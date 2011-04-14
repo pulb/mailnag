@@ -1,0 +1,621 @@
+Inhalt
+========================================================================
+1. Einleitung
+2. Installation
+3. Funktionsweise
+4. Konfigurator
+   4.1. Tab 'Allgemein'
+   4.2. Tab 'Konten'
+   4.3. Tab 'Indikator'
+   4.4. Tab 'Hinweis'
+   4.5. Tab 'Desktop'
+   4.6. Tab 'Skript'
+   4.7. Tab 'Filter'
+   4.8. Tab 'Test'
+   4.9. Tab 'Hilfe'
+   4.10. Die Tasten 'Wiederherstellen', 'Abbrechen', 'Speichern & Beenden'
+5. Benachrichtigungsmenü
+   5.1. Änderungen vornehmen
+   5.2. Evolution-spezifische Einträge
+   5.3. Hinweise
+6. Fehler, Fragen, Forum
+
+
+1. Einleitung
+========================================================================
+Popper ist eine Anwendung zur Benachrichtigung über neue Emails, die auf
+einem oder mehreren POP3 oder IMAP Email Servern liegen. Die Information
+über neue Emails erscheint im Benachrichtigungsmenü des Ubuntu Desktops.
+Anwender werden durch Info-Blasen auf dem Desktop und den grünen Briefum-
+schlag im Panel (beim Standardthema) über neue Emails informiert. Außerdem
+ist die Anzeige direkt auf dem Desktop möglich (vgl. 4.5.).
+
+Die Anwendung besteht aus zwei Teilen. Mit dem Konfigurator (popper_config.py)
+werden alle Einstellungen vorgenommen. Popper (popper.py) ist das
+eigentliche Programm zur Überprüfung des Email-Servers und Anzeige neuer
+Emails. Der Konfigurator hat eine grafische Benutzeroberfläche und wird
+aus dem Menü Anwendungen->Internet->Popper Configurator gestartet. Popper
+selbst läuft im Hintergrund und ist an den Einträgen im Benachrichtigungsmenü
+und an den Info-Blasen bei neuen Emails zu erkennen. Außerdem weist der grüne
+Briefumschlag (beim Standardthema) im Panel auf Neuzugänge hin.
+
+Der Konfigurator bietet sehr viele Einstellmöglichkeiten. Lassen Sie sich
+davon nicht abschrecken. Die Standardeinstellungen sind für den normalen
+Anwender ausreichend. Lediglich die Angaben zu den Email-Konten im Tab
+'Konten' müssen korrekt sein. Alle anderen Einstellung können später bei
+Bedarf vorgenommen werden. Beim Verständnis hilft das Lesen dieses Hilfe-
+texts ungemein.
+
+
+2. Installation
+========================================================================
+Popper liegt als DEB-Archiv vor und wird beim Ausführen über das
+Software-Center installiert. Das Konfigurationsprogramm erhält einen
+Starter-Eintrag im Menü: Anwendungen->Internet->Popper Configurator.
+Über das Software-Center oder die Paketverwaltung (Synaptik) kann das
+Programm deinstalliert werden. Der Konfigurator erstellt bzw. entfernt
+einen Eintrag in der Autostart-Liste.
+
+
+3. Funktionsweise
+========================================================================
+Popper liest in einstellbaren Zeitabständen die Emails aus dem Posteingang
+eines oder mehrerer POP3 oder IMAP Email Server via SSL bzw. nicht über
+SSL falls dies vom Server nicht unterstützt wird. Absender und Betreff
+der Emails werden im Benachrichtigungsmenü aufgeführt. Die Anzahl neuer
+Emails wird in einer Info-Blase dargestellt. Popper vergleicht Neueingänge
+mit den bereits gemeldeten Emails und informiert nur über die tatsächlich
+neuen Emails.
+
+Das Programm löscht keine Emails auf dem Server, sondern liest sie nur.
+Das Abholen (Löschen) der Emails auf dem Server obliegt dem Email-Client
+wie z.B. Evolution, Thunderbird usw. Popper kommuniziert nicht mit dem
+Email-Client.
+
+Die Information über bereits gemeldete Emails kann über die Sitzung hinaus
+behalten werden. Auf Wunsch speichert Popper diese Daten, sodass bei
+einem Neustart des PCs diese Emails nicht mehr als 'neu' gemeldet werden.
+
+Wenn Popper alle n Minuten auf neue Emails prüft, geschieht das
+folgendermaßen: Zuerst wird getestet, ob eine Internetverbindung
+besteht. Ist dies nicht der Fall, so wird der Test alle 5 Sekunden
+wiederholt. Falls die Verbindung zeitweilig unterbrochen ist, z.B.
+beim Aufenthalt im Freien, kann dadurch die Verbindung von Popper
+sobald wie möglich wieder hergestellt werden. Bei bestehender
+Internetverbindung versucht Popper, den Email-Server zu erreichen.
+Wenn dies nicht gelingt, erfolgt nach 30 Sekunden ein zweiter Versuch.
+Falls dieser auch fehlschlägt, wird versucht den Server des nächsten
+Email-Anbieters (falls vorhanden) zu erreichen. Sollte keiner der
+Server erreicht werden können, wird die gesamte Prozedur beim nächsten
+Prüfen (nach n Minuten) wiederholt.
+
+
+4. Konfigurator
+========================================================================
+Das Konfigurationsprogramm für Popper wird aus dem Menü Anwendungen->
+Internet->Popper Configurator aufgerufen. Es ist in mehrere Bereiche unter-
+teilt, in denen Einstellungen zu den verschiedenen Funktionsbereichen von
+Popper gemacht werden können. Die Bereiche werden durch Tabs am oberen
+Fensterrand dargestellt.
+Beim Beenden des Konfigurators wird die eigentliche Anwendung Popper mit
+den neuen Einstellungen gestartet. Ein bereits laufender Popper-Prozess
+wird zuerst beendet und dann neu gestartet.
+
+
+4.1. Tab 'Allgemein'
+========================================================================
+Checkbox: Starte Popper automatisch nach der Anmeldung
+Mit diesem Schalter wird gesteuert, ob Popper beim Start des Computers
+(also beim Start oder Neustart der Sitzung) automatisch gestartet wird.
+Es wird ein Eintrag in der Autostart-Liste erzeugt bzw. entfernt.
+
+
+4.2. Tab 'Konten'
+========================================================================
+Hier können beliebig viele Email-Konten angegeben werden aus denen
+Popper die Informationen über neue Emails holt. Auf der linken Seite
+befindet sich die Liste aller Konten; auf der rechten Seite stehen die
+Einstellmöglichkeiten für das ausgewählte Konto.
+
+Kontenliste (auf der linken Seite)
+
+Checkbox: An
+Mit diesem Schalter können Email-Konten von der Abfrage ein- bzw.
+ausgeschlossen werden. Man kann alle Email-Konten eintragen und durch
+diesen Schalter nach Bedarf bestimmte davon abfragen lassen.
+
+Textfeld: Name
+Hier wird der Name des Kontos angezeigt, z.B.: GMX, Gmail.
+Der Text wird nur zur Anzeige verwendet und nicht für die Verbindung
+zum Email-Anbieter verwendet. Der Name kann auf der rechten Seite
+geändert werden (siehe unten).
+
+Schaltfläche: Import
+Mit dieser Funktion wird der Ubuntu Schlüsselbund nach bestehenden
+Email-Konten durchsucht. Bei jedem gefundenen Konto kann gewählt werden,
+ob es in Poppers Email-Liste aufgenommen werden soll. Wählt man ein Konto
+aus, so sollte auf jeden Fall dessen Name geändert werden und alle
+importierten Einträge auf Korrektheit überprüft werden. Möchte man diese
+tatsächlich nutzen, so muss die Checkbox 'An' eingeschaltet werden.
+
+Schaltfläche: Neu
+Hiermit wird ein neues Konto angelegt. Der Name und die Mindestangaben
+(Server, Anwender, Passwort) (s.u.) müssen eingegeben werden. Ausserdem
+muss die Checkbox 'An' eingeschaltet werden falls das Konto von Popper
+abgefragt werden soll.
+
+Schaltfläche: Löschen
+Das in der Liste ausgewählte Konto wird (auf Nachfrage) gelöscht.
+
+
+Detaileinstellungen (auf der rechten Seite)
+
+Textfeld: Name
+Hier wird der Name des Kontos eingegeben, z.B.: GMX, Gmail.
+Der Text wird nur zur Anzeige verwendet und nicht für die Verbindung
+zum Email-Anbieter verwendet.
+
+Textfeld: Server
+Das ist der Name des Posteingangsservers des Email-Anbieters, z.B.:
+'pop.gmx.net' oder 'imap.googlemail.com' Dieser Name wird für die
+Verbindung zum Email-Anbieter verwendet.
+
+Textfeld: Anwender
+Hier wird der Name des Benutzerkontos beim Email-Anbieter eingetragen.
+Dieser ist in der Regel identisch mit der Email-Adresse, z.B.:
+'hein.mueck@gmx.net'
+
+Textfeld: Passwort
+Zu jedem Benutzerkonto gehört ein Passwort. Die Buchstaben des Passworts
+werden in diesem Feld durch Punkte dargestellt. Passwörter werden von
+Popper mit dem Gnome-Schlüsselbund verwaltet. Bei Ersteingabe eines Kontos
+im Konfigurator oder bei einer Änderung des Passwortes eines bestehenden
+Kontos werden die entsprechenden Daten im Schlüsselbund gespeichert. Auf
+diese Daten greift Popper später bei der Prüfung auf neue Emails zurück.
+Hierfür muss der Schlüsselbund bei jedem Sitzungsstart eines Benutzers ent-
+sperrt werden, falls das Schlüsselbund-Passwort nicht auf LEER gesetzt wurde.
+Wer dies machen will und/oder sich weiter mit dem Schlüsselbund beschäftigen
+möchte sollte einen Blick auf das Programm "Seahorse" bzw. dessen Dokumen-
+tation werfen. "Seahorse" ist in Ubuntu erreichbar über das Menü System->
+Einstellungen->Passwörter und Verschlüsselung.
+
+Checkbox: IMAP
+Ein Email-Konto kann entweder über POP oder IMAP angesprochen werden.
+In der Regel kann dies aus dem Servernamen abgelesen werden, z.B.:
+'pop.gmx.net'. Für den Typ 'IMAP' muss diese Checkbox eingeschaltet
+werden und für den Typ 'POP' ausgeschaltet werden. Falls der Typ unklar
+ist, empfiehlt es sich die Box ausgeschaltet zu lassen.
+
+Textfeld: IMAP Verzeichnisse
+Bei einem IMAP Email-Konto kann hier optional die Liste von Verzeichnissen
+angegeben werden, aus denen Popper die Informationen über neue Emails
+abholt. Mehrere Einträge müssen mit Komma getrennt werden. Falls das
+Feld leer bleibt, wird immer 'INBOX' als Verzeichnis angenommen. Wenn
+Verzeichnisse angegeben werden, muss 'INBOX' explizit eingegeben werden.
+Beim Anbieter 'Gmail' gibt es statt der Verzeichnisse sogenannte Labels.
+Im Unterschied zu den Verzeichnissen kann eine Email mehrmals unter
+verschiedenen Labels erscheinen. Popper verhindert in diesem Fall, dass
+die selbe Email mehrmals angezeigt wird.
+
+Textfeld: Port
+Falls ein spezieller Port für die Serververbindung verwendet werden soll,
+kann dessen Nummer hier eingegeben werden. Im Normalfall bleibt dieses
+Feld leer.
+
+Textfeld: Abfragehäufigkeit (gilt für alle Konten)
+Popper prüft in regelmäßigen Abständen, ob sich neue Emails im
+Posteingang des Email-Servers befinden bzw. ob dort Emails gelöscht
+wurden. Die Zahl 'Abfragehäufigkeit' gibt an, nach wie vielen Minuten sich
+die Abfrage wiederholt. Der Maximalwert beträgt 1440 (entspricht
+24 Stunden), der Minimalwert liegt bei 1 Minute. Manche Anbieter
+verhindern ein zu häufiges Abfragen des Posteingangs (z.B. 15 Min. bei
+Web.de); das ist bei der Eingabe des Wertes zu berücksichtigen.
+
+Checkbox: Einmalig prüfen (gilt für alle Konten)
+Normalerweise prüft Popper wiederholt den Posteingang des Email-Servers.
+Wenn diese Checkbox eingeschaltet ist, prüft Popper den Posteingang
+nur ein einziges Mal und beendet sich dann. Diese Einstellung ist dann
+sinnvoll, wenn man nur beim Start des Computers über neue Emails
+informiert werden möchte oder verhindern will, dass Popper die ganze
+Zeit über im Hintergrund läuft.
+
+
+4.3. Tab 'Indikator'
+========================================================================
+Textfeld: Überschrift
+Dieser Text wird als Überschrift im Benachrichtigungsmenü verwendet.
+
+Textfeld: Kommando für Überschrift
+Hier kann ein Kommando eingegeben werden, das bei einem Klick auf
+die Überschrift ausgeführt wird. Sinnvollerweise ist dies der Aufruf
+eines Email-Client Programms wie z.B. Evolution oder Thunderbird.
+Es ist wichtig zu verstehen, dass Popper keinerlei Informationen mit
+diesen Programmen austauscht. Popper weiß nicht, was der Email-Client
+mit den Emails macht. Um das korrekte Kommando für dieses Feld zu finden
+empfiehlt es sich, den Start des Email-Clients im Terminal zu probieren
+oder beim Menü-Eintrag von Ubuntu nachzusehen.
+Das Kommando für die Überschrift kann auch bei Klick auf das 'Desktop
+Display' verwendet werden (vgl. 4.5.).
+
+Checkbox: Zeige Absender
+Stellt ein, ob der Absender einer Email sichtbar ist.
+
+Auswahl: Hein Mück; hein.mueck@gmx.de
+Einstellung ob der natürliche Name oder die Email Adresse gezeigt wird.
+Sollte eine Email keinen natürlichen Namen haben, wird immer die
+Email Adresse verwendet.
+
+Checkbox: Zeige Betreff
+Stellt ein, ob der Betreff der Email sichtbar ist.
+
+Textfeld: Max. Betrefflänge
+Hiermit kann die Länge des Email-Eintrags im Benachrichtigungsmenü
+beeinflusst werden. Die Länge gibt an, beim wievielten Buchstaben der
+Email-Betreff abgeschnitten wird. Abgeschnittene Betreffs werden durch
+drei Punkte am Ende gekennzeichnet. Diese Längeneinstellung wird auch
+bei der separaten Email-Liste (Summarize by provider) berücksichtigt.
+
+Auswahl: Absender-Betreff, Betreff-Absender
+Darstellung einer Zeile im Benachrichtigungsmenü. Entweder wird zuerst
+der Betreff und dann der Absender angezeigt oder umgekehrt.
+
+Checkbox: Zeige Anbieter vor der Email
+Bei mehreren Email-Konten kann es hilfreich sein, den Namen des
+Anbieters vor dem Email-Eintrag im Benachrichtigungsmenü anzuzeigen.
+Dieser Schalter bestimmt, ob der Anbieter angezeigt wird oder nicht.
+
+Auswahl: Sortiere nach Datum, Sammelliste pro Anbieter
+Mit dieser Auswahl wird eingestellt ob die Einträge im Benachrichtigungs-
+menü nach Datum oder nach Email-Anbieter sortiert werden. Bei der Sortierung
+nach Datum werden alle Emails (unabhängig von welchem Konto sie kommen)
+nach ihrem Eingangsdatum sortiert. Dadurch erscheinen die neusten Emails
+ganz oben in der Benachrichtigungsliste.
+Popper zeigt das Alter der Emails ganz rechts in einem Kreis an. Das Alter
+wird entweder in Sekunden (s), Minuten (m), Stunden (h), Tagen (d),
+Wochen (w), Monaten (M) oder Jahren (Y) dargestellt.
+Beim Summieren nach Provider werden die neuen Emails nicht mehr einzel
+ausgelistet sonder nur der Name des Providers mit der Anzahl neuer Emails
+daneben angezeigt. Durch einen Klick auf den Provider öffnet sich ein
+Fenster in dem die gesamte Liste der Emails dieses Providers angezeigt
+werden.
+
+Checkbox: Speichere letzte Sitzung
+Wenn diese Option ausgeschaltet ist, wird Popper bei jedem Neustart
+den kompletten Posteingang des Servers als 'neue Email' melden, auch
+wenn diese bereits vorher als 'neu' gemeldet wurden. Ist diese Option
+eingeschaltet, merkt sich Popper den aktuellen Meldestatus und wird
+bei einem Neustart keine Emails als 'neu' melden, die bereits vorher
+gemeldet wurden.
+
+Checkbox: Einzelnen Email Eintrag mit Klick entfernen
+Mit dieser Option wird erreicht, dass ein Email Eintrag im Indikatormenü
+durch einen Mausklick entfernt werden kann. Es wird keine weitere Aktion
+ausgeführt, wodurch diese Einstellung nur in Verbindung mit einem Skript
+Sinn macht. Durch Aktivieren eines eigenen Skripts für das Ereignis
+'Anklicken eines Emails im Indikatormenü' kann eine sinnvolle Aktion
+ausgeführt werden. (Diese Funktion ist experimentell.)
+
+
+Checkbox: Zeige nur neue Emails
+Diese Option ist für Anwender gedacht, die ihren Posteingang auf dem
+Email-Server nicht automatisch vom Emai-Client löschen lassen bzw. für
+Anwender, die über einen Web-Browser auf ihre Emails zugreifen und den
+Posteingang nicht konsequent leeren. Normalerweise spiegelt Popper bei
+jedem Prüfen den Posteingang und führt alle Emails im Indicator-Menü auf.
+Wenn diese Option eingeschaltet ist, zeigt Popper nur die neuen Emails
+im Indicator-Menü (entweder als Eintrag oder als Zähler). Sobald auf die
+Überschrift im Menü oder auf die Funktion 'clear' (siehe 'Spezielle
+Kommandos') geklickt wird, werden alle Emails als 'gesehen' markiert
+und nicht erneut im Indicator-Menü dargestellt. Die Sammelanzeigen
+(entweder über die Funktion 'list' oder über Klick auf einen Sammel-
+eintrag (z.B. GMX(3)) zeigen jedoch nach wie vor alle Emails des jeweiligen
+Posteingangs an. So kann es z.B. sein, dass trotz GMX(3) sieben Emails
+im Sammelfenster angezeigt werden. GMX(3) bedeutet, es sind 3 neue Emails
+im GMX Posteingang obwohl dort sieben Emails liegen. Es gibt keine
+Möglichkeit einzelne Emails im Indicator-Menü als 'gesehen' zu markieren.
+
+Checkbox: Emails aus Liste entfernen bei Klick auf Überschrift
+Falls der Email-Client (Evolution, Thunderbird usw.) so eingestellt ist,
+dass neue Emails beim Abholen aus dem Posteingang des Servers gelöscht
+werden, empfiehlt es sich, diese Option einzuschalten. Dann werden
+alle Email-Einträge im Benachrichtigungsmenü sofort entfernt und der
+grüne Briefumschlag (beim Standardthema) wieder auf 'neutral' gestellt.
+Wenn diese Option ausgeschaltet ist, wird das Benachrichtigungsmenü erst
+beim nächsten Prüfen des Posteingangs auf dem Server durch Popper
+aktualisiert.
+
+Menüeinträge
+Es können drei Menüeinträge eingestellt werden. Diese erscheinen
+zuoberst im Benachrichtigungsmenü vor den Emails. Für jedem Menüpunkt
+kann eine Funktion eingegeben werden die nach einem Klick auf den
+Menüpunkt ausgeführt wird. Diese Menüeinträge können auch per Rechts-
+klick auf das 'Desktop Display' erreicht werden (vgl. 4.5.).
+
+Checkbox ganz links
+Mit dieser Option kann bestimmt werden, ob der betreffende Menüeintrag
+im Benachrichtigungsmenü angezeigt wird.
+
+Textfeld links 'Menüeinträge'
+Enthält den Namen des Menüeintrags wie er im Benachrichtigungsmenü
+angezeigt werden soll. Die Standardeinstellungen lauten:
+'Write new email' und 'Open address book'. Diese Texte zum 'Schreiben
+einer neuen Email' bzw. 'Öffnen des Adressbuches' können beliebig
+angepasst werden.
+
+Textfeld rechts 'Kommandos für Menüeinträge'
+Enthält das zugehörige Kommando für diesen Menüeintrag. Die Standard-
+einstellungen lauten: 'evolution mailto:' und 'evolution -c contacts'.
+Die Kommandos beziehen sich auf den Email-Client 'Evolution'; für
+andere Email-Clients wie z.B. Thunderbird müssen die Kommandos ent-
+sprechend angepasst werden (hier hilft eine Suche im Internet).
+
+Spezielle Kommandos
+In das 'Textfeld rechts' können folgende Sonderkommandos eingegeben
+werden:
+'exit'	Das Programm Popper wird beendet
+'clear'	Die Liste der Emails im Benachrichtigungsmenü wird gelöscht
+'check' Es wird sofort auf neue Emails geprüft
+'list'	Es wird ein Fenster mit allen neuen Emails angezeigt
+		Siehe auch: "Summarize by provider"
+
+
+4.4. Tab 'Hinweis'
+========================================================================
+Checkbox: Zeige Info-Blase bei neuen Emails
+Wenn diese Option eingeschaltet ist, macht Popper bei neuen Emails
+durch eine Meldung in Form einer dunklen Blase am rechten oberen
+Bildschirmrand darauf aufmerksam. Diese Meldung wird ca. 10 Sekunden
+lang angezeigt und verschwindet dann automatisch. Schaltet man diese
+Option aus, so wird keine Meldung angezeigt. Neue Emails kann man
+jetzt nur noch am grünen Briefumschlag (beim Standardthema) im Panel
+erkennen.
+
+Textfeld: Text für eine neue Email
+Dieser Text wird gemeldet, falls eine neue Email eingetroffen ist.
+Zusätzlich wird auch der Absender und der Betreff der Email angezeigt.
+
+Textfeld: Text für mehrere neue Emails
+Dieser Text wird gemeldet, falls mehrere neue Emails vorliegen.
+
+Checkbox: Klang für neue Emails abspielen
+Wenn diese Option eingeschaltet ist, wird beim Eintreffen neuer Emails
+eine kurze Melodie abgespielt. Die Musikdatei heißt 'popper.wav' und
+sie wird mit dem in Ubuntu vorinstallierten Programm 'aplay' abgespielt.
+
+Textfeld: Klangdatei
+Hier kann der Name bzw. Pfad zu einer Musikdatei eingegeben werden die
+beim Eintreffen neuer Emails abgespielt wird. Zum Abspielen der Datei
+wird das Programm 'aplay' verwendet. Es werden Dateien im Format 'wav'
+unterstützt (Achtung: kein 'mp3').
+Mit der Schaltfläche 'Auswählen' rechts neben dem Textfeld kann man einen
+Dateidialog anzeigen aus dem eine Musikdatei ausgewählt werden kann.
+Als Standard wird das Verzeichnis der OpenOffice.org Musikbibliothek
+angezeigt.
+
+Schaltfläche: Klang abspielen
+Zum Testen der Musikdatei kann die Datei aus dem Textfeld 'Klangdatei'
+mit dieser Schaltfläche abgespielt werden. Wenn die Option 'Hinweistext
+sprechen' eingeschaltet ist, wird zu Testzwecken der 'Text für eine neue
+Email' gesprochen. Dies geschieht nachdem die Klangdatei abgespielt wurde.
+
+Checkbox: Hinweistext sprechen
+Wenn diese Option eingeschaltet ist, wird der Hinweistext beim Eingang
+einer oder mehrerer Emails gesprochen. Dies geschieht nach dem Abspielen
+der Klangdatei.
+
+
+4.5. Tab 'Desktop'
+========================================================================
+Das 'Desktop Display' ist eine alternative Methode um neue Emails direkt
+auf dem Hintergrundbild anzuzeigen. Dazu wird ein rahmenloses und trans-
+parentes Fenster verwendet. Es kann in der Grösse und Position beliebig
+angepasst werden. Neue Emails werden mit Absender, Datum und Betreff
+angezeigt. Die Zeilenlänge und die Anzahl der Emails hängt von den
+Dimensionen des Fensters ab (Breite, Höhe).
+
+Checkbox: Desktop Display einschalten
+Regelt, ob das Display angezeigt wird oder nicht.
+
+Textfeld: Display Position (x, y)
+Hier kann die absolute Position für die linke obere Ecke des Displays
+(in Pixeln) angegeben werden. (0, 0) befindet sich ganz links oben.
+x ist der horizontale Wert (von links nach rechts) und y der vertikale
+Wert (von oben nach unten). Falls die maximalen Werte des Bildschirms
+überschritten werden, ist das Display nicht zu sehen.
+
+Textfeld: Display Grösse (Breite, Höhe)
+Dies sind die Abmessungen des Display Fensters. 'Breite' gibt die hori-
+zontale Ausdehnung in Pixeln an und 'Höhe' die vertikale Ausdehnung. Die
+Display Grösse wird ausserdem für die Berechnung von Textzeilenenden und
+die Anzahl dargestellter Email Einträge verwendet. Abgeschnittene Text-
+zeilen bzw. unvollständige Email Listen werden durch '...' angezeigt.
+
+Hintergrundfarbe und Transparenz
+Ein Klick auf den Schalter 'Hintergrundfarbe' öffnet einen Dialog zur
+Auswahl der Displayfarbe. Ein Transparenzwert von 0% bedeutet keine
+Transparenz während ein Wert von 100% für vollständige Durchsichtigkeit
+steht. Die optimale Einstellung hängt von der Farbe des Hintergrundbildes
+ab: einfach ausprobieren.
+ACHTUNG: Bei vollständiger Transparenz kann es passieren, das man aus Versehen
+in den unsichtbaren Bereich des Desktop Displays klickt, wodurch das konfigurierte
+Verhalten ('Schliessen', Kommandostart für Überschrift) bei einem solchen Klick
+ausgelöst wird (s.u.).
+
+Schriftfarbe und Art
+Hiermit kann die Textfarbe, Schriftart und Schriftgrösse eingestellt
+werden. Die optimale Textfarbe hängt von der Farbe des Hintergrundbildes
+ab: einfach ausprobieren.
+
+Checkboxen: Bei Klick auf Desktop Display
+Diese Checkboxen regeln, was bei einem Klick auf das Display passiert.
+'Schliessen' schaltet das Display aus, löscht jedoch nicht die Emails
+aus dem Indikator Menü. 'Starte Kommando für Überschrift' führt das
+Kommando aus, welches im Tab 'Indikator' bei 'Kommando für Überschrift'
+eingegeben wurde. Ausserdem werden die Emails aus dem Indikator Menü
+gelöscht und der Briefumschlag zurückgesetzt. Hiermit kann z.B. ein
+Email-Programm aufgerufen werden.
+
+Schaltfläche: Vorschau (an/aus)
+Mit diesem Knopf kann die Vorschau des Desktop Displays an- bzw. ausge-
+schaltet werden. Die Funktionen von 'bei Klick auf Desktop Display'
+funktionieren in der Vorschau nicht. In der Vorschau wird nur Beispieltext
+angezeigt jedoch keine echten Email-Texte.
+
+Die Menüeinträge, welche für das Benachrichtigungsmenü konfiguriert wurden
+(vgl. 4.3.), können im Desktop Display durch Klicken der rechten Maustaste
+ebenfalls angezeigt und gestartet werden.
+
+4.6. Tab 'Skript'
+========================================================================
+Hier kann der Aufruf von eigenen Skripten eingestellt werden. Diese
+Skripte werden ausgeführt wenn ein bestimmtes Ereignis in Popper eintritt.
+
+Folgende Ereignisse werden unterstützt:
+- Das Eintreffen neuer Emails
+- Das Eintreffen keiner neuen Emails
+- Das Anklicken eines Emails im Indikatormenü
+- Das Anklicken eines Sammeleintrags im Indikatormenü
+
+Mit den Checkboxen kann das Abfragen dieser Ereignisse ein- bzw. ausge-
+schaltet werden. Wenn eine Checkbox eingeschaltet ist, muss im Textfeld
+daneben ein Kommando oder der Name eines Shellskripts eingetragen sein.
+Die Schaltfläche rechts neben dem Textfeld öffnet einen Dialog für die
+Dateiauswahl. Als Standard wird das Verzeichnis /home/user/.popper
+angeboten. Selbstverständlich kann sich das Shell Skript in einem
+beliebigen Verzeichnis befinden. Es ist zu beachten, dass das Skript
+ausführbar sein muss (das kann bei den Dateirechten eingestellt werden).
+
+Beim Skriptaufruf für das Ereignis 'Anklicken eines Emails' werden die
+Parameter 'Absender, Datum/Zeit, Betreff' an das Skript als drei
+Argumente übergeben und können dort nach Belieben benutzt werden.
+
+Beim Skriptaufruf für das Ereignis 'Anklicken eines Sammeleintrags' werden
+die Parameter 'Kontoname, Anzahl Emails' an das Skript als zwei Argumente
+übergeben und können dort nach Belieben benutzt werden.
+
+
+4.7. Tab 'Filter'
+========================================================================
+Mit Hilfe des Filters können unerwünschte Emails von der Anzeige ausge-
+schlossen werden. Mit der Checkbox 'Filter anwenden' kann die Funktion
+ein- bzw. ausgeschaltet werden. Im Filtertext können beliebig viele
+Begriffe stehen die durch Komma getrennt werden müssen. Zeilenumbrüche
+und Leerzeichen sind erlaubt. Beim Eintreffen neuer Emails wird der
+Absender und Betreff eines jeden Emails mit den Filterbegriffen verglichen.
+Falls ein Filterbegriff im Betreff enthalten ist, wird diese Email für die
+Anzeige in Popper nicht berücksichtigt. Gross/Kleinschreibung wird nicht
+berücksichtigt.
+ACHTUNG: diese Filterfunktion hat keinen Einfluss auf andere Email
+Programme wie Evolution oder Thunderbird.
+
+
+4.8. Tab 'Test'
+========================================================================
+Mit der Schaltfläche 'Teste Email Verbindung' kann überprüft werden,
+ob eine Verbindung zum Email-Server hergestellt werden kann. Bei
+mehreren Email-Konten werden diese alle getestet. Im Textfeld unterhalb
+des Schalters wird das Testergebnis ausgegeben; es ist selbsterklärend.
+
+Sollte die Verbindung fehlschlagen, können folgende Punkte geprüft
+werden:
+- Schreibfehler bei: Server, User, Password
+- Besteht überhaupt eine Verbindung zum Internet?
+- Blockade durch den Email-Anbieter bei zu häufigem Abfragen
+
+Dieser Test sollte immer durchgeführt werden, nachdem die Einträge in
+den Felder: Server, User, Password geändert wurden und bevor Popper
+gestartet wird. Wenn der Test fehlschlägt, wird auch Popper nicht
+funktionieren.
+
+
+4.9. Tab 'Hilfe'
+========================================================================
+Es wird dieser Hilfetext angezeigt. Die Sprache der Hilfe hängt von
+der Ländereinstellung des Computers ab. Zurzeit wird 'deutsch'
+unterstützt bzw. 'englisch' für alle anderssprachigen Länder.
+
+
+4.10. Die Tasten 'Wiederherstellen', 'Abbrechen', 'Speichern & Beenden'
+========================================================================
+Im unteren Fensterbereich befinden sich drei Schaltflächen.
+Mit 'Speichern & Beenden' werden die aktuellen Einstellungen gespeichert und
+das Konfigurationsprogramm von Popper wird verlassen. Anschliessend wird
+das Programm Popper selbst gestartet. Falls es schon läuft, wird es
+zuerst beendet und dann neu gestartet. Dadurch werden die veränderten
+Einstellungen sofort wirksam. Ein Neustarten des Computers ist nicht
+notwendig.
+
+Hat man sich beim Eintragen der Einstellungen vertan, so kann mit der
+Taste 'Wiederherstellen' der letzte gespeicherte Zustand wieder hergestellt
+werden.
+
+Die Schaltfläche 'Abbrechen' ist mit Vorsicht zu verwenden. Sie führt zu
+einem sofortigen Programmabbruch ohne weitere Aktionen. Es werden keine
+Änderungen an den Einstellungen gespeichert. Popper selbst wird nicht
+unmittelbar nach dem Verlassen des Konfigurators gestartet.
+
+
+5. Benachrichtigungsmenü
+========================================================================
+Bei einer Standardinstallation von Ubuntu befinden sich im Benachrich-
+tigungsmenü die Einträge: Chat, E-Mail und Nachrichten. Diese starten
+jeweils das entsprechende Standardprogramm.
+
+
+5.1. Änderungen vornehmen
+========================================================================
+Wer einen dieser Einträge nicht benötigt, weil man das Programm nicht
+verwendet oder weil 'E-Mail' durch Popper ersetzt wurde, kann das Menü
+anpassen.
+
+Dazu muss man im Verzeichnis /usr/share/indicators/messages/applications/
+die entsprechende Datei entfernen. Im Verzeichnis gibt es für jeden Eintrag
+eine Datei:
+- empathy für Chat
+- evolution für E-Mail
+- gwibber für Nachrichten
+
+Die Dateien enthalten jeweils einen Verweis auf den Starter für die
+Anwendung, der im Verzeichnis /usr/share/applications/ liegt.
+
+
+5.2. Evolution-spezifische Einträge
+========================================================================
+Sofern evolution eingerichtet wurde, kommen zu dem Eintrag E-Mail noch
+zwei weitere hinzu:
+- Neue Nachricht verfassen
+- Kontakte
+
+Für diese Einträge gibt es keine eigene Datei im Verzeichnis
+/usr/share/indicators/messages/applications/ Stattdessen sorgt der
+Starter von Evolution für diese Einträge. Möchte man sie entfernen, muss
+der Starter angepasst werden. Dazu öffnet man diesen mit einem
+Texteditor und entfernt folgendes:
+- die Zeile 'X-Ayatana-Desktop-Shortcuts=Compose;Contacts'
+- die Abschnitte [Compose Shortcut Group] und [Contacts Shortcut Group]
+Anschließend speichert man die Änderungen.
+
+
+5.3. Hinweise
+========================================================================
+Es empfiehlt sich die Datei(en) nicht zu löschen oder zu ändern, sondern
+an einen anderen Ort eine Kopie anzulegen. Dann können die Anpassungen
+später wieder rückgängig machen.
+
+Für Dateioperationen in den Verzeichnissen /usr/share/applications/ und
+/usr/share/indicators/messages/applications/ werden Root Rechte (sudo)
+benötigt.
+
+Die Änderungen am Menü werden eventuell erst nach einem Neustart wirksam.
+
+
+6. Fehler, Fragen, Forum
+========================================================================
+Fehler bitte hier melden (englisch): https://bugs.launchpad.net/popper
+Fragen bitte hier stellen (englisch): https://answers.launchpad.net/popper
+Anforderungen und Diskussionen finden im Forum statt (deutsch):
+http://forum.ubuntuusers.de/topic/allgemeiner-email-benachrichtiger
+
+
+========================================================================
+Ende der Hilfe

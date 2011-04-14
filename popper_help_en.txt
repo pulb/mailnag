@@ -1,0 +1,567 @@
+Table of contents
+========================================================================
+1. Introduction
+2. Installation
+3. How it works
+4. Configurator
+   4.1. Tab 'General'
+   4.2. Tab 'Accounts'
+   4.3. Tab 'Indicate'
+   4.4. Tab 'Notify'
+   4.5. Tab 'Desktop'
+   4.6. Tab 'Script'
+   4.7. Tab 'Filter'
+   4.8. Tab 'Test'
+   4.9. Tab 'Help'
+   4.10. Buttons 'Restore', 'Cancel' and 'Save & Exit'
+5. Indicator menu
+   5.1. Making Changes
+   5.2. Evolution-specific entries
+   5.3. Remarks
+6. Bugs, Questions, Forum
+
+
+1. Introduction
+========================================================================
+Popper is an application to notify about new emails from one or more
+POP3 or IMAP email servers. New emails are notified on the Ubuntu Gnome
+Desktop in the indicator menu on the panel and by means of notification
+bubbles. Emails can also be displayed directly on the desktop.
+
+It consists of two parts. The configurator (popper_config.py) let you
+make all settings that are used by Popper (popper.py) itself. It comes
+with a graphical user interface and is started from menu: applications->
+internet->popper configurator. Popper itself is a background application
+that just shows up in the indicator menu and with notification bubbles
+for new emails.
+
+The configurator provides a lot of settings. Don't be discouraged, you
+only need to set correct email account entries. All other options can be
+done later on demand. Please read this help text to understand the
+meaning of the advanced settings.
+
+
+2. Installation
+========================================================================
+Popper is available as a DEB archive and is installed with the Debian-
+Installer (gdebi). After successful installation you will find a new
+entry in menu: applications->internet named 'Popper Configurator' which
+starts the configurator. The installer also creates or removes an entry
+to your autostart list.
+
+
+3. How it works
+========================================================================
+Popper reads in defined intervals the inbox of your POP3 or IMAP email
+server via SSL or non SSL if the server does not support SSL.
+Sender and subject are listed in the indicator menu.
+The number of new emails shows up in the notification bubble. Popper
+compares new entries with emails that were already notified and informs
+only about the new ones.
+
+The application does not delete any emails from your server, it only
+reads them. Deleting the entries of your inbox remains a task of your
+email client, e.g. Evolution, Thunderbird, etc. Popper does not
+communicate with your email client, it only knows the inbox of your
+server.
+
+Information about already notified emails can be kept beyond a computer
+session. Optionally Popper saves your messages and does not notify them
+as 'new' when you start your PC next time.
+
+Popper checks your inbox every n minutes. How does this work? First
+Popper check for an internet connection. Without a connection the
+check is repeated every 5 seconds. This ensures that your computer is
+re-connected in case you were temporarily offline, e.g. you lost WLAN
+connection because you are roaming. If you are online, Popper tries to
+connect to your email server. If it fails, the program will try again
+after 30 seconds. In case it fails again, Popper connects the next
+email server in the list (if any at all). If no server could be
+reached, Popper repeats the whole procedure after n minutes when it
+makes its next check.
+
+
+4. Configurator
+========================================================================
+The Popper Configurator is started from menu: applications->internet->
+popper configurator. It contains different areas for the settings which
+are arranged in tabs at the upper window edge.
+If you close the Configurator it will start Popper itself. If Popper is
+already running, it will be terminated and then restarted.
+
+
+4.1. Tab 'General'
+========================================================================
+Checkbox: Start Popper automatically after login
+If this one is checked, an entry in your autostart folder will be
+created. When you start your computer or restart the session, Popper
+is started automatically. Unchecking this option will delete the
+autostart entry.
+
+
+4.2. Tab 'Accounts'
+========================================================================
+Enter the email accounts that you want to be checked for new emails. On
+the left side you see the list of your accounts. The right side lets you
+enter details for a selected account.
+
+Account List (left side)
+
+Checkbox: On
+Switch this checkbox to include or exclude email accounts from beeing
+retrieved from the server. You can enter all your email accounts and
+switch them on or off on demand.
+
+Text: Name
+The name of your email provider, e.g.: GMX, Gmail.
+This text is only used for displaying the provider, it is not used
+for the connection to your email server. The name can be changed on the
+right side (see below).
+
+Button: Import
+This feature imports existing email accounts from Ubuntu Keyring. For
+each detected account you will be asked to add it to the account list.
+For each new account you should check if the imported fields are
+correct, activate the account (switch 'on') and change the imported
+acccount name to something meaningfull.
+
+Button: Add
+Click this button to add a new account. The name and the other mandatory
+fields (server, user, password) (see below) must be entered. Enable the
+checkbox 'On' if you want Popper to check this email account.
+
+Button: Delete
+Removes the selected account from the list.
+
+
+Account Details (right side)
+
+Text: Name
+The name of your email provider, e.g.: GMX, Gmail.
+This text is only used for displaying the provider, it is not used
+for the connection to your email server.
+
+Text: Server
+Name of the POP server of your email provider, e.g.: pop.gmx.net or
+imap.googlemail.com. This entry is used to connect to your email provider.
+
+Text: User
+Name of your email user account which is usually identical to your
+email address, e.g.: john.doe@gmx.net.
+
+Text: Password
+There must be a password for each user account. Characters are shown as
+dots. Passwords are managed by Gnome-Keyring. When you key it in for the
+first time or modify an existing password, all changes will be stored to
+Keyring. Popper retrieves your passwords when checking for new emails.
+Therefore the Keyring has to be unlocked at every start of a user-session
+unless the password has been set to BLANK. If want to know more about
+keyring you should take a look at the programm "Seahorse" or its
+documentation. Seahorse can be found in Ubuntu menu:
+system->preferences->passwords and encryption.
+
+Checkbox: IMAP
+You email accounts are either connected via POP or IMAP. In most cases
+this can be detected by looking at the server name, e.g.: 'pop.gmx.net'.
+If it is 'IMAP' you must switch-on the checkbox, in case of 'POP' you
+must uncheck the box. If you are not sure, leave it unchecked.
+
+Text: Folders
+For IMAP accounts you can enter a list of folders that are checked for
+new emails. Multiple entries must be separated by comma. If this field
+is empty, Popper will always check your 'INBOX' folder. If you enter
+folder names, you must enter 'INBOX' explicitly if the inbox should be
+checked.
+'Gmail' supports labels instead of folders. In contrast to folders, one
+email can appear under multiple labels. In this case Popper prevents
+duplicated emails in the indicator list.
+
+Text: Port
+If a special port is required to access the email server, you can enter
+the port number in this field. Normally you don't have to fill it in.
+
+Text: Check Frequency (valid for all accounts)
+Popper checks your inbox on the server every n minutes for new emails.
+This entry determines the time between the checks. Maximum value is
+1440 (24 hours), minimum is 1 minute. Some email providers restrict
+frequent queries by blocking the request; you should consider this
+if you choose a low value.
+
+Checkbox: Check only once (valid for all accounts)
+Usually Popper repeatedly checks the inbox on the email server. If
+this option is active, the program will check the inbox only once and
+terminates afterwards. Choose this option if you just want to have a
+single email check when you start your computer. You avoid that
+Popper is running constantly in the background.
+
+
+4.3. Tab 'Indicate'
+========================================================================
+Text: Headline
+This text is shown as a headline in the indicator menu.
+
+Text: Headline command
+Enter a command to start an email client of your choice, e.g.:
+Evolution, Thunderbird, etc. Whenever you click on the headline in
+the indicator menu this command will be called. Please understand
+that Popper does not communicate with an email client, it only
+mirrors the inbox on your email server. If you don't know the correct
+command for your email client, just try it in a terminal or look at
+the settings in the application menu.
+The headline command can also be used for a click on the Desktop
+Display (cf. 4.5.).
+
+Checkbox: Show Sender
+Enable this option if you want to see the sender of an email in the
+indicator message.
+
+Selection: John Doe, john.doe@gmx.net
+Choose between the natural sender name or the email address. This
+is shown in the indicator message. If the email does not contain a
+natural name, the address is displayed instead.
+
+Checkbox: Show Subject
+Choose if the email subject is shown in the indicator message.
+
+Text: Max. subject length
+Enter a number that determines at which character position the email's
+subject is truncated. If the subject is longer than this length, it
+will be indicated by some dots '...' at the end. This setting helps
+to control the overall length of the message line.
+The max. length is also applied to the subject text in the email list
+that is shown in a separate window for summary entries (Summarize by
+provider).
+
+Selection: Subject-Sender, Sender-Subject
+Choose the order of the message line in the indicator menu. Select
+if you want to see 'subject' first or 'sender' first.
+
+Checkbox: Show provider in front of message
+If you query more than one email account it is helpful to show the
+provider name in front of the message.
+
+Selection: Sort by date, Summarize by provider
+Choose if the entries in the notification list shall be sorted by date
+or by provider. Sorting by date will put the latest emails on top of the
+list (independent of the email account).
+The age of an email is shown in a circle at the very right. This may be
+seconds (s), minutes (m), hours (h), days (d), weeks (w), months (M) or
+years (Y).
+If you choose to summarize by provider one entry per provider will be
+displayed with the number of new emails next to it. A click on such an
+entry will open a list of the emails of that provider in a separate
+window.
+
+Checkbox: Remember last session
+If this option is disabled, Popper will notify all emails from the
+server's inbox again and again with each restart of the computer. You
+can prevent this behaviour by setting this checkbox. In this case
+the program will store the status of notified emails wherefore they
+are not notified again when you restart.
+
+Checkbox: Remove entry after click on single email
+If this option is enabled, you can remove a single email entry in the
+indicator menu by clicking on it. No further action will be done. Therefore
+this option only makes sense in combination with a user script. You can
+utilize user script 'Click on an email in the indicator menu' to start
+a meaningful action. (This feature is experimental.)
+
+Checkbox: Show only new emails
+This option is meant for users who do not clear their inbox on the email
+server (either by means of their email-client or if they read emails in
+the web-browser and keep read emails in the inbox). Normally Popper
+mirrors the inbox and lists all emails in the indicator menu. If this
+option is switched on, Popper only shows new emails in the indicator
+menu (either as an entry per email or as a counter for each provider).
+As soon as you click the headline or the 'clear' function (see 'special
+commands') all emails are marked as 'seen' and will not listed again in
+the indicator menu. However the summary display (either by function 'list'
+or by clicking on e.g. GMX(3)) will show all emails of the inbox(es).
+As an example it is possible that clicking on GMX(3) will show seven
+emails in the summary window. That means you have 3 new emails but a
+total of 7 emails in your GMX inbox. There is no way to mark a single
+email in the indicator menu as 'seen'.
+
+Checkbox: Clear email list after click
+Your email client can either delete received emails from the server
+or keep it on the server. If you set-up your email client to delete
+emails from the server's inbox, you should check this option in order
+to clean up the indicator list as soon as you click the headline. The
+green envelope (with standard theme) in the panel will also be reset to
+'neutral'. If you keep emails on the server you should not check this
+option to avoid repetitive filling of the indicator list with emails that
+you already know about.
+
+Menu Entries:
+You can have up to three functional entries in your indicator menu. The
+will appear on top of your email list. Each menu item has a command that
+is executed when you click on the menu entry. Menu entries can also be
+achieved in the Desktop Display by right-clicking the mouse on it (cf. 4.5.).
+
+Checkbox on the very left
+Check this box if you want to show the menu entry at all.
+
+Textfield on the left 'Menu entries'
+Contains the name of the menu entry as it will be shown in the
+indicator menu. The default settings are: 'Write new email' and
+'Open address book'. These names can be adapted according to your
+preferences.
+
+Textfield on the right 'Commands for menu entries'
+Contains the corresponding command for that menu entry. The default
+settings are: 'evolution mailto:' und 'evolution -c contacts'.
+These command are valid for the email-client 'Evolution'; you can adapt
+the commands for your prefered email-client, e.g. Thunderbird. Search
+in the Internet if you don't know the correspondig commands.
+
+Special Commands
+You can enter some special commands in the text field on the right:
+'exit'	Terminates Popper
+'clear'	Clears the list of emails in the indicator menu
+'check' Checks for new emails immediately
+'list'	Show all new emails in a separate window
+		See also: "Summarize by provider"
+
+
+4.4. Tab 'Notify'
+========================================================================
+Checkbox: Notify on new emails
+Enabling this option causes a notification bubble for new emails.
+The bubble remains about 10 seconds on the screen before it vanishes.
+If this checkbox is disables you will not be notified about new
+emails except by the envelope in the panel which will turn to green
+(with standard theme).
+
+Textfield: Text for one new email
+This text is shown in the notification bubble if you receive
+only one new email. Also sender and subject of the email is shown.
+
+Textfield: Text for multiple new emails
+This text is shown in the notification bubble if you receive more
+than one new email.
+
+Checkbox: Play sound on new emails
+Enabling this option causes a sound played whenever new emails
+arrive. This event comes together with the notification bubble.
+The sound file is 'popper.wav' and it is played with 'aplay', which
+is preinstalled in Ubuntu.
+
+Text: Sound file
+Enter the name or path of a music file that will be played when new
+emails arrive. The program 'aplay' is utilized to play the file.
+Supported format is 'wav' but not 'mp3'.
+The 'Select' button besides opens a file chooser dialog which opens
+the OpenOffice.org sound library as default.
+
+Button: Play Sound
+Press this button to test the selected sound file. If 'Speak notification
+text' is enabled, it will also speak that text after the sound file.
+
+Checkbox: Speak notification text
+When you enable this option, Popper will speak the notification text for
+one or multiple new emails after the sound file is played.
+
+
+4.5. Tab 'Desktop'
+========================================================================
+The Desktop Display is an alternative way of displaying your new emails.
+It is a frameless and transparent window that can be positioned and sized
+as you like it. New emails are shown with their sender, date and subject
+in a subsequent list. The horizontal and vertical limits of the displayed
+text depend on the dimensions of the window. You can influence it by setting
+the width and height.
+
+Checkbox: Enable Desktop Display
+Switch it on if you want to show the Desktop Display.
+
+Text: Display Position (x, y)
+Enter the absolute position (in pixels) of the display's upper left
+corner. (0, 0) is on the very left/top corner of your screen. x is the
+horizontal (left to right) and y the vertical (top to bottom) position.
+If your settings exceeds the max. dimensions of your screen, you will
+not see the Desktop Display.
+
+Text: Display Size (width, height)
+These are the dimensions of the window itself. Width is the horizontal
+dimension and height the vertical one. Display Size is also used to
+calculate the end of text lines and the end of the email list.
+A truncated text line or an incomplete email list is indicated by '...'
+
+Background Color and Transparency
+Clicking on Background Color will open a color selection dialog. A
+transparency value of 0% means complete opaqueness whereas 100% means
+complete transparency of the Desktop Display. The best value depends on
+the color of your desktop wallpaper; just try it.
+CAUTION: On complete transparency it may happen that you accidentally
+click on the invisible range of the Desktop Display which will cause
+the configured behaviour ('close', launching the headline command) with
+such a click (see below).
+
+Textcolor and Font
+This lets you select the color of text on the Desktop Display and its
+font type and size. The best text color also depends on the level of
+transparency and the color of your desktop wallpaper.
+
+Checkboxes: close and launch headline command
+These checkboxes control what happens when you click on the Desktop
+Display. 'Close' lets the window disappear from the desktop but does not
+delete email entries from the Indicator menu. 'Launch headline command'
+will start the command that you entered in the field 'Headline command'
+on the tab 'Indicate'. It also clears the Indicator menu entries and
+resets the indicator envelope in the panel. This can be used to start your
+email client.
+
+Button: Preview (on/off)
+This button shows or closes the Desktop Display to let you check your
+settings. The 'close' and/or 'launch headline command' features are not
+available in preview mode. The preview display shows some example text
+but no real emails.
+
+The menu entries, which can be configured for the indicator menu (cf. 4.3.),
+can also be shown and launched in the Desktop Display by right-clicking
+the mouse on it.
+
+
+4.6. Tab 'Script'
+========================================================================
+You can configure your own shell scripts or commands that are executed
+on the occurance of an event in Popper. Currently two different events
+are supported:
+- Reception of new emails
+- Reception of no new emails
+- Click on an email in the indicator menu
+- click on a summary entry in the indicator menu
+
+Tic the checkbox on the left to allow Popper to launch your scripts when
+the specific event happens. It is mandatory to have an entry in the
+'Script File' text field when the checkbox is switched on. The text field
+may contain a command or the path and filename of your shell script. The
+button on the right opens a file chooser that points per default to:
+/home/user/.popper. You are free to choose any other directory
+of your choice, but keept in mind that the shell script must be executable
+(you can set this with the file access rights in your file manager).
+
+When a script for the event 'Click on email' occurs, three arguments will
+be passed to script: 'sender, datetime, subject'.
+
+When a script for the event 'Click on summary entry' occurs, two arguments
+will be passed to script: 'account name, number of emails'.
+
+
+4.7. Tab 'Filter'
+========================================================================
+The filter allows you to prevent unwanted emails from displaying in
+Popper. The checkbox 'apply filter' switches the filter function on/off.
+You can enter filter words in the text field 'filter text'. Such words
+must be separated by comma. Spaces and line breaks are allowed. Upper
+and lower case do not matter. If the filter feature is switched on,
+Popper will compare sender and subject text of each incoming email with
+the words in your filter text. If any of the words occur in the subject
+text, the email will not be displayed by Popper.
+ATTENTION: the filter function has no influence on your email programs
+like Evolution or Thunderbird.
+
+
+4.8. Tab 'Test'
+========================================================================
+The button 'Test Email Connection' will check the connectivity to
+your emails provider(s). If you have more than one email account
+they will be checked one after another. The text-box underneath the
+bottom shows the test results. That helps to test if your settings
+are correct. You should not start Popper itself without succeeding
+this test.
+
+If you receive any error messages you should check:
+- typos in the fields: Server, User, Password
+- do you really have a connection to the internet?
+- is the connection blocked by your provider because of frequent
+  queries?
+
+Repeat this test whenever you change the settings. If this test
+fails also Popper will never work correctly.
+
+
+4.9. Tab 'Help'
+========================================================================
+Shows this help text. The language depends on the country settings
+of your computer. Currently only 'German' and 'English' is
+supported. 'English' will be shown for all countries except Germany.
+
+
+4.10. Buttons 'Restore', 'Cancel', 'Save & Exit'
+========================================================================
+At the bottom of the window you can find three buttons:
+'Save & Exit' will store all settings and closes the application.
+Then it will start Popper. If Popper is already running it will be
+closed and restarted. Therefore you don't have to restart your computer
+to get the changed settings active.
+'Restore' takes the last stored values and discards your current
+changes. Restoring is useful if you made any mistakes during your
+setup.
+Pay attention when using the 'Cancel' button. It will exit the program
+immediatelly. Nothing will be saved and Popper will not be started
+right after you closed the Configurator.
+
+
+5. Indicator menu
+========================================================================
+For a standard Ubuntu installation you will find three entries in the
+indicator menu: Chat, E-Mail and Messages. These items start the
+associated standard program.
+
+
+5.1. Making Changes
+========================================================================
+If you do not need one of the entries, because the program is not being
+used or because 'E-Mail' was replaced by Popper, you can adapt the menu.
+
+Open the direcotry /usr/share/indicators/messages/applications/ and
+delete the according file. Each entry has a correspind file:
+- empathy for Chat
+- evolution for E-Mail
+- gwibber for Nachrichten
+
+Each file contains a refer to starter for the application, which is
+stored in the diretory /usr/share/applications/
+
+
+5.2. Evolution-specific entries
+========================================================================
+Things change, if evolution is set up, as there are two more entries
+after 'E-Mail':
+- Write New Message
+- Contacts
+
+This entries do not have their own file in the directory
+/usr/share/indicators/messages/applications/ Instead, the application
+starter is responsible for the entries. If you want to delete them,
+you have to adapt the starter. Therefore open the starter with a
+texteditor and remove the following:
+- the line 'X-Ayatana-Desktop-Shortcuts=Compose;Contacts'
+- the sections [Compose Shortcut Group] and [Contacts Shortcut Group]
+Finally save the changes.
+
+
+5.3. Remarks
+========================================================================
+It is strongly recommended not to delete a file or change it, directly.
+Instead make sure that you have a copy at another location. You can just
+move it back later if you want to undo the changes.
+
+Of course you need root rights to perform any file system operation in
+the directories /usr/share/indicators/messages/applications/ and
+/usr/share/applications/.
+
+You might need to restart your system before the changes affect the menu.
+
+
+6. Bugs, Questions, Forum
+========================================================================
+Bugs are reported here (english): https://bugs.launchpad.net/popper
+Answers are asked here (english): https://answers.launchpad.net/popper
+Requirements and discussions happen here (german):
+http://forum.ubuntuusers.de/topic/allgemeiner-email-benachrichtiger
+
+
+========================================================================
+End of help
