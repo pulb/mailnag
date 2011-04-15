@@ -44,11 +44,15 @@ import time
 import email
 from email.header import decode_header
 import sys
-import locale
+#import locale
 import gettext
 from popper_config import Keyring
 #import cairo
 
+
+gettext.bindtextdomain('popper', 'locale')
+gettext.textdomain('popper')
+_ = gettext.gettext
 
 # Accounts and Account =================================================
 class Account:
@@ -585,10 +589,10 @@ class MailChecker:
 #		# Notify =======================================================
 		if new_mails > 0:												# new mails?
 			if new_mails > 1:											# multiple new emails
-				summary = "You have " + str(new_mails) + " new mails."
+				summary = _("You have " + str(new_mails) + " new mails.")
 #				notify_text = cfg.get('notify', 'text_multi') % str(new_mails)
 			else:
-				summary = "You have a new mail."
+				summary = _("You have a new mail.")
 #				notify_text = cfg.get('notify', 'text_one')				# only one new email
 #				notify_text += "\n" + sender + "\n" + subject
 #
@@ -1199,13 +1203,13 @@ class Pid(list):														# List class to manage subprocess PIDs
 def main():
 	global cfg, user_path, accounts, mails, mailchecker, autostarted, firstcheck, pid
 
-	try:																# Internationalization
-		locale.setlocale(locale.LC_ALL, '')								# locale language, e.g.: de_CH.utf8
-	except locale.Error:
-		locale.setlocale(locale.LC_ALL, 'en_US.utf8')					# english for all unsupported locale languages
-	locale.bindtextdomain('popper', 'locale')
-	gettext.bindtextdomain('popper', 'locale')
-	gettext.textdomain('popper')
+#	try:																# Internationalization
+#		locale.setlocale(locale.LC_ALL, '')								# locale language, e.g.: de_CH.utf8
+#	except locale.Error:
+#		locale.setlocale(locale.LC_ALL, 'en_US.utf8')					# english for all unsupported locale languages
+#	locale.bindtextdomain('popper', 'locale')
+#	gettext.bindtextdomain('popper', 'locale')
+#	gettext.textdomain('popper')
 
 	user_path = os.path.expanduser("~/.popper/")						# set path to: "/home/user/.popper/"
 	autostarted = False													# default setting for command line argument
