@@ -47,7 +47,7 @@ import sys
 import locale
 import gettext
 from popper_config import Keyring
-import cairo
+#import cairo
 
 
 # Accounts and Account =================================================
