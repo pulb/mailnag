@@ -518,6 +518,10 @@ class MailChecker:
 #		self.server.connect("server-display", self.headline_clicked)	# if clicked on headline
 #		self.server.show()
 		pynotify.init("icon-summary-body")								# initialize Notification
+		
+		self.notification = pynotify.Notification(" ", None, None)
+		self.notification.set_category("email")
+
 		self.link = cfg.get('indicate', 'start_on_click')				# get link address
 #		self.desktop_display = None										# the Window object for Desktop_Display
 
@@ -533,7 +537,7 @@ class MailChecker:
 			self.reminder.load()
 #			self.add_menu_entries('asc')								# add menu entries to indicator menu
 #			self.sort_order = 'asc'										# set sort order for mail_list and summary window
-			self.mail_list = self.mails.get_mail('asc')		# get all mails from all inboxes
+			self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
 #			if sort_by == '1':											# sort by date
 #				max = self.limit - menu_count							# calculate boundaries
 #				if max > len(self.mail_list):
@@ -548,7 +552,7 @@ class MailChecker:
 			if firstcheck:												# Manual firststart
 				self.reminder.load()
 #			self.sort_order = 'asc'										# set sort order for mail_list and summary window
-			self.mail_list = self.mails.get_mail('asc')		# get all mails from all inboxes
+			self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
 #			if sort_by == '1':											# sort by date
 #				for message in self.messages:							# clear indicator menu
 #					message.set_property("draw-attention", "false")		# white envelope in panel
@@ -567,31 +571,39 @@ class MailChecker:
 #				self.add_account_summaries()							# add providers to indicator menu
 #			self.add_menu_entries('desc')								# add menu entries to indicator menu
 
-		sender = ''
-		subject = ''
+#		sender = ''
+#		subject = ''
+		summary = ""		
+		body = ""		
 		for mail in self.mail_list:										# get number of new mails
 			if not self.reminder.contains(mail.id):
 				new_mails += 1
-				sender = mail.sender									# get sender for "you have one new mail" notification
-				subject = mail.subject									# same for subject
+#				sender = mail.sender									# get sender for "you have one new mail" notification
+#				subject = mail.subject									# same for subject
+				body += mail.sender + ": <i>" + mail.subject + "</i>\n"
 
-		# Notify =======================================================
+#		# Notify =======================================================
 		if new_mails > 0:												# new mails?
 			if new_mails > 1:											# multiple new emails
-				notify_text = cfg.get('notify', 'text_multi') % str(new_mails)
+				summary = "You have " + str(new_mails) + " new mails."
+#				notify_text = cfg.get('notify', 'text_multi') % str(new_mails)
 			else:
-				notify_text = cfg.get('notify', 'text_one')				# only one new email
-				notify_text += "\n" + sender + "\n" + subject
-
+				summary = "You have a new mail."
+#				notify_text = cfg.get('notify', 'text_one')				# only one new email
+#				notify_text += "\n" + sender + "\n" + subject
+#
 			if cfg.get('notify', 'playsound') == '1':					# play sound?
 				soundcommand = ['aplay', '-q', cfg.get('notify', 'soundfile')]
 				pid.append(subprocess.Popen(soundcommand))
 
 #			if cfg.get('notify', 'notify') == '1':						# show bubble?
-			headline = cfg.get('indicate', 'headline')
-			notification = pynotify.Notification(headline, \
-				notify_text, "notification-message-email")
-			try: notification.show()
+#			headline = cfg.get('indicate', 'headline')
+			
+#			notification = pynotify.Notification(headline, \
+#				notify_text, "notification-message-email")
+			self.notification.update(summary, body, "notification-message-email")
+						
+			try: self.notification.show()
 			except: print "Exception in notification.show()", notify_text	# debug
 
 #			if cfg.get('notify', 'speak') == '1':						# speak?
