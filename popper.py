@@ -521,7 +521,7 @@ class MailChecker:
 #		self.server.set_desktop_file(desktop_file)
 #		self.server.connect("server-display", self.headline_clicked)	# if clicked on headline
 #		self.server.show()
-		pynotify.init("icon-summary-body")								# initialize Notification
+		pynotify.init("Pooper")								# initialize Notification
 		
 		self.notification = pynotify.Notification(" ", None, None)
 		self.notification.set_category("email")
