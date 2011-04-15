@@ -485,14 +485,14 @@ def commandExecutor(command, context_menu_command=None):
 		command = context_menu_command
 
 	if command == 'clear':												# clear indicator list immediatelly
-		indicator.clear()
+		mailchecker.clear()
 #		if indicator.desktop_display != None:
 #			indicator.desktop_display.destroy()
 	elif command == 'exit':												# exit popper immediatelly
 		delete_pid()
 		exit(0)
 	elif command == 'check':											# check immediatelly for new emails
-		indicator.timeout()
+		mailchecker.timeout()
 #	elif command == 'list':												# open summary window
 #		rows = []
 #		for mail in indicator.mail_list:
@@ -504,8 +504,8 @@ def commandExecutor(command, context_menu_command=None):
 		pid.append(subprocess.Popen(command_list))						# execute 'command'
 
 
-# Indicator ============================================================
-class Indicator:
+# MailChecker ============================================================
+class MailChecker:
 	def __init__(self):
 #		self.limit = 7													# max. indicator menu entries
 		self.mails = Mails()											# create Mails object
@@ -1185,7 +1185,7 @@ class Pid(list):														# List class to manage subprocess PIDs
 
 # Main =================================================================
 def main():
-	global cfg, user_path, accounts, mails, indicator, autostarted, firstcheck, pid
+	global cfg, user_path, accounts, mails, mailchecker, autostarted, firstcheck, pid
 
 	try:																# Internationalization
 		locale.setlocale(locale.LC_ALL, '')								# locale language, e.g.: de_CH.utf8
@@ -1209,12 +1209,12 @@ def main():
 	else: firstcheck = True
 
 	pid = Pid()															# create Pid object
-	indicator = Indicator()												# create Indicator object
-	indicator.timeout()													# immediate check, firstcheck=True
+	mailchecker = MailChecker()												# create MailChecker object
+	mailchecker.timeout()													# immediate check, firstcheck=True
 	firstcheck = False													# firstcheck is over
 	if cfg.get('account', 'check_once') == '0':							# wanna do more than one email check?
 		frequency = int(cfg.get('account', 'frequency'))				# get email check frequency
-		gobject.timeout_add_seconds(60*frequency, indicator.timeout)	# repetitive check
+		gobject.timeout_add_seconds(60*frequency, mailchecker.timeout)			# repetitive check
 		gtk.main()														# start Loop
 	delete_pid()														# delete file 'popper.pid'
 	return 0
