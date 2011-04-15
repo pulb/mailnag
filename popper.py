@@ -606,9 +606,7 @@ class MailChecker:
 #			notification = pynotify.Notification(headline, \
 #				notify_text, "notification-message-email")
 			self.notification.update(summary, body, "mail-unread")
-						
-			try: self.notification.show()
-			except: print "Exception in notification.show()", notify_text	# debug
+			self.notification.show()
 
 #			if cfg.get('notify', 'speak') == '1':						# speak?
 #				self.speak(notify_text)
