@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# popper.py
+# mailnag.py
 #
+# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -20,15 +21,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 #
-#=======================================================================
-# POPPER : An indicator and notifier for new emails
-#
-# Author : Ralf Hersel, ralf.hersel@gmx.net
-# Version: 0.28
-# Date   : Apr 12, 2011
-# Licence: GPL
-#
-# Libraries ============================================================
 
 import poplib
 import imaplib
@@ -46,13 +38,13 @@ from email.header import decode_header
 import sys
 #import locale
 import gettext
-from popper_config import Keyring
+from mailnag_config import Keyring
 #import cairo
 import signal
 
 
-gettext.bindtextdomain('popper', 'locale')
-gettext.textdomain('popper')
+gettext.bindtextdomain('mailnag', 'locale')
+gettext.textdomain('mailnag')
 _ = gettext.gettext
 
 # Accounts and Account =================================================
@@ -438,15 +430,15 @@ def read_config(cfg_file):												# read config file or create it
 		return cfg
 
 
-def write_pid():														# write Popper's process id to file
-	pid_file = user_path + 'popper.pid'
+def write_pid():														# write Mailnags's process id to file
+	pid_file = user_path + 'mailnag.pid'
 	f = open(pid_file, 'w')
 	f.write(str(os.getpid()))											# get PID and write to file
 	f.close()
 
 
-def delete_pid():														# delete file popper.pid
-	pid_file = user_path + 'popper.pid'
+def delete_pid():														# delete file mailnag.pid
+	pid_file = user_path + 'mailnag.pid'
 	if os.path.exists(pid_file):
 		os.popen("rm " + pid_file)										# delete it
 
@@ -493,7 +485,7 @@ def commandExecutor(command, context_menu_command=None):
 		mailchecker.clear()
 #		if indicator.desktop_display != None:
 #			indicator.desktop_display.destroy()
-	elif command == 'exit':												# exit popper immediatelly
+	elif command == 'exit':												# exit mailnag immediatelly
 		delete_pid()
 		exit(0)
 	elif command == 'check':											# check immediatelly for new emails
@@ -522,7 +514,7 @@ class MailChecker:
 #		self.server.set_desktop_file(desktop_file)
 #		self.server.connect("server-display", self.headline_clicked)	# if clicked on headline
 #		self.server.show()
-		pynotify.init("Pooper")								# initialize Notification
+		pynotify.init("Mailnag")								# initialize Notification
 		
 		self.notification = pynotify.Notification(" ", None, None)
 		self.notification.set_category("email")
@@ -752,7 +744,7 @@ class MailChecker:
 			for mail in self.mail_list:
 				self.reminder.set_to_seen(mail.id)
 
-			self.reminder.save(self.mail_list)							# save to popper.dat
+			self.reminder.save(self.mail_list)							# save to mailnag.dat
 		else:															# keep 'list' filled
 			self.mail_list = []											# clear mail list
 
@@ -995,9 +987,9 @@ class MailChecker:
 # Reminder =============================================================
 class Reminder(dict):
 
-	def load(self):														# load last known messages from popper.dat
+	def load(self):														# load last known messages from mailnag.dat
 		remember = cfg.get('indicate', 'remember')
-		dat_file = user_path + 'popper.dat'
+		dat_file = user_path + 'mailnag.dat'
 		we_have_a_file = os.path.exists(dat_file)						# check if file exists
 		if remember == '1' and we_have_a_file:
 			f = open(dat_file, 'r')										# open file again
@@ -1007,12 +999,12 @@ class Reminder(dict):
 				try:
 					self[content[0]] = content[1]						# add to dict [id : flag]
 				except IndexError:
-					self[content[0]] = '0'								# no flags in popper.dat
+					self[content[0]] = '0'								# no flags in mailnag.dat
 			f.close()							   						# close file
 
 
 	def save(self, mail_list):											# save mail ids to file
-		dat_file = user_path + 'popper.dat'
+		dat_file = user_path + 'mailnag.dat'
 		f = open(dat_file, 'w')											# open the file for overwrite
 		for m in mail_list:
 			try:
@@ -1220,14 +1212,14 @@ def main():
 	signal.signal(signal.SIGTERM, cleanup)
 
 	try:
-		user_path = os.path.expanduser("~/.popper/")						# set path to: "/home/user/.popper/"
+		user_path = os.path.expanduser("~/.mailnag/")						# set path to: "/home/user/.mailnag/"
 		autostarted = False													# default setting for command line argument
 		cmdline = sys.argv													# get command line arguments
 		if len(cmdline) > 1:												# do we have something in command line?
 			if cmdline[1] == 'autostarted':
 				autostarted = True
-		write_pid()															# write Popper's process id to file
-		cfg = read_config(user_path + 'popper.cfg')							# get configuration from file
+		write_pid()															# write Mailnag's process id to file
+		cfg = read_config(user_path + 'mailnag.cfg')							# get configuration from file
 		
 		accounts = Accounts()												# create Accounts object
 		if accounts.keyring_was_locked: firstcheck = False					# required for correct sortorder in indi menu

@@ -4,13 +4,13 @@
   <!-- interface-naming-policy project-wide -->
   <object class="GtkDialog" id="dialog_keyring">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Popper</property>
+    <property name="title" translatable="yes">Mailnag</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="default_width">250</property>
     <property name="default_height">150</property>
     <property name="destroy_with_parent">True</property>
-    <property name="icon">popper_icon.png</property>
+    <property name="icon">mailnag_icon.png</property>
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
     <child internal-child="vbox">

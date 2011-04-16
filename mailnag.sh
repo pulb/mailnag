@@ -1,11 +1,11 @@
 #!/bin/bash
 main()
 {
-if [ -f ~/.popper/popper.log ]; then
-	rm ~/.popper/popper.log
+if [ -f ~/.mailnag/mailnag.log ]; then
+	rm ~/.mailnag/mailnag.log
 fi
 cd `dirname $0`
-python popper.py autostarted >> ~/.popper/popper.log 2>&1 &
+python mailnag.py autostarted >> ~/.mailnag/mailnag.log 2>&1 &
 }
 
 connection()

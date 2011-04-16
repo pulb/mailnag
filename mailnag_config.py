@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# popper_config.py
+# mailnag_config.py
 #
+# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -20,15 +21,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 #
-#=======================================================================
-# POPPER : An indicator and notifier for new emails
-#		   popper_settings.py is the GUI for configuration settings
-# Author : Ralf Hersel, ralf.hersel@gmx.net
-# Version: 0.28
-# Date   : Apr 08, 2011
-# Licence: GPL
-#
-# Libraries ============================================================
 
 import gtk
 import os
@@ -47,8 +39,8 @@ import cairo
 class Settings:
 	def __init__(self):
 		builder = gtk.Builder()											# build GUI from Glade file
-		builder.set_translation_domain('popper_config')
-		builder.add_from_file("popper_config.glade")
+		builder.set_translation_domain('mailnag_config')
+		builder.add_from_file("mailnag_config.glade")
 		builder.connect_signals({ \
 		"gtk_main_quit" : self.exit, \
 		"on_button_restore_clicked" : self.restore, \
@@ -198,12 +190,12 @@ class Settings:
 
 		self.help = builder.get_object("textbuffer_help")				# load help text
 		lang = locale.getdefaultlocale()[0].lower()						# get language from operating system
-		if 'de' in lang:
-			f = open('popper_help_de.txt', 'r')							# get german help
-		else:
-			f = open('popper_help_en.txt', 'r')							# get english help for all other languages
-		self.help.set_text(f.read())
-		f.close()
+#		if 'de' in lang:
+#			f = open('mailnag_help_de.txt', 'r')							# get german help
+#		else:
+#			f = open('mailnag_help_en.txt', 'r')							# get english help for all other languages
+#		self.help.set_text(f.read())
+#		f.close()
 
 
 	def load(self):														# set values to widgets from config
@@ -289,7 +281,7 @@ class Settings:
 
 
 	def cancel(self, widget):											# exit program without doing anything else
-		exit(1)															# exit code used in popper_config.sh
+		exit(1)															# exit code used in mailnag_config.sh
 
 
 	def exit(self, widget):												# save and exit
@@ -368,11 +360,11 @@ class Settings:
 		start, end = self.filter_text.get_bounds()
 		cfg.set('filter', 'filter_text', self.filter_text.get_text(start, end))
 
-		cfg_file = user_folder + ".popper/popper.cfg"					# folder: /home/user/.popper/popper.cfg
+		cfg_file = user_folder + ".mailnag/mailnag.cfg"					# folder: /home/user/.mailnag/mailnag.cfg
 		with open(cfg_file, 'wb') as configfile: cfg.write(configfile)
 
 		headline = self.headline.get_text()								# always write headline..
-		update_desktop_file(headline)									# ..to popper.desktop
+		update_desktop_file(headline)									# ..to mailnag.desktop
 
 		if autostart == 1: create_autostart()							# write autostart
 		else: delete_autostart()
@@ -561,7 +553,7 @@ class Settings:
 		dialog = gtk.FileChooserDialog("Open..", None, \
 			gtk.FILE_CHOOSER_ACTION_OPEN, (gtk.STOCK_CANCEL, \
 			gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))		# create file dialog
-		dialog.set_current_folder(user_folder + ".popper")				# set default folder
+		dialog.set_current_folder(user_folder + ".mailnag")				# set default folder
 		dialog.set_default_response(gtk.RESPONSE_OK)					# set default button to OK
 		response = dialog.run()											# show file dialog
 		if response == gtk.RESPONSE_OK:									# if OK clicked
@@ -770,7 +762,7 @@ class Settings:
 
 class Keyring:
 	def __init__(self):
-		glib.set_application_name('Popper')
+		glib.set_application_name('mailnag')
 		self.was_locked = False											# True if Dialog shown. Required for Sortorder problem
 		self.keyring_password = ''
 		self.defaultKeyring = gnomekeyring.get_default_keyring_sync()
@@ -801,13 +793,13 @@ class Keyring:
 				item = gnomekeyring.item_get_info_sync(self.defaultKeyring, identity)
 				displayNameDict[item.get_display_name()] = identity
 
-			if 'Popper password for %s://%s@%s' % (protocol, user, server) in displayNameDict:
+			if 'Mailnag password for %s://%s@%s' % (protocol, user, server) in displayNameDict:
 
 				if gnomekeyring.item_get_info_sync(self.defaultKeyring, \
-				displayNameDict['Popper password for %s://%s@%s' % \
+				displayNameDict['Mailnag password for %s://%s@%s' % \
 				(protocol, user, server)]).get_secret() != '':
 					return gnomekeyring.item_get_info_sync(self.defaultKeyring, \
-					displayNameDict['Popper password for %s://%s@%s' % \
+					displayNameDict['Mailnag password for %s://%s@%s' % \
 					(protocol, user, server)]).get_secret()
 				else:
 					# DEBUG print "Keyring.get(): No Keyring Password for %s://%s@%s." % (protocol, user, server)
@@ -855,21 +847,21 @@ class Keyring:
 				item = gnomekeyring.item_get_info_sync(self.defaultKeyring, identity)
 				displayNameDict[item.get_display_name()] = identity
 
-			if 'Popper password for %s://%s@%s' % (protocol, user, server) in displayNameDict:
+			if 'Mailnag password for %s://%s@%s' % (protocol, user, server) in displayNameDict:
 
 				if password != gnomekeyring.item_get_info_sync(self.defaultKeyring, \
-				displayNameDict['Popper password for %s://%s@%s' % \
+				displayNameDict['Mailnag password for %s://%s@%s' % \
 				(protocol, user, server)]).get_secret():
 					gnomekeyring.item_create_sync(self.defaultKeyring, \
 						gnomekeyring.ITEM_GENERIC_SECRET, \
-						'Popper password for %s://%s@%s' % (protocol, user, server), \
-						{'application':'Popper', 'protocol':protocol, 'user':user, 'server':server}, \
+						'Mailnag password for %s://%s@%s' % (protocol, user, server), \
+						{'application':'Mailnag', 'protocol':protocol, 'user':user, 'server':server}, \
 						password, True)
 			else:
 				gnomekeyring.item_create_sync(self.defaultKeyring, \
 					gnomekeyring.ITEM_GENERIC_SECRET, \
-					'Popper password for %s://%s@%s' % (protocol, user, server), \
-					{'application':'Popper', 'protocol':protocol, 'user':user, 'server':server}, password, True)
+					'Mailnag password for %s://%s@%s' % (protocol, user, server), \
+					{'application':'Mailnag', 'protocol':protocol, 'user':user, 'server':server}, password, True)
 
 
 	def remove(self, accounts):											# delete obsolete entries from Keyring
@@ -880,7 +872,7 @@ class Keyring:
 		valid_accounts = []
 		for acc in accounts:											# create list of all valid accounts
 			protocol = 'imap' if acc.imap else 'pop'
-			valid_accounts.append('Popper password for %s://%s@%s' % \
+			valid_accounts.append('Mailnag password for %s://%s@%s' % \
 			(protocol, acc.user, acc.server))
 
 		if gnomekeyring.list_item_ids_sync(defaultKeyring):				# find and delete invalid entries
@@ -889,7 +881,7 @@ class Keyring:
 				item = gnomekeyring.item_get_info_sync(defaultKeyring, identity)
 				displayNameDict[item.get_display_name()] = identity
 			for key in displayNameDict.keys():
-				if key[:19] == 'Popper password for' \
+				if key[:19] == 'Mailnag password for' \
 				and key not in valid_accounts:
 					gnomekeyring.item_delete_sync(defaultKeyring, displayNameDict[key])
 
@@ -897,8 +889,8 @@ class Keyring:
 	def show_keyring_dialog(self):										# dialog to get password to unlock keyring
 		self.was_locked = True
 		builder = gtk.Builder()
-		builder.set_translation_domain('popper_config')
-		builder.add_from_file("popper_keyring.glade")
+		builder.set_translation_domain('mailnag_config')
+		builder.add_from_file("mailnag_keyring.glade")
 		builder.connect_signals({"gtk_main_quit" : self.exit_keyring_dialog, \
 			"on_button_cancel_clicked" : self.exit_keyring_dialog, \
 			"on_button_ok_clicked" : self.ok_keyring_dialog, \
@@ -920,8 +912,8 @@ class Keyring:
 
 	def show_message(self, message):									# dialog to show keyring messages
 		builder = gtk.Builder()
-		builder.set_translation_domain('popper_config')
-		builder.add_from_file("popper_message.glade")
+		builder.set_translation_domain('mailnag_config')
+		builder.add_from_file("mailnag_message.glade")
 		builder.connect_signals({"gtk_main_quit" : self.exit_message, \
 			"on_button_cancel_clicked" : self.exit_message, \
 			"on_button_ok_clicked" : self.ok_message})
@@ -1096,11 +1088,11 @@ class DesktopDisplay(gtk.Window):										# displays a transparent frameless wi
 
 		self.content = content											# array of text lists
 
-		self.set_title('Popper Desktop Display')
+		self.set_title('Mailnag Desktop Display')
 		self.set_app_paintable(True)									# no window border
 		self.set_decorated(False)
 		self.set_position(gtk.WIN_POS_CENTER)
-		pixbuf = gtk.gdk.pixbuf_new_from_file('popper.png')				# get icon from png
+		pixbuf = gtk.gdk.pixbuf_new_from_file('mailnag.png')				# get icon from png
 		self.set_icon(pixbuf)											# set window icon
 		pos_x = int(cfg.get('dd', 'pos_x'))
 		pos_y = int(cfg.get('dd', 'pos_y'))
@@ -1197,7 +1189,7 @@ class DesktopDisplay(gtk.Window):										# displays a transparent frameless wi
 
 def read_config():														# read config file or create it
 	cfg = ConfigParser.RawConfigParser()
-	cfg_file = user_folder + ".popper/popper.cfg"						# folder: /home/user/.popper/popper.cfg
+	cfg_file = user_folder + ".mailnag/mailnag.cfg"						# folder: /home/user/.mailnag/mailnag.cfg
 	if not os.path.exists(cfg_file):									# create a fresh config file
 		print _("Config file does not exist, creating new one")
 		cfg = set_default_config(cfg)									# write default values to cfg
@@ -1258,7 +1250,7 @@ def set_default_config(cfg):
 	cfg.set('notify','text_one', 'You have a new mail.')
 	cfg.set('notify','text_multi', 'You have %s new mails.')
 	cfg.set('notify', 'playsound', 1)
-	cfg.set('notify', 'soundfile', 'popper.wav')
+	cfg.set('notify', 'soundfile', 'mailnag.wav')
 	cfg.set('notify', 'speak', 0)
 
 	try: cfg.add_section('dd')
@@ -1303,17 +1295,17 @@ def update_desktop_file(headline):
 		"Encoding=UTF-8\n" + \
 		"Name=" + headline + "\n" + \
 		"GenericName=Email Notifier\n" + \
-		"X-GNOME-FullName=Popper Email Notifier\n" + \
+		"X-GNOME-FullName=Mailnag Email Notifier\n" + \
 		"Comment=Get notified about new emails\n" + \
 		"Icon=applications-email-panel\n" + \
 		"Type=Application\n" + \
 		"Categories=GNOME;GTK;Email;Network;\n" + \
-		"Exec=popper.py\n" + \
+		"Exec=mailnag.py\n" + \
 		"StartupNotify=false\n" + \
 		"Terminal=false\n" + \
 		"X-Ayatana-Desktop-Shortcuts=Compose;Contacts\n"
 
-	desktop_file = user_folder + ".popper/popper.desktop"				# folder: /home/user/.popper/popper.desktop
+	desktop_file = user_folder + ".mailnag/mailnag.desktop"				# folder: /home/user/.mailnag/mailnag.desktop
 	f = open(desktop_file,'w')
 	f.write(desktop_content)
 	f.close()
@@ -1323,7 +1315,7 @@ def update_desktop_file(headline):
 
 def create_autostart():
 	curdir = os.getcwd()												# get working directory
-	exec_file = os.path.join(curdir, "popper.sh")						# path of the shell script to start popper.py
+	exec_file = os.path.join(curdir, "mailnag.sh")						# path of the shell script to start mailnag.py
 
 	content = "\n" + \
 	"[Desktop Entry]\n" + \
@@ -1332,13 +1324,13 @@ def create_autostart():
 	"Hidden=false\n" + \
 	"NoDisplay=false\n" + \
 	"X-GNOME-Autostart-enabled=true\n" + \
-	"Name=Popper\n" + \
+	"Name=Mailnag\n" + \
 	"Comment=Email notifier for the indicator menu"
 
 	autostart_folder = "%s/.config/autostart/" % (user_folder)
 	if not os.path.exists(autostart_folder):
 		os.popen("mkdir -p " + autostart_folder)
-	autostart_file = autostart_folder + "popper.sh.desktop"
+	autostart_file = autostart_folder + "mailnag.sh.desktop"
 	f = open(autostart_file, 'w')
 	f.write(content)													# create it
 	f.close()
@@ -1346,7 +1338,7 @@ def create_autostart():
 
 def delete_autostart():
 	autostart_folder = "%s/.config/autostart/" % (user_folder)
-	autostart_file = autostart_folder + "popper.sh.desktop"
+	autostart_file = autostart_folder + "mailnag.sh.desktop"
 	if os.path.exists(autostart_file):
 		os.popen("rm " + autostart_file)								# delete it
 
@@ -1361,15 +1353,15 @@ def main():
 		locale.setlocale(locale.LC_ALL, '')								# locale language, e.g.: de_CH.utf8
 	except locale.Error:
 		locale.setlocale(locale.LC_ALL, 'en_US.utf8')					# english for all unsupported locale languages
-	locale.bindtextdomain('popper_config', 'locale')
-	gettext.bindtextdomain('popper_config', 'locale')
-	gettext.textdomain('popper_config')
+	locale.bindtextdomain('mailnag_config', 'locale')
+	gettext.bindtextdomain('mailnag_config', 'locale')
+	gettext.textdomain('mailnag_config')
 	_ = gettext.gettext
 
 	user_folder = os.path.expanduser("~/")								# folder: /home/user/
-	popper_folder = user_folder + ".popper"								# folder: /home/user/.popper
-	if not os.path.exists(popper_folder):
-		os.popen("mkdir -p " + popper_folder)							# create: "/home/user/.popper" if not exists
+	mailnag_folder = user_folder + ".mailnag"								# folder: /home/user/.mailnag
+	if not os.path.exists(mailnag_folder):
+		os.popen("mkdir -p " + mailnag_folder)							# create: "/home/user/.mailnag" if not exists
 
 	cfg = read_config()													# get configurations
 	keyring = Keyring()

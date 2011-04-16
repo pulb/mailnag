@@ -13,10 +13,10 @@
     </columns>
   </object>
   <object class="GtkWindow" id="config_window">
-    <property name="title" translatable="yes">Popper Configurator</property>
+    <property name="title" translatable="yes">Mailnag Configuration</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
-    <property name="icon">popper.png</property>
+    <property name="icon">mailnag.png</property>
     <signal name="destroy" handler="gtk_main_quit"/>
     <child>
       <object class="GtkVBox" id="vbox">
@@ -32,14 +32,14 @@
                 <child>
                   <object class="GtkImage" id="image_logo">
                     <property name="visible">True</property>
-                    <property name="pixbuf">popper.png</property>
+                    <property name="pixbuf">mailnag.png</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label_title">
                     <property name="visible">True</property>
                     <property name="ypad">10</property>
-                    <property name="label" translatable="yes">Popper - Email Notifier &amp; Indicator
+                    <property name="label" translatable="yes">Mailnag - Email Notifier &amp; Indicator
 Ralf Hersel, Patrick Benz - 2011 - GPL</property>
                     <property name="justify">center</property>
                   </object>
@@ -50,7 +50,7 @@ Ralf Hersel, Patrick Benz - 2011 - GPL</property>
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="chk_autostart">
-                    <property name="label" translatable="yes">Start Popper automatically after login</property>
+                    <property name="label" translatable="yes">Start Mailnag automatically after login</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -168,7 +168,7 @@ Otherwise keep it empty.</property>
                             <property name="can_focus">True</property>
                             <property name="has_tooltip">True</property>
                             <property name="tooltip_text" translatable="yes">For IMAP accounts you can enter folder names
-that should be read. If empty, Popper reads the
+that should be read. If empty, Mailnag reads the
 INBOX only. Multiple folders must be separated
 by comma.</property>
                             <property name="invisible_char">•</property>
@@ -421,7 +421,7 @@ form Gnome Keyring.</property>
                         <property name="receives_default">False</property>
                         <property name="has_tooltip">True</property>
                         <property name="tooltip_text" translatable="yes">Check for new emails once immediately after start-up
-and then never again. Popper terminates after first check.</property>
+and then never again. Mailnag terminates after first check.</property>
                         <property name="draw_indicator">True</property>
                       </object>
                       <packing>
@@ -445,7 +445,7 @@ and then never again. Popper terminates after first check.</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="has_tooltip">True</property>
-                        <property name="tooltip_text" translatable="yes">Every x minutes Popper
+                        <property name="tooltip_text" translatable="yes">Every x minutes Mailnag
 checks for new emails.
 Min: 1   Max: 1440 = 24h</property>
                         <property name="max_length">4</property>
@@ -1001,7 +1001,7 @@ Minimum value is 10.</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_text" translatable="yes">Stores the email list so that Popper
+                    <property name="tooltip_text" translatable="yes">Stores the email list so that Mailnag
 knows the status when you reboot your PC.</property>
                     <property name="draw_indicator">True</property>
                   </object>
@@ -1224,7 +1224,7 @@ you receive new emails.</property>
                     <property name="has_tooltip">True</property>
                     <property name="tooltip_text" translatable="yes">Path and name of the sound file
 that is played when new emails
-arrive. Standard is 'popper.wav'</property>
+arrive. Standard is 'mailnag.wav'</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">61</property>
                     <signal name="focus_out_event" handler="on_entry_soundfile_focus_out_event" after="yes"/>
@@ -1770,7 +1770,7 @@ arrive. Standard is 'popper.wav'</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_text" translatable="yes">Switch this on if you want Popper
+                    <property name="tooltip_text" translatable="yes">Switch this on if you want Mailnag
 to start a shell script whenever new
 emails arrive.</property>
                     <property name="draw_indicator">True</property>
@@ -1788,7 +1788,7 @@ emails arrive.</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_text" translatable="yes">Switch this on if you want Popper
+                    <property name="tooltip_text" translatable="yes">Switch this on if you want Mailnag
 to start a shell script when no new
 emails are available.</property>
                     <property name="draw_indicator">True</property>
@@ -1869,7 +1869,7 @@ on the left happens.</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_text" translatable="yes">Switch this on if you want Popper
+                    <property name="tooltip_text" translatable="yes">Switch this on if you want Mailnag
 to start a shell script when you clicked
 an email in the indicator menu.</property>
                     <property name="draw_indicator">True</property>
@@ -1887,7 +1887,7 @@ an email in the indicator menu.</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_text" translatable="yes">Switch this on if you want Popper
+                    <property name="tooltip_text" translatable="yes">Switch this on if you want Mailnag
 to start a shell script when you click
 on a account summary entry in the
 indicator menu, e.g.: Gmail</property>
@@ -2271,7 +2271,7 @@ last stored values.</property>
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_text" translatable="yes">Exit program without doing
 anything else. Nothing will be
-saved. Popper will not be started.</property>
+saved. Mailnag will not be started.</property>
                 <signal name="clicked" handler="on_button_cancel_clicked" after="yes"/>
               </object>
               <packing>
@@ -2307,7 +2307,7 @@ exit the application.</property>
   </object>
   <object class="GtkTextBuffer" id="textbuffer_testresult">
     <property name="text" translatable="yes">Click button 'Test Email Connection' to start the test.
-Do not start Popper before this test succeeds.</property>
+Do not start Mailnag before this test succeeds.</property>
   </object>
   <object class="GtkTextBuffer" id="textbuffer_help"/>
   <object class="GtkTextBuffer" id="textbuffer_filter"/>
