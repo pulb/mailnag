@@ -516,7 +516,7 @@ class MailChecker:
 #		self.server.show()
 		pynotify.init("Mailnag")								# initialize Notification
 		
-		self.notification = pynotify.Notification(" ", None, None)
+		self.notification = pynotify.Notification(" ", None, None)			# empty string will emit a gtk warning
 		self.notification.set_category("email")
 
 		self.link = cfg.get('indicate', 'start_on_click')				# get link address
