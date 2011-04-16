@@ -281,7 +281,7 @@ class Settings:
 
 
 	def cancel(self, widget):											# exit program without doing anything else
-		exit(1)															# exit code used in mailnag_config.sh
+		exit(1)															# exit code used in mailnag_config script
 
 
 	def exit(self, widget):												# save and exit
@@ -1315,7 +1315,7 @@ def update_desktop_file(headline):
 
 def create_autostart():
 	curdir = os.getcwd()												# get working directory
-	exec_file = os.path.join(curdir, "mailnag.sh")						# path of the shell script to start mailnag.py
+	exec_file = os.path.join(curdir, "mailnag")						# path of the shell script to start mailnag.py
 
 	content = "\n" + \
 	"[Desktop Entry]\n" + \
@@ -1330,7 +1330,7 @@ def create_autostart():
 	autostart_folder = "%s/.config/autostart/" % (user_folder)
 	if not os.path.exists(autostart_folder):
 		os.popen("mkdir -p " + autostart_folder)
-	autostart_file = autostart_folder + "mailnag.sh.desktop"
+	autostart_file = autostart_folder + "mailnag.desktop"
 	f = open(autostart_file, 'w')
 	f.write(content)													# create it
 	f.close()
@@ -1338,7 +1338,7 @@ def create_autostart():
 
 def delete_autostart():
 	autostart_folder = "%s/.config/autostart/" % (user_folder)
-	autostart_file = autostart_folder + "mailnag.sh.desktop"
+	autostart_file = autostart_folder + "mailnag.desktop"
 	if os.path.exists(autostart_file):
 		os.popen("rm " + autostart_file)								# delete it
 
