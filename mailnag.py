@@ -518,6 +518,7 @@ class MailChecker:
 		pynotify.init("Mailnag")								# initialize Notification
 		
 		self.notification = pynotify.Notification(" ", None, None)			# empty string will emit a gtk warning
+		self.notification.set_hint("resident", True)					# don't close when the bubble or actions are clicked		
 		self.notification.set_category("email")
 		self.notification.add_action("open", _("Open in mail reader"), self.__notification_action_handler)
 		self.notification.add_action("close", _("Close"), self.__notification_action_handler)
@@ -633,7 +634,7 @@ class MailChecker:
 			emailclient = cfg.get('indicate', 'start_on_click').split(' ') # create list of command arguments				
 			pid.append(subprocess.Popen(emailclient))
 		elif action == "close":
-			pass # notifications are closed automatically when an action is triggered	
+			self.notification.close()
 
 
 #	def add_account_summaries(self):									# add entries per provider in indicator menu
