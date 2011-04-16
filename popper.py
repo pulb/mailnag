@@ -48,6 +48,7 @@ import sys
 import gettext
 from popper_config import Keyring
 #import cairo
+import signal
 
 
 gettext.bindtextdomain('popper', 'locale')
@@ -1197,6 +1198,13 @@ class Pid(list):														# List class to manage subprocess PIDs
 #			contextMenu.popup(None, None, None, event.button, event.time)
 #
 
+def cleanup():
+	# clean up resources
+	try:	
+		mailchecker.notification.close()
+	except NameError: pass
+	delete_pid()
+
 # Main =================================================================
 def main():
 	global cfg, user_path, accounts, mails, mailchecker, autostarted, firstcheck, pid
@@ -1209,29 +1217,35 @@ def main():
 #	gettext.bindtextdomain('popper', 'locale')
 #	gettext.textdomain('popper')
 
-	user_path = os.path.expanduser("~/.popper/")						# set path to: "/home/user/.popper/"
-	autostarted = False													# default setting for command line argument
-	cmdline = sys.argv													# get command line arguments
-	if len(cmdline) > 1:												# do we have something in command line?
-		if cmdline[1] == 'autostarted':
-			autostarted = True
-	write_pid()															# write Popper's process id to file
-	cfg = read_config(user_path + 'popper.cfg')							# get configuration from file
+	signal.signal(signal.SIGTERM, cleanup)
 
-	accounts = Accounts()												# create Accounts object
-	if accounts.keyring_was_locked: firstcheck = False					# required for correct sortorder in indi menu
-	else: firstcheck = True
+	try:
+		user_path = os.path.expanduser("~/.popper/")						# set path to: "/home/user/.popper/"
+		autostarted = False													# default setting for command line argument
+		cmdline = sys.argv													# get command line arguments
+		if len(cmdline) > 1:												# do we have something in command line?
+			if cmdline[1] == 'autostarted':
+				autostarted = True
+		write_pid()															# write Popper's process id to file
+		cfg = read_config(user_path + 'popper.cfg')							# get configuration from file
+		
+		accounts = Accounts()												# create Accounts object
+		if accounts.keyring_was_locked: firstcheck = False					# required for correct sortorder in indi menu
+		else: firstcheck = True
 
-	pid = Pid()															# create Pid object
-	mailchecker = MailChecker()												# create MailChecker object
-	mailchecker.timeout()													# immediate check, firstcheck=True
-	firstcheck = False													# firstcheck is over
-	if cfg.get('account', 'check_once') == '0':							# wanna do more than one email check?
-		frequency = int(cfg.get('account', 'frequency'))				# get email check frequency
-		gobject.timeout_add_seconds(60*frequency, mailchecker.timeout)			# repetitive check
-		gtk.main()														# start Loop
-	delete_pid()														# delete file 'popper.pid'
-	return 0
-
+		pid = Pid()															# create Pid object
+		mailchecker = MailChecker()												# create MailChecker object
+		mailchecker.timeout()													# immediate check, firstcheck=True
+		firstcheck = False													# firstcheck is over
+		
+		if cfg.get('account', 'check_once') == '0':							# wanna do more than one email check?
+			frequency = int(cfg.get('account', 'frequency'))				# get email check frequency
+			gobject.timeout_add_seconds(60*frequency, mailchecker.timeout)			# repetitive check
+			gtk.main()														# start Loop
+		
+		cleanup()		
+		return 0
+	except KeyboardInterrupt:
+		cleanup()
 
 if __name__ == '__main__': main()
