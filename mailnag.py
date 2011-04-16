@@ -504,7 +504,7 @@ def commandExecutor(command, context_menu_command=None):
 # MailChecker ============================================================
 class MailChecker:
 	def __init__(self):
-#		self.limit = 7													# max. indicator menu entries
+		self.MAIL_LIST_LIMIT = 5						# gnome-shell shows a scrollbar when more than 5 mails are listed
 		self.mails = Mails()											# create Mails object
 #		self.messages = []												# empty message list
 		self.reminder = Reminder()										# create Reminder object
@@ -576,10 +576,12 @@ class MailChecker:
 		body = ""		
 		for mail in self.mail_list:										# get number of new mails
 			if not self.reminder.contains(mail.id):
+				if new_mails < self.MAIL_LIST_LIMIT:
+					body += mail.sender + ": <i>" + mail.subject + "</i>\n"
 				new_mails += 1
-#				sender = mail.sender									# get sender for "you have one new mail" notification
-#				subject = mail.subject									# same for subject
-				body += mail.sender + ": <i>" + mail.subject + "</i>\n"
+
+		if new_mails > self.MAIL_LIST_LIMIT:
+			body += "...\n"
 
 #		# Notify =======================================================
 		if new_mails > 0:												# new mails?
