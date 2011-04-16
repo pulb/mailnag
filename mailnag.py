@@ -508,6 +508,7 @@ class MailChecker:
 		self.mails = Mails()											# create Mails object
 #		self.messages = []												# empty message list
 		self.reminder = Reminder()										# create Reminder object
+#		self.link = cfg.get('indicate', 'start_on_click')				# get link address
 #		desktop_file = os.path.join(user_path, "popper.desktop")		# path of the desktop file
 #		self.server = indicate.indicate_server_ref_default()			# create indicator server
 #		self.server.set_type("message.mail")
@@ -518,8 +519,9 @@ class MailChecker:
 		
 		self.notification = pynotify.Notification(" ", None, None)			# empty string will emit a gtk warning
 		self.notification.set_category("email")
+		self.notification.add_action("open", _("Open in mail reader"), self.__notification_action_handler)
+		self.notification.add_action("close", _("Close"), self.__notification_action_handler)
 
-		self.link = cfg.get('indicate', 'start_on_click')				# get link address
 #		self.desktop_display = None										# the Window object for Desktop_Display
 
 
@@ -622,6 +624,14 @@ class MailChecker:
 		self.reminder.save(self.mail_list)
 		sys.stdout.flush()												# write stdout to log file
 		return True
+
+
+	def __notification_action_handler(self, n, action):
+		if action == "open":
+			emailclient = cfg.get('indicate', 'start_on_click').split(' ') # create list of command arguments				
+			pid.append(subprocess.Popen(emailclient))
+		elif action == "close":
+			pass # notifications are closed automatically when an action is triggered	
 
 
 #	def add_account_summaries(self):									# add entries per provider in indicator menu
