@@ -1325,7 +1325,7 @@ def create_autostart():
 	"NoDisplay=false\n" + \
 	"X-GNOME-Autostart-enabled=true\n" + \
 	"Name=Mailnag\n" + \
-	"Comment=Email notifier for the indicator menu"
+	"Comment=Email notifier for GNOME 3"
 
 	autostart_folder = "%s/.config/autostart/" % (user_folder)
 	if not os.path.exists(autostart_folder):
