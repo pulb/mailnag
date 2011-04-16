@@ -1092,7 +1092,7 @@ class DesktopDisplay(gtk.Window):										# displays a transparent frameless wi
 		self.set_app_paintable(True)									# no window border
 		self.set_decorated(False)
 		self.set_position(gtk.WIN_POS_CENTER)
-		pixbuf = gtk.gdk.pixbuf_new_from_file('mailnag.png')				# get icon from png
+		pixbuf = gtk.gdk.pixbuf_new_from_file('mailnag.svg')
 		self.set_icon(pixbuf)											# set window icon
 		pos_x = int(cfg.get('dd', 'pos_x'))
 		pos_y = int(cfg.get('dd', 'pos_y'))

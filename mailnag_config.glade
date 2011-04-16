@@ -16,7 +16,7 @@
     <property name="title" translatable="yes">Mailnag Configuration</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
-    <property name="icon">mailnag.png</property>
+    <property name="icon">mailnag.svg</property>
     <signal name="destroy" handler="gtk_main_quit"/>
     <child>
       <object class="GtkVBox" id="vbox">
@@ -32,7 +32,7 @@
                 <child>
                   <object class="GtkImage" id="image_logo">
                     <property name="visible">True</property>
-                    <property name="pixbuf">mailnag.png</property>
+                    <property name="pixbuf">mailnag.svg</property>
                   </object>
                 </child>
                 <child>
