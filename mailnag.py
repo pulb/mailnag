@@ -504,7 +504,7 @@ def commandExecutor(command, context_menu_command=None):
 # MailChecker ============================================================
 class MailChecker:
 	def __init__(self):
-		self.MAIL_LIST_LIMIT = 5						# gnome-shell shows a scrollbar when more than 5 mails are listed
+		self.MAIL_LIST_LIMIT = 6						# gnome-shell shows a scrollbar when more than 6 mails are listed
 		self.mails = Mails()											# create Mails object
 #		self.messages = []												# empty message list
 		self.reminder = Reminder()										# create Reminder object
@@ -529,15 +529,16 @@ class MailChecker:
 	def timeout(self):
 		print 'Checking email accounts at:', time.asctime()				# debug
 		pid.kill()														# kill all Zombies
-		new_mails = 0													# reset number of new mails
+
+#		new_mails = 0													# reset number of new mails
 #		sort_by = cfg.get('indicate', 'sort_by')						# 1 = date	0 = provider
-		show_only_new = bool(int(cfg.get('indicate', 'show_only_new')))	# get show_only_new flag
+#		show_only_new = bool(int(cfg.get('indicate', 'show_only_new')))	# get show_only_new flag
 #		menu_count = self.number_of_menu_entries()						# nr of menu entries
-		if firstcheck and autostarted:
-			self.reminder.load()
+#		if firstcheck and autostarted:
+#			self.reminder.load()
 #			self.add_menu_entries('asc')								# add menu entries to indicator menu
 #			self.sort_order = 'asc'										# set sort order for mail_list and summary window
-			self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
+#			self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
 #			if sort_by == '1':											# sort by date
 #				max = self.limit - menu_count							# calculate boundaries
 #				if max > len(self.mail_list):
@@ -548,11 +549,11 @@ class MailChecker:
 #						self.messages.append(Message(self.mail_list[i]))# add new mail to messages
 #			else:														# sort by provider
 #				self.add_account_summaries()							# add providers to indicator menu
-		else:
-			if firstcheck:												# Manual firststart
-				self.reminder.load()
+#		else:
+#			if firstcheck:												# Manual firststart
+#				self.reminder.load()
 #			self.sort_order = 'asc'										# set sort order for mail_list and summary window
-			self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
+#			self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
 #			if sort_by == '1':											# sort by date
 #				for message in self.messages:							# clear indicator menu
 #					message.set_property("draw-attention", "false")		# white envelope in panel
@@ -573,21 +574,38 @@ class MailChecker:
 
 #		sender = ''
 #		subject = ''
-		summary = ""		
-		body = ""		
-		for mail in self.mail_list:										# get number of new mails
-			if not self.reminder.contains(mail.id):
-				if new_mails < self.MAIL_LIST_LIMIT:
-					body += mail.sender + ": <i>" + mail.subject + "</i>\n"
-				new_mails += 1
 
-		if new_mails > self.MAIL_LIST_LIMIT:
-			body += "...\n"
+		
+		if firstcheck:												# Manual firststart
+				self.reminder.load()	
+
+		self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
+				
+		all_mails = len(self.mail_list)
+		new_mails = 0
+		summary = ""		
+		body = ""
+
+		for mail in self.mail_list:
+			if not self.reminder.contains(mail.id):
+				new_mails += 1
+		
+		if all_mails == 0:
+			 # no mails (e.g. email client has been launched) -> close notification
+			self.notification.close()
+		elif (firstcheck and all_mails > 0) or (new_mails > 0):		
+			ubound = all_mails if all_mails <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT - 1 # subtract one line for "..."
+		
+			for i in range(ubound):
+				body += self.mail_list[i].sender + ": <i>" + self.mail_list[i].subject + "</i>\n"
+
+			if all_mails > self.MAIL_LIST_LIMIT:
+				body += "...\n"
 
 #		# Notify =======================================================
-		if new_mails > 0:												# new mails?
-			if new_mails > 1:											# multiple new emails
-				summary = _("You have " + str(new_mails) + " new mails.")
+#		if new_mails > 0:												# new mails?
+			if all_mails > 1:											# multiple new emails
+				summary = _("You have " + str(all_mails) + " new mails.")
 #				notify_text = cfg.get('notify', 'text_multi') % str(new_mails)
 			else:
 				summary = _("You have a new mail.")
@@ -621,7 +639,7 @@ class MailChecker:
 #			self.desktop_display = DesktopDisplay(content)
 #			self.desktop_display.show()
 
-		# Misc =========================================================
+#		# Misc =========================================================
 		user_scripts("on_email_arrival", new_mails)						# process user scripts
 
 		self.reminder.save(self.mail_list)
