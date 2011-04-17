@@ -648,11 +648,13 @@ class MailChecker:
 
 
 	def __notification_action_handler(self, n, action):
+		self.notification.close()
+				
 		if action == "open":
 			emailclient = cfg.get('indicate', 'start_on_click').split(' ') # create list of command arguments				
 			pid.append(subprocess.Popen(emailclient))
-		elif action == "close":
-			self.notification.close()
+		elif action == "close":		
+			pass
 
 
 #	def add_account_summaries(self):									# add entries per provider in indicator menu
