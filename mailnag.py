@@ -504,7 +504,7 @@ def commandExecutor(command, context_menu_command=None):
 # MailChecker ============================================================
 class MailChecker:
 	def __init__(self):
-		self.MAIL_LIST_LIMIT = 6						# gnome-shell shows a scrollbar when more than 6 mails are listed
+		self.MAIL_LIST_LIMIT = 6										# gnome-shell shows a scrollbar when more than 6 mails are listed
 		self.mails = Mails()											# create Mails object
 #		self.messages = []												# empty message list
 		self.reminder = Reminder()										# create Reminder object
@@ -595,12 +595,36 @@ class MailChecker:
 			self.notification.close()
 		elif (firstcheck and all_mails > 0) or (new_mails > 0):		
 			ubound = all_mails if all_mails <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT - 1 # subtract one line for "..."
-		
+			
+			# TODO: 
+			# these values are very vague. 
+			# unfortunatelly the maximum number of chars for an unwraped line 
+			# depends on the width of individual chars.
+			MAX_SENDER_LEN = 30
+			MAX_SUBJECT_LEN = 25				
+			MAX_LINE_LEN = MAX_SENDER_LEN + MAX_SUBJECT_LEN + 2 # len(": ") = 2
+
 			for i in range(ubound):
-				body += self.mail_list[i].sender + ": <i>" + self.mail_list[i].subject + "</i>\n"
+				sender = self.mail_list[i].sender
+				subject = self.mail_list[i].subject
+				
+				if len(sender) + len(subject) + 2 > MAX_LINE_LEN:
+					if (len(sender) > MAX_SENDER_LEN) and (len(subject) > MAX_SUBJECT_LEN):
+						sender = sender[:MAX_SENDER_LEN - 3] + "..."
+						subject = subject[:MAX_SUBJECT_LEN - 3] + "..."
+					elif (len(sender) > MAX_SENDER_LEN):
+						new_len = MAX_LINE_LEN - len(subject) - 2
+						if new_len < len(sender):
+							sender = sender[:new_len - 3] + "..."
+					elif (len(subject) > MAX_SUBJECT_LEN):
+						new_len = MAX_LINE_LEN - len(sender) - 2
+						if new_len < subject:					
+							subject = subject[:new_len - 3] + "..."
+
+				body += sender + ": " + subject + "\n"
 
 			if all_mails > self.MAIL_LIST_LIMIT:
-				body += "...\n"
+				body += "\n<i>" + _("(and {0} more)").format(str(all_mails - self.MAIL_LIST_LIMIT + 1)) + "</i>"
 
 #		# Notify =======================================================
 #		if new_mails > 0:												# new mails?
