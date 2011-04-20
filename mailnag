@@ -1,11 +1,17 @@
 #!/bin/bash
+CONFIG_HOME=$XDG_CONFIG_HOME
+if [ "$CONFIG_HOME" == "" ]; then
+	CONFIG_HOME="$HOME/.config"
+fi
+config_dir="$CONFIG_HOME/mailnag"
+
 main()
 {
-if [ -f ~/.mailnag/mailnag.log ]; then
-	rm ~/.mailnag/mailnag.log
+if [ -f "$config_dir/mailnag.log" ]; then
+	rm "$config_dir/mailnag.log"
 fi
 cd `dirname $0`
-python mailnag.py autostarted >> ~/.mailnag/mailnag.log 2>&1 &
+python mailnag.py autostarted >> "$config_dir/mailnag.log" 2>&1 &
 }
 
 connection()

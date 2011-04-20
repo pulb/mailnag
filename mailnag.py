@@ -41,6 +41,7 @@ import gettext
 from mailnag_config import Keyring
 #import cairo
 import signal
+import xdg.BaseDirectory as bd
 
 
 gettext.bindtextdomain('mailnag', 'locale')
@@ -431,14 +432,14 @@ def read_config(cfg_file):												# read config file or create it
 
 
 def write_pid():														# write Mailnags's process id to file
-	pid_file = user_path + 'mailnag.pid'
+	pid_file = os.path.join(user_path, 'mailnag.pid')
 	f = open(pid_file, 'w')
 	f.write(str(os.getpid()))											# get PID and write to file
 	f.close()
 
 
 def delete_pid():														# delete file mailnag.pid
-	pid_file = user_path + 'mailnag.pid'
+	pid_file = os.path.join(user_path, 'mailnag.pid')
 	if os.path.exists(pid_file):
 		os.popen("rm " + pid_file)										# delete it
 
@@ -1271,14 +1272,14 @@ def main():
 	signal.signal(signal.SIGTERM, cleanup)
 
 	try:
-		user_path = os.path.expanduser("~/.mailnag/")						# set path to: "/home/user/.mailnag/"
+		user_path = os.path.join(bd.xdg_config_home, "mailnag")
 		autostarted = False													# default setting for command line argument
 		cmdline = sys.argv													# get command line arguments
 		if len(cmdline) > 1:												# do we have something in command line?
 			if cmdline[1] == 'autostarted':
 				autostarted = True
 		write_pid()															# write Mailnag's process id to file
-		cfg = read_config(user_path + 'mailnag.cfg')							# get configuration from file
+		cfg = read_config(os.path.join(user_path, 'mailnag.cfg'))			# get configuration from file
 		
 		accounts = Accounts()												# create Accounts object
 		if accounts.keyring_was_locked: firstcheck = False					# required for correct sortorder in indi menu
