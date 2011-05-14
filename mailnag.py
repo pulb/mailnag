@@ -353,9 +353,13 @@ class Mails:
 	def in_filter(self, sendersubject):									# check if filter appears in sendersubject
 		status = False
 		filter_text = cfg.get('filter', 'filter_text')
-		filter_list = filter_text.split(',')							# convert text to list
+		filter_list = filter_text.replace('\n', '').split(',')							# convert text to list
 		for filter_item in filter_list:
 			filter_stripped_item = filter_item.strip()					# remove CR and white space
+			
+			if len(filter_stripped_item) == 0:
+				continue
+			
 			if filter_stripped_item.lower() in sendersubject.lower():
 				status = True											# subject contains filter item
 				break
