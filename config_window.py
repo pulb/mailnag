@@ -60,7 +60,8 @@ class ConfigWindow:
 			"btn_remove_clicked" : self.__on_btn_remove_clicked, \
 			"treeview_accounts_row_activated" : self.__on_treeview_accounts_row_activated, \
 			"liststore_accounts_row_deleted" : self.__on_liststore_accounts_row_deleted, \
-			"liststore_accounts_row_inserted" : self.__on_liststore_accounts_row_inserted \
+			"liststore_accounts_row_inserted" : self.__on_liststore_accounts_row_inserted, \
+			"chk_enable_filters_toggled" : self.__on_chk_enable_filters_toggled \
 		})
 
 		self.window = builder.get_object("config_window")
@@ -97,14 +98,16 @@ class ConfigWindow:
 		# general tab
 		#
 		self.entry_mail_client = builder.get_object("entry_mail_client")
-		self.entry_label = builder.get_object("entry_label")		
+		self.entry_label = builder.get_object("entry_label")	
 		self.spinbutton_interval = builder.get_object("spinbutton_interval")
 		self.chk_playsound = builder.get_object("chk_playsound")
 		self.chk_autostart = builder.get_object("chk_autostart")
 		
 		#
 		# filters tab
-		# TODO
+		self.chk_enable_filters = builder.get_object("chk_enable_filters")
+		self.textview_filters = builder.get_object("textview_filters")	
+		self.textbuffer_filters = builder.get_object("textbuffer_filters")	
 
 		#
 		# events tab
@@ -126,6 +129,10 @@ class ConfigWindow:
 		self.chk_playsound.set_active(int(cfg.get('general', 'playsound')))
 		self.chk_autostart.set_active(int(cfg.get('general', 'autostart')))
 
+		
+		self.chk_enable_filters.set_active(int(cfg.get('filter', 'filter_on')))
+		self.textbuffer_filters.set_text(cfg.get('filter', 'filter_text'))
+
 		self.accounts.load()
 
 		for acc in self.accounts.account:								# load accounts into treeview
@@ -140,7 +147,11 @@ class ConfigWindow:
 		cfg.set('general', 'check_interval', int(self.spinbutton_interval.get_value()))
 		cfg.set('general', 'playsound',int(self.chk_playsound.get_active()))
 		autostart = self.chk_autostart.get_active()
-		cfg.set('general', 'autostart', int(autostart))	
+		cfg.set('general', 'autostart', int(autostart))
+
+		cfg.set('filter', 'filter_on', int(self.chk_enable_filters.get_active()))
+		start, end = self.textbuffer_filters.get_bounds()		
+		cfg.set('filter', 'filter_text', self.textbuffer_filters.get_text(start, end, True))	
 		
 		on, name, server, user, password, imap, folder, port = self.accounts.get_cfg()
 		cfg.set('account', 'on', on)
@@ -280,6 +291,10 @@ class ConfigWindow:
 	def __on_liststore_accounts_row_inserted(self, model, path, user_param):
 		self.button_edit.set_sensitive(len(model) > 0)
 		self.button_remove.set_sensitive(len(model) > 0)
+
+
+	def __on_chk_enable_filters_toggled(self, widget):
+		self.textview_filters.set_sensitive(self.chk_enable_filters.get_active())
 
 
 	def __save_and_quit(self):
@@ -469,7 +484,7 @@ def set_default_config(cfg):
 	try: cfg.add_section('filter')
 	except ConfigParser.DuplicateSectionError: pass
 	cfg.set('filter', 'filter_on', 0)	
-	cfg.set('filter', 'filter_text', '')
+	cfg.set('filter', 'filter_text', 'newsletter, viagra')
 
 	try: cfg.add_section('script')
 	except ConfigParser.DuplicateSectionError: pass
