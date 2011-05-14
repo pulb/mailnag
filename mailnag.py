@@ -28,17 +28,27 @@ import urllib2
 import ConfigParser
 import os
 import subprocess
-import pynotify
 #import indicate
 import gobject
-import gtk
+
+# TODO : use gtk and glib from gi.repositrory 
+# (those conflict with pynotify and gi.repository.Notify is broken)
+__builtins__.USE_GTK3 = False # (also prevents keyring.py from using GTK3)
+
+if __builtins__.USE_GTK3:
+	from gi.repository import GLib, GdkPixbuf, Gtk, Notify
+else:
+	Gtk = __import__("gtk")
+	import pynotify
+
 import time
 import email
 from email.header import decode_header
 import sys
 #import locale
 import gettext
-from mailnag_config import Keyring
+from keyring import Keyring
+from utils import set_procname
 #import cairo
 import signal
 import xdg.BaseDirectory as bd
@@ -92,9 +102,9 @@ class Account:
 							srv = imaplib.IMAP4(self.server, self.port)
 					srv.login(self.user, self.password)
 				except:
-					frequency = cfg.get('account', 'frequency')			# get email check frequency
+					check_interval = cfg.get('general', 'check_interval')
 					print "Error: Cannot connect to IMAP account: %s. " \
-						"Next try in %s minutes." % (self.server, frequency)
+						"Next try in %s minutes." % (self.server, check_interval)
 					srv = False
 		else:															# POP
 			try:
@@ -130,9 +140,9 @@ class Account:
 					srv.user(self.user)
 					srv.pass_(self.password)
 				except:
-					frequency = cfg.get('account', 'frequency')			# get email check frequency
+					check_interval = cfg.get('general', 'check_interval')
 					print "Error: Cannot connect to POP account: %s. " \
-						"Next try in %s minutes." % (self.server, frequency)
+						"Next try in %s minutes." % (self.server, check_interval)
 					srv = False
 
 		return srv														# server object
@@ -375,7 +385,7 @@ class Mails:
 			except:
 				sender = ('','Error: cannot format sender')
 
-			sender_format = cfg.get('indicate', 'sender_format')
+			sender_format = cfg.get('general', 'sender_format')
 			if sender_format == '1' and sender[0] != '':				# real sender name if not empty
 				sender = sender_real
 			else:
@@ -516,14 +526,23 @@ class MailChecker:
 #		self.server.set_desktop_file(desktop_file)
 #		self.server.connect("server-display", self.headline_clicked)	# if clicked on headline
 #		self.server.show()
-		pynotify.init("Mailnag")								# initialize Notification
+
+		# TODO :  gi.repository Notify seems to be unstable currently (set_hint and add_action crash)
+		# Notify.init("Mailnag")										# initialize Notification		
+		# self.notification = Notify.Notification.new(" ", None, None)	# empty string will emit a gtk warning		
+		# self.notification.set_hint("resident", True)					# don't close when the bubble or actions are clicked		
+		# self.notification.set_category("email")
+		# self.notification.add_action("open", _("Open in mail reader"), self.__notification_action_handler, None, None)
+		# self.notification.add_action("close", _("Close"), self.__notification_action_handler, None, None)
+
+		pynotify.init(cfg.get('general', 'messagetray_label'))			# initialize Notification
 		
-		self.notification = pynotify.Notification(" ", None, None)			# empty string will emit a gtk warning
+		self.notification = pynotify.Notification(" ", None, None)		# empty string will emit a gtk warning		
 		self.notification.set_hint("resident", True)					# don't close when the bubble or actions are clicked		
 		self.notification.set_category("email")
 		self.notification.add_action("open", _("Open in mail reader"), self.__notification_action_handler)
 		self.notification.add_action("close", _("Close"), self.__notification_action_handler)
-
+		
 #		self.desktop_display = None										# the Window object for Desktop_Display
 
 
@@ -639,8 +658,8 @@ class MailChecker:
 #				notify_text = cfg.get('notify', 'text_one')				# only one new email
 #				notify_text += "\n" + sender + "\n" + subject
 #
-			if cfg.get('notify', 'playsound') == '1':					# play sound?
-				soundcommand = ['aplay', '-q', cfg.get('notify', 'soundfile')]
+			if cfg.get('general', 'playsound') == '1':					# play sound?
+				soundcommand = ['aplay', '-q', cfg.get('general', 'soundfile')]
 				pid.append(subprocess.Popen(soundcommand))
 
 #			if cfg.get('notify', 'notify') == '1':						# show bubble?
@@ -678,7 +697,7 @@ class MailChecker:
 		self.notification.close()
 				
 		if action == "open":
-			emailclient = cfg.get('indicate', 'start_on_click').split(' ') # create list of command arguments				
+			emailclient = cfg.get('general', 'mail_client').split(' ') # create list of command arguments				
 			pid.append(subprocess.Popen(emailclient))
 		elif action == "close":		
 			pass
@@ -784,7 +803,7 @@ class MailChecker:
 #
 
 	def clear(self):													# clear the messages list (not the menu entries)
-		show_only_new = bool(int(cfg.get('indicate', 'show_only_new')))	# get show_only_new flag
+		show_only_new = bool(int(cfg.get('general', 'show_only_new')))	# get show_only_new flag
 #		remove_list = []
 #		for message in self.messages:									# for all messages
 #			message.set_property("draw-attention", "false")				# white envelope in panel
@@ -1048,7 +1067,7 @@ class MailChecker:
 class Reminder(dict):
 
 	def load(self):														# load last known messages from mailnag.dat
-		remember = cfg.get('indicate', 'remember')
+		remember = cfg.get('general', 'remember')
 		dat_file = user_path + 'mailnag.dat'
 		we_have_a_file = os.path.exists(dat_file)						# check if file exists
 		if remember == '1' and we_have_a_file:
@@ -1261,6 +1280,7 @@ def cleanup():
 def main():
 	global cfg, user_path, accounts, mails, mailchecker, autostarted, firstcheck, pid
 
+	set_procname("mailnag")
 #	try:																# Internationalization
 #		locale.setlocale(locale.LC_ALL, '')								# locale language, e.g.: de_CH.utf8
 #	except locale.Error:
@@ -1290,10 +1310,10 @@ def main():
 		mailchecker.timeout()													# immediate check, firstcheck=True
 		firstcheck = False													# firstcheck is over
 		
-		if cfg.get('account', 'check_once') == '0':							# wanna do more than one email check?
-			frequency = int(cfg.get('account', 'frequency'))				# get email check frequency
-			gobject.timeout_add_seconds(60*frequency, mailchecker.timeout)			# repetitive check
-			gtk.main()														# start Loop
+		if cfg.get('general', 'check_once') == '0':							# wanna do more than one email check?
+			check_interval = int(cfg.get('general', 'check_interval'))
+			gobject.timeout_add_seconds(60 * check_interval, mailchecker.timeout)
+			Gtk.main()															# start Loop
 		
 		cleanup()		
 		return 0
