@@ -61,7 +61,7 @@ class ConfigWindow:
 			"treeview_accounts_row_activated" : self.__on_treeview_accounts_row_activated, \
 			"liststore_accounts_row_deleted" : self.__on_liststore_accounts_row_deleted, \
 			"liststore_accounts_row_inserted" : self.__on_liststore_accounts_row_inserted, \
-			"chk_enable_filters_toggled" : self.__on_chk_enable_filters_toggled \
+			"chk_enable_filter_toggled" : self.__on_chk_enable_filter_toggled \
 		})
 
 		self.window = builder.get_object("config_window")
@@ -104,10 +104,10 @@ class ConfigWindow:
 		self.chk_autostart = builder.get_object("chk_autostart")
 		
 		#
-		# filters tab
-		self.chk_enable_filters = builder.get_object("chk_enable_filters")
-		self.textview_filters = builder.get_object("textview_filters")	
-		self.textbuffer_filters = builder.get_object("textbuffer_filters")	
+		# spam filter tab
+		self.chk_enable_filter = builder.get_object("chk_enable_filter")
+		self.textview_filter = builder.get_object("textview_filter")	
+		self.textbuffer_filter = builder.get_object("textbuffer_filter")	
 
 		#
 		# events tab
@@ -130,8 +130,8 @@ class ConfigWindow:
 		self.chk_autostart.set_active(int(cfg.get('general', 'autostart')))
 
 		
-		self.chk_enable_filters.set_active(int(cfg.get('filter', 'filter_on')))
-		self.textbuffer_filters.set_text(cfg.get('filter', 'filter_text'))
+		self.chk_enable_filter.set_active(int(cfg.get('filter', 'filter_on')))
+		self.textbuffer_filter.set_text(cfg.get('filter', 'filter_text'))
 
 		self.accounts.load()
 
@@ -149,9 +149,9 @@ class ConfigWindow:
 		autostart = self.chk_autostart.get_active()
 		cfg.set('general', 'autostart', int(autostart))
 
-		cfg.set('filter', 'filter_on', int(self.chk_enable_filters.get_active()))
-		start, end = self.textbuffer_filters.get_bounds()		
-		cfg.set('filter', 'filter_text', self.textbuffer_filters.get_text(start, end, True))	
+		cfg.set('filter', 'filter_on', int(self.chk_enable_filter.get_active()))
+		start, end = self.textbuffer_filter.get_bounds()		
+		cfg.set('filter', 'filter_text', self.textbuffer_filter.get_text(start, end, True))	
 		
 		on, name, server, user, password, imap, folder, port = self.accounts.get_cfg()
 		cfg.set('account', 'on', on)
@@ -293,8 +293,8 @@ class ConfigWindow:
 		self.button_remove.set_sensitive(len(model) > 0)
 
 
-	def __on_chk_enable_filters_toggled(self, widget):
-		self.textview_filters.set_sensitive(self.chk_enable_filters.get_active())
+	def __on_chk_enable_filter_toggled(self, widget):
+		self.textview_filter.set_sensitive(self.chk_enable_filter.get_active())
 
 
 	def __save_and_quit(self):

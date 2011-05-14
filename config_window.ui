@@ -324,15 +324,15 @@
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
-              <object class="GtkCheckButton" id="chk_enable_filters">
-                <property name="label" translatable="yes">Enable spam filters</property>
+              <object class="GtkCheckButton" id="chk_enable_filter">
+                <property name="label" translatable="yes">Enable spamfilter</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_action_appearance">False</property>
                 <property name="xalign">0</property>
                 <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="chk_enable_filters_toggled" swapped="no"/>
+                <signal name="toggled" handler="chk_enable_filter_toggled" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -346,11 +346,11 @@
                 <property name="can_focus">True</property>
                 <property name="shadow_type">in</property>
                 <child>
-                  <object class="GtkTextView" id="textview_filters">
+                  <object class="GtkTextView" id="textview_filter">
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
-                    <property name="buffer">textbuffer_filters</property>
+                    <property name="buffer">textbuffer_filter</property>
                   </object>
                 </child>
               </object>
@@ -369,7 +369,7 @@
           <object class="GtkLabel" id="label3">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Spam Filters</property>
+            <property name="label" translatable="yes">Spamfilter</property>
           </object>
           <packing>
             <property name="position">2</property>
@@ -478,5 +478,5 @@ Copyright (c) 2011 Ralf Hersel</property>
     <signal name="row-deleted" handler="liststore_accounts_row_deleted" swapped="no"/>
     <signal name="row-inserted" handler="liststore_accounts_row_inserted" swapped="no"/>
   </object>
-  <object class="GtkTextBuffer" id="textbuffer_filters"/>
+  <object class="GtkTextBuffer" id="textbuffer_filter"/>
 </interface>
