@@ -28,7 +28,6 @@ import urllib2
 import ConfigParser
 import os
 import subprocess
-#import indicate
 import gobject
 
 # TODO : use gtk and glib from gi.repositrory 
@@ -45,11 +44,9 @@ import time
 import email
 from email.header import decode_header
 import sys
-#import locale
 import gettext
 from keyring import Keyring
 from utils import set_procname
-#import cairo
 import signal
 import xdg.BaseDirectory as bd
 
@@ -498,19 +495,11 @@ def commandExecutor(command, context_menu_command=None):
 
 	if command == 'clear':												# clear indicator list immediatelly
 		mailchecker.clear()
-#		if indicator.desktop_display != None:
-#			indicator.desktop_display.destroy()
 	elif command == 'exit':												# exit mailnag immediatelly
 		delete_pid()
 		exit(0)
 	elif command == 'check':											# check immediatelly for new emails
 		mailchecker.timeout()
-#	elif command == 'list':												# open summary window
-#		rows = []
-#		for mail in indicator.mail_list:
-#			rows.append([mail.provider, mail.sender, \
-#				mail.subject, mail.datetime])
-#		ProviderEmailList(rows, self.sender)							# show email list for all providers
 	else:
 		command_list = command.split(' ')								# create list of arguments
 		pid.append(subprocess.Popen(command_list))						# execute 'command'
@@ -521,15 +510,7 @@ class MailChecker:
 	def __init__(self):
 		self.MAIL_LIST_LIMIT = 10										# prevent flooding of the messaging tray
 		self.mails = Mails()											# create Mails object
-#		self.messages = []												# empty message list
 		self.reminder = Reminder()										# create Reminder object
-#		self.link = cfg.get('indicate', 'start_on_click')				# get link address
-#		desktop_file = os.path.join(user_path, "popper.desktop")		# path of the desktop file
-#		self.server = indicate.indicate_server_ref_default()			# create indicator server
-#		self.server.set_type("message.mail")
-#		self.server.set_desktop_file(desktop_file)
-#		self.server.connect("server-display", self.headline_clicked)	# if clicked on headline
-#		self.server.show()
 
 		# TODO :  gi.repository Notify seems to be unstable currently (set_hint and add_action crash)
 		# Notify.init("Mailnag")										# initialize Notification		
@@ -547,64 +528,16 @@ class MailChecker:
 		self.notification.add_action("open", _("Open in mail reader"), self.__notification_action_handler)
 		self.notification.add_action("close", _("Close"), self.__notification_action_handler)
 		
-#		self.desktop_display = None										# the Window object for Desktop_Display
-
 
 	def timeout(self):
 		print 'Checking email accounts at:', time.asctime()				# debug
 		pid.kill()														# kill all Zombies
-
-#		new_mails = 0													# reset number of new mails
-#		sort_by = cfg.get('indicate', 'sort_by')						# 1 = date	0 = provider
-#		show_only_new = bool(int(cfg.get('indicate', 'show_only_new')))	# get show_only_new flag
-#		menu_count = self.number_of_menu_entries()						# nr of menu entries
-#		if firstcheck and autostarted:
-#			self.reminder.load()
-#			self.add_menu_entries('asc')								# add menu entries to indicator menu
-#			self.sort_order = 'asc'										# set sort order for mail_list and summary window
-#			self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
-#			if sort_by == '1':											# sort by date
-#				max = self.limit - menu_count							# calculate boundaries
-#				if max > len(self.mail_list):
-#					max = len(self.mail_list)							# calculate boundaries
-#				for i in range(0, max):
-#					if not show_only_new or \
-#					self.reminder.unseen(self.mail_list[i].id):
-#						self.messages.append(Message(self.mail_list[i]))# add new mail to messages
-#			else:														# sort by provider
-#				self.add_account_summaries()							# add providers to indicator menu
-#		else:
-#			if firstcheck:												# Manual firststart
-#				self.reminder.load()
-#			self.sort_order = 'asc'										# set sort order for mail_list and summary window
-#			self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
-#			if sort_by == '1':											# sort by date
-#				for message in self.messages:							# clear indicator menu
-#					message.set_property("draw-attention", "false")		# white envelope in panel
-#					message.hide()										# hide message in indicator menu
-#				self.messages = []										# clear message list
-#
-#				max = len(self.mail_list)								# calculate boundaries
-#				low = max - self.limit + menu_count						# calculate boundaries
-#				if low < 0:
-#					low = 0												# calculate boundaries
-#				for i in range(low, max):
-#					if not show_only_new or \
-#					self.reminder.unseen(self.mail_list[i].id):
-#						self.messages.append(Message(self.mail_list[i]))# add new mail to messages
-#			else:														# sort by provider
-#				self.add_account_summaries()							# add providers to indicator menu
-#			self.add_menu_entries('desc')								# add menu entries to indicator menu
-
-#		sender = ''
-#		subject = ''
-
 		
 		if firstcheck:												# Manual firststart
 				self.reminder.load()	
 
 		self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
-				
+		
 		all_mails = len(self.mail_list)
 		new_mails = 0
 		summary = ""		
@@ -620,76 +553,24 @@ class MailChecker:
 		elif (firstcheck and all_mails > 0) or (new_mails > 0):		
 			ubound = all_mails if all_mails <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT
 			
-#			# TODO: 
-#			# these values are very vague. 
-#			# unfortunatelly the maximum number of chars for an unwraped line 
-#			# depends on the width of individual chars.
-#			MAX_SENDER_LEN = 30
-#			MAX_SUBJECT_LEN = 25				
-#			MAX_LINE_LEN = MAX_SENDER_LEN + MAX_SUBJECT_LEN + 2 # len(": ") = 2
-
 			for i in range(ubound):
-#				sender = self.mail_list[i].sender
-#				subject = self.mail_list[i].subject
-#				
-#				if len(sender) + len(subject) + 2 > MAX_LINE_LEN:
-#					if (len(sender) > MAX_SENDER_LEN) and (len(subject) > MAX_SUBJECT_LEN):
-#						sender = sender[:MAX_SENDER_LEN - 3] + "..."
-#						subject = subject[:MAX_SUBJECT_LEN - 3] + "..."
-#					elif (len(sender) > MAX_SENDER_LEN):
-#						new_len = MAX_LINE_LEN - len(subject) - 2
-#						if new_len < len(sender):
-#							sender = sender[:new_len - 3] + "..."
-#					elif (len(subject) > MAX_SUBJECT_LEN):
-#						new_len = MAX_LINE_LEN - len(sender) - 2
-#						if new_len < subject:					
-#							subject = subject[:new_len - 3] + "..."
-#
-#				body += sender + ": " + subject + "\n"
-
 				body += self.mail_list[i].sender + ":\n<i>" + self.mail_list[i].subject + "</i>\n\n"
 			
 			if all_mails > self.MAIL_LIST_LIMIT:
 				body += "<i>" + _("(and {0} more)").format(str(all_mails - self.MAIL_LIST_LIMIT)) + "</i>"
 
-#		# Notify =======================================================
-#		if new_mails > 0:												# new mails?
 			if all_mails > 1:											# multiple new emails
-				summary = _("You have " + str(all_mails) + " new mails.")
-#				notify_text = cfg.get('notify', 'text_multi') % str(new_mails)
+				summary = _("You have {0} new mails.").format(str(all_mails))
 			else:
 				summary = _("You have a new mail.")
-#				notify_text = cfg.get('notify', 'text_one')				# only one new email
-#				notify_text += "\n" + sender + "\n" + subject
-#
+
 			if cfg.get('general', 'playsound') == '1':					# play sound?
 				soundcommand = ['aplay', '-q', cfg.get('general', 'soundfile')]
 				pid.append(subprocess.Popen(soundcommand))
 
-#			if cfg.get('notify', 'notify') == '1':						# show bubble?
-#			headline = cfg.get('indicate', 'headline')
-			
-#			notification = pynotify.Notification(headline, \
-#				notify_text, "notification-message-email")
 			self.notification.update(summary, body, "mail-unread")
 			self.notification.show()
 
-#			if cfg.get('notify', 'speak') == '1':						# speak?
-#				self.speak(notify_text)
-
-#		# Desktop Display ==============================================
-#		if cfg.get('dd', 'on') == '1' and new_mails > 0:				# show Desktop Display
-#			content = []
-#			for mail in self.mail_list:
-#				if not show_only_new or self.reminder.unseen(mail.id):
-#					content.append([mail.sender + ' - ' + mail.datetime, mail.subject])
-#			content.reverse()											# turn around
-#			if self.desktop_display != None:
-#				self.desktop_display.destroy()							# destroy old window
-#			self.desktop_display = DesktopDisplay(content)
-#			self.desktop_display.show()
-
-#		# Misc =========================================================
 		user_scripts("on_email_arrival", new_mails)						# process user scripts
 
 		self.reminder.save(self.mail_list)
@@ -707,121 +588,8 @@ class MailChecker:
 			pass
 
 
-#	def add_account_summaries(self):									# add entries per provider in indicator menu
-#		if firstcheck:													# firstcheck = True -> add entries
-#			for acc in accounts.account:								# loop all email accounts
-#				self.messages.append(Message(Mail(4.0, acc.name, \
-#					acc.name, None, 'id_4', 'acc_entry')))
-#		else:															# firstcheck = False -> update count
-#			show_only_new = bool(int(cfg.get('indicate', 'show_only_new')))	# get show_only_new flag
-#			for message in self.messages:
-#				if message.provider == 'acc_entry':
-#					old_count = message.get_property("count")			# get last count
-#					if show_only_new:
-#						count = self.get_new_count(message.subject)		# get count of emails that are not in reminder
-#					else:
-#						count = accounts.get_count(message.subject)		# get number of mails per account
-#					message.set_property("count", count)				# update count
-#					if int(count) > int(old_count):						# new emails arrived
-#						message.set_property("draw-attention", "true")	# green envelope in panel
-#					elif int(count) == 0:
-#						message.set_property("draw-attention", "false")	# white envelope in panel
-
-
-#	def add_menu_entries(self, sort_order):								# add menu entries to messages
-#		if sort_order == 'asc':
-#			show_menu_1 = cfg.get('indicate', 'show_menu_1')
-#			if show_menu_1 == '1' and 'id_1' not in \
-#			[message.id for message in self.messages]:
-#				name_menu_1 = cfg.get('indicate', 'name_menu_1')
-#				cmd_menu_1 = cfg.get('indicate', 'cmd_menu_1')
-#				if name_menu_1 != '' and cmd_menu_1 != '':
-#					self.messages.append(Message(Mail(1.0, name_menu_1, \
-#						cmd_menu_1, None, 'id_1', 'menu_entry')))
-#
-#			show_menu_2 = cfg.get('indicate', 'show_menu_2')
-#			if show_menu_2 == '1' and 'id_2' not in \
-#			[message.id for message in self.messages]:
-#				name_menu_2 = cfg.get('indicate', 'name_menu_2')
-#				cmd_menu_2 = cfg.get('indicate', 'cmd_menu_2')
-#				if name_menu_2 != '' and cmd_menu_2 != '':
-#					self.messages.append(Message(Mail(2.0, name_menu_2, \
-#						cmd_menu_2, None, 'id_2', 'menu_entry')))
-#
-#			show_menu_3 = cfg.get('indicate', 'show_menu_3')
-#			if show_menu_3 == '1' and 'id_3' not in \
-#			[message.id for message in self.messages]:
-#				name_menu_3 = cfg.get('indicate', 'name_menu_3')
-#				cmd_menu_3 = cfg.get('indicate', 'cmd_menu_3')
-#				if name_menu_3 != '' and cmd_menu_3 != '':
-#					self.messages.append(Message(Mail(3.0, name_menu_3, \
-#						cmd_menu_3, None, 'id_3', 'menu_entry')))
-#		else:
-#			show_menu_3 = cfg.get('indicate', 'show_menu_3')
-#			if show_menu_3 == '1' and 'id_3' not in \
-#			[message.id for message in self.messages]:
-#				name_menu_3 = cfg.get('indicate', 'name_menu_3')
-#				cmd_menu_3 = cfg.get('indicate', 'cmd_menu_3')
-#				if name_menu_3 != '' and cmd_menu_3 != '':
-#					self.messages.append(Message(Mail(3.0, name_menu_3, \
-#						cmd_menu_3, None, 'id_3', 'menu_entry')))
-#
-#			show_menu_2 = cfg.get('indicate', 'show_menu_2')
-#			if show_menu_2 == '1' and 'id_2' not in \
-#			[message.id for message in self.messages]:
-#				name_menu_2 = cfg.get('indicate', 'name_menu_2')
-#				cmd_menu_2 = cfg.get('indicate', 'cmd_menu_2')
-#				if name_menu_2 != '' and cmd_menu_2 != '':
-#					self.messages.append(Message(Mail(2.0, name_menu_2, \
-#						cmd_menu_2, None, 'id_2', 'menu_entry')))
-#
-#			show_menu_1 = cfg.get('indicate', 'show_menu_1')
-#			if show_menu_1 == '1' and 'id_1' not in \
-#			[message.id for message in self.messages]:
-#				name_menu_1 = cfg.get('indicate', 'name_menu_1')
-#				cmd_menu_1 = cfg.get('indicate', 'cmd_menu_1')
-#				if name_menu_1 != '' and cmd_menu_1 != '':
-#					self.messages.append(Message(Mail(1.0, name_menu_1, \
-#						cmd_menu_1, None, 'id_1', 'menu_entry')))
-#
-#
-#	def number_of_menu_entries(self):									# return number of active menu entries
-#		count = 0
-#		if cfg.get('indicate', 'show_menu_1') == '1':
-#			count += 1
-#		if cfg.get('indicate', 'show_menu_2') == '1':
-#			count += 1
-#		if cfg.get('indicate', 'show_menu_3') == '1':
-#			count += 1
-#		return count
-#
-#
-#	def headline_clicked(self, server, dummy):							# click on headline
-#		if self.desktop_display != None:
-#			self.desktop_display.destroy()
-#		clear_on_click = cfg.get('indicate', 'clear_on_click')
-#		if clear_on_click == '1':
-#			self.clear()												# clear messages list
-#		emailclient = self.link.split(' ')								# create list of command arguments
-#		pid.append(subprocess.Popen(emailclient))						# start link (Email Client)
-#
-
 	def clear(self):													# clear the messages list (not the menu entries)
 		show_only_new = bool(int(cfg.get('general', 'show_only_new')))	# get show_only_new flag
-#		remove_list = []
-#		for message in self.messages:									# for all messages
-#			message.set_property("draw-attention", "false")				# white envelope in panel
-#			if message.provider not in ['menu_entry','acc_entry']:		# email entry
-#				message.hide()											# remove from indicator menu
-#				remove_list.append(message)								# add to removal list
-#			elif message.provider == 'acc_entry':						# account entry
-#				message.set_property("count", "0")						# reset count to account menu entry
-#			if show_only_new:
-#				for mail in self.mail_list:								# loop mails in mail list
-#					self.reminder.set_to_seen(mail.id)					# set seen flag for this email to True
-#		for message in remove_list:
-#			self.messages.remove(message)								# remove all email entries from messages list
-		
 		
 		if show_only_new:
 			for mail in self.mail_list:
@@ -830,241 +598,6 @@ class MailChecker:
 			self.reminder.save(self.mail_list)							# save to mailnag.dat
 		else:															# keep 'list' filled
 			self.mail_list = []											# clear mail list
-
-
-#	def get_new_count(self, provider):									# get count of emails not in reminder for one provider
-#		count = 0														# default counter
-#		for mail in self.mail_list:										# loop all emails
-#			if mail.provider == provider and self.reminder.unseen(mail.id):	# this provider and unflaged
-#				count += 1
-#		return str(count)
-
-
-#	def speak(self, text):												# speak the text
-#		lang = locale.getdefaultlocale()[0].lower()						# get language from operating system
-#		if 'de' in lang:
-#			lang = 'de'
-#		else:
-#			lang = 'en'
-#		if cfg.get('notify', 'playsound') == '1':						# if sound should be played
-#			time.sleep(1)												# wait until sound is played halfway
-#		pid.append(subprocess.Popen(['espeak', '-s', '140','-v' + lang, text]))	# speak it
-
-
-## Message ==============================================================
-#class Message(indicate.Indicator):
-#	def __init__(self, mail):
-#		indicate.Indicator.__init__(self)
-#
-#		self.seconds = mail.seconds
-#		self.subject = mail.subject
-#		self.sender = mail.sender
-#		self.datetime = mail.datetime
-#		self.id = mail.id
-#		self.provider = mail.provider
-#
-#		self.connect("user-display", self.clicked)
-#
-#		if self.provider not in ['menu_entry','acc_entry']:				# it is a normal message
-#			self.set_property("draw-attention", "true")					# green envelope in panel
-#			subject_short = self.get_short_subject(self.subject)		# cut subject text
-#			self.set_property("subtype", "mail")
-#			
-#			show_sender = cfg.get('indicate', 'show_sender')
-#			show_subject = cfg.get('indicate', 'show_subject')
-#			
-#			if show_sender == '0' and show_subject == '0':
-#				message_text = self.datetime							# datetime
-#			elif show_sender == '1' and show_subject == '0':
-#				message_text = self.sender								# sender
-#			elif show_sender == '0' and show_subject == '1':
-#				message_text = subject_short							# subject
-#			else:
-#				message_format = cfg.get('indicate', 'message_format')
-#				if message_format == '0':
-#					message_text = "%s - %s" % (subject_short, self.sender)
-#				else:
-#					message_text = "%s - %s" % (self.sender, subject_short)
-#
-#			show_provider = cfg.get('indicate', 'show_provider')
-#			if show_provider == '1':
-#				message_text = "%s - %s" % (self.provider, message_text)	# provider
-#				self.set_property("name", message_text)
-#			else:
-#				self.set_property("name", message_text)
-#			self.set_property("count", self.get_time_delta())			# put age in counter spot
-#			
-#		else:															# it is a menue or account entry
-#			show_only_new = bool(int(cfg.get('indicate', 'show_only_new')))	# get show_only_new flag
-#			self.set_property("name", self.subject)
-#			if self.provider == 'acc_entry':							# it is an account entry
-#				if firstcheck:
-#					old_count = '0'										# default last count
-#				else: old_count = self.get_property("count")			# get last count
-#				if show_only_new:
-#					count = indicator.get_new_count(self.subject)		# get count of emails that are not in reminder
-#				else:
-#					count = accounts.get_count(self.subject)			# get number of mails per account
-#				self.set_property("count", count)						# add count to provider menu entry
-#				if int(count) > int(old_count):							# new emails arrived
-#					self.set_property("draw-attention", "true")			# green envelope in panel
-#		self.show()
-#
-#
-#	def clicked(self, MessageObject, MessageNumber):					# click on message
-#		if self.provider not in ['menu_entry','acc_entry']:				# it is a normal message
-#			if cfg.get('indicate', 'remove_single_email') == '1':
-#				self.hide()												# remove from indicator menu
-#				show_only_new = bool(int(cfg.get('indicate', 'show_only_new')))
-#				if show_only_new:
-#					indicator.reminder.set_to_seen(self.id)				# don't show it again
-#			else:														# show OSD
-#				notify_text = self.sender + '\n' + self.datetime + \
-#					'\n' + self.subject
-#				notification = pynotify.Notification(self.provider, \
-#					notify_text, "notification-message-email")
-#				notification.show()										# show details of one message
-#
-#			user_scripts("on_email_clicked", \
-#				[self.sender, self.datetime, self.subject])				# process user scripts
-#		elif self.provider == 'menu_entry':								# it is a menu entry
-#			command = self.sender
-#			commandExecutor(command)
-#		else:	# account entry
-#			rows = []
-#			for mail in indicator.mail_list:
-#				if mail.provider == self.sender:						# self.sender holds the account name
-#					rows.append([mail.provider, mail.sender, \
-#						mail.subject, mail.datetime])
-#			ProviderEmailList(rows, self.sender)						# show email list for this provider
-#			user_scripts("on_account_clicked", [self.sender, len(rows)])# process user scripts (account, number_of_emails)
-#
-#
-#	def get_short_subject(self, subject):								# shorten long mail subject text
-#		subject_length = int(cfg.get('indicate', 'subject_length'))		# format subject
-#		if len(subject) > subject_length:
-#			dot_filler = '...'											# set dots if longer than n
-#		else:
-#			dot_filler = ''
-#		subject_short = subject[:subject_length] + dot_filler			# shorten subject
-#		return subject_short
-#
-#
-#	def get_time_delta(self):											# return delta hours
-#		delta = time.time() - self.seconds								# calculate delta seconds
-#		if delta < 0:
-#			return "?"													# negative age
-#		else:
-#			unit = " s"
-#			if delta > 60:
-#				delta /= 60												# convert to minutes
-#				unit = " m"
-#				if delta > 60:
-#					delta /= 60											# convert to hours
-#					unit = " h"
-#					if delta > 24:
-#						delta /= 24										# convert to days
-#						unit = " d"
-#						if delta > 7:
-#							delta /= 7									# convert to weeks
-#							unit = " w"
-#							if delta > 30:
-#								delta /= 30								# convert to months
-#								unit = " M"
-#								if delta > 12:
-#									delta /= 12							# convert to years
-#									unit = " Y"
-#		delta_string = str(int(round(delta))) + unit					# make string
-#		return delta_string
-#
-
-## Provider Email List Dialog ===========================================
-#class ProviderEmailList:
-#	def __init__(self, rows, title):
-#		if len(rows) == 0:
-#			return														# nothing to show
-#		builder = gtk.Builder()											# build GUI from Glade file
-#		builder.set_translation_domain('popper_list')
-#		builder.add_from_file("popper_list.glade")
-#		builder.connect_signals({ \
-#		"gtk_main_quit" : self.exit, \
-#		"on_button_close_clicked" : self.exit})
-#		_ = gettext.gettext
-#		colhead = [_('Provider'), _('From'), _('Subject'), _('Date')]	# column headings
-#		self.window = builder.get_object("dialog_popper_list")
-#		self.window.set_title('Popper')
-#		width, hight = self.get_window_size(rows, colhead)				# calculate window size
-#		self.window.set_default_size(width, hight)				  		# set the window size
-#
-#		treeview = builder.get_object("treeview")						# get the widgets
-#		liststore = builder.get_object("liststore")
-#		close_button = builder.get_object("button_close")
-#		close_button.set_label(_('Close'))
-#
-#		renderer = gtk.CellRendererText()
-#		column0 = gtk.TreeViewColumn(colhead[0], renderer, text=0)		# Provider
-#		column0.set_sort_column_id(0)									# make column sortable
-#		column0.set_resizable(True)										# column width resizable
-#		treeview.append_column(column0)
-#
-#		column1 = gtk.TreeViewColumn(colhead[1], renderer, text=1)		# From
-#		column1.set_sort_column_id(1)
-#		column1.set_resizable(True)
-#		treeview.append_column(column1)
-#
-#		column2 = gtk.TreeViewColumn(colhead[2], renderer, text=2)		# Subject
-#		column2.set_sort_column_id(2)
-#		column2.set_resizable(True)
-#		treeview.append_column(column2)
-#
-#		column3 = gtk.TreeViewColumn(colhead[3], renderer, text=3)		# Date
-#		column3.set_sort_column_id(3)
-#		column3.set_resizable(True)
-#		treeview.append_column(column3)
-#
-#		if not autostarted:
-#			rows.reverse()												# not autostarted
-#		elif indicator.sort_order == 'asc':
-#			rows.reverse()												# autostarted and firstcheck
-#
-#		for row in rows:
-#			liststore.append(row)										# add emails to summary window
-#		self.window.show()
-#
-#
-#	def get_window_size(self, rows, colhead):
-#		max = 0															# default for widest row
-#		fix = 50														# fix part of width (frame, lines, etc)
-#		charlen = 7														# average width of one character
-#		height = 480													# fixed set window height
-#		min_width = 320													# lower limit for window width
-#		max_width = 1024												# upper limit for window width
-#		alist = self.transpose(rows)									# transpose list
-#		for i in range(len(colhead)):
-#			alist[i].append(colhead[i] + '  ')							# add column headings
-#		colmax = []														# list with the widest string per column
-#		for col in alist:												# loop all columns
-#			temp_widest = 0												# reset temporary widest row value
-#			for row in col:												# loop all row strings
-#				if len(row) > temp_widest:
-#					temp_widest = len(row)								# find the widest string in that column
-#			colmax.append(temp_widest)									# save the widest string in that column
-#		for row in colmax:
-#			max += row													# add all widest strings
-#		width = fix + max * charlen										# calculate window width
-#		if width < min_width:
-#			width = min_width											# avoid width underrun
-#		if width > max_width:
-#			width = max_width											# avoid width overrun
-#		return width, height
-#
-#
-#	def transpose(self, array):											# transpose list (switch cols with rows)
-#		return map(lambda *row: list(row), *array)
-#
-#
-#	def exit(self, widget):												# exit
-#		self.window.destroy()
 
 
 # Reminder =============================================================
@@ -1139,140 +672,6 @@ class Pid(list):														# List class to manage subprocess PIDs
 			self.remove(p)												# remove non-zombies from list
 
 
-## Desktop Display ======================================================
-#class DesktopDisplay(gtk.Window):										# displays a transparent frameless window on the desktop
-#	__gsignals__ = {
-#		'expose-event': 'override'
-#		}
-#
-#	def __init__(self, content):
-#		super(DesktopDisplay, self).__init__()
-#
-#		self.content = content											# array of text lists
-#
-#		self.set_title('Popper Desktop Display')
-#		self.set_app_paintable(True)									# no window border
-#		self.set_decorated(False)
-#		self.set_position(gtk.WIN_POS_CENTER)
-#		pixbuf = gtk.gdk.pixbuf_new_from_file('popper.png')				# get icon from png
-#		self.set_icon(pixbuf)											# set window icon
-#		pos_x = int(cfg.get('dd', 'pos_x'))
-#		pos_y = int(cfg.get('dd', 'pos_y'))
-#		self.move(pos_x, pos_y)											# move window to position x,y
-#
-#		self.add_events(gtk.gdk.BUTTON_PRESS_MASK)
-#		self.connect("button-press-event", self.event_mouse_clicked)
-#
-#		screen = self.get_screen()										# see if we can do transparency
-#		alphamap = screen.get_rgba_colormap()
-#		rgbmap   = screen.get_rgb_colormap()
-#		if alphamap is not None:
-#			self.set_colormap(alphamap)
-#		else:
-#			self.set_colormap(rgbmap)
-#			print _("Warning: transparency is not supported")
-#
-#		width = int(cfg.get('dd','width'))
-#		height = int(cfg.get('dd','height'))
-#		self.set_size_request(width, height)
-#
-#		font = cfg.get('dd','font_name').split(' ')						# make list ['ubuntu', 12]
-#		self.font_name = ' '.join(font[:-1])							# everything except the last one
-#		try:
-#			self.font_size = int(font[-1])								# only the last one
-#		except ValueError:												# if something wrong, use defaults
-#			self.font_name = 'ubuntu'
-#			self.font_size = '14'
-#
-#
-#	def do_expose_event(self, event):
-#		width, height = self.get_size()
-#		surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-#		ctx = cairo.Context(surface)
-#
-#		# Background
-#		red, green, blue = self.get_rgb(str(cfg.get('dd','bg_color')))	# convert hex color to (r, g, b) / 100 values
-#		alpha = (100 - int(cfg.get('dd','transparency'))) / 100.0
-#		ctx.set_source_rgba(red, green, blue, alpha)					# background is red, green, blue, alpha
-#		ctx.paint()
-#
-#		# Text
-#		ctx.select_font_face(self.font_name, cairo.FONT_SLANT_NORMAL, \
-#			cairo.FONT_WEIGHT_NORMAL)
-#		ctx.set_font_size(self.font_size)
-#		red, green, blue = self.get_rgb(str(cfg.get('dd','text_color')))
-#		ctx.set_source_rgb(red, green, blue)
-#		self.show_text(ctx, self.content)								# write text to surface
-#
-#		dest_ctx = self.window.cairo_create()							# now copy to our window surface
-#		dest_ctx.rectangle(event.area.x, event.area.y, \
-#			event.area.width, event.area.height)						# only update what needs to be drawn
-#		dest_ctx.clip()
-#
-#		dest_ctx.set_operator(cairo.OPERATOR_SOURCE)					# source operator means replace, don't draw on top of
-#		dest_ctx.set_source_surface(surface, 0, 0)
-#		dest_ctx.paint()
-#
-#
-#	def show_text(self, ctx, content):									# write text to surface
-#		x = 10
-#		y = 20
-#		mail_offset = 10
-#		line_offset = self.font_size
-#		width = int(cfg.get('dd','width'))
-#		x_cut = int(width / self.font_size * 1.7)						# end of line
-#		height = int(cfg.get('dd','height'))
-#		y_cut = int(height / (2 * line_offset + mail_offset)) - 2		# end of page
-#		mail_count = 0
-#
-#		for mail in content:											# iterate all mails
-#			mail_count += 1
-#			for line in mail:											# iterate lines in mail
-#				ctx.move_to(x, y)
-#				if len(line) > x_cut: continuation = '...'
-#				else: continuation = ''
-#				ctx.show_text(line[:x_cut] + continuation)				# print stripped line
-#				y += line_offset
-#			y += mail_offset
-#			if mail_count > y_cut:										# end of page
-#				if len(content) > mail_count:
-#					ctx.move_to(x, y)
-#					ctx.show_text('...')
-#				break
-#
-#
-#	def get_rgb(self, hexcolor):										# convert hex color to (r, g, b) / 100 values
-#		color = gtk.gdk.color_parse(hexcolor)
-#		divisor = 65535.0
-#		red = color.red / divisor
-#		green = color.green / divisor
-#		blue = color.blue / divisor
-#		return red, green, blue											# exp.: 0.1, 0.5, 0.8
-#
-#
-#	def event_mouse_clicked(self, widget, event):						# mouse button clicked
-#		if event.button == 1:											# left button?
-#			if bool(int(cfg.get('dd', 'click_launch'))):
-#				indicator.headline_clicked(None, None)
-#			if bool(int(cfg.get('dd', 'click_close'))):
-#				self.destroy()
-#		if event.button == 3:											# right button?
-#			self.event_mouse_clicked_right(widget, event)
-#
-#
-#	def event_mouse_clicked_right(self, widget, event):					# right mouse button clicked
-#		contextMenu = gtk.Menu()
-#		for str_i in ('1', '2', '3'):
-#			if bool(int(cfg.get('indicate', 'show_menu_' + str_i))):	# if command is enabled append to context menu
-#				menu_item = gtk.MenuItem(cfg.get('indicate', 'name_menu_' + str_i))
-#				menu_item.connect('activate', commandExecutor,
-#					cfg.get('indicate', 'cmd_menu_' + str_i))
-#				contextMenu.append(menu_item)
-#		if len(contextMenu) > 0:										# any entries at all?
-#			contextMenu.show_all()
-#			contextMenu.popup(None, None, None, event.button, event.time)
-#
-
 def cleanup():
 	# clean up resources
 	try:	
@@ -1285,13 +684,6 @@ def main():
 	global cfg, user_path, accounts, mails, mailchecker, autostarted, firstcheck, pid
 
 	set_procname("mailnag")
-#	try:																# Internationalization
-#		locale.setlocale(locale.LC_ALL, '')								# locale language, e.g.: de_CH.utf8
-#	except locale.Error:
-#		locale.setlocale(locale.LC_ALL, 'en_US.utf8')					# english for all unsupported locale languages
-#	locale.bindtextdomain('popper', 'locale')
-#	gettext.bindtextdomain('popper', 'locale')
-#	gettext.textdomain('popper')
 
 	signal.signal(signal.SIGTERM, cleanup)
 

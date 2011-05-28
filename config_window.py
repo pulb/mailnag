@@ -29,13 +29,7 @@ from gi.repository import GLib, GdkPixbuf, Gtk
 
 import os
 import ConfigParser
-#import poplib
-#import imaplib
-#import locale
 import gettext
-#import gnomekeyring
-#import glib
-#import cairo
 import xdg.BaseDirectory as bd
 from utils import set_procname
 from keyring import Keyring
@@ -558,7 +552,6 @@ def main():
 
 	cfg = read_config()													# get configurations
 	keyring = Keyring()
-#	settings = Settings()												# start settings GUI
 
 	confwin = ConfigWindow()
 
