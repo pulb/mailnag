@@ -1,5 +1,5 @@
 #!/bin/bash
-# extracts strings from *.py files and
+# extracts strings from *.py and .ui files and
 # generates a gettext .pot template.
 
 dirname=${PWD##*/}
@@ -12,5 +12,13 @@ if [ -f $pot_name ]; then
 	rm $pot_name
 fi
 
-xgettext *.py --language=Python --from-code=UTF-8 --output=$pot_name
+# generate string headers of all glade files
+for f in *.ui ; do
+	intltool-extract --type=gettext/glade $f
+done
 
+# write template files
+xgettext *.py *.h --keyword=_ --keyword=N_ --from-code=UTF-8 --output=$pot_name
+
+#clean up
+rm *.h

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 16:22+0200\n"
+"POT-Creation-Date: 2011-05-29 16:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,4 +71,98 @@ msgstr ""
 
 #: mailnag.py:565
 msgid "You have a new mail."
+msgstr ""
+
+#: account_dialog.ui.h:1
+msgid "Folder:"
+msgstr ""
+
+#: account_dialog.ui.h:2
+msgid "IMAP"
+msgstr ""
+
+#: account_dialog.ui.h:3
+msgid "Mail Account"
+msgstr ""
+
+#: account_dialog.ui.h:4
+msgid "Name:"
+msgstr ""
+
+#: account_dialog.ui.h:5
+msgid "Password:"
+msgstr ""
+
+#: account_dialog.ui.h:6
+msgid "Port:"
+msgstr ""
+
+#: account_dialog.ui.h:7
+msgid "Server:"
+msgstr ""
+
+#: account_dialog.ui.h:8
+msgid "User:"
+msgstr ""
+
+#: config_window.ui.h:1
+msgid ""
+"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - A mail notifier for "
+"GNOME 3\n"
+"Copyright (c) 2011 Patrick Ulbrich\n"
+"\n"
+"Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Copyright (c) 2011 Ralf Hersel"
+msgstr ""
+
+#: config_window.ui.h:6
+msgid "About"
+msgstr ""
+
+#: config_window.ui.h:7
+msgid "Accounts"
+msgstr ""
+
+#: config_window.ui.h:8
+msgid "Check interval:"
+msgstr ""
+
+#: config_window.ui.h:9
+msgid "Enable spamfilter"
+msgstr ""
+
+#: config_window.ui.h:10
+msgid "Events"
+msgstr ""
+
+#: config_window.ui.h:11
+msgid "General"
+msgstr ""
+
+#: config_window.ui.h:12
+msgid "Mail client:"
+msgstr ""
+
+#: config_window.ui.h:13
+msgid "Mailnag Configuration"
+msgstr ""
+
+#: config_window.ui.h:14
+msgid "Messagetray label:"
+msgstr ""
+
+#: config_window.ui.h:15
+msgid "Play sound on new mails"
+msgstr ""
+
+#: config_window.ui.h:16
+msgid "Spamfilter"
+msgstr ""
+
+#: config_window.ui.h:17
+msgid "Start Mailnag automatically"
+msgstr ""
+
+#: config_window.ui.h:18
+msgid "minutes"
 msgstr ""
