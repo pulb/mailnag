@@ -31,7 +31,7 @@ _ = gettext.gettext
 class AccountDialog:
 	def __init__(self, parent):
 		builder = Gtk.Builder()
-		builder.set_translation_domain('mailnag_config')
+		builder.set_translation_domain('mailnag')
 		builder.add_from_file("account_dialog.ui")
 		builder.connect_signals({ \
 			"chk_account_imap_toggled" : self.__on_chk_account_imap_toggled, \
