@@ -436,10 +436,10 @@ class Accounts:
 			acc.password == '':
 				nok.append(acc.name)
 		if len(nok) > 0:
-			message_text = _("Missing data in account(s):\n\n")
+			message_text = _("Missing data in account(s):") + "\n\n"
 			for acc_name in nok:
 				message_text += acc_name + '\n'
-			message_text += _("\nPlease correct this first.")
+			message_text += "\n" + _("Please correct this first.")
 			window.show_message(message_text)
 			return False, nok
 		else:

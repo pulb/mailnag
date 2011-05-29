@@ -57,8 +57,7 @@ class Keyring:
 					result = gnomekeyring.unlock_sync(self.defaultKeyring, \
 								self.keyring_password)
 			except gnomekeyring.IOError:
-				self.show_message(_('Failed to unlock Keyring "' + self.defaultKeyring + '".' + \
-									'\nWrong password.\n\nDo you want to try again?'))
+				self.show_message(_('Failed to unlock Keyring "{0}".\nWrong password.\n\nDo you want to try again?').format(self.defaultKeyring))
 				Gtk.main()												# wait until dialog is closed
 				if self.message_response == 'cancel': exit(1)			# close application (else: continue getting password)
 
