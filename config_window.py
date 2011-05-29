@@ -29,12 +29,14 @@ from gi.repository import GLib, GdkPixbuf, Gtk
 
 import os
 import ConfigParser
+import locale
 import gettext
 import xdg.BaseDirectory as bd
 from utils import set_procname
 from keyring import Keyring
 from account_dialog import AccountDialog
 
+locale.bindtextdomain('mailnag', 'locale')
 gettext.bindtextdomain('mailnag', 'locale')
 gettext.textdomain('mailnag')
 _ = gettext.gettext
@@ -45,7 +47,7 @@ _ = gettext.gettext
 class ConfigWindow:
 	def __init__(self):
 		builder = Gtk.Builder()
-		builder.set_translation_domain('mailnag_config')
+		builder.set_translation_domain('mailnag')
 		builder.add_from_file("config_window.ui")
 		builder.connect_signals({ \
 			"config_window_deleted" : self.__on_config_window_deleted, \
