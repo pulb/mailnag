@@ -1,0 +1,16 @@
+#!/bin/bash
+# extracts strings from *.py files and
+# generates a gettext .pot template.
+
+dirname=${PWD##*/}
+pot_name=./po/$dirname.pot
+
+if [ ! -d ./po ]; then
+	mkdir ./po
+fi
+if [ -f $pot_name ]; then
+	rm $pot_name
+fi
+
+xgettext *.py --language=Python --from-code=UTF-8 --output=$pot_name
+
