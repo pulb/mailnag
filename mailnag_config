@@ -12,7 +12,7 @@ if [ -f "$config_dir/mailnag_config.log" ]; then
 	rm "$config_dir/mailnag_config.log"
 fi
 
-cd `dirname $0`
+cd $(dirname $(readlink -f $0))
 
 python config_window.py >> "$config_dir/mailnag_config.log" 2>&1
 

@@ -10,7 +10,7 @@ main()
 if [ -f "$config_dir/mailnag.log" ]; then
 	rm "$config_dir/mailnag.log"
 fi
-cd `dirname $0`
+cd $(dirname $(readlink -f $0))
 python mailnag.py autostarted >> "$config_dir/mailnag.log" 2>&1 &
 }
 
