@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 16:44+0200\n"
+"POT-Creation-Date: 2011-05-30 14:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,31 +17,31 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: config_window.py:82
+#: config_window.py:84
 msgid "Enabled"
 msgstr ""
 
-#: config_window.py:88
+#: config_window.py:90
 msgid "Name"
 msgstr ""
 
-#: config_window.py:264
+#: config_window.py:266
 msgid "Delete this account:"
 msgstr ""
 
-#: config_window.py:330
+#: config_window.py:332
 msgid "Unnamed"
 msgstr ""
 
-#: config_window.py:439
+#: config_window.py:441
 msgid "Missing data in account(s):"
 msgstr ""
 
-#: config_window.py:442
+#: config_window.py:444
 msgid "Please correct this first."
 msgstr ""
 
-#: config_window.py:456
+#: config_window.py:458
 msgid "Config file does not exist, creating new one"
 msgstr ""
 
@@ -74,19 +74,19 @@ msgid "You have a new mail."
 msgstr ""
 
 #: account_dialog.ui.h:1
-msgid "Folder:"
+msgid "Accountname:"
 msgstr ""
 
 #: account_dialog.ui.h:2
-msgid "IMAP"
+msgid "Folder:"
 msgstr ""
 
 #: account_dialog.ui.h:3
-msgid "Mail Account"
+msgid "IMAP"
 msgstr ""
 
 #: account_dialog.ui.h:4
-msgid "Name:"
+msgid "Mail Account"
 msgstr ""
 
 #: account_dialog.ui.h:5
@@ -94,7 +94,7 @@ msgid "Password:"
 msgstr ""
 
 #: account_dialog.ui.h:6
-msgid "Port:"
+msgid "Port (optional):"
 msgstr ""
 
 #: account_dialog.ui.h:7
