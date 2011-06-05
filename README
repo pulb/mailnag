@@ -1,0 +1,21 @@
+Mailnag - A mail notification daemon for GNOME 3
+http://launchpad.net/mailnag
+
+Requirements*:
+	pyxdg
+	notify-python
+	python2-gnomekeyring
+	python-httplib2
+	pygtk2
+	pygobject2
+	alsa-utils
+
+	* This list is possibly incomplete. 
+	  Please let me know if something is missing here.
+
+
+Configuration:
+
+	Run ./mailnag_config to setup Mailnag. 
+	Closing the configuration window will start mailnag automatically.
+
