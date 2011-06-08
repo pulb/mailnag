@@ -18,4 +18,8 @@ Configuration:
 
 	Run ./mailnag_config to setup Mailnag. 
 	Closing the configuration window will start mailnag automatically.
+	
+	To generate locales run ./gen_locales.
+	Your language is not available? Don't hesitate and head over to 
+	https://translations.launchpad.net/mailnag and translate Mailnag into your language!
 
