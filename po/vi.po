@@ -1,4 +1,4 @@
-# German translation for mailnag
+# Vietnamese translation for mailnag
 # Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the mailnag package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-30 14:26+0200\n"
-"PO-Revision-Date: 2011-05-30 14:10+0000\n"
-"Last-Translator: Patrick Ulbrich <Unknown>\n"
-"Language-Team: German <de@li.org>\n"
+"PO-Revision-Date: 2011-05-31 05:33+0000\n"
+"Last-Translator: Lê Trường An <truongan@linuxmail.org>\n"
+"Language-Team: Vietnamese <vi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,31 +19,31 @@ msgstr ""
 
 #: config_window.py:84
 msgid "Enabled"
-msgstr "Aktiviert"
+msgstr "Bật"
 
 #: config_window.py:90
 msgid "Name"
-msgstr "Name"
+msgstr "Tên"
 
 #: config_window.py:266
 msgid "Delete this account:"
-msgstr "Dieses Konto löschen:"
+msgstr "Xóa tài khoản này:"
 
 #: config_window.py:332
 msgid "Unnamed"
-msgstr "Unbenannt"
+msgstr "Chưa có tên:"
 
 #: config_window.py:441
 msgid "Missing data in account(s):"
-msgstr "Unvollständige Daten in Konto:"
+msgstr "Thất lạc dữ liệu trong tài khoản:"
 
 #: config_window.py:444
 msgid "Please correct this first."
-msgstr "Bitte behebn Sie dies."
+msgstr "Hãy sửa cái này trước."
 
 #: config_window.py:458
 msgid "Config file does not exist, creating new one"
-msgstr "Konfigurationsdatei existiert nicht, erstelle neue."
+msgstr "Tập tin cấu hình không tồn tại, tạo mới"
 
 #: keyring.py:60
 msgid ""
@@ -52,38 +52,38 @@ msgid ""
 "\n"
 "Do you want to try again?"
 msgstr ""
-"Sperren des Schlüßelbundes \"{0}\" fehlgeschlagen.\n"
-"Falsches Passwort.\n"
+"Mở khóa \"{0}\" thất bại.\n"
+"Sai mật khẩu.\n"
 "\n"
-"Möchten Sie es nochmal versuchen?"
+"Bạn có muốn thử lại?"
 
 #: mailnag.py:528
 msgid "Open in mail reader"
-msgstr "Im Mailprogramm öffnen"
+msgstr "Mở bằng chương trình đọc thư"
 
 #: mailnag.py:529
 msgid "Close"
-msgstr "Schließen"
+msgstr "Đóng"
 
 #: mailnag.py:560
 msgid "(and {0} more)"
-msgstr "(und {0} weitere)"
+msgstr "(và {0} nữa)"
 
 #: mailnag.py:563
 msgid "You have {0} new mails."
-msgstr "Sie haben {0} neue Emails."
+msgstr "Bạn có {0} thư mới."
 
 #: mailnag.py:565
 msgid "You have a new mail."
-msgstr "Sie haben eine neue Email."
+msgstr "Bạn có một thư mới."
 
 #: account_dialog.ui.h:1
 msgid "Accountname:"
-msgstr "Kontoname:"
+msgstr "Tên tài khoản:"
 
 #: account_dialog.ui.h:2
 msgid "Folder:"
-msgstr "Ordner:"
+msgstr "Thư mục:"
 
 #: account_dialog.ui.h:3
 msgid "IMAP"
@@ -91,23 +91,23 @@ msgstr "IMAP"
 
 #: account_dialog.ui.h:4
 msgid "Mail Account"
-msgstr "Mail-Konto"
+msgstr "Tài khoản thư"
 
 #: account_dialog.ui.h:5
 msgid "Password:"
-msgstr "Passwort:"
+msgstr "Mật khẩu:"
 
 #: account_dialog.ui.h:6
 msgid "Port (optional):"
-msgstr "Port (optional):"
+msgstr "Cổng (tùy chọn):"
 
 #: account_dialog.ui.h:7
 msgid "Server:"
-msgstr "Server:"
+msgstr "Máy chủ"
 
 #: account_dialog.ui.h:8
 msgid "User:"
-msgstr "Benutzer:"
+msgstr "Người dùng:"
 
 #: config_window.ui.h:1
 msgid ""
@@ -118,67 +118,61 @@ msgid ""
 "Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
 "Copyright (c) 2011 Ralf Hersel"
 msgstr ""
-"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - Email-Benachrichtigung "
-"für GNOME 3\n"
-"Copyright (c) 2011 Patrick Ulbrich\n"
+"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - Trình thông báo thư "
+"điện tử cho GNOME 3\n"
+"Bản quyền (c) 2011 Patrick Ulbrich\n"
 "\n"
-"Mailnag basiert auf <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
-"Copyright (c) 2011 Ralf Hersel"
+"Mailnag dựa trên <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Bản quyền (c) 2011 Ralf Hersel"
 
 #: config_window.ui.h:6
 msgid "About"
-msgstr "Info"
+msgstr "Giới thiệu"
 
 #: config_window.ui.h:7
 msgid "Accounts"
-msgstr "Konten"
+msgstr "Tài khoản"
 
 #: config_window.ui.h:8
 msgid "Check interval:"
-msgstr "Prüfintervall:"
+msgstr "Thời gian kiểm tra thư:"
 
 #: config_window.ui.h:9
 msgid "Enable spamfilter"
-msgstr "Spamfilter aktivieren"
+msgstr "Bật bộ lọc thư rác"
 
 #: config_window.ui.h:10
 msgid "Events"
-msgstr "Ereignisse"
+msgstr "Sự kiện"
 
 #: config_window.ui.h:11
 msgid "General"
-msgstr "Allgemein"
+msgstr "Chung"
 
 #: config_window.ui.h:12
 msgid "Mail client:"
-msgstr "Mail-Programm"
+msgstr "Chương trình thư điện tử:"
 
 #: config_window.ui.h:13
 msgid "Mailnag Configuration"
-msgstr "Mailnag-Konfiguration"
+msgstr "Cấu hình Mailnag"
 
 #: config_window.ui.h:14
 msgid "Messagetray label:"
-msgstr "Messagetray-Beschriftung"
+msgstr "Nhãn tin nhắn dưới khay hệ thống:"
 
 #: config_window.ui.h:15
 msgid "Play sound on new mails"
-msgstr "Spiele einen Sound bei neuen Emails ab"
+msgstr "Phát âm thanh khi có thư mới"
 
 #: config_window.ui.h:16
 msgid "Spamfilter"
-msgstr "Spamfilter"
+msgstr "Bộ lọc thư rác"
 
 #: config_window.ui.h:17
 msgid "Start Mailnag automatically"
-msgstr "Mailnag automatisch starten"
+msgstr "Tự động chạy Mailnag"
 
 #: config_window.ui.h:18
 msgid "minutes"
-msgstr "Minuten"
-
-#~ msgid "Name:"
-#~ msgstr "Name:"
-
-#~ msgid "Port:"
-#~ msgstr "Port:"
+msgstr "phút"
