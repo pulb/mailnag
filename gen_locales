@@ -1,0 +1,21 @@
+#/bin/bash
+
+#
+# script to generate mailnag locales
+#
+
+APPNAME=mailnag
+PO_DIR=po
+LOCALE_DIR=locale # /usr/share/locale
+
+for f in `ls $PO_DIR/*.po`; do
+	LANG=`basename ${f%".po"}`
+	DEST_DIR=$LOCALE_DIR/$LANG/LC_MESSAGES
+	
+	if [ ! -d $DEST_DIR ]; then
+		mkdir -p $DEST_DIR
+	fi
+	
+	echo "creating $DEST_DIR/$APPNAME.mo"
+	msgfmt -o $DEST_DIR/$APPNAME.mo $f
+done
