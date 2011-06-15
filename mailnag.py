@@ -269,7 +269,11 @@ class Mails:
 									id = msg['Message-Id']
 								except:
 									print "Could not get id from IMAP message:", msg		# debug
+									id = None                                               # prepare emergency 
+								
+								if id == None or id == '':
 									id = str(hash(subject))				# create emergency id
+						
 						if id not in mail_ids:							# prevent duplicates caused by Gmail labels
 							if not (filter_on and self.in_filter(sender + subject)):		# check filter
 								mail_list.append(Mail(seconds, subject, \
@@ -326,7 +330,11 @@ class Mails:
 						uidl = srv.uidl(i)								# get id
 					except:
 						print "Could not get id from POP message:", message	# debug
+						uidl = None                                         # prepare emergency
+					
+					if uidl == None or uidl == '':	
 						uidl = str(hash(subject))						# create emergency id
+					
 					id = acc.user + uidl.split(' ')[2]					# create unique id
 					if not (filter_on and self.in_filter(sender + subject)):	# check filter
 						mail_list.append(Mail(seconds, subject, sender, \
