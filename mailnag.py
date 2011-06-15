@@ -513,7 +513,7 @@ class MailChecker:
 		self.reminder = Reminder()										# create Reminder object
 
 		# TODO :  gi.repository Notify seems to be unstable currently (set_hint and add_action crash)
-		# Notify.init("Mailnag")										# initialize Notification		
+		# Notify.init(cfg.get('general', 'messagetray_label'))			# initialize Notification		
 		# self.notification = Notify.Notification.new(" ", None, None)	# empty string will emit a gtk warning		
 		# self.notification.set_hint("resident", True)					# don't close when the bubble or actions are clicked		
 		# self.notification.set_category("email")
