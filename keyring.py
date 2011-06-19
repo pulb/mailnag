@@ -30,9 +30,12 @@ else:
 	Gtk = __import__("gtk")
 	GLib = __import__("glib")
 
+
+import locale
 import gettext
 import gnomekeyring
 
+locale.bindtextdomain('mailnag', 'locale')
 gettext.bindtextdomain('mailnag', 'locale')
 gettext.textdomain('mailnag')
 _ = gettext.gettext
@@ -165,7 +168,7 @@ class Keyring:
 	def show_keyring_dialog(self):										# dialog to get password to unlock keyring
 		self.was_locked = True
 		builder = Gtk.Builder()
-		builder.set_translation_domain('mailnag_config')
+		builder.set_translation_domain('mailnag')
 		builder.add_from_file("mailnag_keyring.glade")
 		builder.connect_signals({"gtk_main_quit" : self.exit_keyring_dialog, \
 			"on_button_cancel_clicked" : self.exit_keyring_dialog, \
@@ -188,7 +191,7 @@ class Keyring:
 
 	def show_message(self, message):									# dialog to show keyring messages
 		builder = Gtk.Builder()
-		builder.set_translation_domain('mailnag_config')
+		builder.set_translation_domain('mailnag')
 		builder.add_from_file("mailnag_message.glade")
 		builder.connect_signals({"gtk_main_quit" : self.exit_message, \
 			"on_button_cancel_clicked" : self.exit_message, \
