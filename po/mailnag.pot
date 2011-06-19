@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-30 14:26+0200\n"
+"POT-Creation-Date: 2011-06-19 13:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgstr ""
 msgid "Config file does not exist, creating new one"
 msgstr ""
 
-#: keyring.py:60
+#: keyring.py:63
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -53,23 +53,23 @@ msgid ""
 "Do you want to try again?"
 msgstr ""
 
-#: mailnag.py:528
+#: mailnag.py:536
 msgid "Open in mail reader"
 msgstr ""
 
-#: mailnag.py:529
+#: mailnag.py:537
 msgid "Close"
 msgstr ""
 
-#: mailnag.py:560
+#: mailnag.py:568
 msgid "(and {0} more)"
 msgstr ""
 
-#: mailnag.py:563
+#: mailnag.py:571
 msgid "You have {0} new mails."
 msgstr ""
 
-#: mailnag.py:565
+#: mailnag.py:573
 msgid "You have a new mail."
 msgstr ""
 
@@ -165,4 +165,22 @@ msgstr ""
 
 #: config_window.ui.h:18
 msgid "minutes"
+msgstr ""
+
+#: keyring_dialog.ui.h:1
+msgid "Mailnag"
+msgstr ""
+
+#: keyring_dialog.ui.h:2
+msgid ""
+"Mailnag can't access the keyring because it is locked.\n"
+"Please enter the password:"
+msgstr ""
+
+#: message_dialog.ui.h:1
+msgid "Mailnag Message"
+msgstr ""
+
+#: message_dialog.ui.h:2
+msgid "label"
 msgstr ""
