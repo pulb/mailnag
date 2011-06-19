@@ -169,7 +169,7 @@ class Keyring:
 		self.was_locked = True
 		builder = Gtk.Builder()
 		builder.set_translation_domain('mailnag')
-		builder.add_from_file("mailnag_keyring.glade")
+		builder.add_from_file("keyring_dialog.ui")
 		builder.connect_signals({"gtk_main_quit" : self.exit_keyring_dialog, \
 			"on_button_cancel_clicked" : self.exit_keyring_dialog, \
 			"on_button_ok_clicked" : self.ok_keyring_dialog, \
@@ -192,7 +192,7 @@ class Keyring:
 	def show_message(self, message):									# dialog to show keyring messages
 		builder = Gtk.Builder()
 		builder.set_translation_domain('mailnag')
-		builder.add_from_file("mailnag_message.glade")
+		builder.add_from_file("message_dialog.ui")
 		builder.connect_signals({"gtk_main_quit" : self.exit_message, \
 			"on_button_cancel_clicked" : self.exit_message, \
 			"on_button_ok_clicked" : self.ok_message})
