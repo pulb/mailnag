@@ -1,4 +1,4 @@
-# German translation for mailnag
+# Czech translation for mailnag
 # Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the mailnag package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-19 13:37+0200\n"
-"PO-Revision-Date: 2011-06-19 12:04+0000\n"
-"Last-Translator: Patrick Ulbrich <Unknown>\n"
-"Language-Team: German <de@li.org>\n"
+"PO-Revision-Date: 2011-06-21 10:24+0000\n"
+"Last-Translator: Jirka Dutka <Unknown>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,31 +19,31 @@ msgstr ""
 
 #: config_window.py:84
 msgid "Enabled"
-msgstr "Aktiviert"
+msgstr "Povoleno"
 
 #: config_window.py:90
 msgid "Name"
-msgstr "Name"
+msgstr "Název"
 
 #: config_window.py:266
 msgid "Delete this account:"
-msgstr "Dieses Konto löschen:"
+msgstr "Odstranit účet"
 
 #: config_window.py:332
 msgid "Unnamed"
-msgstr "Unbenannt"
+msgstr "Nepojmenovaný"
 
 #: config_window.py:441
 msgid "Missing data in account(s):"
-msgstr "Unvollständige Daten in Konto:"
+msgstr "Chybí údaje o účtu:"
 
 #: config_window.py:444
 msgid "Please correct this first."
-msgstr "Bitte behebn Sie dies."
+msgstr "Doplňte prosím chybějící údaje."
 
 #: config_window.py:458
 msgid "Config file does not exist, creating new one"
-msgstr "Konfigurationsdatei existiert nicht, erstelle neue."
+msgstr "Konfigurační soubor nebyl nalezen, vytvářím nový"
 
 #: keyring.py:63
 msgid ""
@@ -52,38 +52,38 @@ msgid ""
 "\n"
 "Do you want to try again?"
 msgstr ""
-"Sperren des Schlüßelbundes \"{0}\" fehlgeschlagen.\n"
-"Falsches Passwort.\n"
+"Nelze otevřít klíčenku \"{0}\".\n"
+"Špatné heslo.\n"
 "\n"
-"Möchten Sie es nochmal versuchen?"
+"Zkusit znova?"
 
 #: mailnag.py:536
 msgid "Open in mail reader"
-msgstr "Im Mailprogramm öffnen"
+msgstr "Otevřít v poštovní programu"
 
 #: mailnag.py:537
 msgid "Close"
-msgstr "Schließen"
+msgstr "Zavřít"
 
 #: mailnag.py:568
 msgid "(and {0} more)"
-msgstr "(und {0} weitere)"
+msgstr "(a {0} dalších)"
 
 #: mailnag.py:571
 msgid "You have {0} new mails."
-msgstr "Sie haben {0} neue Emails."
+msgstr "Máte {0} nových zpráv."
 
 #: mailnag.py:573
 msgid "You have a new mail."
-msgstr "Sie haben eine neue Email."
+msgstr "Máte novou zprávu."
 
 #: account_dialog.ui.h:1
 msgid "Accountname:"
-msgstr "Kontoname:"
+msgstr "Název účtu:"
 
 #: account_dialog.ui.h:2
 msgid "Folder:"
-msgstr "Ordner:"
+msgstr "Složka:"
 
 #: account_dialog.ui.h:3
 msgid "IMAP"
@@ -91,15 +91,15 @@ msgstr "IMAP"
 
 #: account_dialog.ui.h:4
 msgid "Mail Account"
-msgstr "Mail-Konto"
+msgstr "Poštovní účet"
 
 #: account_dialog.ui.h:5
 msgid "Password:"
-msgstr "Passwort:"
+msgstr "Heslo:"
 
 #: account_dialog.ui.h:6
 msgid "Port (optional):"
-msgstr "Port (optional):"
+msgstr "Port (nepovinné):"
 
 #: account_dialog.ui.h:7
 msgid "Server:"
@@ -107,7 +107,7 @@ msgstr "Server:"
 
 #: account_dialog.ui.h:8
 msgid "User:"
-msgstr "Benutzer:"
+msgstr "Uživatel:"
 
 #: config_window.ui.h:1
 msgid ""
@@ -118,52 +118,53 @@ msgid ""
 "Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
 "Copyright (c) 2011 Ralf Hersel"
 msgstr ""
-"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - Email-Benachrichtigung "
-"für GNOME 3\n"
+"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - Upozornění na poštu "
+"pro GNOME 3\n"
 "Copyright (c) 2011 Patrick Ulbrich\n"
 "\n"
-"Mailnag basiert auf <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Mailnag je založen na projektu <a "
+"href=\"http:/launchpad.net/popper\">Popper</a>\n"
 "Copyright (c) 2011 Ralf Hersel"
 
 #: config_window.ui.h:6
 msgid "About"
-msgstr "Info"
+msgstr "O aplikaci"
 
 #: config_window.ui.h:7
 msgid "Accounts"
-msgstr "Konten"
+msgstr "Účty"
 
 #: config_window.ui.h:8
 msgid "Check interval:"
-msgstr "Prüfintervall:"
+msgstr "Interval mezi kontrolami:"
 
 #: config_window.ui.h:9
 msgid "Enable spamfilter"
-msgstr "Spamfilter aktivieren"
+msgstr "Povolit filtrování SPAMu"
 
 #: config_window.ui.h:10
 msgid "Events"
-msgstr "Ereignisse"
+msgstr "Události"
 
 #: config_window.ui.h:11
 msgid "General"
-msgstr "Allgemein"
+msgstr "Obecné"
 
 #: config_window.ui.h:12
 msgid "Mail client:"
-msgstr "Mail-Programm"
+msgstr "Poštovní klient:"
 
 #: config_window.ui.h:13
 msgid "Mailnag Configuration"
-msgstr "Mailnag-Konfiguration"
+msgstr "Mailnag - Nastavení"
 
 #: config_window.ui.h:14
 msgid "Messagetray label:"
-msgstr "Messagetray-Beschriftung"
+msgstr "Titulek v oznamovací oblasti"
 
 #: config_window.ui.h:15
 msgid "Play sound on new mails"
-msgstr "Spiele einen Sound bei neuen Emails ab"
+msgstr "Přehrát zvuk při nových zprávách"
 
 #: config_window.ui.h:16
 msgid "Spamfilter"
@@ -171,11 +172,11 @@ msgstr "Spamfilter"
 
 #: config_window.ui.h:17
 msgid "Start Mailnag automatically"
-msgstr "Mailnag automatisch starten"
+msgstr "Spustit Mailnag automaticky"
 
 #: config_window.ui.h:18
 msgid "minutes"
-msgstr "Minuten"
+msgstr "minut"
 
 #: keyring_dialog.ui.h:1
 msgid "Mailnag"
@@ -186,19 +187,13 @@ msgid ""
 "Mailnag can't access the keyring because it is locked.\n"
 "Please enter the password:"
 msgstr ""
-"Mailnag kann nicht auf den Schlüßelbund zugreifen, weil er gesperrt ist.\n"
-"Bitte geben Sie das Passwort ein:"
+"Mailnag nemohl otevřít Klíčenku, je zamčená.\n"
+"Zadejte prosím heslo:"
 
 #: message_dialog.ui.h:1
 msgid "Mailnag Message"
-msgstr "Mailnag-Nachricht"
+msgstr "Oznámení aplikace Mailnag"
 
 #: message_dialog.ui.h:2
 msgid "label"
-msgstr "Beschriftung"
-
-#~ msgid "Name:"
-#~ msgstr "Name:"
-
-#~ msgid "Port:"
-#~ msgstr "Port:"
+msgstr "štítek"
