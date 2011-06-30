@@ -30,6 +30,8 @@ import os
 import subprocess
 import gobject
 
+PACKAGE_NAME = "mailnag"
+
 # TODO : use gtk and glib from gi.repositrory 
 # (those conflict with pynotify and gi.repository.Notify is broken)
 __builtins__.USE_GTK3 = False # (also prevents keyring.py from using GTK3)
@@ -46,13 +48,13 @@ from email.header import decode_header
 import sys
 import gettext
 from keyring import Keyring
-from utils import set_procname
+from utils import *
 import signal
 import xdg.BaseDirectory as bd
 
 
-gettext.bindtextdomain('mailnag', 'locale')
-gettext.textdomain('mailnag')
+gettext.bindtextdomain(PACKAGE_NAME, './locale')
+gettext.textdomain(PACKAGE_NAME)
 _ = gettext.gettext
 
 # Accounts and Account =================================================
@@ -573,7 +575,7 @@ class MailChecker:
 				summary = _("You have a new mail.")
 
 			if cfg.get('general', 'playsound') == '1':					# play sound?
-				soundcommand = ['aplay', '-q', cfg.get('general', 'soundfile')]
+				soundcommand = ['aplay', '-q', get_data_file(cfg.get('general', 'soundfile'))]
 				pid.append(subprocess.Popen(soundcommand))
 
 			self.notification.update(summary, body, "mail-unread")

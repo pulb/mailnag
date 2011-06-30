@@ -23,16 +23,19 @@
 
 from gi.repository import GLib, GdkPixbuf, Gtk
 import gettext
+from utils import get_data_file
 
-gettext.bindtextdomain('mailnag', 'locale')
-gettext.textdomain('mailnag')
+PACKAGE_NAME = "mailnag"
+
+gettext.bindtextdomain(PACKAGE_NAME, './locale')
+gettext.textdomain(PACKAGE_NAME)
 _ = gettext.gettext
 
 class AccountDialog:
 	def __init__(self, parent):
 		builder = Gtk.Builder()
-		builder.set_translation_domain('mailnag')
-		builder.add_from_file("account_dialog.ui")
+		builder.set_translation_domain(PACKAGE_NAME)
+		builder.add_from_file(get_data_file("account_dialog.ui"))
 		builder.connect_signals({ \
 			"chk_account_imap_toggled" : self.__on_chk_account_imap_toggled, \
 			"btn_cancel_clicked" : self.__on_btn_cancel_clicked, \

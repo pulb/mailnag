@@ -2,23 +2,25 @@
 # extracts strings from *.py and .ui files and
 # generates a gettext .pot template.
 
-dirname=${PWD##*/}
-pot_name=./po/$dirname.pot
+glade_dir=./data
+python_dir=./Mailnag
+pot_file=./po/mailnag.pot
 
 if [ ! -d ./po ]; then
 	mkdir ./po
 fi
-if [ -f $pot_name ]; then
-	rm $pot_name
+
+if [ -f $pot_file ]; then
+	rm $pot_file
 fi
 
 # generate string headers of all glade files
-for f in *.ui ; do
+for f in $glade_dir/*.ui ; do
 	intltool-extract --type=gettext/glade $f
 done
 
 # write template files
-xgettext *.py *.h --keyword=_ --keyword=N_ --from-code=UTF-8 --output=$pot_name
+xgettext $python_dir/*.py $glade_dir/*.h --keyword=_ --keyword=N_ --from-code=UTF-8 --output=$pot_file
 
 #clean up
-rm *.h
+rm $glade_dir/*.h

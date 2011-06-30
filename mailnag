@@ -1,4 +1,6 @@
 #!/bin/bash
+LIB_DIR=./Mailnag
+
 CONFIG_HOME=$XDG_CONFIG_HOME
 if [ "$CONFIG_HOME" == "" ]; then
 	CONFIG_HOME="$HOME/.config"
@@ -11,7 +13,7 @@ if [ -f "$config_dir/mailnag.log" ]; then
 	rm "$config_dir/mailnag.log"
 fi
 cd $(dirname $(readlink -f $0))
-python mailnag.py autostarted >> "$config_dir/mailnag.log" 2>&1 &
+python $LIB_DIR/mailnag.py autostarted >> "$config_dir/mailnag.log" 2>&1 &
 }
 
 connection()

@@ -22,6 +22,8 @@
 # MA 02110-1301, USA.
 #
 
+PACKAGE_NAME = "mailnag"
+
 __builtins__.USE_GTK3 = True # make keyring.py use GTK3
 
 import gobject
@@ -32,13 +34,13 @@ import ConfigParser
 import locale
 import gettext
 import xdg.BaseDirectory as bd
-from utils import set_procname
+from utils import *
 from keyring import Keyring
 from account_dialog import AccountDialog
 
-locale.bindtextdomain('mailnag', 'locale')
-gettext.bindtextdomain('mailnag', 'locale')
-gettext.textdomain('mailnag')
+locale.bindtextdomain(PACKAGE_NAME, './locale')
+gettext.bindtextdomain(PACKAGE_NAME, './locale')
+gettext.textdomain(PACKAGE_NAME)
 _ = gettext.gettext
 
 #
@@ -47,8 +49,8 @@ _ = gettext.gettext
 class ConfigWindow:
 	def __init__(self):
 		builder = Gtk.Builder()
-		builder.set_translation_domain('mailnag')
-		builder.add_from_file("config_window.ui")
+		builder.set_translation_domain(PACKAGE_NAME)
+		builder.add_from_file(get_data_file("config_window.ui"))
 		builder.connect_signals({ \
 			"config_window_deleted" : self.__on_config_window_deleted, \
 			"btn_add_clicked" : self.__on_btn_add_clicked, \
@@ -61,7 +63,7 @@ class ConfigWindow:
 		})
 
 		self.window = builder.get_object("config_window")
-		self.window.set_icon(GdkPixbuf.Pixbuf.new_from_file_at_size("mailnag.svg", 48, 48));
+		self.window.set_icon(GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 48, 48));
 		
 		#
 		# account tab
@@ -111,7 +113,7 @@ class ConfigWindow:
 
 		# about tab
 		self.image_logo = builder.get_object("image_logo")
-		pb = GdkPixbuf.Pixbuf.new_from_file_at_size("mailnag.svg", 200, 200)
+		pb = GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 200, 200)
 		self.image_logo.set_from_pixbuf(pb)
 
 		self.load_config()

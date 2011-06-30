@@ -34,10 +34,13 @@ else:
 import locale
 import gettext
 import gnomekeyring
+from utils import get_data_file
 
-locale.bindtextdomain('mailnag', 'locale')
-gettext.bindtextdomain('mailnag', 'locale')
-gettext.textdomain('mailnag')
+PACKAGE_NAME = "mailnag"
+
+locale.bindtextdomain(PACKAGE_NAME, './locale')
+gettext.bindtextdomain(PACKAGE_NAME, './locale')
+gettext.textdomain(PACKAGE_NAME)
 _ = gettext.gettext
 
 class Keyring:
@@ -168,8 +171,8 @@ class Keyring:
 	def show_keyring_dialog(self):										# dialog to get password to unlock keyring
 		self.was_locked = True
 		builder = Gtk.Builder()
-		builder.set_translation_domain('mailnag')
-		builder.add_from_file("keyring_dialog.ui")
+		builder.set_translation_domain(PACKAGE_NAME)
+		builder.add_from_file(get_datafile("keyring_dialog.ui"))
 		builder.connect_signals({"gtk_main_quit" : self.exit_keyring_dialog, \
 			"on_button_cancel_clicked" : self.exit_keyring_dialog, \
 			"on_button_ok_clicked" : self.ok_keyring_dialog, \
@@ -191,8 +194,8 @@ class Keyring:
 
 	def show_message(self, message):									# dialog to show keyring messages
 		builder = Gtk.Builder()
-		builder.set_translation_domain('mailnag')
-		builder.add_from_file("message_dialog.ui")
+		builder.set_translation_domain(PACKAGE_NAME)
+		builder.add_from_file(get_data_file("message_dialog.ui"))
 		builder.connect_signals({"gtk_main_quit" : self.exit_message, \
 			"on_button_cancel_clicked" : self.exit_message, \
 			"on_button_ok_clicked" : self.ok_message})
