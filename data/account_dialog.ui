@@ -37,6 +37,7 @@
               <object class="GtkButton" id="button_save">
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
@@ -180,6 +181,7 @@
                 <property name="hexpand">True</property>
                 <property name="invisible_char">•</property>
                 <property name="invisible_char_set">True</property>
+                <signal name="changed" handler="entry_changed" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -195,6 +197,7 @@
                 <property name="hexpand">True</property>
                 <property name="invisible_char">•</property>
                 <property name="invisible_char_set">True</property>
+                <signal name="changed" handler="entry_changed" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -211,6 +214,7 @@
                 <property name="visibility">False</property>
                 <property name="invisible_char">•</property>
                 <property name="invisible_char_set">True</property>
+                <signal name="changed" handler="entry_changed" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -226,6 +230,7 @@
                 <property name="hexpand">True</property>
                 <property name="invisible_char">•</property>
                 <property name="invisible_char_set">True</property>
+                <signal name="changed" handler="entry_changed" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>

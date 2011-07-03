@@ -37,6 +37,7 @@ class AccountDialog:
 		builder.set_translation_domain(PACKAGE_NAME)
 		builder.add_from_file(get_data_file("account_dialog.ui"))
 		builder.connect_signals({ \
+			"entry_changed" : self.__on_entry_changed, \
 			"chk_account_imap_toggled" : self.__on_chk_account_imap_toggled, \
 			"btn_cancel_clicked" : self.__on_btn_cancel_clicked, \
 			"btn_save_clicked" : self.__on_btn_save_clicked \
@@ -52,6 +53,7 @@ class AccountDialog:
 		self.entry_account_port = builder.get_object("entry_account_port")
 		self.chk_account_imap = builder.get_object("chk_account_imap")
 		self.entry_account_folder = builder.get_object("entry_account_folder")
+		self.button_save = builder.get_object("button_save")
 
 		
 	def run(self):
@@ -70,6 +72,16 @@ class AccountDialog:
 		pass
 
 	
+	def __on_entry_changed(self, widget):
+		# validate
+		ok = len(self.entry_account_name.get_text()) > 0 and \
+		     len(self.entry_account_user.get_text()) > 0 and \
+		     len(self.entry_account_password.get_text()) > 0 and \
+		     len(self.entry_account_server.get_text()) > 0
+		
+		self.button_save.set_sensitive(ok)
+		
+		
 	def __on_chk_account_imap_toggled(self, widget):
 		self.entry_account_folder.set_sensitive(self.chk_account_imap.get_active())
 
