@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-19 13:37+0200\n"
+"POT-Creation-Date: 2011-07-04 19:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,35 +17,35 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: config_window.py:84
+#: Mailnag/config_window.py:88
 msgid "Enabled"
 msgstr ""
 
-#: config_window.py:90
+#: Mailnag/config_window.py:94
 msgid "Name"
 msgstr ""
 
-#: config_window.py:266
+#: Mailnag/config_window.py:299
 msgid "Delete this account:"
 msgstr ""
 
-#: config_window.py:332
+#: Mailnag/config_window.py:373
 msgid "Unnamed"
 msgstr ""
 
-#: config_window.py:441
+#: Mailnag/config_window.py:482
 msgid "Missing data in account(s):"
 msgstr ""
 
-#: config_window.py:444
+#: Mailnag/config_window.py:485
 msgid "Please correct this first."
 msgstr ""
 
-#: config_window.py:458
+#: Mailnag/config_window.py:499
 msgid "Config file does not exist, creating new one"
 msgstr ""
 
-#: keyring.py:63
+#: Mailnag/keyring.py:66
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -53,59 +53,59 @@ msgid ""
 "Do you want to try again?"
 msgstr ""
 
-#: mailnag.py:536
+#: Mailnag/mailnag.py:521
 msgid "Open in mail reader"
 msgstr ""
 
-#: mailnag.py:537
+#: Mailnag/mailnag.py:522
 msgid "Close"
 msgstr ""
 
-#: mailnag.py:568
+#: Mailnag/mailnag.py:557
 msgid "(and {0} more)"
 msgstr ""
 
-#: mailnag.py:571
+#: Mailnag/mailnag.py:560
 msgid "You have {0} new mails."
 msgstr ""
 
-#: mailnag.py:573
+#: Mailnag/mailnag.py:562
 msgid "You have a new mail."
 msgstr ""
 
-#: account_dialog.ui.h:1
+#: data/account_dialog.ui.h:1
 msgid "Accountname:"
 msgstr ""
 
-#: account_dialog.ui.h:2
+#: data/account_dialog.ui.h:2
 msgid "Folder:"
 msgstr ""
 
-#: account_dialog.ui.h:3
+#: data/account_dialog.ui.h:3
 msgid "IMAP"
 msgstr ""
 
-#: account_dialog.ui.h:4
+#: data/account_dialog.ui.h:4
 msgid "Mail Account"
 msgstr ""
 
-#: account_dialog.ui.h:5
+#: data/account_dialog.ui.h:5
 msgid "Password:"
 msgstr ""
 
-#: account_dialog.ui.h:6
+#: data/account_dialog.ui.h:6
 msgid "Port (optional):"
 msgstr ""
 
-#: account_dialog.ui.h:7
+#: data/account_dialog.ui.h:7
 msgid "Server:"
 msgstr ""
 
-#: account_dialog.ui.h:8
+#: data/account_dialog.ui.h:8
 msgid "User:"
 msgstr ""
 
-#: config_window.ui.h:1
+#: data/config_window.ui.h:1
 msgid ""
 "<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - A mail notifier for "
 "GNOME 3\n"
@@ -115,72 +115,90 @@ msgid ""
 "Copyright (c) 2011 Ralf Hersel"
 msgstr ""
 
-#: config_window.ui.h:6
+#: data/config_window.ui.h:6
+msgid "<b>On mail arrival</b>"
+msgstr ""
+
+#: data/config_window.ui.h:7
+msgid "<b>On mail check</b>"
+msgstr ""
+
+#: data/config_window.ui.h:8
 msgid "About"
 msgstr ""
 
-#: config_window.ui.h:7
+#: data/config_window.ui.h:9
 msgid "Accounts"
 msgstr ""
 
-#: config_window.ui.h:8
+#: data/config_window.ui.h:10
 msgid "Check interval:"
 msgstr ""
 
-#: config_window.ui.h:9
+#: data/config_window.ui.h:11
 msgid "Enable spamfilter"
 msgstr ""
 
-#: config_window.ui.h:10
+#: data/config_window.ui.h:12
 msgid "Events"
 msgstr ""
 
-#: config_window.ui.h:11
+#: data/config_window.ui.h:13
 msgid "General"
 msgstr ""
 
-#: config_window.ui.h:12
+#: data/config_window.ui.h:14
 msgid "Mail client:"
 msgstr ""
 
-#: config_window.ui.h:13
+#: data/config_window.ui.h:15
 msgid "Mailnag Configuration"
 msgstr ""
 
-#: config_window.ui.h:14
+#: data/config_window.ui.h:16
 msgid "Messagetray label:"
 msgstr ""
 
-#: config_window.ui.h:15
+#: data/config_window.ui.h:17
 msgid "Play sound on new mails"
 msgstr ""
 
-#: config_window.ui.h:16
+#: data/config_window.ui.h:18
 msgid "Spamfilter"
 msgstr ""
 
-#: config_window.ui.h:17
+#: data/config_window.ui.h:19
 msgid "Start Mailnag automatically"
 msgstr ""
 
-#: config_window.ui.h:18
+#: data/config_window.ui.h:20
+msgid ""
+"The following script will be executed on every single mail check.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+msgstr ""
+
+#: data/config_window.ui.h:23
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+msgstr ""
+
+#: data/config_window.ui.h:26
 msgid "minutes"
 msgstr ""
 
-#: keyring_dialog.ui.h:1
+#: data/keyring_dialog.ui.h:1
 msgid "Mailnag"
 msgstr ""
 
-#: keyring_dialog.ui.h:2
+#: data/keyring_dialog.ui.h:2
 msgid ""
 "Mailnag can't access the keyring because it is locked.\n"
 "Please enter the password:"
 msgstr ""
 
-#: message_dialog.ui.h:1
+#: data/message_dialog.ui.h:1
 msgid "Mailnag Message"
-msgstr ""
-
-#: message_dialog.ui.h:2
-msgid "label"
 msgstr ""
