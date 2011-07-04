@@ -465,38 +465,21 @@ def delete_pid():														# delete file mailnag.pid
 		os.popen("rm " + pid_file)										# delete it
 
 
-def user_scripts(event, data):											# process user scripts
-	if event == "on_email_arrival":
-		if cfg.get('script', 'script0_on') == '1' and data > 0:			# on new emails
-			pathfile = cfg.get('script', 'script0_file')				# get script pathfile
-			if pathfile != '' and os.path.exists(pathfile):				# not empty and existing
-				pid.append(subprocess.Popen(pathfile))					# execute
+def user_scripts(event, data):
+	if event == "on_mail_check":
+		if cfg.get('script', 'script0_on') == '1':
+			script_file = cfg.get('script', 'script0_file')
+			if script_file != '' and os.path.exists(script_file):
+				pid.append(subprocess.Popen("%s %s" % (script_file, data), shell = True))
 			else:
-				print 'Warning: cannot execute script:', pathfile
-
-		if cfg.get('script', 'script1_on') == '1' and data == 0:		# on no new emails
-			pathfile = cfg.get('script', 'script1_file')
-			if pathfile != '' and os.path.exists(pathfile):
-				pid.append(subprocess.Popen(pathfile))
+				print 'Warning: cannot execute script:', script_file
+		
+		if (data != '0') and (cfg.get('script', 'script1_on') == '1'):
+			script_file = cfg.get('script', 'script1_file')
+			if script_file != '' and os.path.exists(script_file):
+				pid.append(subprocess.Popen("%s %s" % (script_file, data), shell = True))
 			else:
-				print 'Warning: cannot execute script:', pathfile
-
-	elif cfg.get('script', 'script2_on') == '1' and event == "on_email_clicked":
-		pathfile = cfg.get('script', 'script2_file')
-		if pathfile != '' and os.path.exists(pathfile):
-			pid.append(subprocess.Popen([pathfile, data[0], data[1], data[2]]))	# call script with 'sender, datetime, subject'
-		else:
-			print 'Warning: cannot execute script:', pathfile
-
-	elif cfg.get('script', 'script3_on') == '1' and event == "on_account_clicked":
-		pathfile = cfg.get('script', 'script3_file')
-		if pathfile != '' and os.path.exists(pathfile):
-			pid.append(subprocess.Popen([pathfile, data[0], data[1]]))	# call script with account_name
-		else:
-			print 'Warning: cannot execute script:', pathfile
-
-	else:
-		return False
+				print 'Warning: cannot execute script:', script_file
 
 
 def commandExecutor(command, context_menu_command=None):
@@ -552,10 +535,14 @@ class MailChecker:
 		new_mails = 0
 		summary = ""		
 		body = ""
-
+		script_data = ""
+		
 		for mail in self.mail_list:
 			if not self.reminder.contains(mail.id):
 				new_mails += 1
+				script_data += ' "<%s> %s"' % (mail.sender, mail.subject)
+		
+		script_data = str(new_mails) + script_data
 		
 		if all_mails == 0:
 			 # no mails (e.g. email client has been launched) -> close notification
@@ -581,7 +568,7 @@ class MailChecker:
 			self.notification.update(summary, body, "mail-unread")
 			self.notification.show()
 
-		user_scripts("on_email_arrival", new_mails)						# process user scripts
+		user_scripts("on_mail_check", script_data)						# process user scripts
 
 		self.reminder.save(self.mail_list)
 		sys.stdout.flush()												# write stdout to log file
@@ -615,7 +602,7 @@ class Reminder(dict):
 
 	def load(self):														# load last known messages from mailnag.dat
 		remember = cfg.get('general', 'remember')
-		dat_file = user_path + 'mailnag.dat'
+		dat_file = os.path.join(user_path, 'mailnag.dat')
 		we_have_a_file = os.path.exists(dat_file)						# check if file exists
 		if remember == '1' and we_have_a_file:
 			f = open(dat_file, 'r')										# open file again
@@ -630,7 +617,7 @@ class Reminder(dict):
 
 
 	def save(self, mail_list):											# save mail ids to file
-		dat_file = user_path + 'mailnag.dat'
+		dat_file = os.path.join(user_path, 'mailnag.dat')
 		f = open(dat_file, 'w')											# open the file for overwrite
 		for m in mail_list:
 			try:

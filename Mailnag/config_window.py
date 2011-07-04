@@ -59,7 +59,9 @@ class ConfigWindow:
 			"treeview_accounts_row_activated" : self.__on_treeview_accounts_row_activated, \
 			"liststore_accounts_row_deleted" : self.__on_liststore_accounts_row_deleted, \
 			"liststore_accounts_row_inserted" : self.__on_liststore_accounts_row_inserted, \
-			"chk_enable_filter_toggled" : self.__on_chk_enable_filter_toggled \
+			"chk_enable_filter_toggled" : self.__on_chk_enable_filter_toggled, \
+			"chk_script0_toggled" : self.__on_chk_script0_toggled, \
+			"chk_script1_toggled" : self.__on_chk_script1_toggled \
 		})
 
 		self.window = builder.get_object("config_window")
@@ -103,15 +105,22 @@ class ConfigWindow:
 		
 		#
 		# spam filter tab
+		#
 		self.chk_enable_filter = builder.get_object("chk_enable_filter")
 		self.textview_filter = builder.get_object("textview_filter")	
 		self.textbuffer_filter = builder.get_object("textbuffer_filter")	
 
 		#
 		# events tab
-		# TODO
-
+		#
+		self.chk_script0 = builder.get_object("chk_script0")
+		self.filechooser_script0 = builder.get_object("filechooser_script0")
+		self.chk_script1 = builder.get_object("chk_script1")
+		self.filechooser_script1 = builder.get_object("filechooser_script1")
+		
+		#
 		# about tab
+		#
 		self.image_logo = builder.get_object("image_logo")
 		pb = GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 200, 200)
 		self.image_logo.set_from_pixbuf(pb)
@@ -131,6 +140,18 @@ class ConfigWindow:
 		self.chk_enable_filter.set_active(int(cfg.get('filter', 'filter_on')))
 		self.textbuffer_filter.set_text(cfg.get('filter', 'filter_text'))
 
+		self.chk_script0.set_active(int(cfg.get('script', 'script0_on')))
+		
+		tmp = cfg.get('script', 'script0_file')
+		if len(tmp) > 0:
+			self.filechooser_script0.set_filename(tmp)
+		
+		self.chk_script1.set_active(int(cfg.get('script', 'script1_on')))
+		
+		tmp = cfg.get('script', 'script1_file')
+		if len(tmp) > 0:
+			self.filechooser_script1.set_filename(tmp)
+		
 		self.accounts.load()
 
 		for acc in self.accounts.account:								# load accounts into treeview
@@ -150,6 +171,16 @@ class ConfigWindow:
 		cfg.set('filter', 'filter_on', int(self.chk_enable_filter.get_active()))
 		start, end = self.textbuffer_filter.get_bounds()		
 		cfg.set('filter', 'filter_text', self.textbuffer_filter.get_text(start, end, True))	
+		
+		cfg.set('script', 'script0_on', int(self.chk_script0.get_active()))
+		tmp = self.filechooser_script0.get_filename()
+		if tmp == None: tmp = ""
+		cfg.set('script', 'script0_file', tmp)
+		
+		cfg.set('script', 'script1_on', int(self.chk_script1.get_active()))
+		tmp = self.filechooser_script1.get_filename()
+		if tmp == None: tmp = ""
+		cfg.set('script', 'script1_file', tmp)
 		
 		on, name, server, user, password, imap, folder, port = self.accounts.get_cfg()
 		cfg.set('account', 'on', on)
@@ -295,6 +326,14 @@ class ConfigWindow:
 		self.textview_filter.set_sensitive(self.chk_enable_filter.get_active())
 
 
+	def __on_chk_script0_toggled(self, widget):
+		self.filechooser_script0.set_sensitive(self.chk_script0.get_active())
+		
+	
+	def __on_chk_script1_toggled(self, widget):
+		self.filechooser_script1.set_sensitive(self.chk_script1.get_active())
+		
+	
 	def __save_and_quit(self):
 		self.save_config()
 		keyring.remove(self.accounts.account)							# delete obsolete entries from Keyring	
