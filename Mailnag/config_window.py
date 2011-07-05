@@ -153,8 +153,17 @@ class ConfigWindow:
 			self.filechooser_script1.set_filename(tmp)
 		
 		self.accounts.load()
-
-		for acc in self.accounts.account:								# load accounts into treeview
+		
+		if len(self.accounts.account) == 0:
+			imported_accounts = keyring.import_accounts()
+			if len(imported_accounts) > 0 and \
+				self.show_yesno_dialog(_("Mailnag found %s mail accounts on this computer.\n\nDo you want to import them?") % len(imported_accounts)):
+				for arr in imported_accounts:
+					self.accounts.add(name = "%s (%s)" % (arr[1], arr[0]), \
+						on = 1, server = arr[0], user = arr[1], \
+						password = arr[2], imap = arr[3])
+			
+		for acc in self.accounts.account:
 			row = acc.get_row()
 			self.liststore_accounts.append(row)
 		self.select_path((0,))		
