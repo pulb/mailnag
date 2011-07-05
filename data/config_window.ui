@@ -555,7 +555,7 @@ followed by &lt;i&gt;"&amp;lt;sender&amp;gt; &amp;lt;subject&amp;gt;"&lt;/i&gt; 
               <object class="GtkLabel" id="label8">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="label" translatable="yes">&lt;a href="http:/launchpad.net/mailnag"&gt;Mailnag&lt;/a&gt; - A mail notifier for GNOME 3
+                <property name="label" translatable="yes">&lt;a href="https://github.com/pulb/mailnag"&gt;Mailnag&lt;/a&gt; - A mail notifier for GNOME 3
 Copyright (c) 2011 Patrick Ulbrich
 
 Mailnag is based on &lt;a href="http:/launchpad.net/popper"&gt;Popper&lt;/a&gt;
