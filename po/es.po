@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-07-04 19:40+0200\n"
+"POT-Creation-Date: 2011-07-05 19:51+0200\n"
 "PO-Revision-Date: 2011-07-02 20:52+0000\n"
 "Last-Translator: javiggvv <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-07-04 19:18+0000\n"
+"X-Launchpad-Export-Date: 2011-07-05 18:12+0000\n"
 "X-Generator: Launchpad (build 13333)\n"
 
 #: Mailnag/config_window.py:88
@@ -25,23 +25,31 @@ msgstr "Activado"
 msgid "Name"
 msgstr "Nombre"
 
-#: Mailnag/config_window.py:299
+#: Mailnag/config_window.py:160
+#, python-format
+msgid ""
+"Mailnag found %s mail accounts on this computer.\n"
+"\n"
+"Do you want to import them?"
+msgstr ""
+
+#: Mailnag/config_window.py:308
 msgid "Delete this account:"
 msgstr "Borrar esta cuenta"
 
-#: Mailnag/config_window.py:373
+#: Mailnag/config_window.py:382
 msgid "Unnamed"
 msgstr "Sin nombre"
 
-#: Mailnag/config_window.py:482
+#: Mailnag/config_window.py:491
 msgid "Missing data in account(s):"
 msgstr "Faltan datos en la(s) cuenta(s):"
 
-#: Mailnag/config_window.py:485
+#: Mailnag/config_window.py:494
 msgid "Please correct this first."
 msgstr "Por favor, corrija primero esto"
 
-#: Mailnag/config_window.py:499
+#: Mailnag/config_window.py:508
 msgid "Config file does not exist, creating new one"
 msgstr "El archivo de configuración no existe, creando uno nuevo"
 
