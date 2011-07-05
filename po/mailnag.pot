@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-04 19:40+0200\n"
+"POT-Creation-Date: 2011-07-05 19:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,23 +25,31 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: Mailnag/config_window.py:299
+#: Mailnag/config_window.py:160
+#, python-format
+msgid ""
+"Mailnag found %s mail accounts on this computer.\n"
+"\n"
+"Do you want to import them?"
+msgstr ""
+
+#: Mailnag/config_window.py:308
 msgid "Delete this account:"
 msgstr ""
 
-#: Mailnag/config_window.py:373
+#: Mailnag/config_window.py:382
 msgid "Unnamed"
 msgstr ""
 
-#: Mailnag/config_window.py:482
+#: Mailnag/config_window.py:491
 msgid "Missing data in account(s):"
 msgstr ""
 
-#: Mailnag/config_window.py:485
+#: Mailnag/config_window.py:494
 msgid "Please correct this first."
 msgstr ""
 
-#: Mailnag/config_window.py:499
+#: Mailnag/config_window.py:508
 msgid "Config file does not exist, creating new one"
 msgstr ""
 
