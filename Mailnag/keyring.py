@@ -96,7 +96,7 @@ class Keyring:
 			return ''
 
 
-	def import_accounts(self, gui):										# get email accounts from Gnome-Keyring
+	def import_accounts(self):										# get email accounts from Gnome-Keyring
 		accounts = []
 		if gnomekeyring.list_item_ids_sync(self.defaultKeyring):
 			displayNameDict = {}
