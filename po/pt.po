@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-07-05 19:51+0200\n"
-"PO-Revision-Date: 2011-07-07 00:41+0000\n"
-"Last-Translator: Lidinei <Unknown>\n"
+"PO-Revision-Date: 2011-07-07 18:10+0000\n"
+"Last-Translator: Patrick Ulbrich <Unknown>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-07-07 16:56+0000\n"
-"X-Generator: Launchpad (build 13376)\n"
+"X-Launchpad-Export-Date: 2011-07-12 18:48+0000\n"
+"X-Generator: Launchpad (build 13388)\n"
 
 #: Mailnag/config_window.py:88
 msgid "Enabled"
@@ -31,7 +31,10 @@ msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
 "\n"
 "Do you want to import them?"
-msgstr "Mailnag encontrou %s contas de email nesse computador."
+msgstr ""
+"Mailnag encontrou %s contas de email nesse computador.\n"
+"\n"
+"Do you want to import them?"
 
 #: Mailnag/config_window.py:308
 msgid "Delete this account:"
@@ -59,7 +62,11 @@ msgid ""
 "Wrong password.\n"
 "\n"
 "Do you want to try again?"
-msgstr "Falha ao desbloquear chaveiro \"{0}\""
+msgstr ""
+"Falha ao desbloquear chaveiro \"{0}\".\n"
+"Wrong password.\n"
+"\n"
+"Do you want to try again?"
 
 #: Mailnag/mailnag.py:521
 msgid "Open in mail reader"
@@ -171,7 +178,7 @@ msgstr "Configuração Mailnag"
 
 #: data/config_window.ui.h:16
 msgid "Messagetray label:"
-msgstr "Campo Messgetray"
+msgstr "Campo Messgetray:"
 
 #: data/config_window.ui.h:17
 msgid "Play sound on new mails"
