@@ -1,0 +1,233 @@
+# Serbian translation for mailnag
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the mailnag package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mailnag\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-07-05 19:51+0200\n"
+"PO-Revision-Date: 2011-07-27 11:59+0000\n"
+"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
+"Language-Team: Serbian <sr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-07-31 13:17+0000\n"
+"X-Generator: Launchpad (build 13543)\n"
+
+#: Mailnag/config_window.py:88
+msgid "Enabled"
+msgstr "Укључено"
+
+#: Mailnag/config_window.py:94
+msgid "Name"
+msgstr "Назив"
+
+#: Mailnag/config_window.py:160
+#, python-format
+msgid ""
+"Mailnag found %s mail accounts on this computer.\n"
+"\n"
+"Do you want to import them?"
+msgstr ""
+"Поштарко је нашао %s налога поште на овом рачунару.\n"
+"\n"
+"Да ли желите да их увезете?"
+
+#: Mailnag/config_window.py:308
+msgid "Delete this account:"
+msgstr "Обриши ове налоге:"
+
+#: Mailnag/config_window.py:382
+msgid "Unnamed"
+msgstr "Неименовано"
+
+#: Mailnag/config_window.py:491
+msgid "Missing data in account(s):"
+msgstr "Недостају подаци у налогу:"
+
+#: Mailnag/config_window.py:494
+msgid "Please correct this first."
+msgstr "Молим прво исправите ово."
+
+#: Mailnag/config_window.py:508
+msgid "Config file does not exist, creating new one"
+msgstr "Датотека са подешавањима не постоји, направите нову."
+
+#: Mailnag/keyring.py:66
+msgid ""
+"Failed to unlock Keyring \"{0}\".\n"
+"Wrong password.\n"
+"\n"
+"Do you want to try again?"
+msgstr ""
+"Нисам успео да откључам привезак кључева „{0}“.\n"
+"Погрешна лозинка.\n"
+"\n"
+"Да ли желите да покушате опет?"
+
+#: Mailnag/mailnag.py:521
+msgid "Open in mail reader"
+msgstr "Отвори у читачу поште"
+
+#: Mailnag/mailnag.py:522
+msgid "Close"
+msgstr "Затвори"
+
+#: Mailnag/mailnag.py:557
+msgid "(and {0} more)"
+msgstr "(и још {0})"
+
+#: Mailnag/mailnag.py:560
+msgid "You have {0} new mails."
+msgstr "Имате {0} нове поруке."
+
+#: Mailnag/mailnag.py:562
+msgid "You have a new mail."
+msgstr "Имате нову пошту."
+
+#: data/account_dialog.ui.h:1
+msgid "Accountname:"
+msgstr "Назив налога:"
+
+#: data/account_dialog.ui.h:2
+msgid "Folder:"
+msgstr "Фасцикла:"
+
+#: data/account_dialog.ui.h:3
+msgid "IMAP"
+msgstr "ИМАП"
+
+#: data/account_dialog.ui.h:4
+msgid "Mail Account"
+msgstr "Налог поште"
+
+#: data/account_dialog.ui.h:5
+msgid "Password:"
+msgstr "Лозинка:"
+
+#: data/account_dialog.ui.h:6
+msgid "Port (optional):"
+msgstr "Порт (изборно):"
+
+#: data/account_dialog.ui.h:7
+msgid "Server:"
+msgstr "Сервер:"
+
+#: data/account_dialog.ui.h:8
+msgid "User:"
+msgstr "Корисник:"
+
+#: data/config_window.ui.h:1
+msgid ""
+"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - A mail notifier for "
+"GNOME 3\n"
+"Copyright (c) 2011 Patrick Ulbrich\n"
+"\n"
+"Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Copyright (c) 2011 Ralf Hersel"
+msgstr ""
+"<a href=\"http:/launchpad.net/mailnag\">Поштарко</a> — Извештавач о пошти за "
+"Гном 3\n"
+"Ауторска права (c) 2011 Патрик Улбрих\n"
+"\n"
+"Поштарко је заснован на <a href=\"http:/launchpad.net/popper\">Поперу</a>\n"
+"Ауторска права (c) 2011 Ралф Херсел"
+
+#: data/config_window.ui.h:6
+msgid "<b>On mail arrival</b>"
+msgstr "<b>Приликом пристизања поште</b>"
+
+#: data/config_window.ui.h:7
+msgid "<b>On mail check</b>"
+msgstr "<b>Приликом провере поште</b>"
+
+#: data/config_window.ui.h:8
+msgid "About"
+msgstr "О програму"
+
+#: data/config_window.ui.h:9
+msgid "Accounts"
+msgstr "Налози"
+
+#: data/config_window.ui.h:10
+msgid "Check interval:"
+msgstr "Интервал провере:"
+
+#: data/config_window.ui.h:11
+msgid "Enable spamfilter"
+msgstr "Укључи филтер спама"
+
+#: data/config_window.ui.h:12
+msgid "Events"
+msgstr "Догађаји"
+
+#: data/config_window.ui.h:13
+msgid "General"
+msgstr "Опште"
+
+#: data/config_window.ui.h:14
+msgid "Mail client:"
+msgstr "Програм поште:"
+
+#: data/config_window.ui.h:15
+msgid "Mailnag Configuration"
+msgstr "Подешавања Поштарка"
+
+#: data/config_window.ui.h:16
+msgid "Messagetray label:"
+msgstr "Ознака поруке:"
+
+#: data/config_window.ui.h:17
+msgid "Play sound on new mails"
+msgstr "Звучно обавести када пристигне нова пошта"
+
+#: data/config_window.ui.h:18
+msgid "Spamfilter"
+msgstr "Филтер спама"
+
+#: data/config_window.ui.h:19
+msgid "Start Mailnag automatically"
+msgstr "Покрени Поштарка аутоматски"
+
+#: data/config_window.ui.h:20
+msgid ""
+"The following script will be executed on every single mail check.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+msgstr ""
+"Следећа скрипта ће бити извршена при сваком засебном проверавању\n"
+"поште. Поштарко скрипти прослеђује укупан број нових порука,\n"
+"за којим следи пар <i>\"&lt;пошиљалац&gt; &lt;тема&gt;\"</i>."
+
+#: data/config_window.ui.h:23
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+msgstr ""
+"Следећа скрипта ће бити извршена при сваком пристизању нове\n"
+"поште. Поштарко скрипти прослеђује укупан број нових порука,\n"
+"за којим следи пар <i>\"&lt;пошиљалац&gt; &lt;тема&gt;\"</i>."
+
+#: data/config_window.ui.h:26
+msgid "minutes"
+msgstr "минута"
+
+#: data/keyring_dialog.ui.h:1
+msgid "Mailnag"
+msgstr "Поштарко"
+
+#: data/keyring_dialog.ui.h:2
+msgid ""
+"Mailnag can't access the keyring because it is locked.\n"
+"Please enter the password:"
+msgstr ""
+"Поштарко не може да приступи привеску кључева зато што је закључан.\n"
+"Молим унесите лозинку:"
+
+#: data/message_dialog.ui.h:1
+msgid "Mailnag Message"
+msgstr "Порука Поштарка"
