@@ -1,0 +1,234 @@
+# Croatian translation for mailnag
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the mailnag package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mailnag\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-07-05 19:51+0200\n"
+"PO-Revision-Date: 2011-08-14 08:21+0000\n"
+"Last-Translator: Ivo Majić <Unknown>\n"
+"Language-Team: Croatian <hr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-08-14 09:40+0000\n"
+"X-Generator: Launchpad (build 13674)\n"
+
+#: Mailnag/config_window.py:88
+msgid "Enabled"
+msgstr "Omogućeno"
+
+#: Mailnag/config_window.py:94
+msgid "Name"
+msgstr "Ime"
+
+#: Mailnag/config_window.py:160
+#, python-format
+msgid ""
+"Mailnag found %s mail accounts on this computer.\n"
+"\n"
+"Do you want to import them?"
+msgstr ""
+"Mailnag je našao %s novih korisničkih računa na ovom računalu.\n"
+"\n"
+"Želite li ih uvesti?"
+
+#: Mailnag/config_window.py:308
+msgid "Delete this account:"
+msgstr "Izbriši ovaj korisnički račun:"
+
+#: Mailnag/config_window.py:382
+msgid "Unnamed"
+msgstr "Neimenovano"
+
+#: Mailnag/config_window.py:491
+msgid "Missing data in account(s):"
+msgstr "Nedostaju podaci u jednom ili više korisničkih računa."
+
+#: Mailnag/config_window.py:494
+msgid "Please correct this first."
+msgstr "Molim da prvo ispravite sljedeće."
+
+#: Mailnag/config_window.py:508
+msgid "Config file does not exist, creating new one"
+msgstr "Konfiguracijska datoteka ne postoji, stvaram novu datoteku"
+
+#: Mailnag/keyring.py:66
+msgid ""
+"Failed to unlock Keyring \"{0}\".\n"
+"Wrong password.\n"
+"\n"
+"Do you want to try again?"
+msgstr ""
+"Pogreška prilikom otvaranja Keyring aplikacije \"{0}\".\n"
+"Pogrešna lozinka.\n"
+"\n"
+"Želite li ponovo pokušati?"
+
+#: Mailnag/mailnag.py:521
+msgid "Open in mail reader"
+msgstr "Otvori u e-mail aplikaciji"
+
+#: Mailnag/mailnag.py:522
+msgid "Close"
+msgstr "Zatvori"
+
+#: Mailnag/mailnag.py:557
+msgid "(and {0} more)"
+msgstr "(i još {0})"
+
+#: Mailnag/mailnag.py:560
+msgid "You have {0} new mails."
+msgstr "Imate {0} novih poruka."
+
+#: Mailnag/mailnag.py:562
+msgid "You have a new mail."
+msgstr "Imate novu poruku."
+
+#: data/account_dialog.ui.h:1
+msgid "Accountname:"
+msgstr "Naziv korisničkog računa:"
+
+#: data/account_dialog.ui.h:2
+msgid "Folder:"
+msgstr "Direktorij:"
+
+#: data/account_dialog.ui.h:3
+msgid "IMAP"
+msgstr "IMAP"
+
+#: data/account_dialog.ui.h:4
+msgid "Mail Account"
+msgstr "E-mail korisnički račun"
+
+#: data/account_dialog.ui.h:5
+msgid "Password:"
+msgstr "Lozinka"
+
+#: data/account_dialog.ui.h:6
+msgid "Port (optional):"
+msgstr "Port"
+
+#: data/account_dialog.ui.h:7
+msgid "Server:"
+msgstr "Poslužitelj:"
+
+#: data/account_dialog.ui.h:8
+msgid "User:"
+msgstr "Korisnik:"
+
+#: data/config_window.ui.h:1
+msgid ""
+"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - A mail notifier for "
+"GNOME 3\n"
+"Copyright (c) 2011 Patrick Ulbrich\n"
+"\n"
+"Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Copyright (c) 2011 Ralf Hersel"
+msgstr ""
+"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - Obavijestitelj o novim "
+"e-mail porukama za GNOME 3\n"
+"Copyright (c) 2011 Patrick Ulbrich\n"
+"\n"
+"Mailnag je temeljen na <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Copyright (c) 2011 Ralf Hersel"
+
+#: data/config_window.ui.h:6
+msgid "<b>On mail arrival</b>"
+msgstr "<b>Prilikom primitka e-mail poruke</b>"
+
+#: data/config_window.ui.h:7
+msgid "<b>On mail check</b>"
+msgstr "<b>Prilikom dohvata novih e-mail poruka</b>"
+
+#: data/config_window.ui.h:8
+msgid "About"
+msgstr "O aplikaciji"
+
+#: data/config_window.ui.h:9
+msgid "Accounts"
+msgstr "Korisnički računi"
+
+#: data/config_window.ui.h:10
+msgid "Check interval:"
+msgstr "Period provjere:"
+
+#: data/config_window.ui.h:11
+msgid "Enable spamfilter"
+msgstr "Omogući filter neželjenih (SPAM) poruka"
+
+#: data/config_window.ui.h:12
+msgid "Events"
+msgstr "Događaji"
+
+#: data/config_window.ui.h:13
+msgid "General"
+msgstr "Općenito"
+
+#: data/config_window.ui.h:14
+msgid "Mail client:"
+msgstr "E-mail aplikacija:"
+
+#: data/config_window.ui.h:15
+msgid "Mailnag Configuration"
+msgstr "Mailnag Konfiguracija"
+
+#: data/config_window.ui.h:16
+msgid "Messagetray label:"
+msgstr "Oznaka na alatnoj traci:"
+
+#: data/config_window.ui.h:17
+msgid "Play sound on new mails"
+msgstr "Izvedi zvuk prilikom primitka nove e-mail poruke"
+
+#: data/config_window.ui.h:18
+msgid "Spamfilter"
+msgstr "Filter neželjenih (SPAM) poruka"
+
+#: data/config_window.ui.h:19
+msgid "Start Mailnag automatically"
+msgstr "Pokreni Mailnag automatski"
+
+#: data/config_window.ui.h:20
+msgid ""
+"The following script will be executed on every single mail check.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+msgstr ""
+"Sljedeća skripta će biti izvedena prilikom svakog dohvata novih e-mail "
+"poruka.\n"
+"Mailnag skripti kao argument predaje konačan broj novih poruka,\n"
+"koje slijede parovi <i>\"&lt;sender&gt; &lt;subject&gt;\"</i>."
+
+#: data/config_window.ui.h:23
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+msgstr ""
+"Sljedeća skripta će biti izvedena prilikom primitka novih e-mail poruka.\n"
+"Mailnag skripti kao argument predaje konačan broj novih poruka,\n"
+"koje slijede parovi <i>\"&lt;sender&gt; &lt;subject&gt;\"</i>."
+
+#: data/config_window.ui.h:26
+msgid "minutes"
+msgstr "minute"
+
+#: data/keyring_dialog.ui.h:1
+msgid "Mailnag"
+msgstr "Mailnag"
+
+#: data/keyring_dialog.ui.h:2
+msgid ""
+"Mailnag can't access the keyring because it is locked.\n"
+"Please enter the password:"
+msgstr ""
+"Mailnag ne može pristupiti aplikaciji Keyring jer je zaključana.\n"
+"Molimo unesite lozinku:"
+
+#: data/message_dialog.ui.h:1
+msgid "Mailnag Message"
+msgstr "Mailnag Poruka"
