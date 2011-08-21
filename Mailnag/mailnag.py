@@ -678,7 +678,7 @@ def cleanup():
 
 # Main =================================================================
 def main():
-	global cfg, user_path, accounts, mails, mailchecker, autostarted, firstcheck, pid
+	global cfg, user_path, accounts, mails, mailchecker, firstcheck, pid
 
 	set_procname("mailnag")
 
@@ -686,11 +686,6 @@ def main():
 
 	try:
 		user_path = os.path.join(bd.xdg_config_home, "mailnag")
-		autostarted = False													# default setting for command line argument
-		cmdline = sys.argv													# get command line arguments
-		if len(cmdline) > 1:												# do we have something in command line?
-			if cmdline[1] == 'autostarted':
-				autostarted = True
 		write_pid()															# write Mailnag's process id to file
 		cfg = read_config(os.path.join(user_path, 'mailnag.cfg'))			# get configuration from file
 		
