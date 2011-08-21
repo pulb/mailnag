@@ -522,7 +522,7 @@ class MailChecker:
 		self.notification.add_action("close", _("Close"), self.__notification_action_handler)
 		
 
-	def timeout(self):
+	def timeout(self, firstcheck = False):
 		print 'Checking email accounts at:', time.asctime()				# debug
 		pid.kill()														# kill all Zombies
 		
@@ -678,7 +678,7 @@ def cleanup():
 
 # Main =================================================================
 def main():
-	global cfg, user_path, accounts, mails, mailchecker, firstcheck, pid
+	global cfg, user_path, accounts, mails, mailchecker, pid
 
 	set_procname("mailnag")
 
@@ -690,13 +690,9 @@ def main():
 		cfg = read_config(os.path.join(user_path, 'mailnag.cfg'))			# get configuration from file
 		
 		accounts = Accounts()												# create Accounts object
-		if accounts.keyring_was_locked: firstcheck = False					# required for correct sortorder in indi menu
-		else: firstcheck = True
-
 		pid = Pid()															# create Pid object
-		mailchecker = MailChecker()												# create MailChecker object
-		mailchecker.timeout()													# immediate check, firstcheck=True
-		firstcheck = False													# firstcheck is over
+		mailchecker = MailChecker()											# create MailChecker object
+		mailchecker.timeout(True)											# immediate check, firstcheck=True
 		
 		if cfg.get('general', 'check_once') == '0':							# wanna do more than one email check?
 			check_interval = int(cfg.get('general', 'check_interval'))
