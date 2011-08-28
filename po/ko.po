@@ -1,0 +1,232 @@
+# Korean translation for mailnag
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the mailnag package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mailnag\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-07-05 19:51+0200\n"
+"PO-Revision-Date: 2011-08-25 20:19+0000\n"
+"Last-Translator: Bae Taegil <Unknown>\n"
+"Language-Team: Korean <ko@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-08-28 11:12+0000\n"
+"X-Generator: Launchpad (build 13794)\n"
+
+#: Mailnag/config_window.py:88
+msgid "Enabled"
+msgstr "활성화 됨"
+
+#: Mailnag/config_window.py:94
+msgid "Name"
+msgstr "이름"
+
+#: Mailnag/config_window.py:160
+#, python-format
+msgid ""
+"Mailnag found %s mail accounts on this computer.\n"
+"\n"
+"Do you want to import them?"
+msgstr ""
+"Mailnag이 이 컴퓨터에서 %s 메일 계정을 발견했습니다.\n"
+"\n"
+"그것을 불러 들이기를 원하십니까?"
+
+#: Mailnag/config_window.py:308
+msgid "Delete this account:"
+msgstr "이 계정을 지웁니다:"
+
+#: Mailnag/config_window.py:382
+msgid "Unnamed"
+msgstr "이름 없음"
+
+#: Mailnag/config_window.py:491
+msgid "Missing data in account(s):"
+msgstr "계정에 없는 데이터:"
+
+#: Mailnag/config_window.py:494
+msgid "Please correct this first."
+msgstr "이것 먼저 고쳐 주세요."
+
+#: Mailnag/config_window.py:508
+msgid "Config file does not exist, creating new one"
+msgstr "설정파일이 존재하지 않아서 새로 만듭니다"
+
+#: Mailnag/keyring.py:66
+msgid ""
+"Failed to unlock Keyring \"{0}\".\n"
+"Wrong password.\n"
+"\n"
+"Do you want to try again?"
+msgstr ""
+"열쇠고리 \"{0}\"을 푸는데 실패했습니다.\n"
+"암호가 틀렸습니다.\n"
+"\n"
+"다시 시도하시겠습니까?"
+
+#: Mailnag/mailnag.py:521
+msgid "Open in mail reader"
+msgstr "메일 리더에서 열기"
+
+#: Mailnag/mailnag.py:522
+msgid "Close"
+msgstr "닫기"
+
+#: Mailnag/mailnag.py:557
+msgid "(and {0} more)"
+msgstr "(그리고 {0}개 더)"
+
+#: Mailnag/mailnag.py:560
+msgid "You have {0} new mails."
+msgstr "{0}개의 새 메일이 있습니다."
+
+#: Mailnag/mailnag.py:562
+msgid "You have a new mail."
+msgstr "한 개의 새 메일이 있습니다."
+
+#: data/account_dialog.ui.h:1
+msgid "Accountname:"
+msgstr "계정이름"
+
+#: data/account_dialog.ui.h:2
+msgid "Folder:"
+msgstr "폴더:"
+
+#: data/account_dialog.ui.h:3
+msgid "IMAP"
+msgstr "IMAP"
+
+#: data/account_dialog.ui.h:4
+msgid "Mail Account"
+msgstr "메일 계정"
+
+#: data/account_dialog.ui.h:5
+msgid "Password:"
+msgstr "암호:"
+
+#: data/account_dialog.ui.h:6
+msgid "Port (optional):"
+msgstr "포트 (선택사항):"
+
+#: data/account_dialog.ui.h:7
+msgid "Server:"
+msgstr "서버:"
+
+#: data/account_dialog.ui.h:8
+msgid "User:"
+msgstr "사용자:"
+
+#: data/config_window.ui.h:1
+msgid ""
+"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - A mail notifier for "
+"GNOME 3\n"
+"Copyright (c) 2011 Patrick Ulbrich\n"
+"\n"
+"Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Copyright (c) 2011 Ralf Hersel"
+msgstr ""
+"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - 그놈 3를 위한 메일 알림기\n"
+"Copyright (c) 2011 Patrick Ulbrich\n"
+"\n"
+"Mailnag은 <a href=\"http:/launchpad.net/popper\">Popper</a>에 기초하고 있습니다.\n"
+"Copyright (c) 2011 Ralf Hersel"
+
+#: data/config_window.ui.h:6
+msgid "<b>On mail arrival</b>"
+msgstr "메일 도착시"
+
+#: data/config_window.ui.h:7
+msgid "<b>On mail check</b>"
+msgstr "메일 확인시"
+
+#: data/config_window.ui.h:8
+msgid "About"
+msgstr "정보 보기"
+
+#: data/config_window.ui.h:9
+msgid "Accounts"
+msgstr "계정들"
+
+#: data/config_window.ui.h:10
+msgid "Check interval:"
+msgstr "확인 간격:"
+
+#: data/config_window.ui.h:11
+msgid "Enable spamfilter"
+msgstr "스팸필터를 활성화하기"
+
+#: data/config_window.ui.h:12
+msgid "Events"
+msgstr "이벤트"
+
+#: data/config_window.ui.h:13
+msgid "General"
+msgstr "일반"
+
+#: data/config_window.ui.h:14
+msgid "Mail client:"
+msgstr "메일 클라이언트:"
+
+#: data/config_window.ui.h:15
+msgid "Mailnag Configuration"
+msgstr "Mailnag 설정"
+
+#: data/config_window.ui.h:16
+msgid "Messagetray label:"
+msgstr "메시지트레이 이름표:"
+
+#: data/config_window.ui.h:17
+msgid "Play sound on new mails"
+msgstr "새 메일이 오면 소리 내기"
+
+#: data/config_window.ui.h:18
+msgid "Spamfilter"
+msgstr "스팸필터"
+
+#: data/config_window.ui.h:19
+msgid "Start Mailnag automatically"
+msgstr "Mailnag을 자동으로 시작하기"
+
+#: data/config_window.ui.h:20
+msgid ""
+"The following script will be executed on every single mail check.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+msgstr ""
+"다음 스크립트는 매 메일 확인마다 실행됩니다.\n"
+"Mailnag은 이 스크립트에 새 메일의 총 갯수를 전달합니다.\n"
+"그리고 <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> 쌍들이 뒤따릅니다."
+
+#: data/config_window.ui.h:23
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+msgstr ""
+"다음 스크립트는 새 메일이 도착할 때마다 실행됩니다.\n"
+"Mailnag은 이 스크립트에 새 메일의 총 갯수를 전달합니다.\n"
+"그리고 <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> 쌍들이 뒤따릅니다."
+
+#: data/config_window.ui.h:26
+msgid "minutes"
+msgstr "분"
+
+#: data/keyring_dialog.ui.h:1
+msgid "Mailnag"
+msgstr "Mailnag"
+
+#: data/keyring_dialog.ui.h:2
+msgid ""
+"Mailnag can't access the keyring because it is locked.\n"
+"Please enter the password:"
+msgstr ""
+"열쇠고리가 잠겨 있어서 Mailnag이 접근하지 못합니다.\n"
+"암호를 입력하세요:"
+
+#: data/message_dialog.ui.h:1
+msgid "Mailnag Message"
+msgstr "Mailnage 메시지"
