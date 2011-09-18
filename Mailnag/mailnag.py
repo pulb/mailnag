@@ -28,7 +28,6 @@ import urllib2
 import ConfigParser
 import os
 import subprocess
-import gobject
 
 PACKAGE_NAME = "mailnag"
 
@@ -37,9 +36,10 @@ PACKAGE_NAME = "mailnag"
 __builtins__.USE_GTK3 = False # (also prevents keyring.py from using GTK3)
 
 if __builtins__.USE_GTK3:
-	from gi.repository import GLib, GdkPixbuf, Gtk, Notify
+	from gi.repository import GObject, GLib, GdkPixbuf, Gtk, Notify
 else:
 	Gtk = __import__("gtk")
+	from gi.repository import GObject
 	import pynotify
 
 import time
@@ -696,7 +696,7 @@ def main():
 		
 		if cfg.get('general', 'check_once') == '0':							# wanna do more than one email check?
 			check_interval = int(cfg.get('general', 'check_interval'))
-			gobject.timeout_add_seconds(60 * check_interval, mailchecker.timeout)
+			GObject.timeout_add_seconds(60 * check_interval, mailchecker.timeout)
 			Gtk.main()															# start Loop
 		
 		cleanup()		

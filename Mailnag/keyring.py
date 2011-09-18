@@ -22,10 +22,8 @@
 # MA 02110-1301, USA.
 #
 
-import gobject
-
 if __builtins__["USE_GTK3"]:
-	from gi.repository import GLib, GdkPixbuf, Gtk
+	from gi.repository import GObject, GLib, GdkPixbuf, Gtk
 else:
 	Gtk = __import__("gtk")
 	GLib = __import__("glib")
