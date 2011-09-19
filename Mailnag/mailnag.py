@@ -153,23 +153,19 @@ class Accounts:
 		keyring = Keyring()
 		self.keyring_was_locked = keyring.was_locked
 
-		on = cfg.get('account', 'on')
-		name = cfg.get('account', 'name')
-		server = cfg.get('account', 'server')
-		user = cfg.get('account', 'user')
-		imap = cfg.get('account', 'imap')
-		folder = cfg.get('account', 'folder')
-		port = cfg.get('account', 'port')
-
 		separator = '|'
-		on_list = on.split(separator)
-		name_list = name.split(separator)
-		server_list = server.split(separator)
-		user_list = user.split(separator)
-		imap_list = imap.split(separator)
-		folder_list = folder.split(separator)
-		port_list = port.split(separator)
+		on_list = cfg.get('account', 'on').split(separator)
+		name_list = cfg.get('account', 'name').split(separator)
+		server_list = cfg.get('account', 'server').split(separator)
+		user_list = cfg.get('account', 'user').split(separator)
+		imap_list = cfg.get('account', 'imap').split(separator)
+		folder_list = cfg.get('account', 'folder').split(separator)
+		port_list = cfg.get('account', 'port').split(separator)
 
+		# check if the account list is empty
+		if len(name_list) == 1 and name_list[0] == '':
+			return
+		
 		for i in range(len(name_list)):									# iterate 0 to nr of elements in name_list
 			on = int(on_list[i])
 			name = name_list[i]
