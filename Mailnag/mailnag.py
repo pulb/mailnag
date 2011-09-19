@@ -39,7 +39,7 @@ if __builtins__.USE_GTK3:
 	from gi.repository import GObject, GLib, GdkPixbuf, Gtk, Notify
 else:
 	Gtk = __import__("gtk")
-	from gi.repository import GObject
+	GObject = __import__("gobject")
 	import pynotify
 
 import time
