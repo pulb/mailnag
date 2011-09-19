@@ -508,7 +508,7 @@ class MailChecker:
 		# TODO :  gi.repository Notify seems to be unstable currently (set_hint and add_action crash)
 		# Notify.init(cfg.get('general', 'messagetray_label'))			# initialize Notification		
 		# self.notification = Notify.Notification.new(" ", None, None)	# empty string will emit a gtk warning		
-		# self.notification.set_hint("resident", True)					# don't close when the bubble or actions are clicked		
+		# self.notification.set_hint("resident", GLib.Variant("b", True)) # don't close when the bubble or actions are clicked		
 		# self.notification.set_category("email")
 		# self.notification.add_action("open", _("Open in mail reader"), self.__notification_action_handler, None, None)
 		# self.notification.add_action("close", _("Close"), self.__notification_action_handler, None, None)
