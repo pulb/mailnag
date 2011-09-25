@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-07-05 19:51+0200\n"
-"PO-Revision-Date: 2011-07-05 18:08+0000\n"
+"POT-Creation-Date: 2011-09-01 20:26+0200\n"
+"PO-Revision-Date: 2011-09-21 17:37+0000\n"
 "Last-Translator: Patrick Ulbrich <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-07-12 18:48+0000\n"
-"X-Generator: Launchpad (build 13388)\n"
+"X-Launchpad-Export-Date: 2011-09-25 10:48+0000\n"
+"X-Generator: Launchpad (build 14012)\n"
 
 #: Mailnag/config_window.py:88
 msgid "Enabled"
@@ -50,11 +50,11 @@ msgstr "Unvollständige Daten in Konto:"
 
 #: Mailnag/config_window.py:494
 msgid "Please correct this first."
-msgstr "Bitte behebn Sie dies."
+msgstr "Bitte beheben Sie dies."
 
 #: Mailnag/config_window.py:508
 msgid "Config file does not exist, creating new one"
-msgstr "Konfigurationsdatei existiert nicht, erstelle neue."
+msgstr "Konfigurationsdatei existiert nicht, erstelle neue"
 
 #: Mailnag/keyring.py:66
 msgid ""
@@ -63,7 +63,7 @@ msgid ""
 "\n"
 "Do you want to try again?"
 msgstr ""
-"Sperren des Schlüßelbundes \"{0}\" fehlgeschlagen.\n"
+"Entsperren des Schlüßelbundes \"{0}\" fehlgeschlagen.\n"
 "Falsches Passwort.\n"
 "\n"
 "Möchten Sie es nochmal versuchen?"
@@ -122,15 +122,15 @@ msgstr "Benutzer:"
 
 #: data/config_window.ui.h:1
 msgid ""
-"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - A mail notifier for "
-"GNOME 3\n"
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
+"for GNOME 3\n"
 "Copyright (c) 2011 Patrick Ulbrich\n"
 "\n"
 "Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
 "Copyright (c) 2011 Ralf Hersel"
 msgstr ""
-"<a href=\"http:/launchpad.net/mailnag\">Mailnag</a> - Email-Benachrichtigung "
-"für GNOME 3\n"
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Ein Email-"
+"Benachrichtiger für GNOME 3\n"
 "Copyright (c) 2011 Patrick Ulbrich\n"
 "\n"
 "Mailnag basiert auf <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
@@ -170,7 +170,7 @@ msgstr "Allgemein"
 
 #: data/config_window.ui.h:14
 msgid "Mail client:"
-msgstr "Mail-Programm"
+msgstr "Mail-Programm:"
 
 #: data/config_window.ui.h:15
 msgid "Mailnag Configuration"
@@ -178,7 +178,7 @@ msgstr "Mailnag-Konfiguration"
 
 #: data/config_window.ui.h:16
 msgid "Messagetray label:"
-msgstr "Messagetray-Beschriftung"
+msgstr "Messagetray-Beschriftung:"
 
 #: data/config_window.ui.h:17
 msgid "Play sound on new mails"
@@ -231,12 +231,3 @@ msgstr ""
 #: data/message_dialog.ui.h:1
 msgid "Mailnag Message"
 msgstr "Mailnag-Nachricht"
-
-#~ msgid "Name:"
-#~ msgstr "Name:"
-
-#~ msgid "Port:"
-#~ msgstr "Port:"
-
-#~ msgid "label"
-#~ msgstr "Beschriftung"
