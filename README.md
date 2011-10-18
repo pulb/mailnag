@@ -11,12 +11,11 @@ Translations: https://translations.launchpad.net/mailnag
 ***
 
 ### Requirements*  
-    pyxdg
-    notify-python
-    python2-gnomekeyring
+    pygobject-3
+    gir-notify
     python-httplib2
-    pygtk2
-    pygobject2
+    python2-gnomekeyring
+    pyxdg
     alsa-utils
 
 \* _This list is possibly incomplete. Please let me know if something is missing here._
