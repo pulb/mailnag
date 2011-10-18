@@ -24,8 +24,6 @@
 
 PACKAGE_NAME = "mailnag"
 
-__builtins__.USE_GTK3 = True # make keyring.py use GTK3
-
 from gi.repository import GLib, GdkPixbuf, Gtk, GObject
 
 import os

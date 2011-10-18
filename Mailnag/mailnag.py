@@ -31,16 +31,7 @@ import subprocess
 
 PACKAGE_NAME = "mailnag"
 
-# TODO : use gtk and glib from gi.repositrory 
-# (those conflict with pynotify and gi.repository.Notify is broken)
-__builtins__.USE_GTK3 = False # (also prevents keyring.py from using GTK3)
-
-if __builtins__.USE_GTK3:
-	from gi.repository import GObject, GLib, GdkPixbuf, Gtk, Notify
-else:
-	Gtk = __import__("gtk")
-	GObject = __import__("gobject")
-	import pynotify
+from gi.repository import GObject, GLib, GdkPixbuf, Gtk, Notify
 
 import time
 import email
@@ -501,21 +492,12 @@ class MailChecker:
 		self.mails = Mails()											# create Mails object
 		self.reminder = Reminder()										# create Reminder object
 
-		# TODO :  gi.repository Notify seems to be unstable currently (set_hint and add_action crash)
-		# Notify.init(cfg.get('general', 'messagetray_label'))			# initialize Notification		
-		# self.notification = Notify.Notification.new(" ", None, None)	# empty string will emit a gtk warning		
-		# self.notification.set_hint("resident", GLib.Variant("b", True)) # don't close when the bubble or actions are clicked		
-		# self.notification.set_category("email")
-		# self.notification.add_action("open", _("Open in mail reader"), self.__notification_action_handler, None, None)
-		# self.notification.add_action("close", _("Close"), self.__notification_action_handler, None, None)
-
-		pynotify.init(cfg.get('general', 'messagetray_label'))			# initialize Notification
-		
-		self.notification = pynotify.Notification(" ", None, None)		# empty string will emit a gtk warning		
-		self.notification.set_hint("resident", True)					# don't close when the bubble or actions are clicked		
+		Notify.init(cfg.get('general', 'messagetray_label'))							# initialize Notification		
+		self.notification = Notify.Notification.new(" ", None, None)						# empty string will emit a gtk warning		
+		self.notification.set_hint("resident", GLib.Variant("b", True)) 					# don't close when the bubble or actions are clicked		
 		self.notification.set_category("email")
-		self.notification.add_action("open", _("Open in mail reader"), self.__notification_action_handler)
-		self.notification.add_action("close", _("Close"), self.__notification_action_handler)
+		self.notification.add_action("open", _("Open in mail reader"), self.__notification_action_handler, None, None)
+		self.notification.add_action("close", _("Close"), self.__notification_action_handler, None, None)
 		
 
 	def timeout(self, firstcheck = False):

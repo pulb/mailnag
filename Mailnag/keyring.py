@@ -22,12 +22,7 @@
 # MA 02110-1301, USA.
 #
 
-if __builtins__["USE_GTK3"]:
-	from gi.repository import GObject, GLib, GdkPixbuf, Gtk
-else:
-	Gtk = __import__("gtk")
-	GLib = __import__("glib")
-
+from gi.repository import GObject, GLib, GdkPixbuf, Gtk
 
 import locale
 import gettext
