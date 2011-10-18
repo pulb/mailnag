@@ -553,7 +553,7 @@ class MailChecker:
 		return True
 
 
-	def __notification_action_handler(self, n, action):
+	def __notification_action_handler(self, n, action, user_data):
 		self.notification.close()
 				
 		if action == "open":
