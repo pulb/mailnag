@@ -505,7 +505,7 @@ class MailChecker:
 		pid.kill()														# kill all Zombies
 		
 		if firstcheck:												# Manual firststart
-				self.reminder.load()	
+			self.reminder.load()	
 
 		self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
 		
