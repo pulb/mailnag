@@ -11,6 +11,7 @@ Translations: https://translations.launchpad.net/mailnag
 ***
 
 ### Requirements*  
+    python 2 (python 3 won't work!)
     pygobject-3
     gir-notify
     python-httplib2
