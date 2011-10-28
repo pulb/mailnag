@@ -21,7 +21,7 @@ python $LIB_DIR/config_window.py >> "$config_dir/mailnag_config.log" 2>&1
 if [ $? -eq 0 ]; then
 	# Restart mailnag.py
 	if [ -f "$config_dir/mailnag.pid" ]; then
-		kill $(cat "$config_dir/mailnag.pid")
+		kill $(cat "$config_dir/mailnag.pid") 2> /dev/null
 	fi
 	if [ -f "$config_dir/mailnag.log" ]; then
 		rm "$config_dir/mailnag.log"
