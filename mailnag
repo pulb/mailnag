@@ -9,22 +9,31 @@ config_dir="$CONFIG_HOME/mailnag"
 
 main()
 {
-if [ -f "$config_dir/mailnag.log" ]; then
-	rm "$config_dir/mailnag.log"
-fi
-cd $(dirname $(readlink -f $0))
-python $LIB_DIR/mailnag.py >> "$config_dir/mailnag.log" 2>&1 &
+	if [ -f "$config_dir/mailnag.log" ]; then
+		rm "$config_dir/mailnag.log"
+	fi
+	
+	cd $(dirname $(readlink -f $0))
+	python $LIB_DIR/mailnag.py >> "$config_dir/mailnag.log" 2>&1 &
 }
 
-connection()
+check_connection()
 {
-trap "exit 1" SIGTERM
-while ! ping -c1 www.google.com 2>/dev/null 1>&2
-	do
-		sleep 4.2 # The answer to life, the universe and everything :-)
+	retries=50
+	while ! ping -c1 www.google.com 2>/dev/null 1>&2 && [ $retries -gt 0 ] ; do
+		sleep 5
+		# ((retries--))
 	done
-kill %-
+	
+	if [ $retries -gt 0 ]; then
+		return 0
+	else
+		return 1 # timed out
+	fi
 }
 
-connection
-main
+if check_connection; then
+	main
+else
+	echo "Error: No internet connection."
+fi
