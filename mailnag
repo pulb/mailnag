@@ -13,7 +13,7 @@ if [ -f "$config_dir/mailnag.log" ]; then
 	rm "$config_dir/mailnag.log"
 fi
 cd $(dirname $(readlink -f $0))
-python $LIB_DIR/mailnag.py autostarted >> "$config_dir/mailnag.log" 2>&1 &
+python $LIB_DIR/mailnag.py >> "$config_dir/mailnag.log" 2>&1 &
 }
 
 connection()
