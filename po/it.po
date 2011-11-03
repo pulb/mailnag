@@ -1,0 +1,234 @@
+# Italian translation for mailnag
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the mailnag package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mailnag\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-09-01 20:26+0200\n"
+"PO-Revision-Date: 2011-11-03 08:25+0000\n"
+"Last-Translator: Odysseus <Unknown>\n"
+"Language-Team: Italian <it@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-11-03 18:28+0000\n"
+"X-Generator: Launchpad (build 14214)\n"
+
+#: Mailnag/config_window.py:88
+msgid "Enabled"
+msgstr "Attivo"
+
+#: Mailnag/config_window.py:94
+msgid "Name"
+msgstr "Nome"
+
+#: Mailnag/config_window.py:160
+#, python-format
+msgid ""
+"Mailnag found %s mail accounts on this computer.\n"
+"\n"
+"Do you want to import them?"
+msgstr ""
+"Mailnag ha trovato %s account email in questo computer.\n"
+"\n"
+"Li vuoi importare?"
+
+#: Mailnag/config_window.py:308
+msgid "Delete this account:"
+msgstr "Elimina questo account:"
+
+#: Mailnag/config_window.py:382
+msgid "Unnamed"
+msgstr "Senza nome"
+
+#: Mailnag/config_window.py:491
+msgid "Missing data in account(s):"
+msgstr "Dati mancanti nel/negli account:"
+
+#: Mailnag/config_window.py:494
+msgid "Please correct this first."
+msgstr "Correggi questo per primo."
+
+#: Mailnag/config_window.py:508
+msgid "Config file does not exist, creating new one"
+msgstr "File di configurazione inesistente; ne creo uno nuovo"
+
+#: Mailnag/keyring.py:66
+msgid ""
+"Failed to unlock Keyring \"{0}\".\n"
+"Wrong password.\n"
+"\n"
+"Do you want to try again?"
+msgstr ""
+"Sblocco del portachiavi \"{0}\" fallito.\n"
+"Password errata.\n"
+"\n"
+"Vuoi riprovare?"
+
+#: Mailnag/mailnag.py:521
+msgid "Open in mail reader"
+msgstr "Apri il programma di posta elettronica"
+
+#: Mailnag/mailnag.py:522
+msgid "Close"
+msgstr "Chiudi"
+
+#: Mailnag/mailnag.py:557
+msgid "(and {0} more)"
+msgstr "(e altri {0})"
+
+#: Mailnag/mailnag.py:560
+msgid "You have {0} new mails."
+msgstr "Hai {0} nuovi messaggi email."
+
+#: Mailnag/mailnag.py:562
+msgid "You have a new mail."
+msgstr "Hai un nuovo messaggio email."
+
+#: data/account_dialog.ui.h:1
+msgid "Accountname:"
+msgstr "Nome account:"
+
+#: data/account_dialog.ui.h:2
+msgid "Folder:"
+msgstr "Cartella:"
+
+#: data/account_dialog.ui.h:3
+msgid "IMAP"
+msgstr "IMAP"
+
+#: data/account_dialog.ui.h:4
+msgid "Mail Account"
+msgstr "Account email"
+
+#: data/account_dialog.ui.h:5
+msgid "Password:"
+msgstr "Password:"
+
+#: data/account_dialog.ui.h:6
+msgid "Port (optional):"
+msgstr "Porta (opzionale):"
+
+#: data/account_dialog.ui.h:7
+msgid "Server:"
+msgstr "Server:"
+
+#: data/account_dialog.ui.h:8
+msgid "User:"
+msgstr "Nome utente:"
+
+#: data/config_window.ui.h:1
+msgid ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
+"for GNOME 3\n"
+"Copyright (c) 2011 Patrick Ulbrich\n"
+"\n"
+"Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Copyright (c) 2011 Ralf Hersel"
+msgstr ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Un programma di "
+"notifica di email per GNOME 3\n"
+"Copyright (c) 2011 Patrick Ulbrich\n"
+"\n"
+"Mailnag è basato su <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Copyright (c) 2011 Ralf Hersel"
+
+#: data/config_window.ui.h:6
+msgid "<b>On mail arrival</b>"
+msgstr "<b>All'arrivo di un nuovo messaggio email</b>"
+
+#: data/config_window.ui.h:7
+msgid "<b>On mail check</b>"
+msgstr "<b>Al controllo della casella email</b>"
+
+#: data/config_window.ui.h:8
+msgid "About"
+msgstr "Informazioni"
+
+#: data/config_window.ui.h:9
+msgid "Accounts"
+msgstr "Account"
+
+#: data/config_window.ui.h:10
+msgid "Check interval:"
+msgstr "Controlla la casella email ogni"
+
+#: data/config_window.ui.h:11
+msgid "Enable spamfilter"
+msgstr "Abilita il filtro anti-spam"
+
+#: data/config_window.ui.h:12
+msgid "Events"
+msgstr "Eventi"
+
+#: data/config_window.ui.h:13
+msgid "General"
+msgstr "Impostazioni generali"
+
+#: data/config_window.ui.h:14
+msgid "Mail client:"
+msgstr "Programma di posta elettronica:"
+
+#: data/config_window.ui.h:15
+msgid "Mailnag Configuration"
+msgstr "Configurazione di Mailnag"
+
+#: data/config_window.ui.h:16
+msgid "Messagetray label:"
+msgstr "Etichetta nella barra dei messaggi:"
+
+#: data/config_window.ui.h:17
+msgid "Play sound on new mails"
+msgstr "Riproduci un suono all'arrivo di nuovi messaggi email"
+
+#: data/config_window.ui.h:18
+msgid "Spamfilter"
+msgstr "Filtro anti-spam"
+
+#: data/config_window.ui.h:19
+msgid "Start Mailnag automatically"
+msgstr "Avvia Mailnag automaticamente"
+
+#: data/config_window.ui.h:20
+msgid ""
+"The following script will be executed on every single mail check.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+msgstr ""
+"Lo script seguente sarà eseguito ad ogni controllo della casella di posta "
+"elettronica.\n"
+"Mailnag passa a questo script il numero di nuovi messaggi email,\n"
+"seguito da coppie <i>\"&lt;mittente&gt; &lt;oggetto&gt;\"</i>."
+
+#: data/config_window.ui.h:23
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+msgstr ""
+"Lo script seguente sarà eseguito all'arrivo di ogni nuovo messaggio email.\n"
+"Mailnag passa a questo script il numero di nuovi messaggi email,\n"
+"seguito da coppie <i>\"&lt;mittente&gt; &lt;oggetto&gt;\"</i>."
+
+#: data/config_window.ui.h:26
+msgid "minutes"
+msgstr "minuti"
+
+#: data/keyring_dialog.ui.h:1
+msgid "Mailnag"
+msgstr "Mailnag"
+
+#: data/keyring_dialog.ui.h:2
+msgid ""
+"Mailnag can't access the keyring because it is locked.\n"
+"Please enter the password:"
+msgstr ""
+"Il portachiavi è bloccato: Mailnag non è in grado di accedervi.\n"
+"Inserisci la password:"
+
+#: data/message_dialog.ui.h:1
+msgid "Mailnag Message"
+msgstr "Messaggio da Mailnag"
