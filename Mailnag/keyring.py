@@ -165,7 +165,7 @@ class Keyring:
 		self.was_locked = True
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
-		builder.add_from_file(get_datafile("keyring_dialog.ui"))
+		builder.add_from_file(get_data_file("keyring_dialog.ui"))
 		builder.connect_signals({"gtk_main_quit" : self.exit_keyring_dialog, \
 			"on_button_cancel_clicked" : self.exit_keyring_dialog, \
 			"on_button_ok_clicked" : self.ok_keyring_dialog, \
