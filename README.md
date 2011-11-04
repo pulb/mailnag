@@ -18,6 +18,7 @@ Translations: https://translations.launchpad.net/mailnag
     python2-gnomekeyring
     pyxdg
     alsa-utils
+    gettext
 
 \* _This list is possibly incomplete. Please let me know if something is missing here._
 ***
