@@ -22,27 +22,24 @@
 # MA 02110-1301, USA.
 #
 
+PACKAGE_NAME = "mailnag"
+
 import poplib
 import imaplib
 import urllib2
-import ConfigParser
 import os
 import subprocess
-
-PACKAGE_NAME = "mailnag"
-
+import threading
 from gi.repository import GObject, GLib, GdkPixbuf, Gtk, Notify
-
 import time
 import email
 from email.header import decode_header
 import sys
 import gettext
+from config import read_cfg, cfg_exists, cfg_folder
 from keyring import Keyring
 from utils import *
 import signal
-import xdg.BaseDirectory as bd
-
 
 gettext.bindtextdomain(PACKAGE_NAME, './locale')
 gettext.textdomain(PACKAGE_NAME)
@@ -347,7 +344,7 @@ class Mails:
 	def in_filter(self, sendersubject):									# check if filter appears in sendersubject
 		status = False
 		filter_text = cfg.get('filter', 'filter_text')
-		filter_list = filter_text.replace('\n', '').split(',')							# convert text to list
+		filter_list = filter_text.replace('\n', '').split(',')			# convert text to list
 		for filter_item in filter_list:
 			filter_stripped_item = filter_item.strip()					# remove CR and white space
 			
@@ -429,27 +426,24 @@ class Mails:
 
 
 # Misc =================================================================
-def read_config(cfg_file):												# read config file or create it
-	cfg = ConfigParser.RawConfigParser()
-	if not os.path.exists(cfg_file):
-		print 'Error: Cannot find configuration file: ', cfg_file
-		exit(1)
+def read_config():
+	if not cfg_exists():
+		return None
 	else:
-		cfg.read(cfg_file)
-		return cfg
+		return read_cfg()
 
 
-def write_pid():														# write Mailnags's process id to file
-	pid_file = os.path.join(user_path, 'mailnag.pid')
+def write_pid(): # write Mailnags's process id to file
+	pid_file = os.path.join(cfg_folder, 'mailnag.pid')
 	f = open(pid_file, 'w')
-	f.write(str(os.getpid()))											# get PID and write to file
+	f.write(str(os.getpid()))
 	f.close()
 
 
-def delete_pid():														# delete file mailnag.pid
-	pid_file = os.path.join(user_path, 'mailnag.pid')
+def delete_pid(): # delete file mailnag.pid
+	pid_file = os.path.join(cfg_folder, 'mailnag.pid')
 	if os.path.exists(pid_file):
-		os.popen("rm " + pid_file)										# delete it
+		os.popen("rm " + pid_file)
 
 
 def user_scripts(event, data):
@@ -488,99 +482,151 @@ def commandExecutor(command, context_menu_command=None):
 # MailChecker ============================================================
 class MailChecker:
 	def __init__(self):
-		self.MAIL_LIST_LIMIT = 10										# prevent flooding of the messaging tray
-		self.mails = Mails()											# create Mails object
-		self.reminder = Reminder()										# create Reminder object
-
-		Notify.init(cfg.get('general', 'messagetray_label'))							# initialize Notification		
-		self.notification = Notify.Notification.new(" ", None, None)						# empty string will emit a gtk warning		
-		self.notification.set_hint("resident", GLib.Variant("b", True)) 					# don't close when the bubble or actions are clicked		
-		self.notification.set_category("email")
-		self.notification.add_action("open", _("Open in mail reader"), self.__notification_action_handler, None, None)
-		self.notification.add_action("close", _("Close"), self.__notification_action_handler, None, None)
+		self.MAIL_LIST_LIMIT = 10 # prevent flooding of the messaging tray
+		self.mailcheck_lock = threading.Lock()
+		self.mails = Mails()
+		self.reminder = Reminder()
+		# dict that tracks all notifications that need to be closed
+		self.notifications = {}
+		
+		Notify.init(cfg.get('general', 'messagetray_label')) # initialize Notification		
 		
 
 	def timeout(self, firstcheck = False):
-		print 'Checking email accounts at:', time.asctime()				# debug
-		pid.kill()														# kill all Zombies
+		with self.mailcheck_lock:
+			print 'Checking email accounts at:', time.asctime()
+			pid.kill() # kill all zombies
 		
-		if firstcheck:												# Manual firststart
-			self.reminder.load()	
+			if firstcheck: # Manual firststart
+				self.reminder.load()	
 
-		self.mail_list = self.mails.get_mail('desc')		# get all mails from all inboxes
+			self.mail_list = self.mails.get_mail('desc') # get all mails from all inboxes
 		
-		all_mails = len(self.mail_list)
-		new_mails = 0
-		summary = ""		
-		body = ""
-		script_data = ""
+			unseen_mails = []
+			new_mails = []
 		
-		for mail in self.mail_list:
-			if not self.reminder.contains(mail.id):
-				new_mails += 1
-				script_data += ' "<%s> %s"' % (mail.sender, mail.subject)
-		
-		script_data = str(new_mails) + script_data
-		
-		if all_mails == 0:
-			 # no mails (e.g. email client has been launched) -> close notification
-			self.notification.close()
-		elif (firstcheck and all_mails > 0) or (new_mails > 0):		
-			ubound = all_mails if all_mails <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT
+			script_data = ""
+			script_data_mailcount = 0
 			
-			for i in range(ubound):
-				body += self.mail_list[i].sender + ":\n<i>" + self.mail_list[i].subject + "</i>\n\n"
+			for mail in self.mail_list:
+				if self.reminder.contains(mail.id): # mail was fetched before
+					if self.reminder.unseen(mail.id): # mail was not marked as seen
+						unseen_mails.append(mail)
+						if firstcheck: # first check after startup
+							new_mails.append(mail)
+				
+				else: # mail is fetched the first time
+					unseen_mails.append(mail)
+					new_mails.append(mail)
+					script_data += ' "<%s> %s"' % (mail.sender, mail.subject)
+					script_data_mailcount += 1
 			
-			if all_mails > self.MAIL_LIST_LIMIT:
-				body += "<i>" + _("(and {0} more)").format(str(all_mails - self.MAIL_LIST_LIMIT)) + "</i>"
+			script_data = str(script_data_mailcount) + script_data
+		
+			if len(self.mail_list) == 0:
+				 # no mails (e.g. email client has been launched) -> close notifications
+				for n in self.notifications.itervalues():
+					n.close()
+				self.notifications = {}
+			elif len(new_mails) > 0:
+				if cfg.get('general', 'notification_mode') == '1':
+					self.notify_summary(unseen_mails)
+				else:
+					self.notify_single(new_mails)
 
-			if all_mails > 1:											# multiple new emails
-				summary = _("You have {0} new mails.").format(str(all_mails))
-			else:
-				summary = _("You have a new mail.")
+				if cfg.get('general', 'playsound') == '1': # play sound?
+					soundcommand = ['aplay', '-q', get_data_file(cfg.get('general', 'soundfile'))]
+					pid.append(subprocess.Popen(soundcommand))
 
-			if cfg.get('general', 'playsound') == '1':					# play sound?
-				soundcommand = ['aplay', '-q', get_data_file(cfg.get('general', 'soundfile'))]
-				pid.append(subprocess.Popen(soundcommand))
+			self.reminder.save(self.mail_list)
 
-			self.notification.update(summary, body, "mail-unread")
-			self.notification.show()
-
-		user_scripts("on_mail_check", script_data)						# process user scripts
-
-		self.reminder.save(self.mail_list)
-		sys.stdout.flush()												# write stdout to log file
+		user_scripts("on_mail_check", script_data) # process user scripts
+		
+		sys.stdout.flush() # write stdout to log file
 		return True
 
 
-	def __notification_action_handler(self, n, action, user_data):
-		self.notification.close()
-				
-		if action == "open":
-			emailclient = cfg.get('general', 'mail_client').split(' ') # create list of command arguments				
-			pid.append(subprocess.Popen(emailclient))
-		elif action == "close":		
-			pass
+	def notify_summary(self, unseen_mails):
+		summary = ""		
+		body = ""
 
-
-	def clear(self):													# clear the messages list (not the menu entries)
-		show_only_new = bool(int(cfg.get('general', 'show_only_new')))	# get show_only_new flag
+		if len(self.notifications) == 0:
+			self.notifications['0'] = self.get_notification(" ", None, None) # empty string will emit a gtk warning
 		
-		if show_only_new:
+		ubound = len(unseen_mails) if len(unseen_mails) <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT
+		
+		for i in range(ubound):
+			body += unseen_mails[i].sender + ":\n<i>" + unseen_mails[i].subject + "</i>\n\n"
+		
+		if len(unseen_mails) > self.MAIL_LIST_LIMIT:
+			body += "<i>" + _("(and {0} more)").format(str(len(unseen_mails) - self.MAIL_LIST_LIMIT)) + "</i>"
+
+		if len(unseen_mails) > 1: # multiple new emails
+			summary = _("You have {0} new mails.").format(str(len(unseen_mails)))
+		else:
+			summary = _("You have a new mail.")
+
+		self.notifications['0'].update(summary, body, "mail-unread")
+		self.notifications['0'].show()
+
+	
+	def notify_single(self, new_mails):
+		for mail in new_mails:
+			n = self.get_notification(mail.sender, mail.subject, "mail-unread")
+			notification_id = str(id(n))
+			n.add_action("mark-as-read", _("Mark as read"), self.__notification_action_handler, (mail, notification_id), None)			
+			n.show()
+			self.notifications[notification_id] = n
+
+
+	def get_notification(self, summary, body, icon):
+		n = Notify.Notification.new(summary, body, icon)		
+		n.set_category("email")
+		n.add_action("default", "default", self.__notification_action_handler, None, None)
+
+		return n
+	
+
+	def __notification_action_handler(self, n, action, user_data):
+		with self.mailcheck_lock:
+			if action == "default":
+				emailclient = cfg.get('general', 'mail_client').split(' ') # create list of command arguments				
+				pid.append(subprocess.Popen(emailclient))
+				
+				# clicking the notification bubble has closed all notifications
+				# so clear the reference array as well. 
+				self.notifications = {}
+			
+			elif action == "mark-as-read":
+				self.reminder.set_to_seen(user_data[0].id)
+				self.reminder.save(self.mail_list)
+
+				# clicking the action has closed the notification
+				# so remove its reference
+				del self.notifications[user_data[1]]
+
+
+	def clear(self):
+		with self.mailcheck_lock:
+			# mark all mails to seen
 			for mail in self.mail_list:
 				self.reminder.set_to_seen(mail.id)
-
-			self.reminder.save(self.mail_list)							# save to mailnag.dat
-		else:															# keep 'list' filled
-			self.mail_list = []											# clear mail list
-
+			self.reminder.save(self.mail_list)
+		
+			# close all notifications
+			for n in self.notifications.itervalues():
+				n.close()
+			self.notifications = {}
+		
+			self.mail_list = []
+		
 
 # Reminder =============================================================
 class Reminder(dict):
 
 	def load(self):														# load last known messages from mailnag.dat
 		remember = cfg.get('general', 'remember')
-		dat_file = os.path.join(user_path, 'mailnag.dat')
+		dat_file = os.path.join(cfg_folder, 'mailnag.dat')
 		we_have_a_file = os.path.exists(dat_file)						# check if file exists
 		if remember == '1' and we_have_a_file:
 			f = open(dat_file, 'r')										# open file again
@@ -595,7 +641,7 @@ class Reminder(dict):
 
 
 	def save(self, mail_list):											# save mail ids to file
-		dat_file = os.path.join(user_path, 'mailnag.dat')
+		dat_file = os.path.join(cfg_folder, 'mailnag.dat')
 		f = open(dat_file, 'w')											# open the file for overwrite
 		for m in mail_list:
 			try:
@@ -609,11 +655,7 @@ class Reminder(dict):
 
 
 	def contains(self, id):												# check if mail id is in reminder list
-		try:
-			self[id]
-			return True
-		except KeyError:
-			return False
+		return (id in self)
 
 
 	def set_to_seen(self, id):											# set seen flag for this email on True
@@ -626,10 +668,7 @@ class Reminder(dict):
 	def unseen(self, id):												# return True if flag == '0'
 		try:
 			flag = self[id]
-			if flag == '0':
-				return True
-			else:
-				return False
+			return (flag == '0')
 		except KeyError:
 			return True
 
@@ -650,36 +689,48 @@ class Pid(list):														# List class to manage subprocess PIDs
 def cleanup():
 	# clean up resources
 	try:	
-		mailchecker.notification.close()
+		for n in mailchecker.notifications.itervalues():
+			n.close()
 	except NameError: pass
 	delete_pid()
 
+
+def sig_handler(signum, frame):
+	if mainloop != None:
+		mainloop.quit()
+
+
 # Main =================================================================
 def main():
-	global cfg, user_path, accounts, mails, mailchecker, pid
+	global mainloop, cfg, accounts, mails, mailchecker, pid
 
+	mainloop = None
+	
 	set_procname("mailnag")
 
-	signal.signal(signal.SIGTERM, cleanup)
-
+	signal.signal(signal.SIGTERM, sig_handler)
+	
 	try:
-		user_path = os.path.join(bd.xdg_config_home, "mailnag")
-		write_pid()															# write Mailnag's process id to file
-		cfg = read_config(os.path.join(user_path, 'mailnag.cfg'))			# get configuration from file
+		write_pid() # write Mailnag's process id to file
+		cfg = read_config()
+		
+		if (cfg == None):
+			print 'Error: Cannot find configuration file. Please run mailnag_config first.'
+			exit(1)
 		
 		accounts = Accounts()												# create Accounts object
 		pid = Pid()															# create Pid object
 		mailchecker = MailChecker()											# create MailChecker object
 		mailchecker.timeout(True)											# immediate check, firstcheck=True
 		
-		if cfg.get('general', 'check_once') == '0':							# wanna do more than one email check?
-			check_interval = int(cfg.get('general', 'check_interval'))
-			GObject.timeout_add_seconds(60 * check_interval, mailchecker.timeout)
-			Gtk.main()															# start Loop
-		
-		cleanup()		
-		return 0
+		check_interval = int(cfg.get('general', 'check_interval'))
+		GObject.timeout_add_seconds(60 * check_interval, mailchecker.timeout)
+		mainloop = GObject.MainLoop()
+		mainloop.run()
 	except KeyboardInterrupt:
+		pass # ctrl+c pressed
+	finally:
 		cleanup()
+
 
 if __name__ == '__main__': main()

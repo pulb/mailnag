@@ -25,13 +25,11 @@
 PACKAGE_NAME = "mailnag"
 
 from gi.repository import GLib, GdkPixbuf, Gtk, GObject
-
 import os
-import ConfigParser
 import locale
 import gettext
-import xdg.BaseDirectory as bd
 from utils import *
+from config import read_cfg, write_cfg
 from keyring import Keyring
 from account_dialog import AccountDialog
 
@@ -63,11 +61,13 @@ class ConfigWindow:
 
 		self.window = builder.get_object("config_window")
 		self.window.set_icon(GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 48, 48));
+		self.keyring = Keyring()
+		self.cfg = read_cfg()
 		
 		#
 		# account tab
 		#
-		self.accounts = Accounts()
+		self.accounts = Accounts(self.cfg, self.keyring)
 
 		self.treeview_accounts = builder.get_object("treeview_accounts")
 		self.liststore_accounts = builder.get_object("liststore_accounts")
@@ -97,6 +97,10 @@ class ConfigWindow:
 		self.entry_mail_client = builder.get_object("entry_mail_client")
 		self.entry_label = builder.get_object("entry_label")	
 		self.spinbutton_interval = builder.get_object("spinbutton_interval")
+		self.cb_notification_mode = builder.get_object("cb_notification_mode")
+		cell = Gtk.CellRendererText()
+		self.cb_notification_mode.pack_start(cell, True)
+		self.cb_notification_mode.add_attribute(cell, "text", 0)
 		self.chk_playsound = builder.get_object("chk_playsound")
 		self.chk_autostart = builder.get_object("chk_autostart")
 		
@@ -127,32 +131,33 @@ class ConfigWindow:
 
 
 	def load_config(self):
-		self.entry_mail_client.set_text(cfg.get('general', 'mail_client'))
-		self.entry_label.set_text(cfg.get('general', 'messagetray_label'))
-		self.spinbutton_interval.set_value(int(cfg.get('general', 'check_interval')))
-		self.chk_playsound.set_active(int(cfg.get('general', 'playsound')))
-		self.chk_autostart.set_active(int(cfg.get('general', 'autostart')))
+		self.entry_mail_client.set_text(self.cfg.get('general', 'mail_client'))
+		self.entry_label.set_text(self.cfg.get('general', 'messagetray_label'))
+		self.spinbutton_interval.set_value(int(self.cfg.get('general', 'check_interval')))
+		self.cb_notification_mode.set_active(int(self.cfg.get('general', 'notification_mode')))
+		self.chk_playsound.set_active(int(self.cfg.get('general', 'playsound')))
+		self.chk_autostart.set_active(int(self.cfg.get('general', 'autostart')))
 
 		
-		self.chk_enable_filter.set_active(int(cfg.get('filter', 'filter_on')))
-		self.textbuffer_filter.set_text(cfg.get('filter', 'filter_text'))
+		self.chk_enable_filter.set_active(int(self.cfg.get('filter', 'filter_on')))
+		self.textbuffer_filter.set_text(self.cfg.get('filter', 'filter_text'))
 
-		self.chk_script0.set_active(int(cfg.get('script', 'script0_on')))
+		self.chk_script0.set_active(int(self.cfg.get('script', 'script0_on')))
 		
-		tmp = cfg.get('script', 'script0_file')
+		tmp = self.cfg.get('script', 'script0_file')
 		if len(tmp) > 0:
 			self.filechooser_script0.set_filename(tmp)
 		
-		self.chk_script1.set_active(int(cfg.get('script', 'script1_on')))
+		self.chk_script1.set_active(int(self.cfg.get('script', 'script1_on')))
 		
-		tmp = cfg.get('script', 'script1_file')
+		tmp = self.cfg.get('script', 'script1_file')
 		if len(tmp) > 0:
 			self.filechooser_script1.set_filename(tmp)
 		
 		self.accounts.load()
 		
 		if len(self.accounts.account) == 0:
-			imported_accounts = keyring.import_accounts()
+			imported_accounts = self.keyring.import_accounts()
 			if len(imported_accounts) > 0 and \
 				self.show_yesno_dialog(_("Mailnag found %s mail accounts on this computer.\n\nDo you want to import them?") % len(imported_accounts)):
 				for arr in imported_accounts:
@@ -167,43 +172,43 @@ class ConfigWindow:
 		
 
 	def save_config(self):
-		cfg.set('general', 'mail_client', self.entry_mail_client.get_text())
-		cfg.set('general', 'messagetray_label', self.entry_label.get_text())
-		cfg.set('general', 'check_interval', int(self.spinbutton_interval.get_value()))
-		cfg.set('general', 'playsound',int(self.chk_playsound.get_active()))
+		self.cfg.set('general', 'mail_client', self.entry_mail_client.get_text())
+		self.cfg.set('general', 'messagetray_label', self.entry_label.get_text())
+		self.cfg.set('general', 'check_interval', int(self.spinbutton_interval.get_value()))
+		self.cfg.set('general', 'notification_mode', int(self.cb_notification_mode.get_active()))
+		self.cfg.set('general', 'playsound',int(self.chk_playsound.get_active()))
 		autostart = self.chk_autostart.get_active()
-		cfg.set('general', 'autostart', int(autostart))
+		self.cfg.set('general', 'autostart', int(autostart))
 
-		cfg.set('filter', 'filter_on', int(self.chk_enable_filter.get_active()))
+		self.cfg.set('filter', 'filter_on', int(self.chk_enable_filter.get_active()))
 		start, end = self.textbuffer_filter.get_bounds()		
-		cfg.set('filter', 'filter_text', self.textbuffer_filter.get_text(start, end, True))	
+		self.cfg.set('filter', 'filter_text', self.textbuffer_filter.get_text(start, end, True))	
 		
-		cfg.set('script', 'script0_on', int(self.chk_script0.get_active()))
+		self.cfg.set('script', 'script0_on', int(self.chk_script0.get_active()))
 		tmp = self.filechooser_script0.get_filename()
 		if tmp == None: tmp = ""
-		cfg.set('script', 'script0_file', tmp)
+		self.cfg.set('script', 'script0_file', tmp)
 		
-		cfg.set('script', 'script1_on', int(self.chk_script1.get_active()))
+		self.cfg.set('script', 'script1_on', int(self.chk_script1.get_active()))
 		tmp = self.filechooser_script1.get_filename()
 		if tmp == None: tmp = ""
-		cfg.set('script', 'script1_file', tmp)
+		self.cfg.set('script', 'script1_file', tmp)
 		
 		on, name, server, user, password, imap, folder, port = self.accounts.get_cfg()
-		cfg.set('account', 'on', on)
-		cfg.set('account', 'name', name)
-		cfg.set('account', 'server', server)
-		cfg.set('account', 'user', user)
-		cfg.set('account', 'imap', imap)
-		cfg.set('account', 'folder', folder)
-		cfg.set('account', 'port', port)
+		self.cfg.set('account', 'on', on)
+		self.cfg.set('account', 'name', name)
+		self.cfg.set('account', 'server', server)
+		self.cfg.set('account', 'user', user)
+		self.cfg.set('account', 'imap', imap)
+		self.cfg.set('account', 'folder', folder)
+		self.cfg.set('account', 'port', port)
 
 		for acc in self.accounts.account:
 			if bool(acc.imap): protocol = 'imap'
 			else: protocol = 'pop'
-			keyring.set(protocol, acc.user, acc.server, acc.password)
+			self.keyring.set(protocol, acc.user, acc.server, acc.password)
 		
-		cfg_file = os.path.join(cfg_folder, "mailnag.cfg")
-		with open(cfg_file, 'wb') as configfile: cfg.write(configfile)
+		write_cfg(self.cfg)
 
 		if autostart: create_autostart()
 		else: delete_autostart()
@@ -342,7 +347,7 @@ class ConfigWindow:
 	
 	def __save_and_quit(self):
 		self.save_config()
-		keyring.remove(self.accounts.account)							# delete obsolete entries from Keyring	
+		self.keyring.remove(self.accounts.account) # delete obsolete entries from Keyring	
 		Gtk.main_quit()
 		
 
@@ -371,10 +376,11 @@ class Account:
 
 
 class Accounts:
-	def __init__(self):
+	def __init__(self, cfg, keyring):
 		self.account = []
 		self.current = None												# currently selected account_id
-
+		self.cfg = cfg
+		self.keyring = keyring
 
 	def add(self, on = 0, name = _('Unnamed'), server = '', user= '' , \
 		password = '', imap = 0, folder = '', port = ''):				# add one new account
@@ -395,13 +401,13 @@ class Accounts:
 	def load(self):
 		self.account = []												# empty account list
 
-		on = cfg.get('account', 'on')
-		name = cfg.get('account', 'name')
-		server = cfg.get('account', 'server')
-		user = cfg.get('account', 'user')
-		imap = cfg.get('account', 'imap')
-		folder = cfg.get('account', 'folder')
-		port = cfg.get('account', 'port')
+		on = self.cfg.get('account', 'on')
+		name = self.cfg.get('account', 'name')
+		server = self.cfg.get('account', 'server')
+		user = self.cfg.get('account', 'user')
+		imap = self.cfg.get('account', 'imap')
+		folder = self.cfg.get('account', 'folder')
+		port = self.cfg.get('account', 'port')
 
 		separator = '|'
 		on_list = on.split(separator)
@@ -423,7 +429,7 @@ class Accounts:
 			port = port_list[i]
 			if imap: protocol = 'imap'
 			else: protocol = 'pop'
-			password = keyring.get(protocol, user, server)
+			password = self.keyring.get(protocol, user, server)
 			self.add(on, name, server, user, password, imap, folder, port)	# fill Account list
 
 
@@ -476,87 +482,9 @@ class Accounts:
 		return cfg_on, cfg_name, cfg_server, cfg_user, password_list, cfg_imap, cfg_folder, cfg_port
 
 
-	def ok(self, window):												# check if name, server, user, password are not empty
-		nok = []														# list of not-ok accounts
-		for acc in self.account:
-			if acc.name == '' or \
-			acc.server == '' or \
-			acc.user == '' or \
-			acc.password == '':
-				nok.append(acc.name)
-		if len(nok) > 0:
-			message_text = _("Missing data in account(s):") + "\n\n"
-			for acc_name in nok:
-				message_text += acc_name + '\n'
-			message_text += "\n" + _("Please correct this first.")
-			window.show_message(message_text)
-			return False, nok
-		else:
-			return True, True
-
-
 #
 # Misc
 #
-def read_config():														# read config file or create it
-	cfg = ConfigParser.RawConfigParser()
-	cfg_file = cfg_file = os.path.join(cfg_folder, "mailnag.cfg")
-	if not os.path.exists(cfg_file):									# create a fresh config file
-		print _("Config file does not exist, creating new one")
-		cfg = set_default_config(cfg)									# write default values to cfg
-		with open(cfg_file, 'wb') as configfile: cfg.write(configfile)
-
-	cfg.read(cfg_file)
-	return cfg
-
-
-def set_default_config(cfg):
-	try: cfg.add_section('general')
-	except ConfigParser.DuplicateSectionError: pass
-	cfg.set('general', 'mail_client', "evolution")
-	cfg.set('general', 'messagetray_label', "mailnag")
-	cfg.set('general', 'check_interval', 5)
-	cfg.set('general', 'show_only_new', 0)
-	cfg.set('general', 'remember', 1)
-	cfg.set('general', 'check_once', 0)
-	cfg.set('general', 'sender_format', 1)
-	cfg.set('general', 'playsound', 1)
-	cfg.set('general', 'soundfile', 'mailnag.wav')
-	cfg.set('general', 'autostart', 1)
-
-	try: cfg.add_section('filter')
-	except ConfigParser.DuplicateSectionError: pass
-	cfg.set('filter', 'filter_on', 0)	
-	cfg.set('filter', 'filter_text', 'newsletter, viagra')
-
-	try: cfg.add_section('script')
-	except ConfigParser.DuplicateSectionError: pass
-	cfg.set('script', 'script0_on', 0)
-	cfg.set('script', 'script1_on', 0)
-	cfg.set('script', 'script2_on', 0)
-	cfg.set('script', 'script3_on', 0)
-	cfg.set('script', 'script4_on', 0)
-	cfg.set('script', 'script5_on', 0)
-	cfg.set('script', 'script0_file', '')
-	cfg.set('script', 'script1_file', '')
-	cfg.set('script', 'script2_file', '')
-	cfg.set('script', 'script3_file', '')
-	cfg.set('script', 'script4_file', '')
-	cfg.set('script', 'script5_file', '')
-
-	try: cfg.add_section('account')
-	except ConfigParser.DuplicateSectionError: pass
-	cfg.set('account', 'on', '')
-	cfg.set('account', 'name', '')
-	cfg.set('account', 'server', '')
-	cfg.set('account', 'user', '')
-	cfg.set('account', 'imap', '')
-	cfg.set('account', 'folder', '')
-	cfg.set('account', 'port', '')
-
-	return cfg		
-
-
 def create_autostart():
 	curdir = os.getcwd()											# get working directory
 	exec_file = os.path.join(curdir, "mailnag")						# path of the shell script to start mailnag.py
@@ -593,20 +521,9 @@ def delete_autostart():
 # Entry point
 #
 def main():
-	global cfg, cfg_folder, keyring
-
 	set_procname("mailnag_config")
-
-	cfg_folder = os.path.join(bd.xdg_config_home, "mailnag")
-	if not os.path.exists(cfg_folder):
-		os.popen("mkdir -p " + cfg_folder)
-
-	cfg = read_config()													# get configurations
-	keyring = Keyring()
-
 	confwin = ConfigWindow()
-
-	Gtk.main()															# start main loop
+	Gtk.main()
 
 
 if __name__ == "__main__":  main()

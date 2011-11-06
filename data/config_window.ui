@@ -134,7 +134,7 @@
             <property name="margin_right">6</property>
             <property name="margin_top">6</property>
             <property name="margin_bottom">6</property>
-            <property name="n_rows">5</property>
+            <property name="n_rows">6</property>
             <property name="n_columns">2</property>
             <property name="column_spacing">6</property>
             <property name="row_spacing">6</property>
@@ -150,8 +150,8 @@
               </object>
               <packing>
                 <property name="right_attach">2</property>
-                <property name="top_attach">3</property>
-                <property name="bottom_attach">4</property>
+                <property name="top_attach">4</property>
+                <property name="bottom_attach">5</property>
                 <property name="y_options"></property>
               </packing>
             </child>
@@ -233,8 +233,8 @@
               </object>
               <packing>
                 <property name="right_attach">2</property>
-                <property name="top_attach">4</property>
-                <property name="bottom_attach">5</property>
+                <property name="top_attach">5</property>
+                <property name="bottom_attach">6</property>
                 <property name="y_options"></property>
               </packing>
             </child>
@@ -254,8 +254,8 @@
                 </child>
               </object>
               <packing>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
+                <property name="top_attach">3</property>
+                <property name="bottom_attach">4</property>
                 <property name="x_options">GTK_FILL</property>
               </packing>
             </child>
@@ -293,6 +293,40 @@
                     <property name="position">1</property>
                   </packing>
                 </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">3</property>
+                <property name="bottom_attach">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkAlignment" id="alignment4">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="xalign">0</property>
+                <child>
+                  <object class="GtkLabel" id="label15">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes">Notification mode:</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
+                <property name="x_options">GTK_FILL</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBox" id="cb_notification_mode">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="model">liststore_notification_mode</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -598,6 +632,20 @@ Copyright (c) 2011 Ralf Hersel</property>
     </columns>
     <signal name="row-deleted" handler="liststore_accounts_row_deleted" swapped="no"/>
     <signal name="row-inserted" handler="liststore_accounts_row_inserted" swapped="no"/>
+  </object>
+  <object class="GtkListStore" id="liststore_notification_mode">
+    <columns>
+      <!-- column-name gchararray1 -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Single</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Summary</col>
+      </row>
+    </data>
   </object>
   <object class="GtkTextBuffer" id="textbuffer_filter"/>
 </interface>
