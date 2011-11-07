@@ -25,10 +25,11 @@
 PACKAGE_NAME = "mailnag"
 
 import poplib
-import imaplib
+import imaplib2 as imaplib
 import urllib2
 import os
 import subprocess
+import time
 import threading
 from gi.repository import GObject, GLib, GdkPixbuf, Gtk, Notify
 import time
@@ -490,8 +491,7 @@ class MailChecker:
 		self.notifications = {}
 		
 		Notify.init(cfg.get('general', 'messagetray_label')) # initialize Notification		
-		
-
+	
 	def timeout(self, firstcheck = False):
 		with self.mailcheck_lock:
 			print 'Checking email accounts at:', time.asctime()
@@ -688,10 +688,11 @@ class Pid(list):														# List class to manage subprocess PIDs
 
 def cleanup():
 	# clean up resources
-	try:	
+	try:
 		for n in mailchecker.notifications.itervalues():
 			n.close()
 	except NameError: pass
+	idle.closeIdlers()
 	delete_pid()
 
 
@@ -699,10 +700,81 @@ def sig_handler(signum, frame):
 	if mainloop != None:
 		mainloop.quit()
 
+class Idlers:
+	def __init__(self):
+		self.idlerlist = []
+		
+	def setupIdlers(self):
+		for acc in accounts.account:
+			if acc.imap:
+				try:
+					idle.newIdler(acc)
+				except:
+					pass
+
+	
+	def newIdler(self, account):
+		tempserver = account.get_connection()
+		# Need to get out of AUTH mode
+		if account.folder:
+			tempserver.select(account.folder)
+		else:
+			tempserver.select("INBOX")
+		tempIdler = Idler(tempserver)
+		tempIdler.start()
+		self.idlerlist.append(tempIdler)
+	
+	def closeIdlers(self):
+		for idlerObj in self.idlerlist:
+			idlerObj.stop()
+			idlerObj.join()
+			idlerObj.M.close()
+			idlerObj.M.logout()
+			print "Idler closed"
+
+
+class Idler(object):
+	def __init__(self, conn):
+		self.thread = threading.Thread(target=self.idle)
+		self.M = conn
+		self.event = threading.Event()
+
+	def start(self):
+		self.thread.start()
+
+	def stop(self):
+		# Set the event
+		self.event.set()
+
+	def join(self):
+		self.thread.join()
+
+	def idle(self):
+		while True:
+			#If the event is set stop the idle call and therefore thread
+			if self.event.isSet():
+				return
+			self.needsync = False
+
+			def callback(args):
+				if not self.event.isSet():
+					self.needsync = True
+					self.event.set()
+			self.M.idle(callback=callback)
+			#Waits for event to be set
+			self.event.wait()
+			# If the event is set due to idle sync
+			if self.needsync:
+				self.event.clear()
+				self.dosync()
+
+	def dosync(self):
+		print "Got sync call"
+		mailchecker.timeout()
 
 # Main =================================================================
 def main():
-	global mainloop, cfg, accounts, mails, mailchecker, pid
+	global mainloop, cfg, accounts, mails, mailchecker, pid, idle
 
 	mainloop = None
 	
@@ -719,11 +791,13 @@ def main():
 			exit(1)
 		
 		accounts = Accounts()												# create Accounts object
+		idle = Idlers()															# create Idlers object
 		pid = Pid()															# create Pid object
 		mailchecker = MailChecker()											# create MailChecker object
 		mailchecker.timeout(True)											# immediate check, firstcheck=True
-		
+		idle.setupIdlers()
 		check_interval = int(cfg.get('general', 'check_interval'))
+		GObject.threads_init()			# Enables threading while in a GObject loop
 		GObject.timeout_add_seconds(60 * check_interval, mailchecker.timeout)
 		mainloop = GObject.MainLoop()
 		mainloop.run()
