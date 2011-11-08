@@ -7,25 +7,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-09-01 20:26+0200\n"
+"POT-Creation-Date: 2011-11-06 20:48+0100\n"
 "PO-Revision-Date: 2011-07-12 06:47+0000\n"
 "Last-Translator: Jirka Dutka <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-18 17:32+0000\n"
-"X-Generator: Launchpad (build 14157)\n"
+"X-Launchpad-Export-Date: 2011-11-08 20:36+0000\n"
+"X-Generator: Launchpad (build 14263)\n"
 
-#: Mailnag/config_window.py:88
+#: Mailnag/config_window.py:85
 msgid "Enabled"
 msgstr "Povoleno"
 
-#: Mailnag/config_window.py:94
+#: Mailnag/config_window.py:91
 msgid "Name"
 msgstr "Název"
 
-#: Mailnag/config_window.py:160
+#: Mailnag/config_window.py:162
 #, python-format
 msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
@@ -35,27 +35,15 @@ msgstr ""
 "Mailnag našel v tomto počítači %s poštovních účtů.\n"
 "Chcete je importovat?"
 
-#: Mailnag/config_window.py:308
+#: Mailnag/config_window.py:310
 msgid "Delete this account:"
 msgstr "Odstranit tento účet:"
 
-#: Mailnag/config_window.py:382
+#: Mailnag/config_window.py:385
 msgid "Unnamed"
 msgstr "Nepojmenovaný"
 
-#: Mailnag/config_window.py:491
-msgid "Missing data in account(s):"
-msgstr "Chybí údaje o účtu:"
-
-#: Mailnag/config_window.py:494
-msgid "Please correct this first."
-msgstr "Doplňte prosím chybějící údaje."
-
-#: Mailnag/config_window.py:508
-msgid "Config file does not exist, creating new one"
-msgstr "Konfigurační soubor nebyl nalezen, vytvářím nový"
-
-#: Mailnag/keyring.py:66
+#: Mailnag/keyring.py:59
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -67,25 +55,21 @@ msgstr ""
 "\n"
 "Zkusit znova?"
 
-#: Mailnag/mailnag.py:521
-msgid "Open in mail reader"
-msgstr "Otevřít v poštovním programu"
-
-#: Mailnag/mailnag.py:522
-msgid "Close"
-msgstr "Zavřít"
-
-#: Mailnag/mailnag.py:557
+#: Mailnag/mailnag.py:562
 msgid "(and {0} more)"
 msgstr "(a {0} dalších)"
 
-#: Mailnag/mailnag.py:560
+#: Mailnag/mailnag.py:565
 msgid "You have {0} new mails."
 msgstr "Máte {0} nových zpráv."
 
-#: Mailnag/mailnag.py:562
+#: Mailnag/mailnag.py:567
 msgid "You have a new mail."
 msgstr "Máte novou zprávu."
+
+#: Mailnag/mailnag.py:577
+msgid "Mark as read"
+msgstr ""
 
 #: data/account_dialog.ui.h:1
 msgid "Accountname:"
@@ -174,18 +158,30 @@ msgid "Messagetray label:"
 msgstr "Titulek v oznamovací oblasti"
 
 #: data/config_window.ui.h:17
+msgid "Notification mode:"
+msgstr ""
+
+#: data/config_window.ui.h:18
 msgid "Play sound on new mails"
 msgstr "Přehrát zvuk při nových zprávách"
 
-#: data/config_window.ui.h:18
+#: data/config_window.ui.h:19
+msgid "Single"
+msgstr ""
+
+#: data/config_window.ui.h:20
 msgid "Spamfilter"
 msgstr "Spamfilter"
 
-#: data/config_window.ui.h:19
+#: data/config_window.ui.h:21
 msgid "Start Mailnag automatically"
 msgstr "Spustit Mailnag automaticky"
 
-#: data/config_window.ui.h:20
+#: data/config_window.ui.h:22
+msgid "Summary"
+msgstr ""
+
+#: data/config_window.ui.h:23
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -195,7 +191,7 @@ msgstr ""
 "Mailnag předá tomuto skriptu celkový počet nových zpráv\n"
 "následovaný dvojicemi <i>\"&lt;odesílatel&gt; &lt;předmět&gt;\"</i>."
 
-#: data/config_window.ui.h:23
+#: data/config_window.ui.h:26
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -205,7 +201,7 @@ msgstr ""
 "Mailnag předá tomuto skriptu celkový počet nových zpráv\n"
 "následovaný dvojicemi <i>\"&lt;odesílatel&gt; &lt;předmět&gt;\"</i>."
 
-#: data/config_window.ui.h:26
+#: data/config_window.ui.h:29
 msgid "minutes"
 msgstr "minut"
 

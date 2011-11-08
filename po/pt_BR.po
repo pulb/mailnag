@@ -1,4 +1,4 @@
-# German translation for mailnag
+# Brazilian Portuguese translation for mailnag
 # Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the mailnag package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-11-06 20:48+0100\n"
-"PO-Revision-Date: 2011-11-06 23:01+0000\n"
-"Last-Translator: Patrick Ulbrich <Unknown>\n"
-"Language-Team: German <de@li.org>\n"
+"PO-Revision-Date: 2011-11-07 20:14+0000\n"
+"Last-Translator: Rafael Neri <Unknown>\n"
+"Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,11 +19,11 @@ msgstr ""
 
 #: Mailnag/config_window.py:85
 msgid "Enabled"
-msgstr "Aktiviert"
+msgstr "Ativado"
 
 #: Mailnag/config_window.py:91
 msgid "Name"
-msgstr "Name"
+msgstr "Nome"
 
 #: Mailnag/config_window.py:162
 #, python-format
@@ -31,18 +31,15 @@ msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
 "\n"
 "Do you want to import them?"
-msgstr ""
-"Mailnag hat %s Mail-Konten auf diesem Computer gefunden.\n"
-"\n"
-"Möchten Sie diese importieren?"
+msgstr "Mailnag encontrou %s contas de email neste computador."
 
 #: Mailnag/config_window.py:310
 msgid "Delete this account:"
-msgstr "Dieses Konto löschen:"
+msgstr "Apagar esta conta:"
 
 #: Mailnag/config_window.py:385
 msgid "Unnamed"
-msgstr "Unbenannt"
+msgstr "Sem nome"
 
 #: Mailnag/keyring.py:59
 msgid ""
@@ -51,34 +48,34 @@ msgid ""
 "\n"
 "Do you want to try again?"
 msgstr ""
-"Entsperren des Schlüßelbundes \"{0}\" fehlgeschlagen.\n"
-"Falsches Passwort.\n"
+"Falhou ao desbloquear chaveiro \"{0}\".\n"
+"Senha errado.\n"
 "\n"
-"Möchten Sie es nochmal versuchen?"
+"Você quer tentar de novo?"
 
 #: Mailnag/mailnag.py:562
 msgid "(and {0} more)"
-msgstr "(und {0} weitere)"
+msgstr "(e mais {0})"
 
 #: Mailnag/mailnag.py:565
 msgid "You have {0} new mails."
-msgstr "Sie haben {0} neue Emails."
+msgstr "Você tem {0} novos emails."
 
 #: Mailnag/mailnag.py:567
 msgid "You have a new mail."
-msgstr "Sie haben eine neue Email."
+msgstr "você tem um novo email."
 
 #: Mailnag/mailnag.py:577
 msgid "Mark as read"
-msgstr "Als gelesen markieren"
+msgstr "Marcar como lido"
 
 #: data/account_dialog.ui.h:1
 msgid "Accountname:"
-msgstr "Kontoname:"
+msgstr "Nome da conta:"
 
 #: data/account_dialog.ui.h:2
 msgid "Folder:"
-msgstr "Ordner:"
+msgstr "Pasta:"
 
 #: data/account_dialog.ui.h:3
 msgid "IMAP"
@@ -86,23 +83,23 @@ msgstr "IMAP"
 
 #: data/account_dialog.ui.h:4
 msgid "Mail Account"
-msgstr "Mail-Konto"
+msgstr "Conta de email"
 
 #: data/account_dialog.ui.h:5
 msgid "Password:"
-msgstr "Passwort:"
+msgstr "Senha:"
 
 #: data/account_dialog.ui.h:6
 msgid "Port (optional):"
-msgstr "Port (optional):"
+msgstr "Porta (opcional)"
 
 #: data/account_dialog.ui.h:7
 msgid "Server:"
-msgstr "Server:"
+msgstr "Servidor:"
 
 #: data/account_dialog.ui.h:8
 msgid "User:"
-msgstr "Benutzer:"
+msgstr "Usuário:"
 
 #: data/config_window.ui.h:1
 msgid ""
@@ -113,80 +110,80 @@ msgid ""
 "Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
 "Copyright (c) 2011 Ralf Hersel"
 msgstr ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Ein Email-"
-"Benachrichtiger für GNOME 3\n"
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Um notificador de "
+"email para o GNOME 3\n"
 "Copyright (c) 2011 Patrick Ulbrich\n"
 "\n"
-"Mailnag basiert auf <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Mailnag é baseado no <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
 "Copyright (c) 2011 Ralf Hersel"
 
 #: data/config_window.ui.h:6
 msgid "<b>On mail arrival</b>"
-msgstr "<b>Bei Mail-Ankunft</b>"
+msgstr "<b>Na chegada do email</b>"
 
 #: data/config_window.ui.h:7
 msgid "<b>On mail check</b>"
-msgstr "<b>Bei Mail-Prüfung</b>"
+msgstr "<b>Ao checar email</b>"
 
 #: data/config_window.ui.h:8
 msgid "About"
-msgstr "Info"
+msgstr "Sobre"
 
 #: data/config_window.ui.h:9
 msgid "Accounts"
-msgstr "Konten"
+msgstr "Contas"
 
 #: data/config_window.ui.h:10
 msgid "Check interval:"
-msgstr "Prüfintervall:"
+msgstr "Intervalo de verificação:"
 
 #: data/config_window.ui.h:11
 msgid "Enable spamfilter"
-msgstr "Spamfilter aktivieren"
+msgstr "Ativar filtro de spam"
 
 #: data/config_window.ui.h:12
 msgid "Events"
-msgstr "Ereignisse"
+msgstr "Eventos"
 
 #: data/config_window.ui.h:13
 msgid "General"
-msgstr "Allgemein"
+msgstr "Geral"
 
 #: data/config_window.ui.h:14
 msgid "Mail client:"
-msgstr "Mail-Programm:"
+msgstr "Cliente de email:"
 
 #: data/config_window.ui.h:15
 msgid "Mailnag Configuration"
-msgstr "Mailnag-Konfiguration"
+msgstr "Configuração do Mailnag"
 
 #: data/config_window.ui.h:16
 msgid "Messagetray label:"
-msgstr "Messagetray-Beschriftung:"
+msgstr "Mensagem exibida na bandeja do sistema:"
 
 #: data/config_window.ui.h:17
 msgid "Notification mode:"
-msgstr "Benachrichtigungsmodus:"
+msgstr "Modo de notificação:"
 
 #: data/config_window.ui.h:18
 msgid "Play sound on new mails"
-msgstr "Spiele einen Sound bei neuen Emails ab"
+msgstr "Reproduzir sons ao chegar novos emails"
 
 #: data/config_window.ui.h:19
 msgid "Single"
-msgstr "Einzeln"
+msgstr "Único"
 
 #: data/config_window.ui.h:20
 msgid "Spamfilter"
-msgstr "Spamfilter"
+msgstr "Filtro de Spam"
 
 #: data/config_window.ui.h:21
 msgid "Start Mailnag automatically"
-msgstr "Mailnag automatisch starten"
+msgstr "Iniciar Mailnag automaticamente"
 
 #: data/config_window.ui.h:22
 msgid "Summary"
-msgstr "Zusammenfassung"
+msgstr "Sumário"
 
 #: data/config_window.ui.h:23
 msgid ""
@@ -194,9 +191,10 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
-"Das folgende Script wird bei jeder Mail-Prüfung ausgeführt.\n"
-"Mailnag übergibt die Gesamtanzahl der neuen Mails an dieses Script,\n"
-"gefolgt von <i>\"&lt;Sender&gt; &lt;Betreff&gt;\"</i> Paaren."
+"O script abaixo será executado toda vez que for executada a verificação de "
+"email.\n"
+"Mailnag passará o número total de novos emails para esse script,\n"
+"seguindo por <i>\"&lt;origem&gt; &lt;assunto&gt;\"</i>."
 
 #: data/config_window.ui.h:26
 msgid ""
@@ -204,13 +202,13 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
-"Dieses Script wird immer dann ausgeführt, wenn neue Mails eintreffen.\n"
-"Mailnag übergibt die Gesamtanzahl der neuen Mails an dieses Script,\n"
-"gefolgt von <i>\"&lt;Sender&gt; &lt;Betreff&gt;\"</i> Paaren."
+"O script abaixo será executado toda vez que um novo email for recebido.\n"
+"Mailnag passará o número total de novos email para esse script,\n"
+"seguido por y <i>\"&lt;origem&gt; &lt;assunto&gt;\"</i>."
 
 #: data/config_window.ui.h:29
 msgid "minutes"
-msgstr "Minuten"
+msgstr "minutos"
 
 #: data/keyring_dialog.ui.h:1
 msgid "Mailnag"
@@ -221,9 +219,9 @@ msgid ""
 "Mailnag can't access the keyring because it is locked.\n"
 "Please enter the password:"
 msgstr ""
-"Mailnag kann nicht auf den Schlüßelbund zugreifen, weil er gesperrt ist.\n"
-"Bitte geben Sie das Passwort ein:"
+"Mailnag não pode acessar o chaveiro porque está bloqueado.\n"
+"Digite a senha:"
 
 #: data/message_dialog.ui.h:1
 msgid "Mailnag Message"
-msgstr "Mailnag-Nachricht"
+msgstr "Mensagem do Mailnag"

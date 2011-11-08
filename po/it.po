@@ -7,25 +7,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-09-01 20:26+0200\n"
-"PO-Revision-Date: 2011-11-03 08:25+0000\n"
-"Last-Translator: Odysseus <Unknown>\n"
+"POT-Creation-Date: 2011-11-06 20:48+0100\n"
+"PO-Revision-Date: 2011-11-07 13:36+0000\n"
+"Last-Translator: Mattia Meneguzzo <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-11-03 18:28+0000\n"
-"X-Generator: Launchpad (build 14214)\n"
+"X-Launchpad-Export-Date: 2011-11-08 20:36+0000\n"
+"X-Generator: Launchpad (build 14263)\n"
 
-#: Mailnag/config_window.py:88
+#: Mailnag/config_window.py:85
 msgid "Enabled"
 msgstr "Attivo"
 
-#: Mailnag/config_window.py:94
+#: Mailnag/config_window.py:91
 msgid "Name"
 msgstr "Nome"
 
-#: Mailnag/config_window.py:160
+#: Mailnag/config_window.py:162
 #, python-format
 msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
@@ -36,27 +36,15 @@ msgstr ""
 "\n"
 "Li vuoi importare?"
 
-#: Mailnag/config_window.py:308
+#: Mailnag/config_window.py:310
 msgid "Delete this account:"
-msgstr "Elimina questo account:"
+msgstr "Eliminare questo account?"
 
-#: Mailnag/config_window.py:382
+#: Mailnag/config_window.py:385
 msgid "Unnamed"
 msgstr "Senza nome"
 
-#: Mailnag/config_window.py:491
-msgid "Missing data in account(s):"
-msgstr "Dati mancanti nel/negli account:"
-
-#: Mailnag/config_window.py:494
-msgid "Please correct this first."
-msgstr "Correggi questo per primo."
-
-#: Mailnag/config_window.py:508
-msgid "Config file does not exist, creating new one"
-msgstr "File di configurazione inesistente; ne creo uno nuovo"
-
-#: Mailnag/keyring.py:66
+#: Mailnag/keyring.py:59
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -68,25 +56,21 @@ msgstr ""
 "\n"
 "Vuoi riprovare?"
 
-#: Mailnag/mailnag.py:521
-msgid "Open in mail reader"
-msgstr "Apri il programma di posta elettronica"
-
-#: Mailnag/mailnag.py:522
-msgid "Close"
-msgstr "Chiudi"
-
-#: Mailnag/mailnag.py:557
+#: Mailnag/mailnag.py:562
 msgid "(and {0} more)"
 msgstr "(e altri {0})"
 
-#: Mailnag/mailnag.py:560
+#: Mailnag/mailnag.py:565
 msgid "You have {0} new mails."
 msgstr "Hai {0} nuovi messaggi email."
 
-#: Mailnag/mailnag.py:562
+#: Mailnag/mailnag.py:567
 msgid "You have a new mail."
 msgstr "Hai un nuovo messaggio email."
+
+#: Mailnag/mailnag.py:577
+msgid "Mark as read"
+msgstr "Contrassegna come \"già letto\""
 
 #: data/account_dialog.ui.h:1
 msgid "Accountname:"
@@ -181,18 +165,30 @@ msgid "Messagetray label:"
 msgstr "Etichetta nella barra dei messaggi:"
 
 #: data/config_window.ui.h:17
+msgid "Notification mode:"
+msgstr "Modalità di notifica:"
+
+#: data/config_window.ui.h:18
 msgid "Play sound on new mails"
 msgstr "Riproduci un suono all'arrivo di nuovi messaggi email"
 
-#: data/config_window.ui.h:18
+#: data/config_window.ui.h:19
+msgid "Single"
+msgstr "Messaggio singolo"
+
+#: data/config_window.ui.h:20
 msgid "Spamfilter"
 msgstr "Filtro anti-spam"
 
-#: data/config_window.ui.h:19
+#: data/config_window.ui.h:21
 msgid "Start Mailnag automatically"
 msgstr "Avvia Mailnag automaticamente"
 
-#: data/config_window.ui.h:20
+#: data/config_window.ui.h:22
+msgid "Summary"
+msgstr "Riepilogo"
+
+#: data/config_window.ui.h:23
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -203,7 +199,7 @@ msgstr ""
 "Mailnag passa a questo script il numero di nuovi messaggi email,\n"
 "seguito da coppie <i>\"&lt;mittente&gt; &lt;oggetto&gt;\"</i>."
 
-#: data/config_window.ui.h:23
+#: data/config_window.ui.h:26
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -213,7 +209,7 @@ msgstr ""
 "Mailnag passa a questo script il numero di nuovi messaggi email,\n"
 "seguito da coppie <i>\"&lt;mittente&gt; &lt;oggetto&gt;\"</i>."
 
-#: data/config_window.ui.h:26
+#: data/config_window.ui.h:29
 msgid "minutes"
 msgstr "minuti"
 

@@ -7,25 +7,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-09-01 20:26+0200\n"
+"POT-Creation-Date: 2011-11-06 20:48+0100\n"
 "PO-Revision-Date: 2011-09-15 06:26+0000\n"
 "Last-Translator: Bae Taegil <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-18 17:32+0000\n"
-"X-Generator: Launchpad (build 14157)\n"
+"X-Launchpad-Export-Date: 2011-11-08 20:36+0000\n"
+"X-Generator: Launchpad (build 14263)\n"
 
-#: Mailnag/config_window.py:88
+#: Mailnag/config_window.py:85
 msgid "Enabled"
 msgstr "활성화 됨"
 
-#: Mailnag/config_window.py:94
+#: Mailnag/config_window.py:91
 msgid "Name"
 msgstr "이름"
 
-#: Mailnag/config_window.py:160
+#: Mailnag/config_window.py:162
 #, python-format
 msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
@@ -36,27 +36,15 @@ msgstr ""
 "\n"
 "그것을 불러 들이기를 원하십니까?"
 
-#: Mailnag/config_window.py:308
+#: Mailnag/config_window.py:310
 msgid "Delete this account:"
 msgstr "이 계정을 지웁니다:"
 
-#: Mailnag/config_window.py:382
+#: Mailnag/config_window.py:385
 msgid "Unnamed"
 msgstr "이름 없음"
 
-#: Mailnag/config_window.py:491
-msgid "Missing data in account(s):"
-msgstr "계정에 없는 데이터:"
-
-#: Mailnag/config_window.py:494
-msgid "Please correct this first."
-msgstr "이것 먼저 고쳐 주세요."
-
-#: Mailnag/config_window.py:508
-msgid "Config file does not exist, creating new one"
-msgstr "설정파일이 존재하지 않아서 새로 만듭니다"
-
-#: Mailnag/keyring.py:66
+#: Mailnag/keyring.py:59
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -68,25 +56,21 @@ msgstr ""
 "\n"
 "다시 시도하시겠습니까?"
 
-#: Mailnag/mailnag.py:521
-msgid "Open in mail reader"
-msgstr "메일 리더에서 열기"
-
-#: Mailnag/mailnag.py:522
-msgid "Close"
-msgstr "닫기"
-
-#: Mailnag/mailnag.py:557
+#: Mailnag/mailnag.py:562
 msgid "(and {0} more)"
 msgstr "(그리고 {0}개 더)"
 
-#: Mailnag/mailnag.py:560
+#: Mailnag/mailnag.py:565
 msgid "You have {0} new mails."
 msgstr "{0}개의 새 메일이 있습니다."
 
-#: Mailnag/mailnag.py:562
+#: Mailnag/mailnag.py:567
 msgid "You have a new mail."
 msgstr "한 개의 새 메일이 있습니다."
+
+#: Mailnag/mailnag.py:577
+msgid "Mark as read"
+msgstr ""
 
 #: data/account_dialog.ui.h:1
 msgid "Accountname:"
@@ -181,18 +165,30 @@ msgid "Messagetray label:"
 msgstr "메시지트레이 이름표:"
 
 #: data/config_window.ui.h:17
+msgid "Notification mode:"
+msgstr ""
+
+#: data/config_window.ui.h:18
 msgid "Play sound on new mails"
 msgstr "새 메일이 오면 소리 내기"
 
-#: data/config_window.ui.h:18
+#: data/config_window.ui.h:19
+msgid "Single"
+msgstr ""
+
+#: data/config_window.ui.h:20
 msgid "Spamfilter"
 msgstr "스팸필터"
 
-#: data/config_window.ui.h:19
+#: data/config_window.ui.h:21
 msgid "Start Mailnag automatically"
 msgstr "Mailnag을 자동으로 시작하기"
 
-#: data/config_window.ui.h:20
+#: data/config_window.ui.h:22
+msgid "Summary"
+msgstr ""
+
+#: data/config_window.ui.h:23
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -202,7 +198,7 @@ msgstr ""
 "Mailnag은 이 스크립트에 새 메일의 총 갯수를 전달합니다.\n"
 "그리고 <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> 쌍들이 뒤따릅니다."
 
-#: data/config_window.ui.h:23
+#: data/config_window.ui.h:26
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -212,7 +208,7 @@ msgstr ""
 "Mailnag은 이 스크립트에 새 메일의 총 갯수를 전달합니다.\n"
 "그리고 <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> 쌍들이 뒤따릅니다."
 
-#: data/config_window.ui.h:26
+#: data/config_window.ui.h:29
 msgid "minutes"
 msgstr "분"
 
