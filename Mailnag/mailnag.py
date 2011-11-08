@@ -443,7 +443,7 @@ def write_pid(): # write Mailnags's process id to file
 def delete_pid(): # delete file mailnag.pid
 	pid_file = os.path.join(cfg_folder, 'mailnag.pid')
 	if os.path.exists(pid_file):
-		os.popen("rm " + pid_file)
+		os.remove(pid_file)
 
 
 def user_scripts(event, data):

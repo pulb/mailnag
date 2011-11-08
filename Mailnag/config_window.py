@@ -503,10 +503,10 @@ def create_autostart():
 
 	autostart_folder = "%s/.config/autostart/" % (os.path.expanduser("~/"))
 	if not os.path.exists(autostart_folder):
-		os.popen("mkdir -p " + autostart_folder)
+		os.makedirs(autostart_folder)
 	autostart_file = autostart_folder + "mailnag.desktop"
 	f = open(autostart_file, 'w')
-	f.write(content)													# create it
+	f.write(content)# create it
 	f.close()
 
 
@@ -514,7 +514,7 @@ def delete_autostart():
 	autostart_folder = "%s/.config/autostart/" % (os.path.expanduser("~/"))
 	autostart_file = autostart_folder + "mailnag.desktop"
 	if os.path.exists(autostart_file):
-		os.popen("rm " + autostart_file)								# delete it
+		os.remove(autostart_file)
 
 
 #
