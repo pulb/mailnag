@@ -210,8 +210,17 @@ class Mails:
 				if folder_list[0] == '':
 					folder_list = ['INBOX']
 				for folder in folder_list:
-					srv.select(folder.strip(), readonly=True)			# select IMAP folder
-					status, data = srv.search(None, 'UNSEEN')				# ALL or UNSEEN
+					_folder = folder.strip()
+					srv.select(_folder, readonly=True)			# select IMAP folder
+					try:
+						status, data = srv.search(None, 'UNSEEN')				# ALL or UNSEEN
+					except:
+						print "The folder:",_folder, "does not exist, using INBOX instead"
+						try:
+							srv.select('INBOX', readonly=True)			# If search fails select INBOX and try again
+							status, data = srv.search(None, 'UNSEEN')				# ALL or UNSEEN
+						except:
+							print "INBOX Could not be found", sys.exc_info()[0]
 					if status != 'OK' or None in [d for d in data]:
 						print "Folder", folder, "in status", status, "| Data:", data, "\n"
 						continue										# Bugfix LP-735071
