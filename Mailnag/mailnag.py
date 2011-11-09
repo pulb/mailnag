@@ -724,11 +724,17 @@ class Idlers:
 	
 	def newIdler(self, account):
 		tempserver = account.get_connection()
-		# Need to get out of AUTH mode
+		# Need to get out of AUTH mode.
 		if account.folder:
 			tempserver.select(account.folder)
 		else:
 			tempserver.select("INBOX")
+		try:
+			tmp = tempserver.search(None, 'UNSEEN')				# ALL or UNSEEN
+		except:
+			tempserver.select('INBOX', readonly=True)			# If search fails select INBOX and try again
+			tmp = tempserver.search(None, 'UNSEEN')				# ALL or UNSEEN
+
 		tempIdler = Idler(tempserver)
 		tempIdler.start()
 		self.idlerlist.append(tempIdler)
