@@ -80,6 +80,6 @@ def read_cfg():
 
 def write_cfg(cfg):
 	if not os.path.exists(cfg_folder):
-		os.popen("mkdir -p " + cfg_folder)
+		os.makedirs(cfg_folder)
 	
 	with open(cfg_file, 'wb') as configfile: cfg.write(configfile)
