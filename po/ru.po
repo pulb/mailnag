@@ -7,25 +7,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-09-01 20:26+0200\n"
-"PO-Revision-Date: 2011-07-21 10:45+0000\n"
-"Last-Translator: Dmitry Shachnev <Mitya57@gmail.com>\n"
+"POT-Creation-Date: 2011-11-06 20:48+0100\n"
+"PO-Revision-Date: 2011-11-02 16:36+0000\n"
+"Last-Translator: KEIII <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-18 17:32+0000\n"
-"X-Generator: Launchpad (build 14157)\n"
+"X-Launchpad-Export-Date: 2011-11-08 20:36+0000\n"
+"X-Generator: Launchpad (build 14263)\n"
 
-#: Mailnag/config_window.py:88
+#: Mailnag/config_window.py:85
 msgid "Enabled"
 msgstr "Включено"
 
-#: Mailnag/config_window.py:94
+#: Mailnag/config_window.py:91
 msgid "Name"
 msgstr "Название"
 
-#: Mailnag/config_window.py:160
+#: Mailnag/config_window.py:162
 #, python-format
 msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
@@ -36,27 +36,15 @@ msgstr ""
 "\n"
 "Импортировать их?"
 
-#: Mailnag/config_window.py:308
+#: Mailnag/config_window.py:310
 msgid "Delete this account:"
 msgstr "Удалить эту учётную запись:"
 
-#: Mailnag/config_window.py:382
+#: Mailnag/config_window.py:385
 msgid "Unnamed"
 msgstr "Без названия"
 
-#: Mailnag/config_window.py:491
-msgid "Missing data in account(s):"
-msgstr "Не хватает информации об учётной(ых) записи(ях):"
-
-#: Mailnag/config_window.py:494
-msgid "Please correct this first."
-msgstr "Пожалуйста, сначала исправьте это."
-
-#: Mailnag/config_window.py:508
-msgid "Config file does not exist, creating new one"
-msgstr "Файл конфигурации отсутствует, создание нового"
-
-#: Mailnag/keyring.py:66
+#: Mailnag/keyring.py:59
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -68,25 +56,21 @@ msgstr ""
 "\n"
 "Попытаться ещё раз?"
 
-#: Mailnag/mailnag.py:521
-msgid "Open in mail reader"
-msgstr "Открыть в почтовом клиенте"
-
-#: Mailnag/mailnag.py:522
-msgid "Close"
-msgstr "Закрыть"
-
-#: Mailnag/mailnag.py:557
+#: Mailnag/mailnag.py:562
 msgid "(and {0} more)"
 msgstr "(и ещё {0})"
 
-#: Mailnag/mailnag.py:560
+#: Mailnag/mailnag.py:565
 msgid "You have {0} new mails."
 msgstr "У вас {0} новых писем."
 
-#: Mailnag/mailnag.py:562
+#: Mailnag/mailnag.py:567
 msgid "You have a new mail."
 msgstr "У вас новое письмо."
+
+#: Mailnag/mailnag.py:577
+msgid "Mark as read"
+msgstr ""
 
 #: data/account_dialog.ui.h:1
 msgid "Accountname:"
@@ -129,6 +113,12 @@ msgid ""
 "Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
 "Copyright (c) 2011 Ralf Hersel"
 msgstr ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
+"for GNOME 3\n"
+"Copyright (c) 2011 Patrick Ulbrich\n"
+"\n"
+"Mailnag основан на <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
+"Copyright (c) 2011 Ralf Hersel"
 
 #: data/config_window.ui.h:6
 msgid "<b>On mail arrival</b>"
@@ -172,21 +162,33 @@ msgstr "Настройки Mailnag"
 
 #: data/config_window.ui.h:16
 msgid "Messagetray label:"
-msgstr ""
+msgstr "Название элемента в меню сообщений:"
 
 #: data/config_window.ui.h:17
+msgid "Notification mode:"
+msgstr ""
+
+#: data/config_window.ui.h:18
 msgid "Play sound on new mails"
 msgstr "Проигрывать мелодию при получении нового сообщения"
 
-#: data/config_window.ui.h:18
+#: data/config_window.ui.h:19
+msgid "Single"
+msgstr ""
+
+#: data/config_window.ui.h:20
 msgid "Spamfilter"
 msgstr "Спам-фильтр"
 
-#: data/config_window.ui.h:19
+#: data/config_window.ui.h:21
 msgid "Start Mailnag automatically"
 msgstr "Запускать Mailnag автоматически"
 
-#: data/config_window.ui.h:20
+#: data/config_window.ui.h:22
+msgid "Summary"
+msgstr ""
+
+#: data/config_window.ui.h:23
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -196,7 +198,7 @@ msgstr ""
 "Mailnag передаёт общее количество новых писем этому скрипту,\n"
 "добавляя в конец пары вида <i>\"&lt;отправитель&gt; &lt;тема&gt;\"</i>."
 
-#: data/config_window.ui.h:23
+#: data/config_window.ui.h:26
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -206,7 +208,7 @@ msgstr ""
 "Mailnag передаёт общее количество новых писем этому скрипту,\n"
 "добавляя в конец пары вида <i>\"&lt;отправитель&gt; &lt;тема&gt;\"</i>."
 
-#: data/config_window.ui.h:26
+#: data/config_window.ui.h:29
 msgid "minutes"
 msgstr "минут"
 
@@ -225,4 +227,4 @@ msgstr ""
 
 #: data/message_dialog.ui.h:1
 msgid "Mailnag Message"
-msgstr ""
+msgstr "Сообщение Mailnag"

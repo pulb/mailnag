@@ -7,25 +7,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-09-01 20:26+0200\n"
-"PO-Revision-Date: 2011-10-15 17:34+0000\n"
+"POT-Creation-Date: 2011-11-06 20:48+0100\n"
+"PO-Revision-Date: 2011-11-07 03:08+0000\n"
 "Last-Translator: Manuel Xosé Lemos <Unknown>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-18 17:32+0000\n"
-"X-Generator: Launchpad (build 14157)\n"
+"X-Launchpad-Export-Date: 2011-11-08 20:36+0000\n"
+"X-Generator: Launchpad (build 14263)\n"
 
-#: Mailnag/config_window.py:88
+#: Mailnag/config_window.py:85
 msgid "Enabled"
-msgstr ""
+msgstr "Activado"
 
-#: Mailnag/config_window.py:94
+#: Mailnag/config_window.py:91
 msgid "Name"
 msgstr "Nome"
 
-#: Mailnag/config_window.py:160
+#: Mailnag/config_window.py:162
 #, python-format
 msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
@@ -33,27 +33,15 @@ msgid ""
 "Do you want to import them?"
 msgstr "Mailnag atopou %s contas de correo neste equipo."
 
-#: Mailnag/config_window.py:308
+#: Mailnag/config_window.py:310
 msgid "Delete this account:"
 msgstr "Eliminar esta conta:"
 
-#: Mailnag/config_window.py:382
+#: Mailnag/config_window.py:385
 msgid "Unnamed"
 msgstr "Sen nome"
 
-#: Mailnag/config_window.py:491
-msgid "Missing data in account(s):"
-msgstr ""
-
-#: Mailnag/config_window.py:494
-msgid "Please correct this first."
-msgstr ""
-
-#: Mailnag/config_window.py:508
-msgid "Config file does not exist, creating new one"
-msgstr "O ficheiro de configuración non existe, creando un novo"
-
-#: Mailnag/keyring.py:66
+#: Mailnag/keyring.py:59
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -61,25 +49,21 @@ msgid ""
 "Do you want to try again?"
 msgstr ""
 
-#: Mailnag/mailnag.py:521
-msgid "Open in mail reader"
-msgstr ""
-
-#: Mailnag/mailnag.py:522
-msgid "Close"
-msgstr "Pechar"
-
-#: Mailnag/mailnag.py:557
+#: Mailnag/mailnag.py:562
 msgid "(and {0} more)"
 msgstr "(e {0} máis)"
 
-#: Mailnag/mailnag.py:560
+#: Mailnag/mailnag.py:565
 msgid "You have {0} new mails."
 msgstr "Ten {0} novas mensaxes."
 
-#: Mailnag/mailnag.py:562
+#: Mailnag/mailnag.py:567
 msgid "You have a new mail."
 msgstr "Ten unha nova mensaxe."
+
+#: Mailnag/mailnag.py:577
+msgid "Mark as read"
+msgstr "Marcar como lido"
 
 #: data/account_dialog.ui.h:1
 msgid "Accountname:"
@@ -107,7 +91,7 @@ msgstr "Porto (opcional):"
 
 #: data/account_dialog.ui.h:7
 msgid "Server:"
-msgstr ""
+msgstr "Servidor:"
 
 #: data/account_dialog.ui.h:8
 msgid "User:"
@@ -174,32 +158,44 @@ msgid "Messagetray label:"
 msgstr ""
 
 #: data/config_window.ui.h:17
+msgid "Notification mode:"
+msgstr ""
+
+#: data/config_window.ui.h:18
 msgid "Play sound on new mails"
 msgstr "Son de notificación para novas mensaxes"
 
-#: data/config_window.ui.h:18
-msgid "Spamfilter"
-msgstr "Filtro de spam"
-
 #: data/config_window.ui.h:19
-msgid "Start Mailnag automatically"
+msgid "Single"
 msgstr ""
 
 #: data/config_window.ui.h:20
+msgid "Spamfilter"
+msgstr "Filtro de spam"
+
+#: data/config_window.ui.h:21
+msgid "Start Mailnag automatically"
+msgstr ""
+
+#: data/config_window.ui.h:22
+msgid "Summary"
+msgstr "Resumo"
+
+#: data/config_window.ui.h:23
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
 
-#: data/config_window.ui.h:23
+#: data/config_window.ui.h:26
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
 
-#: data/config_window.ui.h:26
+#: data/config_window.ui.h:29
 msgid "minutes"
 msgstr "minutos"
 

@@ -7,25 +7,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-09-01 20:26+0200\n"
+"POT-Creation-Date: 2011-11-06 20:48+0100\n"
 "PO-Revision-Date: 2011-07-27 11:59+0000\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-18 17:32+0000\n"
-"X-Generator: Launchpad (build 14157)\n"
+"X-Launchpad-Export-Date: 2011-11-08 20:36+0000\n"
+"X-Generator: Launchpad (build 14263)\n"
 
-#: Mailnag/config_window.py:88
+#: Mailnag/config_window.py:85
 msgid "Enabled"
 msgstr "Укључено"
 
-#: Mailnag/config_window.py:94
+#: Mailnag/config_window.py:91
 msgid "Name"
 msgstr "Назив"
 
-#: Mailnag/config_window.py:160
+#: Mailnag/config_window.py:162
 #, python-format
 msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
@@ -36,27 +36,15 @@ msgstr ""
 "\n"
 "Да ли желите да их увезете?"
 
-#: Mailnag/config_window.py:308
+#: Mailnag/config_window.py:310
 msgid "Delete this account:"
 msgstr "Обриши ове налоге:"
 
-#: Mailnag/config_window.py:382
+#: Mailnag/config_window.py:385
 msgid "Unnamed"
 msgstr "Неименовано"
 
-#: Mailnag/config_window.py:491
-msgid "Missing data in account(s):"
-msgstr "Недостају подаци у налогу:"
-
-#: Mailnag/config_window.py:494
-msgid "Please correct this first."
-msgstr "Молим прво исправите ово."
-
-#: Mailnag/config_window.py:508
-msgid "Config file does not exist, creating new one"
-msgstr "Датотека са подешавањима не постоји, направите нову."
-
-#: Mailnag/keyring.py:66
+#: Mailnag/keyring.py:59
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -68,25 +56,21 @@ msgstr ""
 "\n"
 "Да ли желите да покушате опет?"
 
-#: Mailnag/mailnag.py:521
-msgid "Open in mail reader"
-msgstr "Отвори у читачу поште"
-
-#: Mailnag/mailnag.py:522
-msgid "Close"
-msgstr "Затвори"
-
-#: Mailnag/mailnag.py:557
+#: Mailnag/mailnag.py:562
 msgid "(and {0} more)"
 msgstr "(и још {0})"
 
-#: Mailnag/mailnag.py:560
+#: Mailnag/mailnag.py:565
 msgid "You have {0} new mails."
 msgstr "Имате {0} нове поруке."
 
-#: Mailnag/mailnag.py:562
+#: Mailnag/mailnag.py:567
 msgid "You have a new mail."
 msgstr "Имате нову пошту."
+
+#: Mailnag/mailnag.py:577
+msgid "Mark as read"
+msgstr ""
 
 #: data/account_dialog.ui.h:1
 msgid "Accountname:"
@@ -175,18 +159,30 @@ msgid "Messagetray label:"
 msgstr "Ознака поруке:"
 
 #: data/config_window.ui.h:17
+msgid "Notification mode:"
+msgstr ""
+
+#: data/config_window.ui.h:18
 msgid "Play sound on new mails"
 msgstr "Звучно обавести када пристигне нова пошта"
 
-#: data/config_window.ui.h:18
+#: data/config_window.ui.h:19
+msgid "Single"
+msgstr ""
+
+#: data/config_window.ui.h:20
 msgid "Spamfilter"
 msgstr "Филтер спама"
 
-#: data/config_window.ui.h:19
+#: data/config_window.ui.h:21
 msgid "Start Mailnag automatically"
 msgstr "Покрени Поштарка аутоматски"
 
-#: data/config_window.ui.h:20
+#: data/config_window.ui.h:22
+msgid "Summary"
+msgstr ""
+
+#: data/config_window.ui.h:23
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -196,7 +192,7 @@ msgstr ""
 "поште. Поштарко скрипти прослеђује укупан број нових порука,\n"
 "за којим следи пар <i>\"&lt;пошиљалац&gt; &lt;тема&gt;\"</i>."
 
-#: data/config_window.ui.h:23
+#: data/config_window.ui.h:26
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -206,7 +202,7 @@ msgstr ""
 "поште. Поштарко скрипти прослеђује укупан број нових порука,\n"
 "за којим следи пар <i>\"&lt;пошиљалац&gt; &lt;тема&gt;\"</i>."
 
-#: data/config_window.ui.h:26
+#: data/config_window.ui.h:29
 msgid "minutes"
 msgstr "минута"
 

@@ -7,25 +7,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-09-01 20:26+0200\n"
+"POT-Creation-Date: 2011-11-06 20:48+0100\n"
 "PO-Revision-Date: 2011-08-14 08:21+0000\n"
 "Last-Translator: Ivo Majić <Unknown>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-18 17:32+0000\n"
-"X-Generator: Launchpad (build 14157)\n"
+"X-Launchpad-Export-Date: 2011-11-08 20:36+0000\n"
+"X-Generator: Launchpad (build 14263)\n"
 
-#: Mailnag/config_window.py:88
+#: Mailnag/config_window.py:85
 msgid "Enabled"
 msgstr "Omogućeno"
 
-#: Mailnag/config_window.py:94
+#: Mailnag/config_window.py:91
 msgid "Name"
 msgstr "Ime"
 
-#: Mailnag/config_window.py:160
+#: Mailnag/config_window.py:162
 #, python-format
 msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
@@ -36,27 +36,15 @@ msgstr ""
 "\n"
 "Želite li ih uvesti?"
 
-#: Mailnag/config_window.py:308
+#: Mailnag/config_window.py:310
 msgid "Delete this account:"
 msgstr "Izbriši ovaj korisnički račun:"
 
-#: Mailnag/config_window.py:382
+#: Mailnag/config_window.py:385
 msgid "Unnamed"
 msgstr "Neimenovano"
 
-#: Mailnag/config_window.py:491
-msgid "Missing data in account(s):"
-msgstr "Nedostaju podaci u jednom ili više korisničkih računa."
-
-#: Mailnag/config_window.py:494
-msgid "Please correct this first."
-msgstr "Molim da prvo ispravite sljedeće."
-
-#: Mailnag/config_window.py:508
-msgid "Config file does not exist, creating new one"
-msgstr "Konfiguracijska datoteka ne postoji, stvaram novu datoteku"
-
-#: Mailnag/keyring.py:66
+#: Mailnag/keyring.py:59
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -68,25 +56,21 @@ msgstr ""
 "\n"
 "Želite li ponovo pokušati?"
 
-#: Mailnag/mailnag.py:521
-msgid "Open in mail reader"
-msgstr "Otvori u e-mail aplikaciji"
-
-#: Mailnag/mailnag.py:522
-msgid "Close"
-msgstr "Zatvori"
-
-#: Mailnag/mailnag.py:557
+#: Mailnag/mailnag.py:562
 msgid "(and {0} more)"
 msgstr "(i još {0})"
 
-#: Mailnag/mailnag.py:560
+#: Mailnag/mailnag.py:565
 msgid "You have {0} new mails."
 msgstr "Imate {0} novih poruka."
 
-#: Mailnag/mailnag.py:562
+#: Mailnag/mailnag.py:567
 msgid "You have a new mail."
 msgstr "Imate novu poruku."
+
+#: Mailnag/mailnag.py:577
+msgid "Mark as read"
+msgstr ""
 
 #: data/account_dialog.ui.h:1
 msgid "Accountname:"
@@ -175,18 +159,30 @@ msgid "Messagetray label:"
 msgstr "Oznaka na alatnoj traci:"
 
 #: data/config_window.ui.h:17
+msgid "Notification mode:"
+msgstr ""
+
+#: data/config_window.ui.h:18
 msgid "Play sound on new mails"
 msgstr "Izvedi zvuk prilikom primitka nove e-mail poruke"
 
-#: data/config_window.ui.h:18
+#: data/config_window.ui.h:19
+msgid "Single"
+msgstr ""
+
+#: data/config_window.ui.h:20
 msgid "Spamfilter"
 msgstr "Filter neželjenih (SPAM) poruka"
 
-#: data/config_window.ui.h:19
+#: data/config_window.ui.h:21
 msgid "Start Mailnag automatically"
 msgstr "Pokreni Mailnag automatski"
 
-#: data/config_window.ui.h:20
+#: data/config_window.ui.h:22
+msgid "Summary"
+msgstr ""
+
+#: data/config_window.ui.h:23
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -197,7 +193,7 @@ msgstr ""
 "Mailnag skripti kao argument predaje konačan broj novih poruka,\n"
 "koje slijede parovi <i>\"&lt;sender&gt; &lt;subject&gt;\"</i>."
 
-#: data/config_window.ui.h:23
+#: data/config_window.ui.h:26
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -207,7 +203,7 @@ msgstr ""
 "Mailnag skripti kao argument predaje konačan broj novih poruka,\n"
 "koje slijede parovi <i>\"&lt;sender&gt; &lt;subject&gt;\"</i>."
 
-#: data/config_window.ui.h:26
+#: data/config_window.ui.h:29
 msgid "minutes"
 msgstr "minute"
 
