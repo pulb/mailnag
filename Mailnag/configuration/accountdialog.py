@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# account_dialog.py
+# accountdialog.py
 #
 # Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
 #
@@ -21,15 +21,16 @@
 # MA 02110-1301, USA.
 #
 
+PACKAGE_NAME = "mailnag"
+
 from gi.repository import GLib, GdkPixbuf, Gtk
 import gettext
-from utils import get_data_file
-
-PACKAGE_NAME = "mailnag"
+from common.utils import get_data_file
 
 gettext.bindtextdomain(PACKAGE_NAME, './locale')
 gettext.textdomain(PACKAGE_NAME)
 _ = gettext.gettext
+
 
 class AccountDialog:
 	def __init__(self, parent):

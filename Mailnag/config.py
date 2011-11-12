@@ -4,6 +4,7 @@
 # config.py
 #
 # Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,66 +21,17 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 #
-import os
-import ConfigParser
-import xdg.BaseDirectory as bd
 
-mailnag_defaults = {
-	'general':
-	{
-		'mail_client'		: "evolution",
-		'messagetray_label'	: "mailnag",
-		'check_interval'	: 5,
-		'notification_mode'	: 0,
-		'remember'			: 1,
-		'sender_format'		: 1,
-		'playsound'			: 1,
-		'soundfile'			: 'mailnag.wav',
-		'autostart'			: 1
-	},
-	'filter':
-	{
-		'filter_on'			: 0,
-		'filter_text'		: 'newsletter, viagra'
-	},
-	'script':
-	{
-		'script0_on'		: 0,
-		'script1_on'		: 0,
-		'script0_file'		: '',
-		'script1_file'		: '',
-	},
-	'account':
-	{
-		'on'				: '',
-		'name'				: '',
-		'server'			: '',
-		'user'				: '',
-		'imap'				: '',
-		'folder'			: '',
-		'port'				: ''
-	}
-}
+from gi.repository import Gtk
 
-cfg_folder = os.path.join(bd.xdg_config_home, "mailnag")
-cfg_file = os.path.join(cfg_folder, "mailnag.cfg")
-
-def cfg_exists():
-	return os.path.exists(cfg_file)
+from common.utils import set_procname
+from configuration.configwindow import ConfigWindow
 
 
-def read_cfg():
-	cfg = ConfigParser.RawConfigParser()
-	cfg._sections = mailnag_defaults # HACK : use cfg.read_dict(mailnag_defaults) in python 3
-
-	if os.path.exists(cfg_file):
-		cfg.read(cfg_file)
-
-	return cfg
+def main():
+	set_procname("mailnag_config")
+	confwin = ConfigWindow()
+	Gtk.main()
 
 
-def write_cfg(cfg):
-	if not os.path.exists(cfg_folder):
-		os.makedirs(cfg_folder)
-	
-	with open(cfg_file, 'wb') as configfile: cfg.write(configfile)
+if __name__ == "__main__":  main()
