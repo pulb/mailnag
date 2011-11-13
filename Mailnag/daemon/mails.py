@@ -4,6 +4,7 @@
 # mails.py
 #
 # Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -52,8 +53,19 @@ class Mails:
 				if folder_list[0] == '':
 					folder_list = ['INBOX']
 				for folder in folder_list:
-					srv.select(folder.strip(), readonly=True)			# select IMAP folder
-					status, data = srv.search(None, 'UNSEEN')				# ALL or UNSEEN
+									
+					tmp = folder.strip()
+					srv.select(tmp, readonly=True) # select IMAP folder
+					try:
+						status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
+					except:
+						print "The folder:", tmp, "does not exist, using INBOX instead"
+						try:
+							srv.select('INBOX', readonly=True) # If search fails select INBOX and try again
+							status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
+						except:
+							print "INBOX Could not be found", sys.exc_info()[0]
+
 					if status != 'OK' or None in [d for d in data]:
 						print "Folder", folder, "in status", status, "| Data:", data, "\n"
 						continue										# Bugfix LP-735071
