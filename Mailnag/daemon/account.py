@@ -24,7 +24,7 @@
 
 import time
 import poplib
-import imaplib
+import daemon.imaplib2 as imaplib
 
 class Account:
 	def __init__(self, check_interval, name, server, user, password, imap, folder, port):

@@ -44,10 +44,10 @@ _ = gettext.gettext
 
 
 class MailChecker:
-	def __init__(self, cfg):
+	def __init__(self, cfg, accounts):
 		self.MAIL_LIST_LIMIT = 10 # prevent flooding of the messaging tray
 		self.mailcheck_lock = threading.Lock()
-		self.mails = Mails(cfg)
+		self.mails = Mails(cfg, accounts)
 		self.reminder = Reminder()
 		self.pid = Pid()
 		self.cfg = cfg

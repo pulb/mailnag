@@ -4,6 +4,7 @@
 # mailnag.py
 #
 # Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -28,8 +29,9 @@ import signal
 
 from common.config import read_cfg, cfg_exists, cfg_folder
 from common.utils import set_procname
+from daemon.accounts import Accounts
 from daemon.mailchecker import MailChecker
-
+from daemon.idlers import Idlers
 
 def read_config():
 	if not cfg_exists():
@@ -69,10 +71,15 @@ def delete_pid(): # delete file mailnag.pid
 
 def cleanup():
 	# clean up resources
-	try:	
+	try:
 		for n in mailchecker.notifications.itervalues():
 			n.close()
 	except NameError: pass
+	
+	try:
+		idlers.dispose()
+	except NameError: pass
+	
 	delete_pid()
 
 
@@ -82,12 +89,14 @@ def sig_handler(signum, frame):
 
 
 def main():
-	global mailchecker, mainloop
+	global mailchecker, mainloop, idlers
 	
 	mainloop = None
 	
 	set_procname("mailnag")
-
+	
+	GObject.threads_init()
+	
 	signal.signal(signal.SIGTERM, sig_handler)
 	
 	try:
@@ -98,11 +107,17 @@ def main():
 			print 'Error: Cannot find configuration file. Please run mailnag_config first.'
 			exit(1)
 		
-		mailchecker = MailChecker(cfg)
+		accounts = Accounts(cfg)
+		mailchecker = MailChecker(cfg, accounts)
 		mailchecker.timeout(True) # immediate check, firstcheck=True
 		
 		check_interval = int(cfg.get('general', 'check_interval'))
 		GObject.timeout_add_seconds(60 * check_interval, mailchecker.timeout)
+		
+		if False:
+			idlers = Idlers(accounts, mailchecker.timeout)
+			idlers.run()
+		
 		mainloop = GObject.MainLoop()
 		mainloop.run()
 	except KeyboardInterrupt:

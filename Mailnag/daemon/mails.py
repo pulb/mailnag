@@ -29,13 +29,13 @@ import sys
 import email
 from email.header import decode_header
 
-from daemon.accounts import Accounts
 from daemon.mail import Mail
 
 class Mails:
-	def __init__(self, cfg):
-		self.accounts = Accounts(cfg)
+	def __init__(self, cfg, accounts):
 		self.cfg = cfg
+		self.accounts = accounts
+		
 		
 	def get_mail(self, sort_order):
 		mail_list = []													# initialize list of mails
