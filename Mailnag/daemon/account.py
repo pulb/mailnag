@@ -72,7 +72,7 @@ class Account:
 				except:
 					print "Error: Cannot connect to IMAP account: %s. " \
 						"Next try in %s minutes." % (self.server, self.check_interval)
-					srv = False
+					srv = None
 		else:															# POP
 			try:
 				try:
@@ -109,7 +109,7 @@ class Account:
 				except:
 					print "Error: Cannot connect to POP account: %s. " \
 						"Next try in %s minutes." % (self.server, self.check_interval)
-					srv = False
+					srv = None
 
 		return srv														# server object
 

@@ -45,7 +45,7 @@ class Mails:
 
 		for acc in self.accounts.account:								# loop all email accounts
 			srv = acc.get_connection()									# get server connection for this account
-			if srv == False:
+			if srv == None:
 				continue												# continue with next account if server is empty
 			elif acc.imap:												# IMAP
 				folder_list = acc.folder.split(',')						# make a list of folders
