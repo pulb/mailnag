@@ -47,6 +47,10 @@ class Idlers:
 	
 	def _new_idler(self, account):
 		server = account.get_connection()
+		
+		if server == None:
+			return
+					
 		# Need to get out of AUTH mode.
 		if account.folder:
 			server.select(account.folder)
