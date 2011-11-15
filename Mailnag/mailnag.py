@@ -53,22 +53,6 @@ def delete_pid(): # delete file mailnag.pid
 		os.remove(pid_file)
 
 
-#def commandExecutor(command, context_menu_command=None):
-#	if context_menu_command != None:									# check origin of command
-#		command = context_menu_command
-#
-#	if command == 'clear':												# clear indicator list immediatelly
-#		mailchecker.clear()
-#	elif command == 'exit':												# exit mailnag immediatelly
-#		delete_pid()
-#		exit(0)
-#	elif command == 'check':											# check immediatelly for new emails
-#		mailchecker.check()
-#	else:
-#		command_list = command.split(' ')								# create list of arguments
-#		pid.append(subprocess.Popen(command_list))						# execute 'command'
-
-
 def cleanup():
 	# clean up resources
 	try:
