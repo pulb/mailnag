@@ -63,7 +63,7 @@ def delete_pid(): # delete file mailnag.pid
 #		delete_pid()
 #		exit(0)
 #	elif command == 'check':											# check immediatelly for new emails
-#		mailchecker.timeout()
+#		mailchecker.check()
 #	else:
 #		command_list = command.split(' ')								# create list of arguments
 #		pid.append(subprocess.Popen(command_list))						# execute 'command'
@@ -109,13 +109,13 @@ def main():
 		
 		accounts = Accounts(cfg)
 		mailchecker = MailChecker(cfg, accounts)
-		mailchecker.timeout(True) # immediate check, firstcheck=True
+		mailchecker.check(True) # immediate check, firstcheck=True
 		
 		check_interval = int(cfg.get('general', 'check_interval'))
-		GObject.timeout_add_seconds(60 * check_interval, mailchecker.timeout)
+		GObject.timeout_add_seconds(60 * check_interval, mailchecker.check)
 		
 		if False:
-			idlers = Idlers(accounts, mailchecker.timeout)
+			idlers = Idlers(accounts, mailchecker.check)
 			idlers.run()
 		
 		mainloop = GObject.MainLoop()

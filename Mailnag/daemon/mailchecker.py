@@ -57,7 +57,7 @@ class MailChecker:
 		Notify.init(cfg.get('general', 'messagetray_label')) # initialize Notification		
 		
 
-	def timeout(self, firstcheck = False):
+	def check(self, firstcheck = False):
 		with self.mailcheck_lock:
 			print 'Checking email accounts at:', time.asctime()
 			self.pid.kill() # kill all zombies
