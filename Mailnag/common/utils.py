@@ -23,7 +23,7 @@
 #
 
 import xdg.BaseDirectory as base
-from gi.repository import Gst
+from gi.repository import Gst, GConf
 import threading
 import os
 
@@ -52,6 +52,12 @@ def set_procname(newname):
 	buff = create_string_buffer(len(newname)+1)
 	buff.value = newname
 	libc.prctl(15, byref(buff), 0, 0, 0)
+
+
+def get_default_mail_reader():
+	client = GConf.Client.get_default()
+	cmd  = client.get_string("/desktop/gnome/url-handlers/mailto/command")
+	return cmd.split()[0]
 
 
 class _GstPlayThread(threading.Thread):
