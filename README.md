@@ -14,10 +14,10 @@ Translations: https://translations.launchpad.net/mailnag
     python 2 (python 3 won't work!)
     pygobject-3
     gir-notify
+    gir-gstreamer
     python-httplib2
     python2-gnomekeyring
     pyxdg
-    alsa-utils
     gettext
 
 \* _This list is possibly incomplete. Please let me know if something is missing here._

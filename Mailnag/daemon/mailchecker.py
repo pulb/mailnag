@@ -32,7 +32,7 @@ import subprocess
 import os
 import time
 
-from common.utils import get_data_file
+from common.utils import get_data_file, gstplay
 from daemon.reminder import Reminder
 from daemon.mails import Mails
 from daemon.pid import Pid
@@ -100,8 +100,7 @@ class MailChecker:
 					self.notify_single(new_mails)
 
 				if self.cfg.get('general', 'playsound') == '1': # play sound?
-					soundcommand = ['aplay', '-q', get_data_file(self.cfg.get('general', 'soundfile'))]
-					self.pid.append(subprocess.Popen(soundcommand))
+					gstplay(get_data_file(self.cfg.get('general', 'soundfile')))
 
 			self.reminder.save(self.mail_list)
 
