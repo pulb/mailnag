@@ -76,40 +76,40 @@ class Mails:
 								try:
 									msg = email.message_from_string(response_part[1])
 								except:
-									print "Could not get IMAP message:", response_part		# debug
+									print "Could not get IMAP message." # debug
 									continue
 								try:
 									try:
 										sender = self.format_header('sender', msg['From'])	# get sender and format it
 									except KeyError:
-										print "KeyError exception for key 'From' in message:", msg	# debug
+										print "KeyError exception for key 'From' in message." # debug
 										sender = self.format_header('sender', msg['from'])
 								except:
-									print "Could not get sender from IMAP message:", msg	# debug
+									print "Could not get sender from IMAP message." # debug
 									sender = "Error in sender"
 								try:
 									try:
 										datetime, seconds = self.format_header('date', msg['Date'])	# get date and format it
 									except KeyError:
-										print "KeyError exception for key 'Date' in message:", msg	# debug
+										print "KeyError exception for key 'Date' in message." # debug
 										datetime, seconds = self.format_header('date', msg['date'])
 								except:
-									print "Could not get date from IMAP message:", msg		# debug
+									print "Could not get date from IMAP message." # debug
 									datetime = time.strftime('%Y.%m.%d %X')					# take current time as "2010.12.31 13:57:04"
 									seconds = time.time()									# take current time as seconds
 								try:
 									try:
 										subject = self.format_header('subject', msg['Subject'])	# get subject and format it
 									except KeyError:
-										print "KeyError exception for key 'Subject' in message:", msg	# debug
+										print "KeyError exception for key 'Subject' in message." # debug
 										subject = self.format_header('subject', msg['subject'])
 								except:
-									print "Could not get subject from IMAP message:", msg	# debug
+									print "Could not get subject from IMAP message." # debug
 									subject = 'Error in subject'
 								try:
 									id = msg['Message-Id']
 								except:
-									print "Could not get id from IMAP message:", msg		# debug
+									print "Could not get id from IMAP message."				# debug
 									id = None                                               # prepare emergency 
 								
 								if id == None or id == '':
@@ -132,46 +132,46 @@ class Mails:
 					try:
 						message = srv.top(i, 0)[1]						# header plus first 0 lines from body
 					except:
-						print "Could not get POP message"				# debug
+						print "Could not get POP message."				# debug
 						continue
 					message_string = '\n'.join(message)					# convert list to string
 					try:
 						msg = dict(email.message_from_string(message_string))	# put message into email object and make a dictionary
 					except:
-						print "Could not get msg from POP message:", message_string	# debug
+						print "Could not get msg from POP message."	# debug
 						continue
 					try:
 						try:
 							sender = self.format_header('sender', msg['From'])	# get sender and format it
 						except KeyError:
-							print "KeyError exception for key 'From' in message:", msg	# debug
+							print "KeyError exception for key 'From' in message."	# debug
 							sender = self.format_header('sender', msg['from'])
 					except:
-						print "Could not get sender from POP message:", msg	# debug
+						print "Could not get sender from POP message."	# debug
 						sender = "Error in sender"
 					try:
 						try:
 							datetime, seconds = self.format_header('date', msg['Date'])	# get date and format it
 						except KeyError:
-							print "KeyError exception for key 'Date' in message:", msg	# debug
+							print "KeyError exception for key 'Date' in message."	# debug
 							datetime, seconds = self.format_header('date', msg['date'])
 					except:
-						print "Could not get date from POP message:", msg	# debug
+						print "Could not get date from POP message."	# debug
 						datetime = time.strftime('%Y.%m.%d %X')			# take current time as "2010.12.31 13:57:04"
 						seconds = time.time()							# take current time as seconds
 					try:
 						try:
 							subject = self.format_header('subject', msg['Subject'])	# get subject and format it
 						except KeyError:
-							print "KeyError exception for key 'Subject' in message:", msg	# debug
+							print "KeyError exception for key 'Subject' in message."	# debug
 							subject = self.format_header('subject', msg['subject'])
 					except:
-						print "Could not get subject from POP message:", msg
+						print "Could not get subject from POP message."
 						subject = 'Error in subject'
 					try:
 						uidl = srv.uidl(i)								# get id
 					except:
-						print "Could not get id from POP message:", message	# debug
+						print "Could not get id from POP message."		# debug
 						uidl = None                                         # prepare emergency
 					
 					if uidl == None or uidl == '':	
@@ -250,7 +250,7 @@ class Mails:
 				tupel = time.localtime(seconds)							# convert seconds to tupel
 				datetime = time.strftime('%Y.%m.%d %X', tupel)			# convert tupel to string
 			except:
-				print 'Error: cannot format date:', content
+				print 'Error: cannot format date.'
 				datetime = time.strftime('%Y.%m.%d %X')					# take current time as "2010.12.31 13:57:04"
 				seconds = time.time()									# take current time as seconds
 			return datetime, seconds
@@ -265,18 +265,14 @@ class Mails:
 
 	def convert(self, raw_content):										# decode and concatenate multi-coded header parts
 		content = raw_content.replace('\n',' ')							# replace newline by space
-		content = content.replace('?==?','?= =?')						# fix bug in email.header.decode_header()
+		content = content.replace('?==?','?= =?')						# workaround a bug in email.header.decode_header()
 		tupels = decode_header(content)									# list of (text_part, charset) tupels
 		content_list = []
 		for text, charset in tupels:									# iterate parts
 			if charset == None: charset = 'latin-1'						# set default charset for decoding
 			content_list.append(text.decode(charset, 'ignore'))			# replace non-decodable chars with 'nothing'
-		decoded_content = ' '.join(content_list)						# insert blanks between parts
+		decoded_content = u' '.join(content_list)						# insert blanks between parts
 		decoded_content = decoded_content.strip()						# get rid of whitespace
-
-		print "  raw    :", raw_content									# debug
-		print "  tupels :", tupels										# debug
-		print "  decoded:", decoded_content								# debug
 
 		return decoded_content
 
