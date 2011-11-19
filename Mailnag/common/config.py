@@ -36,7 +36,7 @@ mailnag_defaults = {
 		'notification_mode'	: 0,
 		'sender_format'		: 1,
 		'playsound'			: 1,
-		'soundfile'			: 'mailnag.wav',
+		'soundfile'			: 'mailnag.ogg',
 		'autostart'			: 1
 	},
 	'filter':
