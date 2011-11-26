@@ -60,6 +60,8 @@ class AccountDialog:
 		self.button_save = builder.get_object("button_save")
 
 		self.cmb_account_type.set_active(0) # default to POP3
+		self.entry_account_port.set_placeholder_text(_("optional"))
+		self.entry_account_folder.set_placeholder_text(_("optional"))
 		
 		
 	def run(self):

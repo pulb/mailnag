@@ -181,7 +181,6 @@
                 <property name="hexpand">True</property>
                 <property name="invisible_char">•</property>
                 <property name="invisible_char_set">True</property>
-                <property name="placeholder_text">optional</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -283,7 +282,6 @@
                 <property name="hexpand">True</property>
                 <property name="invisible_char">•</property>
                 <property name="invisible_char_set">True</property>
-                <property name="placeholder_text">optional</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -348,9 +346,6 @@
               </packing>
             </child>
             <child>
-              <placeholder/>
-            </child>
-            <child>
               <object class="GtkCheckButton" id="chk_account_ssl">
                 <property name="label" translatable="yes">Enable SSL encryption</property>
                 <property name="visible">True</property>
@@ -366,6 +361,9 @@
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
+            </child>
+            <child>
+              <placeholder/>
             </child>
           </object>
           <packing>
