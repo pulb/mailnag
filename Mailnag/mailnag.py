@@ -96,10 +96,12 @@ def main():
 		
 		mailchecker = MailChecker(cfg, accounts)
 		
+		# immediate check
+		mailchecker.check(firstcheck = True)
+		
 		# start polling thread for POP3 accounts and
 		# IMAP accounts without idle support
 		if sum(1 for acc in accounts if ((not acc.imap ) or (acc.imap and not acc.idle))) > 0:
-			mailchecker.check(True) # immediate check, firstcheck=True
 			check_interval = int(cfg.get('general', 'check_interval'))
 			GObject.timeout_add_seconds(60 * check_interval, mailchecker.check)
 		
