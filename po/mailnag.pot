@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-06 20:48+0100\n"
+"POT-Creation-Date: 2011-11-26 20:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,31 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Mailnag/config_window.py:85
-msgid "Enabled"
-msgstr ""
-
-#: Mailnag/config_window.py:91
-msgid "Name"
-msgstr ""
-
-#: Mailnag/config_window.py:162
-#, python-format
-msgid ""
-"Mailnag found %s mail accounts on this computer.\n"
-"\n"
-"Do you want to import them?"
-msgstr ""
-
-#: Mailnag/config_window.py:310
-msgid "Delete this account:"
-msgstr ""
-
-#: Mailnag/config_window.py:385
-msgid "Unnamed"
-msgstr ""
-
-#: Mailnag/keyring.py:59
+#: Mailnag/common/keyring.py:61
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -49,51 +25,83 @@ msgid ""
 "Do you want to try again?"
 msgstr ""
 
-#: Mailnag/mailnag.py:562
+#: Mailnag/common/account.py:49
+msgid "Unnamed"
+msgstr ""
+
+#: Mailnag/daemon/mailchecker.py:126
 msgid "(and {0} more)"
 msgstr ""
 
-#: Mailnag/mailnag.py:565
+#: Mailnag/daemon/mailchecker.py:129
 msgid "You have {0} new mails."
 msgstr ""
 
-#: Mailnag/mailnag.py:567
+#: Mailnag/daemon/mailchecker.py:131
 msgid "You have a new mail."
 msgstr ""
 
-#: Mailnag/mailnag.py:577
+#: Mailnag/daemon/mailchecker.py:141
 msgid "Mark as read"
 msgstr ""
 
+#: Mailnag/configuration/configwindow.py:79
+msgid "Enabled"
+msgstr ""
+
+#: Mailnag/configuration/configwindow.py:85
+msgid "Name"
+msgstr ""
+
+#: Mailnag/configuration/configwindow.py:156
+#, python-format
+msgid ""
+"Mailnag found %s mail accounts on this computer.\n"
+"\n"
+"Do you want to import them?"
+msgstr ""
+
+#: Mailnag/configuration/configwindow.py:338
+msgid "Delete this account:"
+msgstr ""
+
 #: data/account_dialog.ui.h:1
-msgid "Accountname:"
+msgid "Account type:"
 msgstr ""
 
 #: data/account_dialog.ui.h:2
-msgid "Folder:"
+msgid "Accountname:"
 msgstr ""
 
 #: data/account_dialog.ui.h:3
-msgid "IMAP"
+msgid "Enable Push-IMAP"
 msgstr ""
 
 #: data/account_dialog.ui.h:4
-msgid "Mail Account"
+msgid "Enable SSL encryption"
 msgstr ""
 
 #: data/account_dialog.ui.h:5
-msgid "Password:"
+msgid "Folder:"
 msgstr ""
 
 #: data/account_dialog.ui.h:6
-msgid "Port (optional):"
+msgid "Mail Account"
 msgstr ""
 
 #: data/account_dialog.ui.h:7
-msgid "Server:"
+msgid "Password:"
 msgstr ""
 
 #: data/account_dialog.ui.h:8
+msgid "Port:"
+msgstr ""
+
+#: data/account_dialog.ui.h:9
+msgid "Server:"
+msgstr ""
+
+#: data/account_dialog.ui.h:10
 msgid "User:"
 msgstr ""
 
