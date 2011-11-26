@@ -23,7 +23,6 @@
 
 PACKAGE_NAME = "mailnag"
 
-from ConfigParser import NoSectionError
 from common.account import Account, account_defaults
 from common.keyring import Keyring
 
