@@ -32,8 +32,8 @@ class Idlers:
 	
 	
 	def run(self):
-		for acc in self._accounts.account:
-			if acc.imap: # TODO : and enable_push
+		for acc in self._accounts:
+			if acc.imap and acc.idle:
 				try:
 					self._new_idler(acc)
 				except:
@@ -52,7 +52,7 @@ class Idlers:
 			return
 					
 		# Need to get out of AUTH mode.
-		if account.folder:
+		if len(account.folder) > 0:
 			server.select(account.folder)
 		else:
 			server.select("INBOX")

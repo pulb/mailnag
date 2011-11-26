@@ -41,9 +41,9 @@ class Mails:
 		mail_list = []													# initialize list of mails
 		mail_ids = []													# initialize list of mail ids
 		while not self.is_online(): time.sleep(5)						# wait for internet connection
-		filter_on = int(self.cfg.get('filter', 'filter_on'))			# get filter switch
+		filter_enabled = bool(int(self.cfg.get('filter', 'filter_enabled')))	# get filter switch
 
-		for acc in self.accounts.account:								# loop all email accounts
+		for acc in self.accounts:
 			srv = acc.get_connection()									# get server connection for this account
 			if srv == None:
 				continue												# continue with next account if server is empty
@@ -116,7 +116,7 @@ class Mails:
 									id = str(hash(subject))				# create emergency id
 						
 						if id not in mail_ids:							# prevent duplicates caused by Gmail labels
-							if not (filter_on and self.in_filter(sender + subject)):		# check filter
+							if not (filter_enabled and self.in_filter(sender + subject)):		# check filter
 								mail_list.append(Mail(seconds, subject, \
 									sender, datetime, id, acc.name))
 								mail_count += 1							# increment mail counter for this IMAP folder
@@ -178,7 +178,7 @@ class Mails:
 						uidl = str(hash(subject))						# create emergency id
 					
 					id = acc.user + uidl.split(' ')[2]					# create unique id
-					if not (filter_on and self.in_filter(sender + subject)):	# check filter
+					if not (filter_enabled and self.in_filter(sender + subject)):	# check filter
 						mail_list.append(Mail(seconds, subject, sender, \
 							datetime, id, acc.name))
 						mail_count += 1									# increment mail counter for this IMAP folder

@@ -21,45 +21,33 @@
 # MA 02110-1301, USA.
 #
 import os
-import ConfigParser
 import xdg.BaseDirectory as bd
-
+from ConfigParser import RawConfigParser
 from utils import get_default_mail_reader
-
 
 mailnag_defaults = {
 	'general':
 	{
 		'mail_client'		: get_default_mail_reader(),
-		'messagetray_label'	: "mailnag",
-		'check_interval'	: 5,
-		'notification_mode'	: 0,
-		'sender_format'		: 1,
-		'playsound'			: 1,
+		'messagetray_label'	: 'mailnag',
+		'check_interval'	: '5',
+		'notification_mode'	: '0',
+		'sender_format'		: '1',
+		'playsound'			: '1',
 		'soundfile'			: 'mailnag.ogg',
-		'autostart'			: 1
+		'autostart'			: '1'
 	},
 	'filter':
 	{
-		'filter_on'			: 0,
+		'filter_enabled'	: '0',
 		'filter_text'		: 'newsletter, viagra'
 	},
 	'script':
 	{
-		'script0_on'		: 0,
-		'script1_on'		: 0,
+		'script0_enabled'	: '0',
+		'script1_enabled'	: '0',
 		'script0_file'		: '',
-		'script1_file'		: '',
-	},
-	'account':
-	{
-		'on'				: '',
-		'name'				: '',
-		'server'			: '',
-		'user'				: '',
-		'imap'				: '',
-		'folder'			: '',
-		'port'				: ''
+		'script1_file'		: ''
 	}
 }
 
@@ -71,7 +59,7 @@ def cfg_exists():
 
 
 def read_cfg():
-	cfg = ConfigParser.RawConfigParser()
+	cfg = RawConfigParser()
 	cfg._sections = mailnag_defaults # HACK : use cfg.read_dict(mailnag_defaults) in python 3
 
 	if os.path.exists(cfg_file):

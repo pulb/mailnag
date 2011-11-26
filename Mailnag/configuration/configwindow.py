@@ -31,9 +31,9 @@ import gettext
 
 from common.utils import get_data_file
 from common.config import read_cfg, write_cfg
-from common.keyring import Keyring
+from common.accountlist import AccountList
+from common.account import Account
 from configuration.accountdialog import AccountDialog
-from configuration.accounts import Accounts
 
 locale.bindtextdomain(PACKAGE_NAME, './locale')
 gettext.bindtextdomain(PACKAGE_NAME, './locale')
@@ -61,24 +61,18 @@ class ConfigWindow:
 
 		self.window = builder.get_object("config_window")
 		self.window.set_icon(GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 48, 48));
-		self.keyring = Keyring()
 		self.cfg = read_cfg()
 		
 		#
 		# account tab
 		#
-		self.accounts = Accounts(self.cfg, self.keyring)
+		self.accounts = AccountList()
 
 		self.treeview_accounts = builder.get_object("treeview_accounts")
 		self.liststore_accounts = builder.get_object("liststore_accounts")
 
 		self.button_edit = builder.get_object("button_edit")
 		self.button_remove = builder.get_object("button_remove")
-
-#		colhead = [('Id'), _('Active'), _('Name')]						# column headings
-#
-#		renderer_id = Gtk.CellRendererText()
-#		column_id = Gtk.TreeViewColumn(colhead[0], renderer_id, text=0)	# Account Id
 
 		renderer_on = Gtk.CellRendererToggle()
 		renderer_on.connect("toggled", self.__on_account_toggled)		# bind toggle signal
@@ -135,38 +129,35 @@ class ConfigWindow:
 		self.entry_label.set_text(self.cfg.get('general', 'messagetray_label'))
 		self.spinbutton_interval.set_value(int(self.cfg.get('general', 'check_interval')))
 		self.cb_notification_mode.set_active(int(self.cfg.get('general', 'notification_mode')))
-		self.chk_playsound.set_active(int(self.cfg.get('general', 'playsound')))
-		self.chk_autostart.set_active(int(self.cfg.get('general', 'autostart')))
+		self.chk_playsound.set_active(bool(int(self.cfg.get('general', 'playsound'))))
+		self.chk_autostart.set_active(bool(int(self.cfg.get('general', 'autostart'))))
 
 		
-		self.chk_enable_filter.set_active(int(self.cfg.get('filter', 'filter_on')))
+		self.chk_enable_filter.set_active(bool(int(self.cfg.get('filter', 'filter_enabled'))))
 		self.textbuffer_filter.set_text(self.cfg.get('filter', 'filter_text'))
 
-		self.chk_script0.set_active(int(self.cfg.get('script', 'script0_on')))
+		self.chk_script0.set_active(bool(int(self.cfg.get('script', 'script0_enabled'))))
 		
 		tmp = self.cfg.get('script', 'script0_file')
 		if len(tmp) > 0:
 			self.filechooser_script0.set_filename(tmp)
 		
-		self.chk_script1.set_active(int(self.cfg.get('script', 'script1_on')))
+		self.chk_script1.set_active(bool(int(self.cfg.get('script', 'script1_enabled'))))
 		
 		tmp = self.cfg.get('script', 'script1_file')
 		if len(tmp) > 0:
 			self.filechooser_script1.set_filename(tmp)
 		
-		self.accounts.load()
+		self.accounts.load_from_cfg(self.cfg)
 		
-		if len(self.accounts.account) == 0:
-			imported_accounts = self.keyring.import_accounts()
-			if len(imported_accounts) > 0 and \
-				self.show_yesno_dialog(_("Mailnag found %s mail accounts on this computer.\n\nDo you want to import them?") % len(imported_accounts)):
-				for arr in imported_accounts:
-					self.accounts.add(name = "%s (%s)" % (arr[1], arr[0]), \
-						on = 1, server = arr[0], user = arr[1], \
-						password = arr[2], imap = arr[3])
-			
-		for acc in self.accounts.account:
-			row = acc.get_row()
+		if len(self.accounts) == 0:
+			self.accounts.import_from_keyring()
+			if len(self.accounts) > 0 and \
+				(not self.show_yesno_dialog(_("Mailnag found %s mail accounts on this computer.\n\nDo you want to import them?") % len(self.accounts))):
+				del self.accounts[:]
+
+		for acc in self.accounts:
+			row = [acc, acc.enabled, acc.name]
 			self.liststore_accounts.append(row)
 		self.select_path((0,))		
 		
@@ -180,34 +171,22 @@ class ConfigWindow:
 		autostart = self.chk_autostart.get_active()
 		self.cfg.set('general', 'autostart', int(autostart))
 
-		self.cfg.set('filter', 'filter_on', int(self.chk_enable_filter.get_active()))
+		self.cfg.set('filter', 'filter_enabled', int(self.chk_enable_filter.get_active()))
 		start, end = self.textbuffer_filter.get_bounds()		
 		self.cfg.set('filter', 'filter_text', self.textbuffer_filter.get_text(start, end, True))	
 		
-		self.cfg.set('script', 'script0_on', int(self.chk_script0.get_active()))
+		self.cfg.set('script', 'script0_enabled', int(self.chk_script0.get_active()))
 		tmp = self.filechooser_script0.get_filename()
 		if tmp == None: tmp = ""
 		self.cfg.set('script', 'script0_file', tmp)
 		
-		self.cfg.set('script', 'script1_on', int(self.chk_script1.get_active()))
+		self.cfg.set('script', 'script1_enabled', int(self.chk_script1.get_active()))
 		tmp = self.filechooser_script1.get_filename()
 		if tmp == None: tmp = ""
 		self.cfg.set('script', 'script1_file', tmp)
 		
-		on, name, server, user, password, imap, folder, port = self.accounts.get_cfg()
-		self.cfg.set('account', 'on', on)
-		self.cfg.set('account', 'name', name)
-		self.cfg.set('account', 'server', server)
-		self.cfg.set('account', 'user', user)
-		self.cfg.set('account', 'imap', imap)
-		self.cfg.set('account', 'folder', folder)
-		self.cfg.set('account', 'port', port)
-
-		for acc in self.accounts.account:
-			if bool(acc.imap): protocol = 'imap'
-			else: protocol = 'pop'
-			self.keyring.set(protocol, acc.user, acc.server, acc.password)
-		
+		self.accounts.save_to_cfg(self.cfg)
+				
 		write_cfg(self.cfg)
 
 		if autostart: self.create_autostart()
@@ -227,9 +206,9 @@ class ConfigWindow:
 		treeselection = self.treeview_accounts.get_selection()			# get tree_selection object
 		selection = treeselection.get_selected()						# get selected tupel (model, iter)
 		model, iter = selection											# get selected iter
-		if iter != None: id = model.get_value(iter, 0)					# get account_id from treeviews 1. column
-		else: id = None
-		return id, model, iter
+		if iter != None: acc = model.get_value(iter, 0)					# get account object from treeviews 1. column
+		else: acc = None
+		return acc, model, iter
 	
 	
 	def select_path(self, path):										# select path in treeview
@@ -239,18 +218,20 @@ class ConfigWindow:
 
 
 	def edit_account(self):
-		id, model, iter = self.get_selected_account()
+		acc, model, iter = self.get_selected_account()
 		if iter != None:
-			acc = self.accounts.get(id)
 			d = AccountDialog(self.window)
 			
+			d.cmb_account_type.set_active(acc.imap)
+				
 			d.entry_account_name.set_text(acc.name)
 			d.entry_account_user.set_text(acc.user)
 			d.entry_account_password.set_text(acc.password)
 			d.entry_account_server.set_text(acc.server)
 			d.entry_account_port.set_text(acc.port)
-			d.chk_account_imap.set_active(acc.imap)
 			d.entry_account_folder.set_text(acc.folder)
+			d.chk_account_push.set_active(acc.idle)
+			d.chk_account_ssl.set_active(acc.ssl)
 			
 			res = d.run()
 			
@@ -260,8 +241,16 @@ class ConfigWindow:
 				acc.password = d.entry_account_password.get_text()
 				acc.server = d.entry_account_server.get_text()
 				acc.port = d.entry_account_port.get_text()
-				acc.imap = d.chk_account_imap.get_active()
-				acc.folder = d.entry_account_folder.get_text()
+				acc.ssl = d.chk_account_ssl.get_active()
+				
+				if d.cmb_account_type.get_active() == 0: # POP3
+					acc.imap = False
+					acc.folder = ''
+					acc.idle = False
+				else: # IMAP
+					acc.imap = True
+					acc.folder = d.entry_account_folder.get_text()
+					acc.idle = d.chk_account_push.get_active()
 			
 				model.set_value(iter, 2, acc.name)
 			
@@ -303,25 +292,33 @@ class ConfigWindow:
 	def __on_account_toggled(self, cell, path):							# chk_box account_on toggled
 		model = self.liststore_accounts
 		iter = model.get_iter(path)
-		id = model.get_value(iter, 0)
-		acc = self.accounts.get(id)										# get account by id
-		acc.on = not acc.on												# update account.on
+		acc = model.get_value(iter, 0)
+		acc.enabled = not acc.enabled
 		
 		self.liststore_accounts.set_value(iter, 1, not cell.get_active())
-
+		
 
 	def __on_btn_add_clicked(self, widget):
 		d = AccountDialog(self.window)
 		res = d.run()
 
 		if res == 1:
-			id = self.accounts.add(1, d.entry_account_name.get_text(),
-			d.entry_account_server.get_text(), d.entry_account_user.get_text(),
-			d.entry_account_password.get_text(), d.chk_account_imap.get_active(), 
-			d.entry_account_folder.get_text(), d.entry_account_port.get_text()
-			)
+			if d.cmb_account_type.get_active() == 0: # POP3
+				imap = False
+				folder = ''
+				idle = False
+			else: # IMAP
+				imap = True
+				folder = d.entry_account_folder.get_text()
+				idle = d.chk_account_push.get_active()
 			
-			row = [id, 1, d.entry_account_name.get_text()]
+			acc = Account(enabled = True, name = d.entry_account_name.get_text(), \
+				user = d.entry_account_user.get_text(), password = d.entry_account_password.get_text(), \
+				server = d.entry_account_server.get_text(), port = d.entry_account_port.get_text(), \
+				ssl = d.chk_account_ssl.get_active(), imap = imap, idle = idle , folder = folder)
+			self.accounts.append(acc)
+			
+			row = [acc, True, acc.name]
 			iter = self.liststore_accounts.append(row)
 			model = self.treeview_accounts.get_model()
 			path = model.get_path(iter)
@@ -336,11 +333,10 @@ class ConfigWindow:
 
 
 	def __on_btn_remove_clicked(self, widget):
-		id, model, iter = self.get_selected_account()
+		acc, model, iter = self.get_selected_account()
 		if iter != None:
-			name = model.get_value(iter, 2)								# get account_name
 			if self.show_yesno_dialog(_('Delete this account:') + \
-				'\n\n' + name):
+				'\n\n' + acc.name):
 				
 				p = model.get_path(iter)
 				if not p.prev():
@@ -348,7 +344,7 @@ class ConfigWindow:
 				self.select_path(p)										# select prev/next account
 				
 				model.remove(iter)										# delete in treeview
-				self.accounts.remove(id)								# delete in accounts list
+				self.accounts.remove(acc)								# delete in accounts list
 
 
 	def __on_treeview_accounts_row_activated(self, treeview, path, view_column):
@@ -378,8 +374,7 @@ class ConfigWindow:
 		
 	
 	def __save_and_quit(self):
-		self.save_config()
-		self.keyring.remove(self.accounts.account) # delete obsolete entries from Keyring	
+		self.save_config()	
 		Gtk.main_quit()
 		
 

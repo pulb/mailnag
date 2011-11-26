@@ -27,7 +27,9 @@ from gi.repository import GObject, GLib, GdkPixbuf, Gtk
 import locale
 import gettext
 import gnomekeyring
-from utils import get_data_file
+
+from common.utils import get_data_file
+from common.account import Account
 
 PACKAGE_NAME = "mailnag"
 
@@ -89,7 +91,7 @@ class Keyring:
 			return ''
 
 
-	def import_accounts(self):										# get email accounts from Gnome-Keyring
+	def import_accounts(self): # get email accounts from Gnome-Keyring
 		accounts = []
 		if gnomekeyring.list_item_ids_sync(self.defaultKeyring):
 			displayNameDict = {}
@@ -101,21 +103,26 @@ class Keyring:
 				or displayName.startswith('imap://'):
 					server = displayName.split('@')[1][:-1]
 					if displayName.startswith('imap://'):
-						imap = 1
+						imap = True
 						user = displayName.split('@')[0][7:]
 					else:
-						imap = 0
+						imap = False
 						user = displayName.split('@')[0][6:]
+					
 					user = user.replace('%40','@')
+					
 					if ';' in user:
 						user = user.split(';')[0]
+					
 					password = gnomekeyring.item_get_info_sync(self.defaultKeyring, \
 						displayNameDict[displayName]).get_secret()
-					accounts.append([server, user, password, imap])
+					
+					accounts.append(Account(enabled = True, name = "%s (%s)" % (server, user), \
+						server = server, user = user, password = password, imap = imap))
 		return accounts
 
 
-	def set(self, protocol, user, server, password):					# store password in Gnome-Keyring
+	def set(self, protocol, user, server, password): # store password in Gnome-Keyring
 		if password != '':
 			displayNameDict = {}
 			for identity in gnomekeyring.list_item_ids_sync(self.defaultKeyring):

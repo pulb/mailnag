@@ -23,8 +23,8 @@
 
 PACKAGE_NAME = "mailnag"
 
-from gi.repository import GLib, GdkPixbuf, Gtk
 import gettext
+from gi.repository import GLib, GdkPixbuf, Gtk
 from common.utils import get_data_file
 
 gettext.bindtextdomain(PACKAGE_NAME, './locale')
@@ -38,8 +38,8 @@ class AccountDialog:
 		builder.set_translation_domain(PACKAGE_NAME)
 		builder.add_from_file(get_data_file("account_dialog.ui"))
 		builder.connect_signals({ \
+			"account_type_changed" : self.__on_cmb_account_type_changed, \
 			"entry_changed" : self.__on_entry_changed, \
-			"chk_account_imap_toggled" : self.__on_chk_account_imap_toggled, \
 			"btn_cancel_clicked" : self.__on_btn_cancel_clicked, \
 			"btn_save_clicked" : self.__on_btn_save_clicked \
 		})
@@ -47,15 +47,20 @@ class AccountDialog:
 		self.window = builder.get_object("account_dialog")
 		self.window.set_transient_for(parent)
 
+		self.cmb_account_type = builder.get_object("cmb_account_type")
 		self.entry_account_name = builder.get_object("entry_account_name")
 		self.entry_account_user = builder.get_object("entry_account_user")
 		self.entry_account_password = builder.get_object("entry_account_password")
 		self.entry_account_server = builder.get_object("entry_account_server")		
 		self.entry_account_port = builder.get_object("entry_account_port")
-		self.chk_account_imap = builder.get_object("chk_account_imap")
+		self.label_account_folder = builder.get_object("label_account_folder")
 		self.entry_account_folder = builder.get_object("entry_account_folder")
+		self.chk_account_push = builder.get_object("chk_account_push")
+		self.chk_account_ssl = builder.get_object("chk_account_ssl")
 		self.button_save = builder.get_object("button_save")
 
+		self.cmb_account_type.set_active(0) # default to POP3
+		
 		
 	def run(self):
 		return self.window.run()
@@ -83,7 +88,14 @@ class AccountDialog:
 		self.button_save.set_sensitive(ok)
 		
 		
-	def __on_chk_account_imap_toggled(self, widget):
-		self.entry_account_folder.set_sensitive(self.chk_account_imap.get_active())
+	def __on_cmb_account_type_changed(self, widget):
+		if self.cmb_account_type.get_active() == 0: # POP3
+			self.label_account_folder.set_visible(False)
+			self.entry_account_folder.set_visible(False)
+			self.chk_account_push.set_visible(False)
+		else: # IMAP
+			self.label_account_folder.set_visible(True)
+			self.entry_account_folder.set_visible(True)
+			self.chk_account_push.set_visible(True)
 
 

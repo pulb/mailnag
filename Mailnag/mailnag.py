@@ -29,7 +29,7 @@ import signal
 
 from common.config import read_cfg, cfg_exists, cfg_folder
 from common.utils import set_procname
-from daemon.accounts import Accounts
+from common.accountlist import AccountList
 from daemon.mailchecker import MailChecker
 from daemon.idlers import Idlers
 
@@ -91,14 +91,20 @@ def main():
 			print 'Error: Cannot find configuration file. Please run mailnag_config first.'
 			exit(1)
 		
-		accounts = Accounts(cfg)
+		accounts = AccountList()
+		accounts.load_from_cfg(cfg, enabled_only = True)
+		
 		mailchecker = MailChecker(cfg, accounts)
-		mailchecker.check(True) # immediate check, firstcheck=True
 		
-		check_interval = int(cfg.get('general', 'check_interval'))
-		GObject.timeout_add_seconds(60 * check_interval, mailchecker.check)
+		# start polling thread for POP3 accounts and
+		# IMAP accounts without idle support
+		if sum(1 for acc in accounts if ((not acc.imap ) or (acc.imap and not acc.idle))) > 0:
+			mailchecker.check(True) # immediate check, firstcheck=True
+			check_interval = int(cfg.get('general', 'check_interval'))
+			GObject.timeout_add_seconds(60 * check_interval, mailchecker.check)
 		
-		if False:
+		# start idler threads for IMAP accounts with idle support
+		if sum(1 for acc in accounts if (acc.imap and acc.idle)) > 0:
 			idlers = Idlers(accounts, mailchecker.check)
 			idlers.run()
 		

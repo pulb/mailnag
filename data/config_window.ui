@@ -623,9 +623,9 @@ Copyright (c) 2011 Ralf Hersel</property>
   </object>
   <object class="GtkListStore" id="liststore_accounts">
     <columns>
-      <!-- column-name account_id -->
-      <column type="gchararray"/>
-      <!-- column-name account_on -->
+      <!-- column-name account_obj -->
+      <column type="PyObject"/>
+      <!-- column-name account_enabled -->
       <column type="gboolean"/>
       <!-- column-name account_name -->
       <column type="gchararray"/>

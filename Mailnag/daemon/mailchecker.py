@@ -187,14 +187,14 @@ class MailChecker:
 	
 	def run_user_scripts(self, event, data):
 		if event == "on_mail_check":
-			if self.cfg.get('script', 'script0_on') == '1':
+			if self.cfg.get('script', 'script0_enabled') == '1':
 				script_file = self.cfg.get('script', 'script0_file')
 				if script_file != '' and os.path.exists(script_file):
 					self.pid.append(subprocess.Popen("%s %s" % (script_file, data), shell = True))
 				else:
 					print 'Warning: cannot execute script:', script_file
 		
-			if (data != '0') and (self.cfg.get('script', 'script1_on') == '1'):
+			if (data != '0') and (self.cfg.get('script', 'script1_enabled') == '1'):
 				script_file = self.cfg.get('script', 'script1_file')
 				if script_file != '' and os.path.exists(script_file):
 					self.pid.append(subprocess.Popen("%s %s" % (script_file, data), shell = True))
