@@ -61,33 +61,21 @@ class Account:
 		self.folder = folder
 
 
-	def get_connection(self):											# get email server connection
-		if self.imap:													# IMAP
+	def get_connection(self): # get email server connection
+		if self.imap:
 			try:
 				srv = self._get_IMAP_connection()
 			except:
-				print "Warning: Cannot connect to IMAP account: %s. " \
-					"Next try in 30 seconds." % self.server
-				time.sleep(30)											# wait 30 seconds
-				try:
-					srv = self._get_IMAP_connection()
-				except:
-					print "Error: Cannot connect to IMAP account: %s. " % self.server
-					srv = None
-		else:															# POP
+				print "Error: Cannot connect to IMAP account: %s. " % self.server
+				srv = None
+		else:
 			try:
 				srv = self._get_POP3_connection()
 			except:
-				print "Warning: Cannot connect to POP account: %s. " \
-					"Next try in 30 seconds." % self.server
-				time.sleep(30)											# wait 30 seconds
-				try:
-					srv = self._get_POP3_connection()
-				except:
-					print "Error: Cannot connect to POP account: %s. " % self.server
-					srv = None
+				print "Error: Cannot connect to POP account: %s. " % self.server
+				srv = None
 
-		return srv														# server object
+		return srv # server object
 
 
 	def _get_IMAP_connection(self):
