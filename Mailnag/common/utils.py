@@ -26,6 +26,7 @@ import xdg.BaseDirectory as base
 from gi.repository import Gst, Gio
 import threading
 import os
+import time
 
 PACKAGE_NAME = "mailnag"
 
@@ -74,16 +75,22 @@ class _GstPlayThread(threading.Thread):
 	
 	
 	def run(self):
-		self.ply.set_state(Gst.State.PLAYING)
-		
 		def on_eos(bus, msg):
+			print "EOS" # debug
 			self.ply.set_state(Gst.State.NULL)
 			return True
 		
-		bus = self.ply.get_bus()		
-		bus.add_signal_watch()
-		bus.connect('message::eos', on_eos)
-			
+		bus = self.ply.get_bus()
+#		bus.add_signal_watch()
+#		bus.connect('message::eos', on_eos)
+		
+		self.ply.set_state(Gst.State.PLAYING)
+		
+		# FIXME : use add_signal_watch with 'message::eos'
+		# if it is working with GTK3
+		time.sleep(3)
+		on_eos(bus, Gst.MessageType.EOS)
+		
 
 _gst_initialized = False
 
