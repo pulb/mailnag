@@ -23,13 +23,16 @@ Translations: https://translations.launchpad.net/mailnag
 \* _This list is possibly incomplete. Please let me know if something is missing here._
 ***
 
-### Configuration
+### Installation & Configuration
+* [Ubuntu](https://launchpad.net/~webupd8team/+archive/gnome3)
+* [Arch Linux](https://aur.archlinux.org/packages.php?ID=49581)
+* [Generic](https://github.com/pulb/mailnag/downloads)
 
-Run `./mailnag_config` to setup Mailnag.    
-Closing the configuration window will start mailnag automatically.
-
-To generate locales run `./gen_locales`.    
-Your language is not available? Don't hesitate - head over to https://translations.launchpad.net/mailnag and translate Mailnag into your language!
+  Run `./mailnag_config` to setup Mailnag.    
+  Closing the configuration window will start mailnag automatically.
+  
+  To generate locales run `./gen_locales`.    
+  Your language is not available? Don't hesitate - head over to https://translations.launchpad.net/mailnag and translate Mailnag into your language!
 ***
 
 ### Screenshots
