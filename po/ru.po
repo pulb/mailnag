@@ -7,44 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-11-06 20:48+0100\n"
+"POT-Creation-Date: 2011-11-26 22:32+0100\n"
 "PO-Revision-Date: 2011-11-02 16:36+0000\n"
 "Last-Translator: KEIII <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-11-08 20:36+0000\n"
-"X-Generator: Launchpad (build 14263)\n"
+"X-Launchpad-Export-Date: 2011-11-27 13:08+0000\n"
+"X-Generator: Launchpad (build 14381)\n"
 
-#: Mailnag/config_window.py:85
-msgid "Enabled"
-msgstr "Включено"
-
-#: Mailnag/config_window.py:91
-msgid "Name"
-msgstr "Название"
-
-#: Mailnag/config_window.py:162
-#, python-format
-msgid ""
-"Mailnag found %s mail accounts on this computer.\n"
-"\n"
-"Do you want to import them?"
-msgstr ""
-"Mailnag обнаружил %s учётных записей почты на этом компьютере.\n"
-"\n"
-"Импортировать их?"
-
-#: Mailnag/config_window.py:310
-msgid "Delete this account:"
-msgstr "Удалить эту учётную запись:"
-
-#: Mailnag/config_window.py:385
-msgid "Unnamed"
-msgstr "Без названия"
-
-#: Mailnag/keyring.py:59
+#: Mailnag/common/keyring.py:61
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -56,51 +29,91 @@ msgstr ""
 "\n"
 "Попытаться ещё раз?"
 
-#: Mailnag/mailnag.py:562
+#: Mailnag/common/account.py:49
+msgid "Unnamed"
+msgstr "Без названия"
+
+#: Mailnag/daemon/mailchecker.py:126
 msgid "(and {0} more)"
 msgstr "(и ещё {0})"
 
-#: Mailnag/mailnag.py:565
+#: Mailnag/daemon/mailchecker.py:129
 msgid "You have {0} new mails."
 msgstr "У вас {0} новых писем."
 
-#: Mailnag/mailnag.py:567
+#: Mailnag/daemon/mailchecker.py:131
 msgid "You have a new mail."
 msgstr "У вас новое письмо."
 
-#: Mailnag/mailnag.py:577
+#: Mailnag/daemon/mailchecker.py:141
 msgid "Mark as read"
 msgstr ""
 
+#: Mailnag/configuration/accountdialog.py:63
+#: Mailnag/configuration/accountdialog.py:64
+msgid "optional"
+msgstr ""
+
+#: Mailnag/configuration/configwindow.py:79
+msgid "Enabled"
+msgstr "Включено"
+
+#: Mailnag/configuration/configwindow.py:85
+msgid "Name"
+msgstr "Название"
+
+#: Mailnag/configuration/configwindow.py:156
+#, python-format
+msgid ""
+"Mailnag found %s mail accounts on this computer.\n"
+"\n"
+"Do you want to import them?"
+msgstr ""
+"Mailnag обнаружил %s учётных записей почты на этом компьютере.\n"
+"\n"
+"Импортировать их?"
+
+#: Mailnag/configuration/configwindow.py:338
+msgid "Delete this account:"
+msgstr "Удалить эту учётную запись:"
+
 #: data/account_dialog.ui.h:1
+msgid "Account type:"
+msgstr ""
+
+#: data/account_dialog.ui.h:2
 msgid "Accountname:"
 msgstr "Название учётной записи:"
 
-#: data/account_dialog.ui.h:2
+#: data/account_dialog.ui.h:3
+msgid "Enable Push-IMAP"
+msgstr ""
+
+#: data/account_dialog.ui.h:4
+msgid "Enable SSL encryption"
+msgstr ""
+
+#: data/account_dialog.ui.h:5
 msgid "Folder:"
 msgstr "Каталог:"
 
-#: data/account_dialog.ui.h:3
-msgid "IMAP"
-msgstr "IMAP"
-
-#: data/account_dialog.ui.h:4
+#: data/account_dialog.ui.h:6
 msgid "Mail Account"
 msgstr "Учётная запись почты"
 
-#: data/account_dialog.ui.h:5
+#: data/account_dialog.ui.h:7
 msgid "Password:"
 msgstr "Пароль:"
 
-#: data/account_dialog.ui.h:6
-msgid "Port (optional):"
-msgstr "порт (необязательно):"
+#: data/account_dialog.ui.h:8
+msgid "Port:"
+msgstr ""
 
-#: data/account_dialog.ui.h:7
+#: data/account_dialog.ui.h:9
 msgid "Server:"
 msgstr "Сервер:"
 
-#: data/account_dialog.ui.h:8
+#: data/account_dialog.ui.h:10
 msgid "User:"
 msgstr "Владелец:"
 
