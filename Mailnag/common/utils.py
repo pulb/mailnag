@@ -23,7 +23,7 @@
 #
 
 import xdg.BaseDirectory as base
-from gi.repository import Gst, GConf
+from gi.repository import Gst, Gio
 import threading
 import os
 
@@ -55,9 +55,16 @@ def set_procname(newname):
 
 
 def get_default_mail_reader():
-	client = GConf.Client.get_default()
-	cmd  = client.get_string("/desktop/gnome/url-handlers/mailto/command")
-	return cmd.split()[0]
+	mail_reader = "evolution"
+	app_info = Gio.AppInfo.get_default_for_type ("x-scheme-handler/mailto", False)
+	
+	if app_info != None:
+		executable = Gio.AppInfo.get_executable(app_info)
+	
+		if (executable != None) and (len(executable) > 0):
+			mail_reader = executable
+	
+	return mail_reader
 
 
 class _GstPlayThread(threading.Thread):
