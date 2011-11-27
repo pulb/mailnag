@@ -76,7 +76,7 @@ class _GstPlayThread(threading.Thread):
 	
 	def run(self):
 		def on_eos(bus, msg):
-			print "EOS" # debug
+#			print "EOS" # debug
 			self.ply.set_state(Gst.State.NULL)
 			return True
 		
