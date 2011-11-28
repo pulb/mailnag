@@ -88,7 +88,6 @@ class ConfigWindow:
 		#
 		# general tab
 		#
-		self.entry_mail_client = builder.get_object("entry_mail_client")
 		self.entry_label = builder.get_object("entry_label")	
 		self.spinbutton_interval = builder.get_object("spinbutton_interval")
 		self.cb_notification_mode = builder.get_object("cb_notification_mode")
@@ -125,7 +124,6 @@ class ConfigWindow:
 
 
 	def load_config(self):
-		self.entry_mail_client.set_text(self.cfg.get('general', 'mail_client'))
 		self.entry_label.set_text(self.cfg.get('general', 'messagetray_label'))
 		self.spinbutton_interval.set_value(int(self.cfg.get('general', 'check_interval')))
 		self.cb_notification_mode.set_active(int(self.cfg.get('general', 'notification_mode')))
@@ -163,7 +161,6 @@ class ConfigWindow:
 		
 
 	def save_config(self):
-		self.cfg.set('general', 'mail_client', self.entry_mail_client.get_text())
 		self.cfg.set('general', 'messagetray_label', self.entry_label.get_text())
 		self.cfg.set('general', 'check_interval', int(self.spinbutton_interval.get_value()))
 		self.cfg.set('general', 'notification_mode', int(self.cb_notification_mode.get_active()))

@@ -32,7 +32,7 @@ import subprocess
 import os
 import time
 
-from common.utils import get_data_file, gstplay
+from common.utils import get_data_file, gstplay, get_default_mail_reader
 from daemon.reminder import Reminder
 from daemon.mails import Mails
 from daemon.pid import Pid
@@ -154,8 +154,9 @@ class MailChecker:
 	def __notification_action_handler(self, n, action, user_data):
 		with self.mailcheck_lock:
 			if action == "default":
-				emailclient = self.cfg.get('general', 'mail_client').split(' ') # create list of command arguments				
-				self.pid.append(subprocess.Popen(emailclient))
+				mailclient = get_default_mail_reader()
+				if mailclient != None:
+					self.pid.append(subprocess.Popen(mailclient))
 				
 				# clicking the notification bubble has closed all notifications
 				# so clear the reference array as well. 

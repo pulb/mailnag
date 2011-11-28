@@ -23,12 +23,10 @@
 import os
 import xdg.BaseDirectory as bd
 from ConfigParser import RawConfigParser
-from utils import get_default_mail_reader
 
 mailnag_defaults = {
 	'general':
 	{
-		'mail_client'		: get_default_mail_reader(),
 		'messagetray_label'	: 'mailnag',
 		'check_interval'	: '5',
 		'notification_mode'	: '0',

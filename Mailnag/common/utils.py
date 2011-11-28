@@ -56,7 +56,7 @@ def set_procname(newname):
 
 
 def get_default_mail_reader():
-	mail_reader = "evolution"
+	mail_reader = None
 	app_info = Gio.AppInfo.get_default_for_type ("x-scheme-handler/mailto", False)
 	
 	if app_info != None:
