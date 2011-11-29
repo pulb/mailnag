@@ -1,0 +1,19 @@
+Version 0.3:
+* Support for IMAP-Push notifications (thanks tony747!)
+* Single/summary notification modes
+* Support for GNOME 3.2 notification counters (single mode only)
+* Mails can be marked as read
+* Explicit SSL encryption
+* Autostart in GNOME sessions only
+* Detection of default email client
+* Notification sound playback via GStreamer (ogg)
+* Removed GTK2 workaround code
+* Lots of bugfixes, rewritten code and refactoring
+* New translations
+
+Version 0.2
+* Added many new translations
+* Bugfixes
+
+Version 0.1
+* Initial release
