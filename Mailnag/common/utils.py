@@ -103,7 +103,7 @@ def gstplay(filename):
 	try:
 		cwd = os.getcwd()
 		location = os.path.join(cwd, filename)
-		ply = Gst.ElementFactory.make("playbin", "player")
+		ply = Gst.ElementFactory.make("playbin2", "player")
 		ply.set_property("uri", "file://" + location)
 		pt = _GstPlayThread(ply)
 		pt.start()
