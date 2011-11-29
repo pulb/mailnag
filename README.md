@@ -42,7 +42,7 @@ Clicking a mail notification popup will open the default mail client specified i
 If you're a webmail (e.g. gmail) user and want your account to be launched in a browser, please install a tool like [gnome-gmail](http://gnome-gmail.sourceforge.net).
 
 #### Permanent Notifications
-GNOME-Shell notifications are visible for a few seconds only before they vanish in GNOME's hidden messaging tray (at the bottom right corner of your screen).  
+GNOME-Shell notifications are visible for a few seconds only before they vanish in GNOME's hidden messaging tray.  
 If you like to have a permanently visible notification counter in your top panel, you probably want to install [this](https://github.com/pulb/shell-message-notifier) GNOME-Shell extension.
 
 ## Screenshots
