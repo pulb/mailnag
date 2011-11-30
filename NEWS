@@ -1,4 +1,5 @@
-Version 0.3:
+Version 0.3 (2011-11-27):
+=========================
 * Support for IMAP-Push notifications (thanks tony747!)
 * Single/summary notification modes
 * Support for GNOME 3.2 notification counters (single mode only)
@@ -11,9 +12,15 @@ Version 0.3:
 * Lots of bugfixes, rewritten code and refactoring
 * New translations
 
-Version 0.2
+Please note that this release breaks existing config files (for the first and last time),
+so make sure to delete ~/.config/mailnag/mailnag.cfg before upgrading.
+
+Version 0.2 (2011-10-17):
+=========================
 * Added many new translations
 * Bugfixes
 
-Version 0.1
+
+Version 0.1 (2011-07-06):
+=========================
 * Initial release
