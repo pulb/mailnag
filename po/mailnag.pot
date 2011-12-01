@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-28 18:34+0100\n"
+"POT-Creation-Date: 2011-12-01 19:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,10 @@ msgid ""
 "Wrong password.\n"
 "\n"
 "Do you want to try again?"
+msgstr ""
+
+#: Mailnag/common/config.py:38
+msgid "New email"
 msgstr ""
 
 #: Mailnag/common/account.py:49
