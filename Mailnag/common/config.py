@@ -27,7 +27,7 @@ from ConfigParser import RawConfigParser
 mailnag_defaults = {
 	'general':
 	{
-		'messagetray_label'	: 'mailnag',
+		'messagetray_label'	: 'New email',
 		'check_interval'	: '5',
 		'notification_mode'	: '0',
 		'sender_format'		: '1',
