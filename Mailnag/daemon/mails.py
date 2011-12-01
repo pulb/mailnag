@@ -23,13 +23,20 @@
 # MA 02110-1301, USA.
 #
 
+PACKAGE_NAME = "mailnag"
+
 import time
 import urllib2
 import sys
+import gettext
 import email
 from email.header import decode_header
 
 from daemon.mail import Mail
+
+gettext.bindtextdomain(PACKAGE_NAME, './locale')
+gettext.textdomain(PACKAGE_NAME)
+_ = gettext.gettext
 
 class Mails:
 	def __init__(self, cfg, accounts):
@@ -105,7 +112,7 @@ class Mails:
 										subject = self.format_header('subject', msg['subject'])
 								except:
 									print "Could not get subject from IMAP message." # debug
-									subject = 'Error in subject'
+									subject = _('No subject')
 								try:
 									id = msg['Message-Id']
 								except:
@@ -167,7 +174,7 @@ class Mails:
 							subject = self.format_header('subject', msg['subject'])
 					except:
 						print "Could not get subject from POP message."
-						subject = 'Error in subject'
+						subject = _('No subject')
 					try:
 						uidl = srv.uidl(i)								# get id
 					except:
