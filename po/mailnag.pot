@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-01 19:31+0100\n"
+"POT-Creation-Date: 2011-12-01 19:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,6 +47,10 @@ msgstr ""
 
 #: Mailnag/daemon/mailchecker.py:141
 msgid "Mark as read"
+msgstr ""
+
+#: Mailnag/daemon/mails.py:115 Mailnag/daemon/mails.py:177
+msgid "No subject"
 msgstr ""
 
 #: Mailnag/configuration/accountdialog.py:63
