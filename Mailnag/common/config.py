@@ -20,14 +20,22 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 #
+
+PACKAGE_NAME = "mailnag"
+
 import os
+import gettext
 import xdg.BaseDirectory as bd
 from ConfigParser import RawConfigParser
+
+gettext.bindtextdomain(PACKAGE_NAME, './locale')
+gettext.textdomain(PACKAGE_NAME)
+_ = gettext.gettext
 
 mailnag_defaults = {
 	'general':
 	{
-		'messagetray_label'	: 'New email',
+		'messagetray_label'	: _('New email'),
 		'check_interval'	: '5',
 		'notification_mode'	: '0',
 		'sender_format'		: '1',
