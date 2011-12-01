@@ -23,20 +23,11 @@
 #
 
 from gi.repository import GObject, GLib, GdkPixbuf, Gtk
-
-import locale
-import gettext
 import gnomekeyring
 
+from common.i18n import PACKAGE_NAME, _
 from common.utils import get_data_file
 from common.account import Account
-
-PACKAGE_NAME = "mailnag"
-
-locale.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.textdomain(PACKAGE_NAME)
-_ = gettext.gettext
 
 class Keyring:
 	def __init__(self):

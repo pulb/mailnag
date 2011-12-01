@@ -23,20 +23,14 @@
 # MA 02110-1301, USA.
 #
 
-PACKAGE_NAME = "mailnag"
-
 import time
 import urllib2
 import sys
-import gettext
 import email
+
+from common.i18n import _
 from email.header import decode_header
-
 from daemon.mail import Mail
-
-gettext.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.textdomain(PACKAGE_NAME)
-_ = gettext.gettext
 
 class Mails:
 	def __init__(self, cfg, accounts):

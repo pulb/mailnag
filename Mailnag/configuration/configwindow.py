@@ -22,24 +22,15 @@
 # MA 02110-1301, USA.
 #
 
-PACKAGE_NAME = "mailnag"
-
-from gi.repository import GLib, GdkPixbuf, Gtk, GObject
 import os
-import locale
-import gettext
+from gi.repository import GLib, GdkPixbuf, Gtk, GObject
 
+from common.i18n import PACKAGE_NAME, _
 from common.utils import get_data_file
 from common.config import read_cfg, write_cfg
 from common.accountlist import AccountList
 from common.account import Account
 from configuration.accountdialog import AccountDialog
-
-locale.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.textdomain(PACKAGE_NAME)
-_ = gettext.gettext
-
 
 class ConfigWindow:
 	def __init__(self):

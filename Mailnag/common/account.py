@@ -22,16 +22,10 @@
 # MA 02110-1301, USA.
 #
 
-PACKAGE_NAME = "mailnag"
-
-import gettext
 import time
 import poplib
 import daemon.imaplib2 as imaplib
-
-gettext.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.textdomain(PACKAGE_NAME)
-_ = gettext.gettext
+from common.i18n import _
 
 account_defaults = {
 	'enabled'			: '0',

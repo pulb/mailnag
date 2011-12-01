@@ -21,16 +21,10 @@
 # MA 02110-1301, USA.
 #
 
-PACKAGE_NAME = "mailnag"
-
 import os
-import gettext
 import xdg.BaseDirectory as bd
 from ConfigParser import RawConfigParser
-
-gettext.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.textdomain(PACKAGE_NAME)
-_ = gettext.gettext
+from common.i18n import _
 
 mailnag_defaults = {
 	'general':

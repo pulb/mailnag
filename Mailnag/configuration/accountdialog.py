@@ -21,16 +21,9 @@
 # MA 02110-1301, USA.
 #
 
-PACKAGE_NAME = "mailnag"
-
-import gettext
 from gi.repository import GLib, GdkPixbuf, Gtk
 from common.utils import get_data_file
-
-gettext.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.textdomain(PACKAGE_NAME)
-_ = gettext.gettext
-
+from common.i18n import PACKAGE_NAME, _
 
 class AccountDialog:
 	def __init__(self, parent):

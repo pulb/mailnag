@@ -22,26 +22,18 @@
 # MA 02110-1301, USA.
 #
 
-PACKAGE_NAME = "mailnag"
-
 from gi.repository import Notify
 import threading
 import sys
-import gettext
 import subprocess
 import os
 import time
 
 from common.utils import get_data_file, gstplay, get_default_mail_reader
+from common.i18n import _
 from daemon.reminder import Reminder
 from daemon.mails import Mails
 from daemon.pid import Pid
-
-
-gettext.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.textdomain(PACKAGE_NAME)
-_ = gettext.gettext
-
 
 class MailChecker:
 	def __init__(self, cfg, accounts):

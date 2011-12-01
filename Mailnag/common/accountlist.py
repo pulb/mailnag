@@ -21,8 +21,6 @@
 # MA 02110-1301, USA.
 #
 
-PACKAGE_NAME = "mailnag"
-
 from common.account import Account, account_defaults
 from common.keyring import Keyring
 
