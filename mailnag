@@ -1,17 +1,11 @@
 #!/bin/bash
 LIB_DIR=./Mailnag
 
-CONFIG_HOME=$XDG_CONFIG_HOME
-if [ "$CONFIG_HOME" == "" ]; then
-	CONFIG_HOME="$HOME/.config"
-fi
-config_dir="$CONFIG_HOME/mailnag"
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/mailnag"
 
 main()
 {
-	if [ -f "$config_dir/mailnag.log" ]; then
-		rm "$config_dir/mailnag.log"
-	fi
+	rm --force "$config_dir/mailnag.log"
 	
 	cd $(dirname $(readlink -f $0))
 	python $LIB_DIR/mailnag.py >> "$config_dir/mailnag.log" 2>&1 &
