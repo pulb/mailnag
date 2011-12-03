@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-11-26 22:32+0100\n"
+"POT-Creation-Date: 2011-12-01 19:40+0100\n"
 "PO-Revision-Date: 2011-10-05 14:36+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <Unknown>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-11-27 13:08+0000\n"
-"X-Generator: Launchpad (build 14381)\n"
+"X-Launchpad-Export-Date: 2011-12-03 13:06+0000\n"
+"X-Generator: Launchpad (build 14418)\n"
 
 #: Mailnag/common/keyring.py:61
 msgid ""
@@ -23,6 +23,10 @@ msgid ""
 "Wrong password.\n"
 "\n"
 "Do you want to try again?"
+msgstr ""
+
+#: Mailnag/common/config.py:38
+msgid "New email"
 msgstr ""
 
 #: Mailnag/common/account.py:49
@@ -45,6 +49,10 @@ msgstr "Posta berri bat duzu."
 msgid "Mark as read"
 msgstr ""
 
+#: Mailnag/daemon/mails.py:115 Mailnag/daemon/mails.py:177
+msgid "No subject"
+msgstr ""
+
 #: Mailnag/configuration/accountdialog.py:63
 #: Mailnag/configuration/accountdialog.py:64
 msgid "optional"
@@ -58,7 +66,7 @@ msgstr "Gaituta"
 msgid "Name"
 msgstr "Izena"
 
-#: Mailnag/configuration/configwindow.py:156
+#: Mailnag/configuration/configwindow.py:154
 #, python-format
 msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
@@ -66,7 +74,7 @@ msgid ""
 "Do you want to import them?"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:338
+#: Mailnag/configuration/configwindow.py:335
 msgid "Delete this account:"
 msgstr "Ezabatu kontu hau:"
 
@@ -153,56 +161,52 @@ msgid "General"
 msgstr "Orokorra"
 
 #: data/config_window.ui.h:14
-msgid "Mail client:"
-msgstr "Posta-bezeroa:"
-
-#: data/config_window.ui.h:15
 msgid "Mailnag Configuration"
 msgstr "Mailnag konfigurazioa"
 
-#: data/config_window.ui.h:16
+#: data/config_window.ui.h:15
 msgid "Messagetray label:"
 msgstr ""
 
-#: data/config_window.ui.h:17
+#: data/config_window.ui.h:16
 msgid "Notification mode:"
 msgstr ""
 
-#: data/config_window.ui.h:18
+#: data/config_window.ui.h:17
 msgid "Play sound on new mails"
 msgstr ""
 
-#: data/config_window.ui.h:19
+#: data/config_window.ui.h:18
 msgid "Single"
 msgstr ""
 
-#: data/config_window.ui.h:20
+#: data/config_window.ui.h:19
 msgid "Spamfilter"
 msgstr ""
 
-#: data/config_window.ui.h:21
+#: data/config_window.ui.h:20
 msgid "Start Mailnag automatically"
 msgstr "Abiarazi Mailnag automatikoki"
 
-#: data/config_window.ui.h:22
+#: data/config_window.ui.h:21
 msgid "Summary"
 msgstr ""
 
-#: data/config_window.ui.h:23
+#: data/config_window.ui.h:22
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
 
-#: data/config_window.ui.h:26
+#: data/config_window.ui.h:25
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
 
-#: data/config_window.ui.h:29
+#: data/config_window.ui.h:28
 msgid "minutes"
 msgstr "minutu"
 
