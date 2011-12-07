@@ -33,7 +33,7 @@ account_defaults = {
 	'user'				: '',
 	'server'			: '',
 	'port'				: '',
-	'ssl'				: '0',
+	'ssl'				: '1',
 	'imap'				: '0',	
 	'idle'				: '0',
 	'folder'			: ''
@@ -41,7 +41,7 @@ account_defaults = {
 
 class Account:
 	def __init__(self, enabled = False, name = _('Unnamed'), user = '', \
-		password = '', server = '', port = '', ssl = False, imap = False, idle = False, folder = '' ):
+		password = '', server = '', port = '', ssl = True, imap = False, idle = False, folder = '' ):
 	
 		self.enabled = enabled # bool
 		self.name = name

@@ -53,6 +53,7 @@ class AccountDialog:
 		self.button_save = builder.get_object("button_save")
 
 		self.cmb_account_type.set_active(0) # default to POP3
+		self.chk_account_ssl.set_active(True) # default to SSL
 		self.entry_account_port.set_placeholder_text(_("optional"))
 		self.entry_account_folder.set_placeholder_text(_("optional"))
 		
