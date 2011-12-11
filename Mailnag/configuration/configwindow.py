@@ -208,41 +208,10 @@ class ConfigWindow:
 	def edit_account(self):
 		acc, model, iter = self.get_selected_account()
 		if iter != None:
-			d = AccountDialog(self.window)
+			d = AccountDialog(self.window, acc)
 			
-			d.cmb_account_type.set_active(acc.imap)
-				
-			d.entry_account_name.set_text(acc.name)
-			d.entry_account_user.set_text(acc.user)
-			d.entry_account_password.set_text(acc.password)
-			d.entry_account_server.set_text(acc.server)
-			d.entry_account_port.set_text(acc.port)
-			d.entry_account_folder.set_text(acc.folder)
-			d.chk_account_push.set_active(acc.idle)
-			d.chk_account_ssl.set_active(acc.ssl)
-			
-			res = d.run()
-			
-			if res == 1:
-				acc.name = d.entry_account_name.get_text()
-				acc.user = d.entry_account_user.get_text()
-				acc.password = d.entry_account_password.get_text()
-				acc.server = d.entry_account_server.get_text()
-				acc.port = d.entry_account_port.get_text()
-				acc.ssl = d.chk_account_ssl.get_active()
-				
-				if d.cmb_account_type.get_active() == 0: # POP3
-					acc.imap = False
-					acc.folder = ''
-					acc.idle = False
-				else: # IMAP
-					acc.imap = True
-					acc.folder = d.entry_account_folder.get_text()
-					acc.idle = d.chk_account_push.get_active()
-			
+			if d.run() == 1:
 				model.set_value(iter, 2, acc.name)
-			
-			d.destroy()
 
 
 	def create_autostart(self):
@@ -287,33 +256,18 @@ class ConfigWindow:
 		
 
 	def __on_btn_add_clicked(self, widget):
-		d = AccountDialog(self.window)
-		res = d.run()
-
-		if res == 1:
-			if d.cmb_account_type.get_active() == 0: # POP3
-				imap = False
-				folder = ''
-				idle = False
-			else: # IMAP
-				imap = True
-				folder = d.entry_account_folder.get_text()
-				idle = d.chk_account_push.get_active()
-			
-			acc = Account(enabled = True, name = d.entry_account_name.get_text(), \
-				user = d.entry_account_user.get_text(), password = d.entry_account_password.get_text(), \
-				server = d.entry_account_server.get_text(), port = d.entry_account_port.get_text(), \
-				ssl = d.chk_account_ssl.get_active(), imap = imap, idle = idle , folder = folder)
+		acc = Account(enabled = True, name = '')
+		d = AccountDialog(self.window, acc)
+	
+		if d.run() == 1:
 			self.accounts.append(acc)
 			
-			row = [acc, True, acc.name]
+			row = [acc, acc.enabled, acc.name]
 			iter = self.liststore_accounts.append(row)
 			model = self.treeview_accounts.get_model()
 			path = model.get_path(iter)
 			self.treeview_accounts.set_cursor(path, None, False)
 			self.treeview_accounts.grab_focus()
-
-		d.destroy()
 
 
 	def __on_btn_edit_clicked(self, widget):
