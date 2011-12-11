@@ -21,10 +21,9 @@
 # MA 02110-1301, USA.
 #
 
-PACKAGE_NAME = "mailnag"
-
 import locale
 import gettext
+from common.utils import PACKAGE_NAME
 
 locale.bindtextdomain(PACKAGE_NAME, './locale')
 gettext.bindtextdomain(PACKAGE_NAME, './locale')
