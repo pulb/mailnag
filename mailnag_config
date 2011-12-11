@@ -1,21 +1,13 @@
 #!/bin/bash
 LIB_DIR=./Mailnag
 
-config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/mailnag"
-
-mkdir --parents "$config_dir"
-
 cd $(dirname $(readlink -f $0))
 
 python $LIB_DIR/config.py
 
 if [ $? -eq 0 ]; then
-	# Restart mailnag.py
-	if [ -f "$config_dir/mailnag.pid" ]; then
-		kill $(cat "$config_dir/mailnag.pid") 2> /dev/null
-	fi
-	rm --force "$config_dir/mailnag.log"
-	python $LIB_DIR/mailnag.py >> "$config_dir/mailnag.log" 2>&1 &
+	# Restart mailnag daemon
+	./mailnag &
 else
 	echo mailnag-config discarded
 fi

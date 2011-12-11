@@ -5,6 +5,12 @@ config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/mailnag"
 
 main()
 {
+	mkdir --parents "$config_dir"
+
+	if [ -f "$config_dir/mailnag.pid" ]; then
+		kill $(cat "$config_dir/mailnag.pid") 2> /dev/null
+	fi
+	
 	rm --force "$config_dir/mailnag.log"
 	
 	cd $(dirname $(readlink -f $0))
