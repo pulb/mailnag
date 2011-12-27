@@ -87,27 +87,27 @@ class MailChecker:
 				self.notifications = {}
 			elif len(new_mails) > 0:
 				if self.cfg.get('general', 'notification_mode') == '1':
-					self.notify_summary(unseen_mails)
+					self.__notify_summary(unseen_mails)
 				else:
-					self.notify_single(new_mails)
+					self.__notify_single(new_mails)
 
 				if self.cfg.get('general', 'playsound') == '1': # play sound?
 					gstplay(get_data_file(self.cfg.get('general', 'soundfile')))
 
 			self.reminder.save(self.mail_list)
 
-		self.run_user_scripts("on_mail_check", script_data) # process user scripts
+		self.__run_user_scripts("on_mail_check", script_data) # process user scripts
 		
 		sys.stdout.flush() # write stdout to log file
 		return True
 
 
-	def notify_summary(self, unseen_mails):
+	def __notify_summary(self, unseen_mails):
 		summary = ""		
 		body = ""
 
 		if len(self.notifications) == 0:
-			self.notifications['0'] = self.get_notification(" ", None, None) # empty string will emit a gtk warning
+			self.notifications['0'] = self.__get_notification(" ", None, None) # empty string will emit a gtk warning
 		
 		ubound = len(unseen_mails) if len(unseen_mails) <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT
 		
@@ -126,16 +126,16 @@ class MailChecker:
 		self.notifications['0'].show()
 
 	
-	def notify_single(self, new_mails):
+	def __notify_single(self, new_mails):
 		for mail in new_mails:
-			n = self.get_notification(mail.sender, mail.subject, "mail-unread")
+			n = self.__get_notification(mail.sender, mail.subject, "mail-unread")
 			notification_id = str(id(n))
 			n.add_action("mark-as-read", _("Mark as read"), self.__notification_action_handler, (mail, notification_id), None)			
 			n.show()
 			self.notifications[notification_id] = n
 
 
-	def get_notification(self, summary, body, icon):
+	def __get_notification(self, summary, body, icon):
 		n = Notify.Notification.new(summary, body, icon)		
 		n.set_category("email")
 		n.add_action("default", "default", self.__notification_action_handler, None, None)
@@ -178,7 +178,7 @@ class MailChecker:
 			self.mail_list = []
 	
 	
-	def run_user_scripts(self, event, data):
+	def __run_user_scripts(self, event, data):
 		if event == "on_mail_check":
 			if self.cfg.get('script', 'script0_enabled') == '1':
 				script_file = self.cfg.get('script', 'script0_file')
