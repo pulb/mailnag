@@ -97,7 +97,7 @@ def main():
 		mailchecker = MailChecker(cfg, accounts)
 		
 		# immediate check
-		mailchecker.check(firstcheck = True)
+		mailchecker.check()
 		
 		# start polling thread for POP3 accounts and
 		# IMAP accounts without idle support

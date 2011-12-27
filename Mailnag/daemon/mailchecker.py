@@ -38,6 +38,7 @@ from daemon.pid import Pid
 class MailChecker:
 	def __init__(self, cfg, accounts):
 		self.MAIL_LIST_LIMIT = 10 # prevent flooding of the messaging tray
+		self.firstcheck = True; # first check after startup
 		self.mailcheck_lock = threading.Lock()
 		self.mails = Mails(cfg, accounts)
 		self.reminder = Reminder()
@@ -46,16 +47,14 @@ class MailChecker:
 		# dict that tracks all notifications that need to be closed
 		self.notifications = {}
 		
+		self.reminder.load()
 		Notify.init(cfg.get('general', 'messagetray_label')) # initialize Notification		
 		
 
-	def check(self, firstcheck = False):
+	def check(self):
 		with self.mailcheck_lock:
 			print 'Checking email accounts at:', time.asctime()
-			self.pid.kill() # kill all zombies
-		
-			if firstcheck: # Manual firststart
-				self.reminder.load()	
+			self.pid.kill() # kill all zombies	
 
 			self.mail_list = self.mails.get_mail('desc') # get all mails from all inboxes
 		
@@ -69,7 +68,7 @@ class MailChecker:
 				if self.reminder.contains(mail.id): # mail was fetched before
 					if self.reminder.unseen(mail.id): # mail was not marked as seen
 						unseen_mails.append(mail)
-						if firstcheck: # first check after startup
+						if self.firstcheck:
 							new_mails.append(mail)
 				
 				else: # mail is fetched the first time
@@ -95,7 +94,8 @@ class MailChecker:
 					gstplay(get_data_file(self.cfg.get('general', 'soundfile')))
 
 			self.reminder.save(self.mail_list)
-
+			self.firstcheck = False
+			
 		self.__run_user_scripts("on_mail_check", script_data) # process user scripts
 		
 		sys.stdout.flush() # write stdout to log file
