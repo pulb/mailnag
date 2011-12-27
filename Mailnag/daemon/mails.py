@@ -41,7 +41,10 @@ class Mails:
 	def get_mail(self, sort_order):
 		mail_list = []													# initialize list of mails
 		mail_ids = []													# initialize list of mail ids
-		while not self.is_online(): time.sleep(5)						# wait for internet connection
+		
+		if not self.is_online():										# check internet connection
+			return mail_list
+		
 		filter_enabled = bool(int(self.cfg.get('filter', 'filter_enabled')))	# get filter switch
 
 		for acc in self.accounts:
