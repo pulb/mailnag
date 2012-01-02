@@ -3,7 +3,7 @@
 #
 # mail.py
 #
-# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -23,10 +23,10 @@
 #
 
 class Mail:
-	def __init__(self, seconds, subject, sender, datetime, id, provider):
+	def __init__(self, seconds, subject, sender, datetime, id, account_id):
 		self.seconds = seconds
 		self.subject = subject
 		self.sender = sender
 		self.datetime = datetime
 		self.id = id
-		self.provider = provider
+		self.account_id = account_id

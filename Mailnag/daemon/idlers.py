@@ -3,8 +3,8 @@
 #
 # idlers.py
 #
+# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
-# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,35 +35,14 @@ class Idlers:
 		for acc in self._accounts:
 			if acc.imap and acc.idle:
 				try:
-					self._new_idler(acc)
-				except:
-					pass
+					idler = Idler(acc, self._sync_callback)
+					idler.run()
+					self._idlerlist.append(idler)
+				except Exception as ex:
+					print "Error: Failed to create an idler thread for account '%s'" % acc.name
 					
 	
 	def dispose(self):
 		for idler in self._idlerlist:
 			idler.dispose()
-	
-	
-	def _new_idler(self, account):
-		server = account.get_connection()
-		
-		if server == None:
-			return
-					
-		# Need to get out of AUTH mode.
-		if len(account.folder) > 0:
-			server.select(account.folder)
-		else:
-			server.select("INBOX")
-		
-		try:
-			tmp = server.search(None, 'UNSEEN') # ALL or UNSEEN
-		except:
-			server.select('INBOX', readonly=True) # If search fails select INBOX and try again
-			tmp = server.search(None, 'UNSEEN') # ALL or UNSEEN
-		
-		idler = Idler(server, self._sync_callback)
-		idler.run()
-		self._idlerlist.append(idler)
 

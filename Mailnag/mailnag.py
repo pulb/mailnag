@@ -3,7 +3,7 @@
 #
 # mailnag.py
 #
-# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -25,10 +25,11 @@
 
 import os
 from gi.repository import GObject, GLib
+import time
 import signal
 
 from common.config import read_cfg, cfg_exists, cfg_folder
-from common.utils import set_procname
+from common.utils import set_procname, is_online
 from common.accountlist import AccountList
 from daemon.mailchecker import MailChecker
 from daemon.idlers import Idlers
@@ -91,23 +92,38 @@ def main():
 			print 'Error: Cannot find configuration file. Please run mailnag_config first.'
 			exit(1)
 		
+		if not is_online():
+			print 'Waiting for internet connection...'
+			while not is_online():
+				time.sleep(5)
+		
 		accounts = AccountList()
 		accounts.load_from_cfg(cfg, enabled_only = True)
 		
-		mailchecker = MailChecker(cfg, accounts)
+		mailchecker = MailChecker(cfg)
 		
-		# immediate check
-		mailchecker.check()
+		# immediate check, check *all* accounts
+		mailchecker.check(accounts)
+		
+		idle_accounts = filter(lambda acc: acc.imap and acc.idle, accounts)
+		non_idle_accounts = filter(lambda acc: (not acc.imap) or (acc.imap and not acc.idle), accounts)
 		
 		# start polling thread for POP3 accounts and
 		# IMAP accounts without idle support
-		if sum(1 for acc in accounts if ((not acc.imap ) or (acc.imap and not acc.idle))) > 0:
+		if len(non_idle_accounts) > 0:
+			def poll_func():
+				mailchecker.check(non_idle_accounts)
+				return True
+			
 			check_interval = int(cfg.get('general', 'check_interval'))
-			GObject.timeout_add_seconds(60 * check_interval, mailchecker.check)
+			GObject.timeout_add_seconds(60 * check_interval, poll_func)
 		
 		# start idler threads for IMAP accounts with idle support
-		if sum(1 for acc in accounts if (acc.imap and acc.idle)) > 0:
-			idlers = Idlers(accounts, mailchecker.check)
+		if len(idle_accounts) > 0:
+			def sync_func(account):
+				mailchecker.check([account])
+			
+			idlers = Idlers(idle_accounts, sync_func)
 			idlers.run()
 		
 		mainloop = GObject.MainLoop()

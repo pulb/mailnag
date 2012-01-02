@@ -3,37 +3,14 @@ LIB_DIR=./Mailnag
 
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/mailnag"
 
-main()
-{
-	mkdir --parents "$config_dir"
+mkdir --parents "$config_dir"
 
-	if [ -f "$config_dir/mailnag.pid" ]; then
-		kill $(cat "$config_dir/mailnag.pid") 2> /dev/null
-	fi
-	
-	rm --force "$config_dir/mailnag.log"
-	
-	cd $(dirname $(readlink -f $0))
-	python $LIB_DIR/mailnag.py >> "$config_dir/mailnag.log" 2>&1 &
-}
-
-check_connection()
-{
-	retries=50
-	while ! ping -c1 www.google.com 2>/dev/null 1>&2 && [ $retries -gt 0 ] ; do
-		sleep 5
-		# ((retries--))
-	done
-	
-	if [ $retries -gt 0 ]; then
-		return 0
-	else
-		return 1 # timed out
-	fi
-}
-
-if check_connection; then
-	main
-else
-	echo "Error: No internet connection."
+if [ -f "$config_dir/mailnag.pid" ]; then
+	kill $(cat "$config_dir/mailnag.pid") 2> /dev/null
 fi
+
+rm --force "$config_dir/mailnag.log"
+
+cd $(dirname $(readlink -f $0))
+python $LIB_DIR/mailnag.py >> "$config_dir/mailnag.log" 2>&1 &
+

@@ -3,8 +3,8 @@
 #
 # idler.py
 #
+# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
-# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,13 +23,22 @@
 #
 
 import threading
+from daemon.imaplib2 import AUTH
 
 class Idler(object):
-	def __init__(self, conn, sync_callback):
+	def __init__(self, account, sync_callback):
 		self._thread = threading.Thread(target=self._idle)
-		self._conn = conn
 		self._event = threading.Event()
 		self._sync_callback = sync_callback
+		self._account = account
+		self._conn = account.get_connection(use_existing = True) # connection has been opened in mailnag.py already (immediate check)
+		
+		if self._conn == None:
+			raise Exception("Failed to establish a connection for account '%s'" % account.name)
+					
+		# Need to get out of AUTH mode of fresh connections.
+		if self._conn.state == AUTH:
+			self._select(self._conn, account.folder)
 
 
 	def run(self):
@@ -41,8 +50,11 @@ class Idler(object):
 			self._event.set()
 			self._thread.join()
 		
-		self._conn.close()
-		self._conn.logout()
+		try:
+			self._conn.close()
+			self._conn.logout()
+		except:
+			pass
 		
 		print "Idler closed"
 
@@ -55,11 +67,19 @@ class Idler(object):
 			self._needsync = False
 
 			def callback(args):
+				if (args[2] != None) and (args[2][0] is self._conn.abort):
+					# connection has been reset by provider -> reopen
+					print "Idler thread for account '%s' reconnected" % self._account.name
+					self._conn = self._account.get_connection(use_existing = False)
+					self._select(self._conn, self._account.folder)
+				
 				if not self._event.isSet():
 					self._needsync = True
 					self._event.set()
 			
-			self._conn.idle(callback=callback)
+			# register idle callback that is called whenever an idle event arrives (new mail / mail deleted).
+			# the callback is called after 10 minutes at the latest. gmail sends keepalive events every 5 minutes.
+			self._conn.idle(callback = callback, timeout = 60 * 10)
 			
 			# Waits for event to be set
 			self._event.wait()
@@ -67,6 +87,12 @@ class Idler(object):
 			# If the event is set due to idle sync
 			if self._needsync:
 				self._event.clear()
-				self._sync_callback()
+				self._sync_callback(self._account)
 
-	
+	def _select(self, conn, folder):
+		folder = folder.strip()
+		if len(folder) > 0:
+			conn.select(folder)
+		else:
+			conn.select("INBOX")
+

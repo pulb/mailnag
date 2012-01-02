@@ -3,7 +3,7 @@
 #
 # mailchecker.py
 #
-# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -29,18 +29,19 @@ import subprocess
 import os
 import time
 
-from common.utils import get_data_file, gstplay, get_default_mail_reader
+from common.utils import get_data_file, gstplay, is_online, get_default_mail_reader
 from common.i18n import _
 from daemon.reminder import Reminder
-from daemon.mails import Mails
+from daemon.mailsyncer import MailSyncer
 from daemon.pid import Pid
 
 class MailChecker:
-	def __init__(self, cfg, accounts):
+	def __init__(self, cfg):
 		self.MAIL_LIST_LIMIT = 10 # prevent flooding of the messaging tray
 		self.firstcheck = True; # first check after startup
 		self.mailcheck_lock = threading.Lock()
-		self.mails = Mails(cfg, accounts)
+		self.mail_list = []
+		self.mailsyncer = MailSyncer(cfg)
 		self.reminder = Reminder()
 		self.pid = Pid()
 		self.cfg = cfg
@@ -50,14 +51,18 @@ class MailChecker:
 		self.reminder.load()
 		Notify.init(cfg.get('general', 'messagetray_label')) # initialize Notification		
 		
-
-	def check(self):
+	
+	def check(self, accounts):
 		with self.mailcheck_lock:
 			print 'Checking email accounts at:', time.asctime()
 			self.pid.kill() # kill all zombies	
 
-			self.mail_list = self.mails.get_mail('desc') # get all mails from all inboxes
-		
+			if not is_online():
+				print 'Error: No internet connection'
+				return
+			
+			self.mail_list = self.mailsyncer.sync(accounts)
+			
 			unseen_mails = []
 			new_mails = []
 		
@@ -80,7 +85,7 @@ class MailChecker:
 			script_data = str(script_data_mailcount) + script_data
 		
 			if len(self.mail_list) == 0:
-				 # no mails (e.g. email client has been launched) -> close notifications
+				# no mails (e.g. email client has been launched) -> close notifications
 				for n in self.notifications.itervalues():
 					n.close()
 				self.notifications = {}
@@ -94,14 +99,13 @@ class MailChecker:
 					gstplay(get_data_file(self.cfg.get('general', 'soundfile')))
 
 			self.reminder.save(self.mail_list)
+			self.__run_user_scripts("on_mail_check", script_data) # process user scripts
+			sys.stdout.flush() # write stdout to log file
 			self.firstcheck = False
-			
-		self.__run_user_scripts("on_mail_check", script_data) # process user scripts
 		
-		sys.stdout.flush() # write stdout to log file
-		return True
+		return
 
-
+	
 	def __notify_summary(self, unseen_mails):
 		summary = ""		
 		body = ""
@@ -162,22 +166,7 @@ class MailChecker:
 				# so remove its reference
 				del self.notifications[user_data[1]]
 
-
-	def clear(self):
-		with self.mailcheck_lock:
-			# mark all mails to seen
-			for mail in self.mail_list:
-				self.reminder.set_to_seen(mail.id)
-			self.reminder.save(self.mail_list)
-		
-			# close all notifications
-			for n in self.notifications.itervalues():
-				n.close()
-			self.notifications = {}
-		
-			self.mail_list = []
-	
-	
+			
 	def __run_user_scripts(self, event, data):
 		if event == "on_mail_check":
 			if self.cfg.get('script', 'script0_enabled') == '1':

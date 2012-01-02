@@ -3,7 +3,7 @@
 #
 # account.py
 #
-# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,6 @@
 # MA 02110-1301, USA.
 #
 
-import time
 import poplib
 import daemon.imaplib2 as imaplib
 from common.i18n import _
@@ -42,7 +41,7 @@ account_defaults = {
 class Account:
 	def __init__(self, enabled = False, name = _('Unnamed'), user = '', \
 		password = '', server = '', port = '', ssl = True, imap = False, idle = False, folder = '' ):
-	
+		
 		self.enabled = enabled # bool
 		self.name = name
 		self.user = user
@@ -53,55 +52,72 @@ class Account:
 		self.imap = imap # bool		
 		self.idle = idle # bool
 		self.folder = folder
+		self._conn = None
 
 
-	def get_connection(self): # get email server connection
+	def get_connection(self, use_existing = False): # get email server connection
 		if self.imap:
 			try:
-				srv = self._get_IMAP_connection()
+				conn = self._get_IMAP_connection(use_existing)
 			except:
 				print "Error: Cannot connect to IMAP account: %s. " % self.server
-				srv = None
+				conn = None
 		else:
 			try:
-				srv = self._get_POP3_connection()
+				conn = self._get_POP3_connection(use_existing)
 			except:
 				print "Error: Cannot connect to POP account: %s. " % self.server
-				srv = None
+				conn = None
 
-		return srv # server object
-
-
-	def _get_IMAP_connection(self):
-		if self.ssl:
-			if self.port == '':
-				srv = imaplib.IMAP4_SSL(self.server)
-			else:
-				srv = imaplib.IMAP4_SSL(self.server, self.port)
-		else:
-			if self.port == '':
-				srv = imaplib.IMAP4(self.server)
-			else:
-				srv = imaplib.IMAP4(self.server, self.port)
-		
-		srv.login(self.user, self.password)
-		return srv
+		return conn
 	
 	
-	def _get_POP3_connection(self):
+	def get_id(self):
+		# TODO : this id is not really unique...
+		return str(hash(self.user + self.server))
+	
+	
+	def _get_IMAP_connection(self, use_existing):
+		# try to reuse existing connection
+		if use_existing and (self._conn != None) and \
+		(self._conn.state != imaplib.LOGOUT) and (not self._conn.Terminate):
+			return self._conn
+		
 		if self.ssl:
 			if self.port == '':
-				srv = poplib.POP3_SSL(self.server)
+				self._conn = imaplib.IMAP4_SSL(self.server)
 			else:
-				srv = poplib.POP3_SSL(self.server, self.port)
+				self._conn = imaplib.IMAP4_SSL(self.server, self.port)
 		else:
 			if self.port == '':
-				srv = poplib.POP3(self.server)
+				self._conn = imaplib.IMAP4(self.server)
 			else:
-				srv = poplib.POP3(self.server, self.port)
+				self._conn = imaplib.IMAP4(self.server, self.port)
 		
-		srv.getwelcome()
-		srv.user(self.user)
-		srv.pass_(self.password)
-		return srv
+		self._conn.login(self.user, self.password)
+		
+		return self._conn
+	
+	
+	def _get_POP3_connection(self, use_existing):
+		# try to reuse existing connection
+		if use_existing and (self._conn != None) and ('sock' in self._conn.__dict__):
+			return self._conn
+		
+		if self.ssl:
+			if self.port == '':
+				self._conn = poplib.POP3_SSL(self.server)
+			else:
+				self._conn = poplib.POP3_SSL(self.server, self.port)
+		else:
+			if self.port == '':
+				self._conn = poplib.POP3(self.server)
+			else:
+				self._conn = poplib.POP3(self.server, self.port)
+		
+		self._conn.getwelcome()
+		self._conn.user(self.user)
+		self._conn.pass_(self.password)
+		
+		return self._conn
 

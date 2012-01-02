@@ -3,7 +3,7 @@
 #
 # mails.py
 #
-# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2007 Marco Ferragina <marco.ferragina@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -27,6 +27,7 @@ from gi.repository import Gst, Gio
 import threading
 import os
 import time
+import urllib2
 
 PACKAGE_NAME = "mailnag"
 
@@ -67,6 +68,14 @@ def get_default_mail_reader():
 	
 	return mail_reader
 
+
+def is_online(): # check for internet connection
+	try:
+		urllib2.urlopen("http://www.google.com/")
+		return True
+	except:
+		return False
+			
 
 class _GstPlayThread(threading.Thread):
 	def __init__(self, ply):
