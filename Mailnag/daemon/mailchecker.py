@@ -106,6 +106,11 @@ class MailChecker:
 		return
 
 	
+	def dispose(self):
+		for n in self.notifications.itervalues():
+			n.close()
+	
+	
 	def __notify_summary(self, unseen_mails):
 		summary = ""		
 		body = ""

@@ -57,8 +57,7 @@ def delete_pid(): # delete file mailnag.pid
 def cleanup():
 	# clean up resources
 	try:
-		for n in mailchecker.notifications.itervalues():
-			n.close()
+		mailchecker.dispose()
 	except NameError: pass
 	
 	try:
