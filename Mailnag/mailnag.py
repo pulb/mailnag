@@ -34,6 +34,11 @@ from common.accountlist import AccountList
 from daemon.mailchecker import MailChecker
 from daemon.idlers import Idlers
 
+mainloop = None
+mailchecker = None
+idlers = None
+
+
 def read_config():
 	if not cfg_exists():
 		return None
@@ -56,13 +61,11 @@ def delete_pid(): # delete file mailnag.pid
 
 def cleanup():
 	# clean up resources
-	try:
+	if mailchecker != None:
 		mailchecker.dispose()
-	except NameError: pass
-	
-	try:
+
+	if idlers != None:
 		idlers.dispose()
-	except NameError: pass
 	
 	delete_pid()
 
@@ -73,9 +76,7 @@ def sig_handler(signum, frame):
 
 
 def main():
-	global mailchecker, mainloop, idlers
-	
-	mainloop = None
+	global mainloop, mailchecker, idlers
 	
 	set_procname("mailnag")
 	
