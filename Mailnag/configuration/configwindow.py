@@ -27,7 +27,7 @@ from gi.repository import GLib, GdkPixbuf, Gtk, GObject
 
 from common.i18n import PACKAGE_NAME, _
 from common.utils import get_data_file
-from common.config import read_cfg, write_cfg
+from common.config import read_cfg, write_cfg, APP_VERSION
 from common.accountlist import AccountList
 from common.account import Account
 from configuration.accountdialog import AccountDialog
@@ -107,8 +107,11 @@ class ConfigWindow:
 		# about tab
 		#
 		self._image_logo = builder.get_object("image_logo")
-		pb = GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 200, 200)
+		pb = GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 180, 180)
+		pb = pb.new_subpixbuf(0, 0, 180, 150) # crop whitespace at the bottom
 		self._image_logo.set_from_pixbuf(pb)
+		self._label_app_desc = builder.get_object("label_app_desc")
+		self._label_app_desc.set_markup("<span font=\"24\"><b>Mailnag</b></span>\nVersion %s" % str(APP_VERSION))
 
 		self._load_config()
 		self._window.show()
