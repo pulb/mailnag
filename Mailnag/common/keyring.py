@@ -3,7 +3,7 @@
 #
 # keyring.py
 #
-# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -32,41 +32,41 @@ from common.account import Account
 class Keyring:
 	def __init__(self):
 		GLib.set_application_name('mailnag')
-		self.was_locked = False											# True if Dialog shown. Required for Sortorder problem
-		self.keyring_password = ''
-		self.defaultKeyring = gnomekeyring.get_default_keyring_sync()
-		if self.defaultKeyring == None:
-			self.defaultKeyring = 'login'
+		self._was_locked = False										# True if Dialog shown. Required for Sortorder problem
+		self._keyring_password = ''
+		self._defaultKeyring = gnomekeyring.get_default_keyring_sync()
+		if self._defaultKeyring == None:
+			self._defaultKeyring = 'login'
 
-		while gnomekeyring.get_info_sync(self.defaultKeyring).get_is_locked():		# Keyring locked?
-			self.message_response = 'cancel'							# default response for message dialog
+		while gnomekeyring.get_info_sync(self._defaultKeyring).get_is_locked():		# Keyring locked?
+			self._message_response = 'cancel'							# default response for message dialog
 			try:
-				try: gnomekeyring.unlock_sync(self.defaultKeyring, \
-						self.keyring_password)
+				try: gnomekeyring.unlock_sync(self._defaultKeyring, \
+						self._keyring_password)
 				except gnomekeyring.IOError:
-					self.show_keyring_dialog()							# get keyring password
+					self._show_keyring_dialog()							# get keyring password
 					Gtk.main()											# wait until dialog is closed
-					result = gnomekeyring.unlock_sync(self.defaultKeyring, \
-								self.keyring_password)
+					result = gnomekeyring.unlock_sync(self._defaultKeyring, \
+								self._keyring_password)
 			except gnomekeyring.IOError:
-				self.show_message(_('Failed to unlock Keyring "{0}".\nWrong password.\n\nDo you want to try again?').format(self.defaultKeyring))
+				self._show_message(_('Failed to unlock Keyring "{0}".\nWrong password.\n\nDo you want to try again?').format(self._defaultKeyring))
 				Gtk.main()												# wait until dialog is closed
-				if self.message_response == 'cancel': exit(1)			# close application (else: continue getting password)
+				if self._message_response == 'cancel': exit(1)			# close application (else: continue getting password)
 
 
 	def get(self, protocol, user, server):												# get password for account from Gnome Keyring
-		if gnomekeyring.list_item_ids_sync(self.defaultKeyring):
+		if gnomekeyring.list_item_ids_sync(self._defaultKeyring):
 			displayNameDict = {}
-			for identity in gnomekeyring.list_item_ids_sync(self.defaultKeyring):
-				item = gnomekeyring.item_get_info_sync(self.defaultKeyring, identity)
+			for identity in gnomekeyring.list_item_ids_sync(self._defaultKeyring):
+				item = gnomekeyring.item_get_info_sync(self._defaultKeyring, identity)
 				displayNameDict[item.get_display_name()] = identity
 
 			if 'Mailnag password for %s://%s@%s' % (protocol, user, server) in displayNameDict:
 
-				if gnomekeyring.item_get_info_sync(self.defaultKeyring, \
+				if gnomekeyring.item_get_info_sync(self._defaultKeyring, \
 				displayNameDict['Mailnag password for %s://%s@%s' % \
 				(protocol, user, server)]).get_secret() != '':
-					return gnomekeyring.item_get_info_sync(self.defaultKeyring, \
+					return gnomekeyring.item_get_info_sync(self._defaultKeyring, \
 					displayNameDict['Mailnag password for %s://%s@%s' % \
 					(protocol, user, server)]).get_secret()
 				else:
@@ -84,10 +84,10 @@ class Keyring:
 
 	def import_accounts(self): # get email accounts from Gnome-Keyring
 		accounts = []
-		if gnomekeyring.list_item_ids_sync(self.defaultKeyring):
+		if gnomekeyring.list_item_ids_sync(self._defaultKeyring):
 			displayNameDict = {}
-			for identity in gnomekeyring.list_item_ids_sync(self.defaultKeyring):
-				item = gnomekeyring.item_get_info_sync(self.defaultKeyring, identity)
+			for identity in gnomekeyring.list_item_ids_sync(self._defaultKeyring):
+				item = gnomekeyring.item_get_info_sync(self._defaultKeyring, identity)
 				displayNameDict[item.get_display_name()] = identity
 			for displayName in displayNameDict:
 				if displayName.startswith('pop://') \
@@ -105,7 +105,7 @@ class Keyring:
 					if ';' in user:
 						user = user.split(';')[0]
 					
-					password = gnomekeyring.item_get_info_sync(self.defaultKeyring, \
+					password = gnomekeyring.item_get_info_sync(self._defaultKeyring, \
 						displayNameDict[displayName]).get_secret()
 					
 					accounts.append(Account(enabled = True, name = "%s (%s)" % (server, user), \
@@ -116,22 +116,22 @@ class Keyring:
 	def set(self, protocol, user, server, password): # store password in Gnome-Keyring
 		if password != '':
 			displayNameDict = {}
-			for identity in gnomekeyring.list_item_ids_sync(self.defaultKeyring):
-				item = gnomekeyring.item_get_info_sync(self.defaultKeyring, identity)
+			for identity in gnomekeyring.list_item_ids_sync(self._defaultKeyring):
+				item = gnomekeyring.item_get_info_sync(self._defaultKeyring, identity)
 				displayNameDict[item.get_display_name()] = identity
 
 			if 'Mailnag password for %s://%s@%s' % (protocol, user, server) in displayNameDict:
 
-				if password != gnomekeyring.item_get_info_sync(self.defaultKeyring, \
+				if password != gnomekeyring.item_get_info_sync(self._defaultKeyring, \
 				displayNameDict['Mailnag password for %s://%s@%s' % \
 				(protocol, user, server)]).get_secret():
-					gnomekeyring.item_create_sync(self.defaultKeyring, \
+					gnomekeyring.item_create_sync(self._defaultKeyring, \
 						gnomekeyring.ITEM_GENERIC_SECRET, \
 						'Mailnag password for %s://%s@%s' % (protocol, user, server), \
 						{'application':'Mailnag', 'protocol':protocol, 'user':user, 'server':server}, \
 						password, True)
 			else:
-				gnomekeyring.item_create_sync(self.defaultKeyring, \
+				gnomekeyring.item_create_sync(self._defaultKeyring, \
 					gnomekeyring.ITEM_GENERIC_SECRET, \
 					'Mailnag password for %s://%s@%s' % (protocol, user, server), \
 					{'application':'Mailnag', 'protocol':protocol, 'user':user, 'server':server}, password, True)
@@ -159,49 +159,49 @@ class Keyring:
 					gnomekeyring.item_delete_sync(defaultKeyring, displayNameDict[key])
 
 
-	def show_keyring_dialog(self):										# dialog to get password to unlock keyring
-		self.was_locked = True
+	def _show_keyring_dialog(self):										# dialog to get password to unlock keyring
+		self._was_locked = True
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
 		builder.add_from_file(get_data_file("keyring_dialog.ui"))
-		builder.connect_signals({"gtk_main_quit" : self.exit_keyring_dialog, \
-			"on_button_cancel_clicked" : self.exit_keyring_dialog, \
-			"on_button_ok_clicked" : self.ok_keyring_dialog, \
-			"on_entry_password_activate" : self.ok_keyring_dialog})		# hit RETURN in entry field
-		self.window = builder.get_object("dialog_keyring")
-		self.password = builder.get_object("entry_password")
-		self.window.show()
+		builder.connect_signals({"gtk_main_quit" : self._exit_keyring_dialog, \
+			"on_button_cancel_clicked" : self._exit_keyring_dialog, \
+			"on_button_ok_clicked" : self._ok_keyring_dialog, \
+			"on_entry_password_activate" : self._ok_keyring_dialog})	# hit RETURN in entry field
+		self._window = builder.get_object("dialog_keyring")
+		self._password = builder.get_object("entry_password")
+		self._window.show()
 
 
-	def exit_keyring_dialog(self, widget):								# password dialog exit or cancel clicked
-		self.window.destroy()
+	def _exit_keyring_dialog(self, widget):								# password dialog exit or cancel clicked
+		self._window.destroy()
 		Gtk.main_quit()													# terminate loop to allow continuation
 
 
-	def ok_keyring_dialog(self, widget):								# password dialog ok clicked
-		self.keyring_password = self.password.get_text()				# get text from widget
-		self.exit_keyring_dialog(widget)
+	def _ok_keyring_dialog(self, widget):								# password dialog ok clicked
+		self._keyring_password = self._password.get_text()				# get text from widget
+		self._exit_keyring_dialog(widget)
 
 
-	def show_message(self, message):									# dialog to show keyring messages
+	def _show_message(self, message):									# dialog to show keyring messages
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
 		builder.add_from_file(get_data_file("message_dialog.ui"))
-		builder.connect_signals({"gtk_main_quit" : self.exit_message, \
-			"on_button_cancel_clicked" : self.exit_message, \
-			"on_button_ok_clicked" : self.ok_message})
-		self.window = builder.get_object("dialog_message")
-		self.message = builder.get_object("label_message")
-		self.message.set_text(message)									# put message text into label
-		self.window.show()
+		builder.connect_signals({"gtk_main_quit" : self._exit_message, \
+			"on_button_cancel_clicked" : self._exit_message, \
+			"on_button_ok_clicked" : self._ok_message})
+		self._window = builder.get_object("dialog_message")
+		self._message = builder.get_object("label_message")
+		self._message.set_text(message)									# put message text into label
+		self._window.show()
 
 
-	def exit_message(self, widget):										# keyring message dialog exit or cancel clicked
-		self.window.destroy()
+	def _exit_message(self, widget):									# keyring message dialog exit or cancel clicked
+		self._window.destroy()
 		Gtk.main_quit()													# terminate loop to allow continuation
 
 
-	def ok_message(self, widget):										# keyring message dialog ok clicked
-		self.message_response = 'ok'
-		self.exit_message(widget)
+	def _ok_message(self, widget):										# keyring message dialog ok clicked
+		self._message_response = 'ok'
+		self._exit_message(widget)
 

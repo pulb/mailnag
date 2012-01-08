@@ -33,17 +33,17 @@ from daemon.mail import Mail
 
 class Mails:
 	def __init__(self, cfg, accounts):
-		self.cfg = cfg
-		self.accounts = accounts
+		self._cfg = cfg
+		self._accounts = accounts
 		
 		
 	def get_mail(self, sort_order = None):
 		mail_list = []													# initialize list of mails
 		mail_ids = []													# initialize list of mail ids
 		
-		filter_enabled = bool(int(self.cfg.get('filter', 'filter_enabled')))	# get filter switch
+		filter_enabled = bool(int(self._cfg.get('filter', 'filter_enabled')))	# get filter switch
 
-		for acc in self.accounts:
+		for acc in self._accounts:
 			srv = acc.get_connection(use_existing = True)				# get server connection for this account
 			if srv == None:
 				continue												# continue with next account if server is empty
@@ -77,29 +77,29 @@ class Mails:
 								continue
 							try:
 								try:
-									sender = self.__format_header('sender', msg['From'])	# get sender and format it
+									sender = self._format_header('sender', msg['From'])	# get sender and format it
 								except KeyError:
 									print "KeyError exception for key 'From' in message." # debug
-									sender = self.__format_header('sender', msg['from'])
+									sender = self._format_header('sender', msg['from'])
 							except:
 								print "Could not get sender from IMAP message." # debug
 								sender = "Error in sender"
 							try:
 								try:
-									datetime, seconds = self.__format_header('date', msg['Date'])	# get date and format it
+									datetime, seconds = self._format_header('date', msg['Date'])	# get date and format it
 								except KeyError:
 									print "KeyError exception for key 'Date' in message." # debug
-									datetime, seconds = self.__format_header('date', msg['date'])
+									datetime, seconds = self._format_header('date', msg['date'])
 							except:
 								print "Could not get date from IMAP message." # debug
 								datetime = time.strftime('%Y.%m.%d %X')					# take current time as "2010.12.31 13:57:04"
 								seconds = time.time()									# take current time as seconds
 							try:
 								try:
-									subject = self.__format_header('subject', msg['Subject'])	# get subject and format it
+									subject = self._format_header('subject', msg['Subject'])	# get subject and format it
 								except KeyError:
 									print "KeyError exception for key 'Subject' in message." # debug
-									subject = self.__format_header('subject', msg['subject'])
+									subject = self._format_header('subject', msg['subject'])
 							except:
 								print "Could not get subject from IMAP message." # debug
 								subject = _('No subject')
@@ -113,7 +113,7 @@ class Mails:
 								id = str(hash(acc.server + acc.user + sender + subject)) # create fallback id
 					
 					if id not in mail_ids:							# prevent duplicates caused by Gmail labels
-						if not (filter_enabled and self.__in_filter(sender + subject)):		# check filter
+						if not (filter_enabled and self._in_filter(sender + subject)):		# check filter
 							mail_list.append(Mail(seconds, subject, \
 								sender, datetime, id, acc.get_id()))
 							mail_ids.append(id)						# add id to list
@@ -138,29 +138,29 @@ class Mails:
 						continue
 					try:
 						try:
-							sender = self.__format_header('sender', msg['From'])	# get sender and format it
+							sender = self._format_header('sender', msg['From'])	# get sender and format it
 						except KeyError:
 							print "KeyError exception for key 'From' in message."	# debug
-							sender = self.__format_header('sender', msg['from'])
+							sender = self._format_header('sender', msg['from'])
 					except:
 						print "Could not get sender from POP message."	# debug
 						sender = "Error in sender"
 					try:
 						try:
-							datetime, seconds = self.__format_header('date', msg['Date'])	# get date and format it
+							datetime, seconds = self._format_header('date', msg['Date'])	# get date and format it
 						except KeyError:
 							print "KeyError exception for key 'Date' in message."	# debug
-							datetime, seconds = self.__format_header('date', msg['date'])
+							datetime, seconds = self._format_header('date', msg['date'])
 					except:
 						print "Could not get date from POP message."	# debug
 						datetime = time.strftime('%Y.%m.%d %X')			# take current time as "2010.12.31 13:57:04"
 						seconds = time.time()							# take current time as seconds
 					try:
 						try:
-							subject = self.__format_header('subject', msg['Subject'])	# get subject and format it
+							subject = self._format_header('subject', msg['Subject'])	# get subject and format it
 						except KeyError:
 							print "KeyError exception for key 'Subject' in message."	# debug
-							subject = self.__format_header('subject', msg['subject'])
+							subject = self._format_header('subject', msg['subject'])
 					except:
 						print "Could not get subject from POP message."
 						subject = _('No subject')
@@ -175,7 +175,7 @@ class Mails:
 					else:
 						id = acc.user + uidl.split(' ')[2]				# create unique id
 					
-					if not (filter_enabled and self.__in_filter(sender + subject)):	# check filter
+					if not (filter_enabled and self._in_filter(sender + subject)):	# check filter
 						mail_list.append(Mail(seconds, subject, sender, \
 							datetime, id, acc.get_id()))
 
@@ -187,9 +187,9 @@ class Mails:
 		return mail_list
 
 
-	def __in_filter(self, sendersubject):								# check if filter appears in sendersubject
+	def _in_filter(self, sendersubject):								# check if filter appears in sendersubject
 		status = False
-		filter_text = self.cfg.get('filter', 'filter_text')
+		filter_text = self._cfg.get('filter', 'filter_text')
 		filter_list = filter_text.replace('\n', '').split(',')			# convert text to list
 		for filter_item in filter_list:
 			filter_stripped_item = filter_item.strip()					# remove CR and white space
@@ -217,17 +217,17 @@ class Mails:
 		return mail_list
 
 
-	def __format_header(self, field, content):							# format sender, date, subject etc.
+	def _format_header(self, field, content):							# format sender, date, subject etc.
 		if field == 'sender':
 			try:
 				sender_real, sender_addr = email.utils.parseaddr(content) # get the two parts of the sender
-				sender_real = self.__convert(sender_real)
-				sender_addr = self.__convert(sender_addr)
+				sender_real = self._convert(sender_real)
+				sender_addr = self._convert(sender_addr)
 				sender = (sender_real, sender_addr)						# create decoded tupel
 			except:
 				sender = ('','Error: cannot format sender')
 
-			sender_format = self.cfg.get('general', 'sender_format')
+			sender_format = self._cfg.get('general', 'sender_format')
 			if sender_format == '1' and sender[0] != '':				# real sender name if not empty
 				sender = sender_real
 			else:
@@ -248,13 +248,13 @@ class Mails:
 
 		if field == 'subject':
 			try:
-				subject = self.__convert(content)
+				subject = self._convert(content)
 			except:
 				subject = 'Error: cannot format subject'
 			return subject
 
 
-	def __convert(self, raw_content):									# decode and concatenate multi-coded header parts
+	def _convert(self, raw_content):									# decode and concatenate multi-coded header parts
 		content = raw_content.replace('\n',' ')							# replace newline by space
 		content = content.replace('?==?','?= =?')						# workaround a bug in email.header.decode_header()
 		tupels = decode_header(content)									# list of (text_part, charset) tupels
