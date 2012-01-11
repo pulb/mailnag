@@ -47,4 +47,4 @@ If you like to have a permanently visible notification counter in your top panel
 
 ## Screenshots
 
-![Screenshot](http://www.shockshit.net/mailnag/screenshots/mailnag_flyer.png "Mailnag")
+![Screenshot](http://www.shockshit.net/mailnag/screenshots/mailnag_flyer.png)
