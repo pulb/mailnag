@@ -57,19 +57,9 @@ class Account:
 
 	def get_connection(self, use_existing = False): # get email server connection
 		if self.imap:
-			try:
-				conn = self._get_IMAP_connection(use_existing)
-			except:
-				print "Error: Cannot connect to IMAP account: %s. " % self.server
-				conn = None
+			return self._get_IMAP_connection(use_existing)
 		else:
-			try:
-				conn = self._get_POP3_connection(use_existing)
-			except:
-				print "Error: Cannot connect to POP account: %s. " % self.server
-				conn = None
-
-		return conn
+			return self._get_POP3_connection(use_existing)
 	
 	
 	def get_id(self):
@@ -83,18 +73,31 @@ class Account:
 		(self._conn.state != imaplib.LOGOUT) and (not self._conn.Terminate):
 			return self._conn
 		
-		if self.ssl:
-			if self.port == '':
-				self._conn = imaplib.IMAP4_SSL(self.server)
-			else:
-				self._conn = imaplib.IMAP4_SSL(self.server, self.port)
-		else:
-			if self.port == '':
-				self._conn = imaplib.IMAP4(self.server)
-			else:
-				self._conn = imaplib.IMAP4(self.server, self.port)
+		self._conn = conn = None
 		
-		self._conn.login(self.user, self.password)
+		try:
+			if self.ssl:
+				if self.port == '':
+					conn = imaplib.IMAP4_SSL(self.server)
+				else:
+					conn = imaplib.IMAP4_SSL(self.server, self.port)
+			else:
+				if self.port == '':
+					conn = imaplib.IMAP4(self.server)
+				else:
+					conn = imaplib.IMAP4(self.server, self.port)
+			
+			conn.login(self.user, self.password)
+			
+			self._conn = conn
+		except:
+			print "Error: Cannot connect to IMAP account: %s. " % self.server
+			try:
+				if conn != None:
+					# conn.close() # allowed in SELECTED state only
+					conn.logout()
+			except:
+				pass		
 		
 		return self._conn
 	
@@ -104,20 +107,32 @@ class Account:
 		if use_existing and (self._conn != None) and ('sock' in self._conn.__dict__):
 			return self._conn
 		
-		if self.ssl:
-			if self.port == '':
-				self._conn = poplib.POP3_SSL(self.server)
-			else:
-				self._conn = poplib.POP3_SSL(self.server, self.port)
-		else:
-			if self.port == '':
-				self._conn = poplib.POP3(self.server)
-			else:
-				self._conn = poplib.POP3(self.server, self.port)
+		self._conn = conn = None
 		
-		self._conn.getwelcome()
-		self._conn.user(self.user)
-		self._conn.pass_(self.password)
+		try:
+			if self.ssl:
+				if self.port == '':
+					conn = poplib.POP3_SSL(self.server)
+				else:
+					conn = poplib.POP3_SSL(self.server, self.port)
+			else:
+				if self.port == '':
+					conn = poplib.POP3(self.server)
+				else:
+					conn = poplib.POP3(self.server, self.port)
+		
+			conn.getwelcome()
+			conn.user(self.user)
+			conn.pass_(self.password)
+			
+			self._conn = conn
+		except:
+			print "Error: Cannot connect to POP account: %s. " % self.server
+			try:
+				if conn != None:
+					conn.quit()
+			except:
+				pass	
 		
 		return self._conn
 
