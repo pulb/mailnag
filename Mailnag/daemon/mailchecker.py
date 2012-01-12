@@ -54,7 +54,7 @@ class MailChecker:
 	
 	def check(self, accounts):
 		with self._mailcheck_lock:
-			print 'Checking email accounts at:', time.asctime()
+			print 'Checking %s email account(s) at: %s' % (len(accounts), time.asctime())
 			self._pid.kill() # kill all zombies	
 
 			if not is_online():
