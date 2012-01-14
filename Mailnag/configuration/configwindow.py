@@ -108,7 +108,7 @@ class ConfigWindow:
 		#
 		self._image_logo = builder.get_object("image_logo")
 		pb = GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 180, 180)
-		pb = pb.new_subpixbuf(0, 0, 180, 150) # crop whitespace at the bottom
+		pb = pb.new_subpixbuf(0, 0, 180, 160) # crop whitespace at the bottom
 		self._image_logo.set_from_pixbuf(pb)
 		self._label_app_desc = builder.get_object("label_app_desc")
 		self._label_app_desc.set_markup("<span font=\"24\"><b>Mailnag</b></span>\nVersion %s" % str(APP_VERSION))
