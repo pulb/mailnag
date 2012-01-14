@@ -26,7 +26,7 @@ import xdg.BaseDirectory as bd
 from ConfigParser import RawConfigParser
 from common.i18n import _
 
-APP_VERSION = "0.3.9"
+APP_VERSION = "0.4.0"
 
 mailnag_defaults = {
 	'general':
