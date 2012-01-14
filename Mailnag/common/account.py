@@ -64,7 +64,7 @@ class Account:
 	
 	def get_id(self):
 		# TODO : this id is not really unique...
-		return str(hash(self.user + self.server))
+		return str(hash(self.user + self.server + self.folder))
 	
 	
 	def _get_IMAP_connection(self, use_existing):
