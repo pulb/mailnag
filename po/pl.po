@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-12-01 19:40+0100\n"
-"PO-Revision-Date: 2011-11-03 23:06+0000\n"
-"Last-Translator: vbert <wsobczak@gmail.com>\n"
+"PO-Revision-Date: 2011-12-18 13:13+0000\n"
+"Last-Translator: RapierTG <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-12-07 19:52+0000\n"
-"X-Generator: Launchpad (build 14443)\n"
+"X-Launchpad-Export-Date: 2012-01-14 18:40+0000\n"
+"X-Generator: Launchpad (build 14664)\n"
 
 #: Mailnag/common/keyring.py:61
 msgid ""
@@ -27,7 +27,7 @@ msgstr ""
 
 #: Mailnag/common/config.py:38
 msgid "New email"
-msgstr ""
+msgstr "Nowa wiadomość"
 
 #: Mailnag/common/account.py:49
 msgid "Unnamed"
@@ -43,15 +43,15 @@ msgstr "Masz {0} nowych wiadomości."
 
 #: Mailnag/daemon/mailchecker.py:131
 msgid "You have a new mail."
-msgstr "Masz nową wwiadomość."
+msgstr "Masz nową wiadomość."
 
 #: Mailnag/daemon/mailchecker.py:141
 msgid "Mark as read"
-msgstr ""
+msgstr "Oznacz jako przeczytana"
 
 #: Mailnag/daemon/mails.py:115 Mailnag/daemon/mails.py:177
 msgid "No subject"
-msgstr ""
+msgstr "Brak tematu"
 
 #: Mailnag/configuration/accountdialog.py:63
 #: Mailnag/configuration/accountdialog.py:64
@@ -83,7 +83,7 @@ msgstr "Usuń to konto:"
 
 #: data/account_dialog.ui.h:1
 msgid "Account type:"
-msgstr ""
+msgstr "Typ konta:"
 
 #: data/account_dialog.ui.h:2
 msgid "Accountname:"
@@ -91,7 +91,7 @@ msgstr "Nazwa konta:"
 
 #: data/account_dialog.ui.h:3
 msgid "Enable Push-IMAP"
-msgstr ""
+msgstr "Włącz Push-IMAP"
 
 #: data/account_dialog.ui.h:4
 msgid "Enable SSL encryption"
@@ -111,7 +111,7 @@ msgstr "Hasło:"
 
 #: data/account_dialog.ui.h:8
 msgid "Port:"
-msgstr ""
+msgstr "Port:"
 
 #: data/account_dialog.ui.h:9
 msgid "Server:"
@@ -165,7 +165,7 @@ msgstr ""
 
 #: data/config_window.ui.h:14
 msgid "Mailnag Configuration"
-msgstr ""
+msgstr "Konfiguracja Mailnag"
 
 #: data/config_window.ui.h:15
 msgid "Messagetray label:"
@@ -189,11 +189,11 @@ msgstr ""
 
 #: data/config_window.ui.h:20
 msgid "Start Mailnag automatically"
-msgstr ""
+msgstr "Uruchamiaj Mailnag automatycznie"
 
 #: data/config_window.ui.h:21
 msgid "Summary"
-msgstr ""
+msgstr "Podsumowanie"
 
 #: data/config_window.ui.h:22
 msgid ""
