@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: Philippe Poumaroux <poum@cpan.org>\n"
 "POT-Creation-Date: 2011-12-01 19:40+0100\n"
-"PO-Revision-Date: 2011-09-20 10:20+0000\n"
-"Last-Translator: poum <Unknown>\n"
+"PO-Revision-Date: 2012-01-14 22:31+0000\n"
+"Last-Translator: Zeppelinlg <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-01-14 18:40+0000\n"
+"X-Launchpad-Export-Date: 2012-01-15 11:00+0000\n"
 "X-Generator: Launchpad (build 14664)\n"
 "Language: \n"
 
@@ -32,7 +32,7 @@ msgstr ""
 
 #: Mailnag/common/config.py:38
 msgid "New email"
-msgstr ""
+msgstr "Nouvel email"
 
 #: Mailnag/common/account.py:49
 msgid "Unnamed"
@@ -52,16 +52,16 @@ msgstr "Vous avez un nouveau courriel"
 
 #: Mailnag/daemon/mailchecker.py:141
 msgid "Mark as read"
-msgstr ""
+msgstr "Marquer comme lu"
 
 #: Mailnag/daemon/mails.py:115 Mailnag/daemon/mails.py:177
 msgid "No subject"
-msgstr ""
+msgstr "Sans objet"
 
 #: Mailnag/configuration/accountdialog.py:63
 #: Mailnag/configuration/accountdialog.py:64
 msgid "optional"
-msgstr ""
+msgstr "facultatif"
 
 #: Mailnag/configuration/configwindow.py:79
 msgid "Enabled"
@@ -88,7 +88,7 @@ msgstr "Supprimer ce compte:"
 
 #: data/account_dialog.ui.h:1
 msgid "Account type:"
-msgstr ""
+msgstr "Type de compte :"
 
 #: data/account_dialog.ui.h:2
 msgid "Accountname:"
@@ -96,11 +96,11 @@ msgstr "Nom du compte:"
 
 #: data/account_dialog.ui.h:3
 msgid "Enable Push-IMAP"
-msgstr ""
+msgstr "Activer le Push-IMAP"
 
 #: data/account_dialog.ui.h:4
 msgid "Enable SSL encryption"
-msgstr ""
+msgstr "Activer l'encryptage SSL"
 
 #: data/account_dialog.ui.h:5
 msgid "Folder:"
@@ -116,7 +116,7 @@ msgstr "Mot de passe:"
 
 #: data/account_dialog.ui.h:8
 msgid "Port:"
-msgstr ""
+msgstr "Port:"
 
 #: data/account_dialog.ui.h:9
 msgid "Server:"
@@ -192,7 +192,7 @@ msgstr "Jouer un son en cas de nouveaux courriels"
 
 #: data/config_window.ui.h:18
 msgid "Single"
-msgstr ""
+msgstr "Unique"
 
 #: data/config_window.ui.h:19
 msgid "Spamfilter"
@@ -204,7 +204,7 @@ msgstr "Démarrer Mailnag automatiquement"
 
 #: data/config_window.ui.h:21
 msgid "Summary"
-msgstr ""
+msgstr "Résumé"
 
 #: data/config_window.ui.h:22
 msgid ""
