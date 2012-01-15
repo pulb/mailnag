@@ -1,3 +1,16 @@
+Version 0.4 (2012-01-15):
+=========================
+* Much improved IMAP IDLE support
+* Reconnect if a connection has been lost (e.g. after standby)
+* Use GNOMEs default mail client
+* Enable SSL by default
+* Use a meaningful messagetray label by default 
+* Added version info to the about tab
+* Refactoring, removed unused code
+* Updated translations
+* Bugfixes
+
+
 Version 0.3 (2011-11-27):
 =========================
 * Support for IMAP-Push notifications (thanks tony747!)
@@ -14,6 +27,7 @@ Version 0.3 (2011-11-27):
 
 Please note that this release breaks existing config files (for the first and last time),
 so make sure to delete ~/.config/mailnag/mailnag.cfg before upgrading.
+
 
 Version 0.2 (2011-10-17):
 =========================
