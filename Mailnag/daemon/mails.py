@@ -48,75 +48,81 @@ class Mails:
 			if srv == None:
 				continue												# continue with next account if server is empty
 			elif acc.imap:												# IMAP
-				folder = acc.folder.strip()
-				if len(folder) == 0:
-					folder = "INBOX"
+				if len(acc.folder.strip()) == 0:
+					folder_list = ["INBOX"]
+				else:
+					folder_list = acc.folder.split(',')
+					
+				for folder in folder_list:	
+					folder = folder.strip()
+					if len(folder) == 0:
+						continue
 				
-				srv.select(folder, readonly=True) # select IMAP folder
-				try:
-					status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
-				except:
-					print "The folder:", folder, "does not exist, using INBOX instead"
+					srv.select(folder, readonly=True) # select IMAP folder
 					try:
-						srv.select('INBOX', readonly=True) # If search fails select INBOX and try again
 						status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
 					except:
-						print "INBOX Could not be found", sys.exc_info()[0]
+						print "The folder:", folder, "does not exist, using INBOX instead"
+						try:
+							srv.select('INBOX', readonly=True) # If search fails select INBOX and try again
+							status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
+						except:
+							print "INBOX Could not be found", sys.exc_info()[0]
 
-				if status != 'OK' or None in [d for d in data]:
-					print "Folder", folder, "in status", status, "| Data:", data, "\n"
-					continue										# Bugfix LP-735071
-				for num in data[0].split():
-					typ, msg_data = srv.fetch(num, '(BODY.PEEK[HEADER])')	# header only (without setting READ flag)
-					for response_part in msg_data:
-						if isinstance(response_part, tuple):
-							try:
-								msg = email.message_from_string(response_part[1])
-							except:
-								print "Could not get IMAP message." # debug
-								continue
-							try:
+					if status != 'OK' or None in [d for d in data]:
+						print "Folder", folder, "in status", status, "| Data:", data, "\n"
+						continue										# Bugfix LP-735071
+					for num in data[0].split():
+						typ, msg_data = srv.fetch(num, '(BODY.PEEK[HEADER])')	# header only (without setting READ flag)
+						for response_part in msg_data:
+							if isinstance(response_part, tuple):
 								try:
-									sender = self._format_header('sender', msg['From'])	# get sender and format it
-								except KeyError:
-									print "KeyError exception for key 'From' in message." # debug
-									sender = self._format_header('sender', msg['from'])
-							except:
-								print "Could not get sender from IMAP message." # debug
-								sender = "Error in sender"
-							try:
+									msg = email.message_from_string(response_part[1])
+								except:
+									print "Could not get IMAP message." # debug
+									continue
 								try:
-									datetime, seconds = self._format_header('date', msg['Date'])	# get date and format it
-								except KeyError:
-									print "KeyError exception for key 'Date' in message." # debug
-									datetime, seconds = self._format_header('date', msg['date'])
-							except:
-								print "Could not get date from IMAP message." # debug
-								datetime = time.strftime('%Y.%m.%d %X')					# take current time as "2010.12.31 13:57:04"
-								seconds = time.time()									# take current time as seconds
-							try:
+									try:
+										sender = self._format_header('sender', msg['From'])	# get sender and format it
+									except KeyError:
+										print "KeyError exception for key 'From' in message." # debug
+										sender = self._format_header('sender', msg['from'])
+								except:
+									print "Could not get sender from IMAP message." # debug
+									sender = "Error in sender"
 								try:
-									subject = self._format_header('subject', msg['Subject'])	# get subject and format it
-								except KeyError:
-									print "KeyError exception for key 'Subject' in message." # debug
-									subject = self._format_header('subject', msg['subject'])
-							except:
-								print "Could not get subject from IMAP message." # debug
-								subject = _('No subject')
-							try:
-								id = msg['Message-Id']
-							except:
-								print "Could not get id from IMAP message."				# debug
-								id = None
+									try:
+										datetime, seconds = self._format_header('date', msg['Date'])	# get date and format it
+									except KeyError:
+										print "KeyError exception for key 'Date' in message." # debug
+										datetime, seconds = self._format_header('date', msg['date'])
+								except:
+									print "Could not get date from IMAP message." # debug
+									datetime = time.strftime('%Y.%m.%d %X')					# take current time as "2010.12.31 13:57:04"
+									seconds = time.time()									# take current time as seconds
+								try:
+									try:
+										subject = self._format_header('subject', msg['Subject'])	# get subject and format it
+									except KeyError:
+										print "KeyError exception for key 'Subject' in message." # debug
+										subject = self._format_header('subject', msg['subject'])
+								except:
+									print "Could not get subject from IMAP message." # debug
+									subject = _('No subject')
+								try:
+									id = msg['Message-Id']
+								except:
+									print "Could not get id from IMAP message."				# debug
+									id = None
 							
-							if id == None or id == '':
-								id = str(hash(acc.server + acc.user + sender + subject)) # create fallback id
+								if id == None or id == '':
+									id = str(hash(acc.server + acc.user + sender + subject)) # create fallback id
 					
-					if id not in mail_ids:							# prevent duplicates caused by Gmail labels
-						if not (filter_enabled and self._in_filter(sender + subject)):		# check filter
-							mail_list.append(Mail(seconds, subject, \
-								sender, datetime, id, acc.get_id()))
-							mail_ids.append(id)						# add id to list
+						if id not in mail_ids:							# prevent duplicates caused by Gmail labels
+							if not (filter_enabled and self._in_filter(sender + subject)):		# check filter
+								mail_list.append(Mail(seconds, subject, \
+									sender, datetime, id, acc.get_id()))
+								mail_ids.append(id)						# add id to list
 				
 				# don't close IMAP idle connections
 				if not acc.idle:

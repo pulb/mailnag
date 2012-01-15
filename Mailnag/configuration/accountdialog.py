@@ -105,14 +105,22 @@ class AccountDialog:
 		pass
 
 	
-	def _on_entry_changed(self, widget):
-		# validate
-		ok = len(self._entry_account_name.get_text()) > 0 and \
-		     len(self._entry_account_user.get_text()) > 0 and \
-		     len(self._entry_account_password.get_text()) > 0 and \
-		     len(self._entry_account_server.get_text()) > 0
+	def _on_entry_changed(self, widget):		
+		if widget is self._entry_account_folder:
+			# disable IMAP Push checkbox if multiple folders are specifed
+			if ("," in self._entry_account_folder.get_text()):
+				self._chk_account_push.set_active(False)
+				self._chk_account_push.set_sensitive(False)
+			else:
+				self._chk_account_push.set_sensitive(True)
+		else:
+			# validate
+			ok = len(self._entry_account_name.get_text()) > 0 and \
+				 len(self._entry_account_user.get_text()) > 0 and \
+				 len(self._entry_account_password.get_text()) > 0 and \
+				 len(self._entry_account_server.get_text()) > 0
 		
-		self._button_save.set_sensitive(ok)
+			self._button_save.set_sensitive(ok)
 		
 		
 	def _on_cmb_account_type_changed(self, widget):

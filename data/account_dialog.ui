@@ -282,6 +282,7 @@
                 <property name="hexpand">True</property>
                 <property name="invisible_char">•</property>
                 <property name="invisible_char_set">True</property>
+                <signal name="changed" handler="entry_changed" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -361,9 +362,6 @@
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
-            </child>
-            <child>
-              <placeholder/>
             </child>
           </object>
           <packing>
