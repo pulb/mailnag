@@ -23,6 +23,7 @@
 #
 
 import threading
+import time
 from daemon.imaplib2 import AUTH
 
 class Idler(object):
@@ -68,9 +69,14 @@ class Idler(object):
 
 			def callback(args):
 				if (args[2] != None) and (args[2][0] is self._conn.abort):
-					# connection has been reset by provider -> reopen
-					print "Idler thread for account '%s' reconnected" % self._account.name
-					self._conn = self._account.get_connection(use_existing = False)
+					# connection has been reset by provider -> try to reconnect
+					print "Idler thread for account '%s' has been disconnected" % self._account.name
+					self._conn = None
+					while (self._conn == None) and (not self._event.isSet()): 
+						print "Trying to reconnect account '%s'" % self._account.name
+						self._conn = self._account.get_connection(use_existing = False)
+						if self._conn == None: time.sleep(60 * 5) # don't hammer
+					
 					if self._conn != None:
 						self._select(self._conn, self._account.folder)
 				
