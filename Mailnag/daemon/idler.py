@@ -71,7 +71,8 @@ class Idler(object):
 					# connection has been reset by provider -> reopen
 					print "Idler thread for account '%s' reconnected" % self._account.name
 					self._conn = self._account.get_connection(use_existing = False)
-					self._select(self._conn, self._account.folder)
+					if self._conn != None:
+						self._select(self._conn, self._account.folder)
 				
 				if not self._event.isSet():
 					self._needsync = True
