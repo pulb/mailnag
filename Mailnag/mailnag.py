@@ -27,6 +27,7 @@ import os
 from gi.repository import GObject, GLib
 import time
 import signal
+import traceback
 
 from common.config import read_cfg, cfg_exists, cfg_folder
 from common.utils import set_procname, is_online
@@ -112,7 +113,10 @@ def main():
 		# IMAP accounts without idle support
 		if len(non_idle_accounts) > 0:
 			def poll_func():
-				mailchecker.check(non_idle_accounts)
+				try:
+					mailchecker.check(non_idle_accounts)
+				except:
+					traceback.print_exc()
 				return True
 			
 			check_interval = int(cfg.get('general', 'check_interval'))
@@ -121,7 +125,10 @@ def main():
 		# start idler threads for IMAP accounts with idle support
 		if len(idle_accounts) > 0:
 			def sync_func(account):
-				mailchecker.check([account])
+				try:
+					mailchecker.check([account])
+				except:
+					traceback.print_exc()
 			
 			idlers = Idlers(idle_accounts, sync_func)
 			idlers.run()
