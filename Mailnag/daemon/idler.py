@@ -24,10 +24,13 @@
 
 import threading
 import time
+import sys
 from daemon.imaplib2 import AUTH
 
 class Idler(object):
 	def __init__(self, account, sync_callback):
+		self.RECONNECT_RETRY_INTERVAL = 5 # minutes
+		
 		self._thread = threading.Thread(target=self._idle)
 		self._event = threading.Event()
 		self._sync_callback = sync_callback
@@ -73,9 +76,14 @@ class Idler(object):
 					print "Idler thread for account '%s' has been disconnected" % self._account.name
 					self._conn = None
 					while (self._conn == None) and (not self._event.isSet()): 
-						print "Trying to reconnect account '%s'" % self._account.name
+						sys.stdout.write("Trying to reconnect Idler thread for account '%s'..." % self._account.name)
 						self._conn = self._account.get_connection(use_existing = False)
-						if self._conn == None: time.sleep(60 * 5) # don't hammer
+						if self._conn == None:
+							sys.stdout.write("FAILED\n")
+							print "Trying again in %s minutes" % self.RECONNECT_RETRY_INTERVAL
+							time.sleep(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer
+						else:
+							sys.stdout.write("OK\n")
 					
 					if self._conn != None:
 						self._select(self._conn, self._account.folder)
