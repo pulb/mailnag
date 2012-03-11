@@ -264,7 +264,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="xalign">0</property>
-                    <property name="label" translatable="yes">Folder:</property>
+                    <property name="label" translatable="yes">Folders:</property>
                   </object>
                 </child>
               </object>
@@ -362,6 +362,9 @@
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
+            </child>
+            <child>
+              <placeholder/>
             </child>
           </object>
           <packing>
