@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-01 19:40+0100\n"
+"POT-Creation-Date: 2012-03-11 21:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Mailnag/common/keyring.py:61
+#: Mailnag/common/keyring.py:52
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -25,48 +25,48 @@ msgid ""
 "Do you want to try again?"
 msgstr ""
 
-#: Mailnag/common/config.py:38
+#: Mailnag/common/config.py:34
 msgid "New email"
 msgstr ""
 
-#: Mailnag/common/account.py:49
+#: Mailnag/common/account.py:42
 msgid "Unnamed"
 msgstr ""
 
-#: Mailnag/daemon/mailchecker.py:126
+#: Mailnag/daemon/mailchecker.py:127
 msgid "(and {0} more)"
 msgstr ""
 
-#: Mailnag/daemon/mailchecker.py:129
+#: Mailnag/daemon/mailchecker.py:130
 msgid "You have {0} new mails."
 msgstr ""
 
-#: Mailnag/daemon/mailchecker.py:131
+#: Mailnag/daemon/mailchecker.py:132
 msgid "You have a new mail."
 msgstr ""
 
-#: Mailnag/daemon/mailchecker.py:141
+#: Mailnag/daemon/mailchecker.py:142
 msgid "Mark as read"
 msgstr ""
 
-#: Mailnag/daemon/mails.py:115 Mailnag/daemon/mails.py:177
+#: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
 msgid "No subject"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:63
-#: Mailnag/configuration/accountdialog.py:64
+#: Mailnag/configuration/accountdialog.py:58
+#: Mailnag/configuration/accountdialog.py:59
 msgid "optional"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:79
+#: Mailnag/configuration/configwindow.py:70
 msgid "Enabled"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:85
+#: Mailnag/configuration/configwindow.py:76
 msgid "Name"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:154
+#: Mailnag/configuration/configwindow.py:148
 #, python-format
 msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
@@ -74,7 +74,7 @@ msgid ""
 "Do you want to import them?"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:335
+#: Mailnag/configuration/configwindow.py:283
 msgid "Delete this account:"
 msgstr ""
 
@@ -95,7 +95,7 @@ msgid "Enable SSL encryption"
 msgstr ""
 
 #: data/account_dialog.ui.h:5
-msgid "Folder:"
+msgid "Folders:"
 msgstr ""
 
 #: data/account_dialog.ui.h:6
