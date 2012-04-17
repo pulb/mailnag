@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-12-01 19:40+0100\n"
+"POT-Creation-Date: 2012-03-11 21:40+0100\n"
 "PO-Revision-Date: 2012-01-18 08:28+0000\n"
 "Last-Translator: AmiG <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-01-21 10:36+0000\n"
-"X-Generator: Launchpad (build 14700)\n"
+"X-Launchpad-Export-Date: 2012-04-17 19:44+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
-#: Mailnag/common/keyring.py:61
+#: Mailnag/common/keyring.py:52
 msgid ""
 "Failed to unlock Keyring \"{0}\".\n"
 "Wrong password.\n"
@@ -29,48 +29,48 @@ msgstr ""
 "\n"
 "האם ברצונך לנסות שוב?"
 
-#: Mailnag/common/config.py:38
+#: Mailnag/common/config.py:34
 msgid "New email"
 msgstr "דוא\"ל חדש"
 
-#: Mailnag/common/account.py:49
+#: Mailnag/common/account.py:42
 msgid "Unnamed"
 msgstr "ללא שם"
 
-#: Mailnag/daemon/mailchecker.py:126
+#: Mailnag/daemon/mailchecker.py:127
 msgid "(and {0} more)"
 msgstr "(ועוד {0})"
 
-#: Mailnag/daemon/mailchecker.py:129
+#: Mailnag/daemon/mailchecker.py:130
 msgid "You have {0} new mails."
 msgstr "יש לך {0} הודעות דוא\"ל חדשות."
 
-#: Mailnag/daemon/mailchecker.py:131
+#: Mailnag/daemon/mailchecker.py:132
 msgid "You have a new mail."
 msgstr "יש לך הודעת דוא\"ל חדשה."
 
-#: Mailnag/daemon/mailchecker.py:141
+#: Mailnag/daemon/mailchecker.py:142
 msgid "Mark as read"
 msgstr "סימון כנקרא"
 
-#: Mailnag/daemon/mails.py:115 Mailnag/daemon/mails.py:177
+#: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
 msgid "No subject"
 msgstr "ללא נושא"
 
-#: Mailnag/configuration/accountdialog.py:63
-#: Mailnag/configuration/accountdialog.py:64
+#: Mailnag/configuration/accountdialog.py:58
+#: Mailnag/configuration/accountdialog.py:59
 msgid "optional"
 msgstr "אופציונאלי"
 
-#: Mailnag/configuration/configwindow.py:79
+#: Mailnag/configuration/configwindow.py:70
 msgid "Enabled"
 msgstr "מאופשר"
 
-#: Mailnag/configuration/configwindow.py:85
+#: Mailnag/configuration/configwindow.py:76
 msgid "Name"
 msgstr "שם"
 
-#: Mailnag/configuration/configwindow.py:154
+#: Mailnag/configuration/configwindow.py:148
 #, python-format
 msgid ""
 "Mailnag found %s mail accounts on this computer.\n"
@@ -81,7 +81,7 @@ msgstr ""
 "\n"
 "האם לייבא אותם?"
 
-#: Mailnag/configuration/configwindow.py:335
+#: Mailnag/configuration/configwindow.py:283
 msgid "Delete this account:"
 msgstr "מחיקת החשבון:"
 
@@ -102,8 +102,8 @@ msgid "Enable SSL encryption"
 msgstr "איפשור הצפנת SSL"
 
 #: data/account_dialog.ui.h:5
-msgid "Folder:"
-msgstr "תיקייה:"
+msgid "Folders:"
+msgstr ""
 
 #: data/account_dialog.ui.h:6
 msgid "Mail Account"
