@@ -22,7 +22,7 @@
 # MA 02110-1301, USA.
 #
 
-from gi.repository import Notify
+from gi.repository import Notify, Gio
 import threading
 import sys
 import subprocess
@@ -45,6 +45,7 @@ class MailChecker:
 		self._reminder = Reminder()
 		self._pid = Pid()
 		self._cfg = cfg
+		self._gsettings = Gio.Settings.new('org.gnome.shell')
 		# dict that tracks all notifications that need to be closed
 		self._notifications = {}
 		
@@ -94,8 +95,11 @@ class MailChecker:
 					self._notify_summary(unseen_mails)
 				else:
 					self._notify_single(new_mails)
-
-				if self._cfg.get('general', 'playsound') == '1': # play sound?
+				
+				# play sound if it is enabled in mailnags settings and 
+				# gnome-shell notifications aren't disabled
+				if (self._cfg.get('general', 'playsound') == '1') and \
+					(self._gsettings.get_int('saved-session-presence') != 2):
 					gstplay(get_data_file(self._cfg.get('general', 'soundfile')))
 
 			self._reminder.save(self._mail_list)

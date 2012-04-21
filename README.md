@@ -27,6 +27,7 @@ and translate Mailnag into your language!
     pygobject-3
     gir-notify
     gir-gstreamer
+    gir-glib-2.0
     python-httplib2
     python2-gnomekeyring
     pyxdg
