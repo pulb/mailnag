@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-03-11 21:40+0100\n"
-"PO-Revision-Date: 2012-01-19 18:47+0000\n"
-"Last-Translator: Wolter Hellmund <wolterh6@gmail.com>\n"
+"PO-Revision-Date: 2012-05-05 12:54+0000\n"
+"Last-Translator: Asier Sarasua Garmendia <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-17 19:44+0000\n"
-"X-Generator: Launchpad (build 15099)\n"
+"X-Launchpad-Export-Date: 2012-05-15 16:44+0000\n"
+"X-Generator: Launchpad (build 15247)\n"
 
 #: Mailnag/common/keyring.py:52
 msgid ""
@@ -103,7 +103,7 @@ msgstr "Activar encriptación SSL"
 
 #: data/account_dialog.ui.h:5
 msgid "Folders:"
-msgstr ""
+msgstr "Carpetas:"
 
 #: data/account_dialog.ui.h:6
 msgid "Mail Account"
