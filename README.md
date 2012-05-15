@@ -9,7 +9,7 @@ __This project needs contributors!__
 [Bugtracker](https://github.com/pulb/mailnag/issues)  
 [Translations](https://translations.launchpad.net/mailnag)  
 [Wiki](https://github.com/pulb/mailnag/wiki) 
-***
+
 ## Installation
 
 ### Unofficial Packages
@@ -33,7 +33,7 @@ and translate Mailnag into your language!
     pyxdg
     gettext
 
-***
+
 ## Configuration
 Run `mailnag_config` to setup Mailnag.  
 Closing the configuration window will start mailnag automatically.
@@ -45,6 +45,6 @@ If you're a webmail (e.g. gmail) user and want your account to be launched in a 
 ### Permanent Notifications
 GNOME-Shell notifications are visible for a few seconds only before they vanish in GNOME's hidden messaging tray.  
 If you like to have a permanently visible notification counter in your top panel, you probably want to install [this](https://github.com/pulb/shell-message-notifier) GNOME-Shell extension.
-***
+
 ## Screenshots
 ![Screenshot](http://www.shockshit.net/mailnag/screenshots/mailnag_flyer.png)
