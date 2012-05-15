@@ -21,12 +21,14 @@
 # MA 02110-1301, USA.
 #
 
+LOCALE_DIR = './locale'
+
 import locale
 import gettext
 from common.utils import PACKAGE_NAME
 
-locale.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.bindtextdomain(PACKAGE_NAME, './locale')
-gettext.textdomain(PACKAGE_NAME)
+# bind textdomain for GTK Builder
+locale.bindtextdomain(PACKAGE_NAME, LOCALE_DIR)
 
-_ = gettext.gettext
+# add gettext shortcut "_" for string translations
+_ = gettext.translation(PACKAGE_NAME, LOCALE_DIR).ugettext
