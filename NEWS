@@ -1,3 +1,11 @@
+Version 0.4.1 (2012-05-21):
+===========================
+* Fixed some crashes and connection issues
+* Use unicode for translated strings
+* Don't play notification sounds when GNOME Shell notifications are disabled
+* Updated translations
+
+
 Version 0.4 (2012-01-15):
 =========================
 * Much improved IMAP IDLE support
