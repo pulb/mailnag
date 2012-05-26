@@ -24,7 +24,7 @@ and translate Mailnag into your language!
 
 ###### Requirements
     python2 (python3 won't work!)
-    pygobject-3
+    pygobject
     gir-notify
     gir-gstreamer
     gir-glib-2.0
