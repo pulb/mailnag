@@ -31,4 +31,4 @@ from common.utils import PACKAGE_NAME
 locale.bindtextdomain(PACKAGE_NAME, LOCALE_DIR)
 
 # add gettext shortcut "_" for string translations
-_ = gettext.translation(PACKAGE_NAME, LOCALE_DIR).ugettext
+_ = gettext.translation(domain = PACKAGE_NAME, localedir = LOCALE_DIR, fallback = True).ugettext
