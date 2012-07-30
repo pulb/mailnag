@@ -36,7 +36,8 @@ class Idler(object):
 		self._sync_callback = sync_callback
 		self._account = account
 		self._conn = account.get_connection(use_existing = True) # connection has been opened in mailnag.py already (immediate check)
-		
+		self._disposed = False
+				
 		if self._conn == None:
 			raise Exception("Failed to establish a connection for account '%s'" % account.name)
 					
@@ -46,6 +47,9 @@ class Idler(object):
 
 
 	def run(self):
+		if self._disposed:
+			raise Exception("Idler has been disposed")
+			
 		self._thread.start()
 
 		
@@ -55,59 +59,94 @@ class Idler(object):
 			self._thread.join()
 		
 		try:
-			self._conn.close()
-			self._conn.logout()
+			if self._conn != None:
+				# (calls idle_callback)
+				self._conn.close()
+				# shutdown existing callback thread
+				self._conn.logout()
 		except:
 			pass
 		
+		self._disposed = True
 		print "Idler closed"
 
 		
+	# idle thread
 	def _idle(self):
+		self._reconnect()
 		while True:
-			# If the event is set stop the idle call and therefore thread
+			# if the event is set here, 
+			# disposed() must have been called
+			# so stop the idle thread.
 			if self._event.isSet():
 				return
-			self._needsync = False
-
-			def callback(args):
-				if (args[2] != None) and (args[2][0] is self._conn.abort):
-					# connection has been reset by provider -> try to reconnect
-					print "Idler thread for account '%s' has been disconnected" % self._account.name
-					self._conn = None
-					while (self._conn == None) and (not self._event.isSet()): 
-						sys.stdout.write("Trying to reconnect Idler thread for account '%s'..." % self._account.name)
-						self._conn = self._account.get_connection(use_existing = False)
-						if self._conn == None:
-							sys.stdout.write("FAILED\n")
-							print "Trying again in %s minutes" % self.RECONNECT_RETRY_INTERVAL
-							time.sleep(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer
-						else:
-							sys.stdout.write("OK\n")
-					
-					if self._conn != None:
-						self._select(self._conn, self._account.folder)
-				
-				if not self._event.isSet():
-					self._needsync = True
-					self._event.set()
 			
+			self._needsync = False
+			self._conn_closed = False
+
 			# register idle callback that is called whenever an idle event arrives (new mail / mail deleted).
 			# the callback is called after 10 minutes at the latest. gmail sends keepalive events every 5 minutes.
-			self._conn.idle(callback = callback, timeout = 60 * 10)
+			self._conn.idle(callback = self._idle_callback, timeout = 60 * 10)
 			
-			# Waits for event to be set
+			# waits for the event to be set
+			# (in idle callback or in dispose())
 			self._event.wait()
 			
-			# If the event is set due to idle sync
+			# if the event is set due to idle sync
 			if self._needsync:
 				self._event.clear()
-				self._sync_callback(self._account)
+				if self._conn_closed:
+					self._reconnect()
+				
+				if self._conn != None:
+					self._sync_callback(self._account)
 
+	
+	# idle callback (runs on a further thread)
+	def _idle_callback(self, args):
+		# check if the connection has been reset by provider
+		self._conn_closed = (args[2] != None) and (args[2][0] is self._conn.abort)
+		# flag that a mail sync is needed
+		self._needsync = True
+		# trigger waiting _idle thread
+		self._event.set()
+	
+			
+	def _reconnect(self):
+		# connection has been reset by provider -> try to reconnect
+		print "Idler thread for account '%s' has been disconnected" % self._account.name
+		
+		# conn has already been closed, don't try to close it again
+		# self._conn.close() # (calls idle_callback)
+		
+		# shutdown existing callback thread
+		self._conn.logout()
+		self._conn = None
+		
+		while (self._conn == None) and (not self._event.isSet()): 
+			sys.stdout.write("Trying to reconnect Idler thread for account '%s'..." % self._account.name)
+			self._conn = self._account.get_connection(use_existing = False)
+			if self._conn == None:
+				sys.stdout.write("FAILED\n")
+				print "Trying again in %s minutes" % self.RECONNECT_RETRY_INTERVAL
+				self._wait(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer the server
+			else:
+				sys.stdout.write("OK\n")
+		
+		if self._conn != None:
+			self._select(self._conn, self._account.folder)
+	
+					
 	def _select(self, conn, folder):
 		folder = folder.strip()
 		if len(folder) > 0:
 			conn.select(folder)
 		else:
 			conn.select("INBOX")
+	
+			
+	def _wait(self, secs):
+		start_time = time.time()
+		while (((time.time() - start_time) < secs) and (not self._event.isSet())):
+			time.sleep(1)
 
