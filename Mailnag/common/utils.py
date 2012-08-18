@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# mails.py
+# utils.py
 #
 # Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2007 Marco Ferragina <marco.ferragina@gmail.com>
