@@ -25,9 +25,10 @@
 import os
 from gi.repository import GLib, GdkPixbuf, Gtk, GObject
 
-from common.i18n import PACKAGE_NAME, _
+from common.dist_cfg import PACKAGE_NAME, APP_VERSION
+from common.i18n import _
 from common.utils import get_data_file
-from common.config import read_cfg, write_cfg, APP_VERSION
+from common.config import read_cfg, write_cfg
 from common.accountlist import AccountList
 from common.account import Account
 from configuration.accountdialog import AccountDialog

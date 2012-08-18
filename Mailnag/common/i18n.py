@@ -3,7 +3,7 @@
 #
 # i18n.py
 #
-# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,11 +21,9 @@
 # MA 02110-1301, USA.
 #
 
-LOCALE_DIR = './locale'
-
 import locale
 import gettext
-from common.utils import PACKAGE_NAME
+from common.dist_cfg import PACKAGE_NAME, LOCALE_DIR
 
 # bind textdomain for GTK Builder
 locale.bindtextdomain(PACKAGE_NAME, LOCALE_DIR)

@@ -29,7 +29,7 @@ import os
 import time
 import urllib2
 
-PACKAGE_NAME = "mailnag"
+from common.dist_cfg import PACKAGE_NAME
 
 def get_data_file(filename):
 	"""

@@ -3,7 +3,7 @@
 #
 # config.py
 #
-# Copyright 2011 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,8 +25,6 @@ import os
 import xdg.BaseDirectory as bd
 from ConfigParser import RawConfigParser
 from common.i18n import _
-
-APP_VERSION = "0.4.2"
 
 mailnag_defaults = {
 	'general':

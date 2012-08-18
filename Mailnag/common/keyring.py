@@ -25,7 +25,8 @@
 from gi.repository import GObject, GLib, GdkPixbuf, Gtk
 import gnomekeyring
 
-from common.i18n import PACKAGE_NAME, _
+from common.dist_cfg import PACKAGE_NAME
+from common.i18n import _
 from common.utils import get_data_file
 from common.account import Account
 
