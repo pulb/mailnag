@@ -35,9 +35,9 @@ mailnag_defaults = {
 		'check_interval'	: '5',
 		'notification_mode'	: '0',
 		'sender_format'		: '1',
-		'playsound'			: '1',
-		'soundfile'			: 'mailnag.ogg',
-		'autostart'			: '1'
+		'playsound'		: '1',
+		'soundfile'		: 'mailnag.ogg',
+		'autostart'		: '1'
 	},
 	'filter':
 	{
