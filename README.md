@@ -12,9 +12,10 @@ __This project needs contributors!__
 
 ## Installation
 
-### Unofficial Packages
+### Packages
 * [Ubuntu](https://launchpad.net/~webupd8team/+archive/gnome3)
 * [Arch Linux](https://aur.archlinux.org/packages.php?ID=49581)
+* [Fedora](https://admin.fedoraproject.org/updates/mailnag-0.4.2-2.fc17)
 
 ### Generic Tarballs
 Distribution independent tarball releases are available [here](https://github.com/pulb/mailnag/downloads).  
