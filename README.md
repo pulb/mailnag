@@ -15,7 +15,7 @@ __This project needs contributors!__
 ### Packages
 * [Ubuntu](https://launchpad.net/~webupd8team/+archive/gnome3)
 * [Arch Linux](https://aur.archlinux.org/packages.php?ID=49581)
-* [Fedora](https://admin.fedoraproject.org/updates/mailnag-0.4.2-2.fc17)
+* [Fedora](https://admin.fedoraproject.org/pkgdb/acls/name/mailnag?_csrf_token=ea19eecba58867f86b22d70461d2d21d862a783e)
 
 ### Generic Tarballs
 Distribution independent tarball releases are available [here](https://github.com/pulb/mailnag/downloads).  
