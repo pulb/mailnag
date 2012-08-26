@@ -8,14 +8,23 @@ APPNAME=mailnag
 PO_DIR=po
 LOCALE_DIR=locale # /usr/share/locale
 
+MKDIR_ERR=1
+MSGFMT_ERR=2
+
+# check if a custom locale dir 
+# was passed as a commandline arg
+if [ $# -gt 0 ]; then
+	LOCALE_DIR=$1
+fi
+
 for f in `ls $PO_DIR/*.po`; do
 	LANG=`basename ${f%".po"}`
 	DEST_DIR=$LOCALE_DIR/$LANG/LC_MESSAGES
 	
 	if [ ! -d $DEST_DIR ]; then
-		mkdir -p $DEST_DIR
+		mkdir -p $DEST_DIR || exit $MKDIR_ERR
 	fi
 	
 	echo "creating $DEST_DIR/$APPNAME.mo"
-	msgfmt -o $DEST_DIR/$APPNAME.mo $f
+	msgfmt -o $DEST_DIR/$APPNAME.mo $f || exit $MSGFMT_ERR
 done
