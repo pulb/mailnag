@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# To install Mailnag run this script as root:
+# ./setup.py install
+
 from distutils.core import setup
 from distutils.cmd import Command
 from distutils.log import warn, info, error
