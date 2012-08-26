@@ -15,12 +15,16 @@ import glob
 from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION
 
 
-PREFIX='/usr'
+PREFIX = '/usr'
 for arg in sys.argv:
 	if arg.startswith('--prefix='):
 		PREFIX = arg[9:]
 
 BUILD_DIR = 'build'
+for arg in sys.argv:
+	if arg.startswith('--build-base='):
+		BUILD_DIR = arg[13:]
+
 BUILD_LOCALE_DIR = os.path.join(BUILD_DIR, 'locale')
 INSTALL_LIB_DIR =  os.path.join(get_python_lib(prefix=PREFIX), 'Mailnag')
 
