@@ -47,12 +47,14 @@ class BuildData(build):
 		
 		build.run (self)
 
+
 	def _patch_file(self, infile, outfile, orig, replaced):
 		with open(infile, 'r') as f:
 			strn = f.read()
 			strn = strn.replace(orig, replaced)
 		with open(outfile, 'w') as f:
 			f.write(strn)
+
 
 class InstallData(install_data):
 	def run (self):
