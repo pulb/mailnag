@@ -18,6 +18,7 @@ import glob
 from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION
 
 
+# TODO : This hack won't work with --user and --home options
 PREFIX = '/usr'
 for arg in sys.argv:
 	if arg.startswith('--prefix='):
@@ -79,6 +80,7 @@ class InstallData(install_data):
 
 class Uninstall(Command):
 	def run (self):
+		# TODO
 		pass
 
 
