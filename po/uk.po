@@ -1,16 +1,15 @@
-# Portuguese translation for mailnag
-# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# Ukrainian translation for mailnag
 # This file is distributed under the same license as the mailnag package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# Rax G <admin@dvizho.ks.ua>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-03-11 21:40+0100\n"
-"PO-Revision-Date: 2012-09-01 11:20+0000\n"
-"Last-Translator: Pedro Beja <althaser@gmail.com>\n"
-"Language-Team: Portuguese <pt@li.org>\n"
+"PO-Revision-Date: 2012-08-27 18:57+0000\n"
+"Last-Translator: Rax <Unknown>\n"
+"Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,51 +23,51 @@ msgid ""
 "\n"
 "Do you want to try again?"
 msgstr ""
-"Falhou ao desbloquear chaveiro \"{0}\".\n"
-"Password errada.\n"
+"Не вдалося відімкнути зв’язку «{0}» —\n"
+"введено хибний пароль.\n"
 "\n"
-"Quer tentar novamente?"
+"Спробуєте ще раз?"
 
 #: Mailnag/common/config.py:34
 msgid "New email"
-msgstr "Novo email"
+msgstr "Нова пошта"
 
 #: Mailnag/common/account.py:42
 msgid "Unnamed"
-msgstr "Sem nome"
+msgstr "Без імені"
 
 #: Mailnag/daemon/mailchecker.py:127
 msgid "(and {0} more)"
-msgstr "(e mais {0})"
+msgstr "(і ще {0})"
 
 #: Mailnag/daemon/mailchecker.py:130
 msgid "You have {0} new mails."
-msgstr "Você tem {0} emails novos."
+msgstr "Ви отримали {0} нових повідомлень."
 
 #: Mailnag/daemon/mailchecker.py:132
 msgid "You have a new mail."
-msgstr "Você tem um email novo."
+msgstr "Ви отримали пошту."
 
 #: Mailnag/daemon/mailchecker.py:142
 msgid "Mark as read"
-msgstr "Marcar como lido"
+msgstr "Позначити як прочитане"
 
 #: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
 msgid "No subject"
-msgstr "Sem assunto"
+msgstr "Без теми"
 
 #: Mailnag/configuration/accountdialog.py:58
 #: Mailnag/configuration/accountdialog.py:59
 msgid "optional"
-msgstr "opcional"
+msgstr "(необов’язково)"
 
 #: Mailnag/configuration/configwindow.py:70
 msgid "Enabled"
-msgstr "Ativado"
+msgstr "Увімкнено"
 
 #: Mailnag/configuration/configwindow.py:76
 msgid "Name"
-msgstr "Nome"
+msgstr "Ім’я"
 
 #: Mailnag/configuration/configwindow.py:148
 #, python-format
@@ -77,53 +76,55 @@ msgid ""
 "\n"
 "Do you want to import them?"
 msgstr ""
-"Mailnag encontrou %s contas de email neste computador.\n"
+"На цьому комп’ютері знайдено %s поштових облікових записів.\n"
 "\n"
-"Quer importá-las?"
+"Імпортувати їх до сповіщувача?"
 
 #: Mailnag/configuration/configwindow.py:283
 msgid "Delete this account:"
-msgstr "Apagar esta conta:"
+msgstr ""
+"Стерти наступний\n"
+"обліковий запис?"
 
 #: data/account_dialog.ui.h:1
 msgid "Account type:"
-msgstr "Tipo de conta:"
+msgstr "Протокол:"
 
 #: data/account_dialog.ui.h:2
 msgid "Accountname:"
-msgstr "Nome da Conta:"
+msgstr "Назва запису:"
 
 #: data/account_dialog.ui.h:3
 msgid "Enable Push-IMAP"
-msgstr "Ativar Push-IMAP"
+msgstr "Увімкнути Push-IMAP"
 
 #: data/account_dialog.ui.h:4
 msgid "Enable SSL encryption"
-msgstr "Ativar encriptação SSL"
+msgstr "Увімкнути SSL-шифрування"
 
 #: data/account_dialog.ui.h:5
 msgid "Folders:"
-msgstr "Pastas:"
+msgstr "Теки:"
 
 #: data/account_dialog.ui.h:6
 msgid "Mail Account"
-msgstr "Conta de Correio"
+msgstr "Поштовий обліковий запис"
 
 #: data/account_dialog.ui.h:7
 msgid "Password:"
-msgstr "Password:"
+msgstr "Пароль:"
 
 #: data/account_dialog.ui.h:8
 msgid "Port:"
-msgstr "Porta:"
+msgstr "Порт"
 
 #: data/account_dialog.ui.h:9
 msgid "Server:"
-msgstr "Servidor:"
+msgstr "Сервер:"
 
 #: data/account_dialog.ui.h:10
 msgid "User:"
-msgstr "Utilizador:"
+msgstr "Користувач:"
 
 #: data/config_window.ui.h:1
 msgid ""
@@ -134,76 +135,76 @@ msgid ""
 "Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
 "Copyright (c) 2011 Ralf Hersel"
 msgstr ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Um notificador de "
-"email para o GNOME 3\n"
-"Copyright (c) 2011 Patrick Ulbrich\n"
+"«<a href=\"https://github.com/pulb/mailnag\">Mailnag</a>» сповіщує про нову "
+"пошту в середовищі GNOME 3.\n"
+"Код написав Patrick Ulbrich 2011 року.\n"
 "\n"
-"Mailnag é baseado no <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
-"Copyright (c) 2011 Ralf Hersel"
+"«Mailnag» базується на «<a href=\"http:/launchpad.net/popper\">Popper</a>»,\n"
+"код якого написав Ralf Hersel у 2011 році."
 
 #: data/config_window.ui.h:6
 msgid "<b>On mail arrival</b>"
-msgstr "<b>Ao receber email</b>"
+msgstr "<b>При появі нової пошти</b>"
 
 #: data/config_window.ui.h:7
 msgid "<b>On mail check</b>"
-msgstr "<b>Ao verificar email</b>"
+msgstr "<b>При перевірці скриньки</b>"
 
 #: data/config_window.ui.h:8
 msgid "About"
-msgstr "Sobre"
+msgstr "Про Mailnag"
 
 #: data/config_window.ui.h:9
 msgid "Accounts"
-msgstr "Contas"
+msgstr "Облікові записи"
 
 #: data/config_window.ui.h:10
 msgid "Check interval:"
-msgstr "Intervalo de verificação:"
+msgstr "Інтервал перевірки:"
 
 #: data/config_window.ui.h:11
 msgid "Enable spamfilter"
-msgstr "Ativar filtro de spam"
+msgstr "Задіяти спам-фільтр"
 
 #: data/config_window.ui.h:12
 msgid "Events"
-msgstr "Eventos"
+msgstr "Запуск команд"
 
 #: data/config_window.ui.h:13
 msgid "General"
-msgstr "Geral"
+msgstr "Сповіщення"
 
 #: data/config_window.ui.h:14
 msgid "Mailnag Configuration"
-msgstr "Configuração Mailnag"
+msgstr "Налаштування сповіщень про пошту"
 
 #: data/config_window.ui.h:15
 msgid "Messagetray label:"
-msgstr "Legenda da mensagem no tray:"
+msgstr "Підпис у лотку:"
 
 #: data/config_window.ui.h:16
 msgid "Notification mode:"
-msgstr "Modo de notificação:"
+msgstr "Режим сповіщення:"
 
 #: data/config_window.ui.h:17
 msgid "Play sound on new mails"
-msgstr "Tocar som quando receber um novo email"
+msgstr "Відтворювати звуковий сигнал при отриманні пошти"
 
 #: data/config_window.ui.h:18
 msgid "Single"
-msgstr "Único"
+msgstr "По одному"
 
 #: data/config_window.ui.h:19
 msgid "Spamfilter"
-msgstr "Filtro de Spam"
+msgstr "Фільтр"
 
 #: data/config_window.ui.h:20
 msgid "Start Mailnag automatically"
-msgstr "Iniciar Mailnag automaticamente"
+msgstr "Запускати сповіщувач автоматично"
 
 #: data/config_window.ui.h:21
 msgid "Summary"
-msgstr "Sumário"
+msgstr "Підсумок"
 
 #: data/config_window.ui.h:22
 msgid ""
@@ -211,10 +212,9 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
-"O script abaixo será executado cada vez que for a feita a verificação de "
-"correio.\n"
-"Mailnag passa o número total de novos emails para esse script,\n"
-"seguido por pares de <i>\"&lt;origem&gt; &lt;assunto&gt;\"</i>."
+"Скрипт запускатиметься під час кожної перевірки скриньки.\n"
+"«Mailnag» передаватиме йому загальну кількість повідомлень\n"
+"та пари «<i>&lt;адресант&gt; &lt;тема&gt;</i>»."
 
 #: data/config_window.ui.h:25
 msgid ""
@@ -222,13 +222,13 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
-"O script abaixo será executado sempre que um novo email seja recebido.\n"
-"Mailnag passa o número total de novos emails para esse script,\n"
-"seguido por pares de <i>\"&lt;origem&gt; &lt;assunto&gt;\"</i>."
+"Скрипт запускатиметься щоразу при появі нової пошти.\n"
+"«Mailnag» передаватиме йому загальну кількість повідомлень\n"
+"та пари «<i>&lt;адресант&gt; &lt;тема&gt;</i>»."
 
 #: data/config_window.ui.h:28
 msgid "minutes"
-msgstr "minutos"
+msgstr "хв"
 
 #: data/keyring_dialog.ui.h:1
 msgid "Mailnag"
@@ -239,9 +239,10 @@ msgid ""
 "Mailnag can't access the keyring because it is locked.\n"
 "Please enter the password:"
 msgstr ""
-"Mailnag não pode aceder ao chaveiro porque ele está bloquado.\n"
-"Por favor introduza a password:"
+"Зв’язка ключів замкнена, поштовий сповіщувач\n"
+"не може отримати до неї доступ.\n"
+"Будь ласка, введіть пароль:"
 
 #: data/message_dialog.ui.h:1
 msgid "Mailnag Message"
-msgstr "Mensagem Mailnag"
+msgstr "Повідомлення"
