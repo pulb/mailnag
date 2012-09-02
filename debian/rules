@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+export HOME=/nonexistent
+
+%:
+	dh $@ --with python2
+
+override_dh_clean:
+	rm -rf $(CURDIR)/build
+	python setup.py clean
+	rm -rf $(CURDIR)/Mailnag/*.pyc
+	rm -rf $(CURDIR)/Mailnag/common/*.pyc
+	rm -rf $(CURDIR)/Mailnag/configuration/*.pyc
+	rm -rf $(CURDIR)/Mailnag/daemon/*.pyc
+	dh_clean
