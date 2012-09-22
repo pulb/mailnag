@@ -19,9 +19,8 @@ __This project needs contributors!__
 
 ### Generic Tarballs
 Distribution independent tarball releases are available [here](https://github.com/pulb/mailnag/downloads).  
-To generate locales run `./gen_locales`.  
-Your language is not available? Don't hesitate - head over to https://translations.launchpad.net/mailnag  
-and translate Mailnag into your language!
+Just run `./setup.py install` (as root!) to install Mailnag,
+though make sure the requirements stated below are met.
 
 ###### Requirements
     python2 (python3 won't work!)
