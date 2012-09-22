@@ -13,7 +13,7 @@ __This project needs contributors!__
 ## Installation
 
 ### Packages
-* [Ubuntu](https://launchpad.net/~webupd8team/+archive/gnome3)
+* [Ubuntu](https://launchpad.net/~pulb/+archive/mailnag)
 * [Arch Linux](https://aur.archlinux.org/packages.php?ID=49581)
 * [Fedora](https://admin.fedoraproject.org/pkgdb/acls/name/mailnag?_csrf_token=ea19eecba58867f86b22d70461d2d21d862a783e)
 
