@@ -19,7 +19,7 @@ __This project needs contributors!__
 
 ### Generic Tarballs
 Distribution independent tarball releases are available [here](https://github.com/pulb/mailnag/downloads).  
-Just run `./setup.py install` (as root!) to install Mailnag,
+Just run `./setup.py install` (as root!) to install Mailnag,  
 though make sure the requirements stated below are met.
 
 ###### Requirements
