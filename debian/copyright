@@ -38,8 +38,8 @@ Copyright: 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
 License: GPL-2+
 
 Files: Mailnag/daemon/imaplib2.py
-Copyright: 2011 - 2012 Piers Lauder <piers@janeelix.com
-License: Python License (CNRI Python License)
+Copyright: 2011 - 2012 Piers Lauder <piers@janeelix.com>
+License: other-Python
 
 License: GPL-2+
  This program is free software; you can redistribute it and/or modify
