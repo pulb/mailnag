@@ -15,7 +15,7 @@ __This project needs contributors!__
 
 ### Ubuntu
 Mailnag has an [official Ubuntu PPA](https://launchpad.net/~pulb/+archive/mailnag).  
-Issue the following commands in a terminal to enable the PPA and install Mailnag.
+Issue the following commands in a terminal to enable the PPA and install Mailnag.  
     sudo add-apt-repository ppa:pulb/mailnag
     sudo apt-get update
     sudo apt-get install mailnag
