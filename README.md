@@ -6,6 +6,7 @@ Mailnag is a fork of the Popper mail notifier (http://launchpad.net/popper).
 What Popper is to Ubuntu's Unity, Mailnag is to GNOME-Shell.
 
 __This project needs contributors!__  
+[Code](https://github.com/pulb/mailnag)  
 [Bugtracker](https://github.com/pulb/mailnag/issues)  
 [Translations](https://translations.launchpad.net/mailnag)  
 [Wiki](https://github.com/pulb/mailnag/wiki) 
