@@ -16,12 +16,13 @@ __This project needs contributors!__
 ### Ubuntu
 Mailnag has an [official Ubuntu PPA](https://launchpad.net/~pulb/+archive/mailnag).  
 Issue the following commands in a terminal to enable the PPA and install Mailnag.  
+
     sudo add-apt-repository ppa:pulb/mailnag
     sudo apt-get update
     sudo apt-get install mailnag
 
 ### Fedora
-As of Fedora 17 Mailnag is available in the official Fedora repos.  
+As of Fedora 17, Mailnag is available in the official Fedora repos.  
 Just run `yum install mailnag` (as root) in a terminal to install the package.
 
 ### Arch Linux
@@ -34,20 +35,20 @@ Just run `./setup.py install` (as root) to install Mailnag,
 though make sure the requirements stated below are met.
 
 ###### Requirements
-    python2 (python3 won't work!)
-    pygobject
-    gir-notify
-    gir-gstreamer
-    gir-glib-2.0
-    python-httplib2
-    python2-gnomekeyring
-    pyxdg
-    gettext
+* python2 (python3 won't work!)
+* pygobject
+* gir-notify
+* gir-gstreamer
+* gir-glib-2.0
+* python-httplib2
+* python2-gnomekeyring
+* pyxdg
+* gettext
 
 
 ## Configuration
 Run `mailnag_config` to setup Mailnag.  
-Closing the configuration window will start mailnag automatically.
+Closing the configuration window will start Mailnag automatically.
 
 ### Default Mail Client
 Clicking a mail notification popup will open the default mail client specified in `System Settings -> System Info -> Default Applications`.  
