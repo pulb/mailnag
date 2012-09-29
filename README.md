@@ -13,14 +13,24 @@ __This project needs contributors!__
 
 ## Installation
 
-### Packages
-* [Ubuntu](https://launchpad.net/~pulb/+archive/mailnag)
-* [Arch Linux](https://aur.archlinux.org/packages.php?ID=49581)
-* [Fedora](https://admin.fedoraproject.org/pkgdb/acls/name/mailnag?_csrf_token=ea19eecba58867f86b22d70461d2d21d862a783e)
+### Ubuntu
+Mailnag has an [official Ubuntu PPA](https://launchpad.net/~pulb/+archive/mailnag).  
+Issue the following commands in a terminal to enable the PPA and install Mailnag.
+    sudo add-apt-repository ppa:pulb/mailnag
+    sudo apt-get update
+    sudo apt-get install mailnag
+
+### Fedora
+As of Fedora 17 Mailnag is available in the official Fedora repos.  
+Just run `yum install mailnag` (as root) in a terminal to install the package.
+
+### Arch Linux
+Mailnag is available in Arch's user community repository [AUR](https://aur.archlinux.org/packages.php?ID=49581).  
+Please either run `yarout -S mailnag` or `packer -S mailnag` (as root) to install the package.
 
 ### Generic Tarballs
 Distribution independent tarball releases are available [here](https://github.com/pulb/mailnag/downloads).  
-Just run `./setup.py install` (as root!) to install Mailnag,  
+Just run `./setup.py install` (as root) to install Mailnag,  
 though make sure the requirements stated below are met.
 
 ###### Requirements
