@@ -1,3 +1,12 @@
+Version 0.4.4 (2012-10-20):
+===========================
+* Bugfix: don't crash on session start 
+  if the notification DBUS interface isn't available yet
+* Bugfix: fix notification sound playback in GNOME 3.6
+* Removed messagetray-label configuration since gnome-shell 
+  no longer shows labels in the messagetray
+
+
 Version 0.4.3 (2012-09-22):
 ===========================
 * Added installation script (setup.py)
