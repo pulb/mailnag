@@ -60,6 +60,29 @@ def delete_pid(): # delete file mailnag.pid
 		os.remove(pid_file)
 
 
+# Workaround: 
+# sometimes the notification system doesn't seem to be up immediately
+# upon session start, so prevent Mailnag from crashing 
+# by checking if the notification DBUS interface is available yet.
+def wait_for_notification_interface():	
+	import dbus
+	bus = dbus.SessionBus()
+	while True:	
+		main_obj = bus.get_object('org.freedesktop.DBus', '/')
+		if 'org.freedesktop.Notifications' in main_obj.ListNames():
+			break
+		
+		print 'Waiting for org.freedesktop.Notifications DBUS interface...'			
+		time.sleep(5)
+
+
+def wait_for_inet_connection():
+	if not is_online():
+		print 'Waiting for internet connection...'
+		while not is_online():
+			time.sleep(5)
+
+
 def cleanup():
 	# clean up resources
 	if mailchecker != None:
@@ -93,10 +116,8 @@ def main():
 			print 'Error: Cannot find configuration file. Please run mailnag_config first.'
 			exit(1)
 		
-		if not is_online():
-			print 'Waiting for internet connection...'
-			while not is_online():
-				time.sleep(5)
+		wait_for_notification_interface()		
+		wait_for_inet_connection()
 		
 		accounts = AccountList()
 		accounts.load_from_cfg(cfg, enabled_only = True)
