@@ -79,8 +79,7 @@ class ConfigWindow:
 
 		#
 		# general tab
-		#
-		self._entry_label = builder.get_object("entry_label")	
+		#	
 		self._spinbutton_interval = builder.get_object("spinbutton_interval")
 		self._cb_notification_mode = builder.get_object("cb_notification_mode")
 		cell = Gtk.CellRendererText()
@@ -119,7 +118,6 @@ class ConfigWindow:
 
 
 	def _load_config(self):
-		self._entry_label.set_text(self._cfg.get('general', 'messagetray_label'))
 		self._spinbutton_interval.set_value(int(self._cfg.get('general', 'check_interval')))
 		self._cb_notification_mode.set_active(int(self._cfg.get('general', 'notification_mode')))
 		self._chk_playsound.set_active(bool(int(self._cfg.get('general', 'playsound'))))
@@ -156,7 +154,6 @@ class ConfigWindow:
 		
 
 	def _save_config(self):
-		self._cfg.set('general', 'messagetray_label', self._entry_label.get_text())
 		self._cfg.set('general', 'check_interval', int(self._spinbutton_interval.get_value()))
 		self._cfg.set('general', 'notification_mode', int(self._cb_notification_mode.get_active()))
 		self._cfg.set('general', 'playsound',int(self._chk_playsound.get_active()))

@@ -50,7 +50,7 @@ class MailChecker:
 		self._notifications = {}
 		
 		self._reminder.load()
-		Notify.init(cfg.get('general', 'messagetray_label')) # initialize Notification		
+		Notify.init("Mailnag") # initialize Notification		
 		
 	
 	def check(self, accounts):
