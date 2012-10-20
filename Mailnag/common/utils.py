@@ -90,15 +90,10 @@ class _GstPlayThread(threading.Thread):
 			return True
 		
 		bus = self.ply.get_bus()
-#		bus.add_signal_watch()
-#		bus.connect('message::eos', on_eos)
+		bus.add_signal_watch()
+		bus.connect('message::eos', on_eos)
 		
 		self.ply.set_state(Gst.State.PLAYING)
-		
-		# FIXME : use add_signal_watch with 'message::eos'
-		# if it is working with GTK3
-		time.sleep(3)
-		on_eos(bus, Gst.MessageType.EOS)
 		
 
 _gst_initialized = False
@@ -112,7 +107,7 @@ def gstplay(filename):
 	try:
 		cwd = os.getcwd()
 		location = os.path.join(cwd, filename)
-		ply = Gst.ElementFactory.make("playbin2", "player")
+		ply = Gst.ElementFactory.make("playbin", "player")
 		ply.set_property("uri", "file://" + location)
 		pt = _GstPlayThread(ply)
 		pt.start()
