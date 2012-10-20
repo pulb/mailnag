@@ -42,6 +42,7 @@ though make sure the requirements stated below are met.
 * gir-glib-2.0
 * python-httplib2
 * python2-gnomekeyring
+* python-dbus
 * pyxdg
 * gettext
 
