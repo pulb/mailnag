@@ -142,12 +142,6 @@ class ConfigWindow:
 		
 		self._accounts.load_from_cfg(self._cfg)
 		
-		if len(self._accounts) == 0:
-			self._accounts.import_from_keyring()
-			if len(self._accounts) > 0 and \
-				(not self._show_yesno_dialog(_("Mailnag found %s mail accounts on this computer.\n\nDo you want to import them?") % len(self._accounts))):
-				del self._accounts[:]
-
 		for acc in self._accounts:
 			row = [acc, acc.enabled, acc.name]
 			self._liststore_accounts.append(row)

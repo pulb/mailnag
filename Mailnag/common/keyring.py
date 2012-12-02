@@ -69,39 +69,6 @@ class Keyring:
 			return ''
 
 
-	def import_accounts(self): # get email accounts from Gnome-Keyring
-		accounts = []
-		(result, ids) = GnomeKeyring.list_item_ids_sync(self._defaultKeyring)
-		if result == GnomeKeyring.Result.OK:
-			displayNameDict = {}
-			for identity in ids:
-				(result, item) = GnomeKeyring.item_get_info_sync(self._defaultKeyring, identity)
-				displayNameDict[item.get_display_name()] = identity
-			for displayName in displayNameDict:
-				if displayName.startswith('pop://') \
-				or displayName.startswith('imap://'):
-					server = displayName.split('@')[1][:-1]
-					if displayName.startswith('imap://'):
-						imap = True
-						user = displayName.split('@')[0][7:]
-					else:
-						imap = False
-						user = displayName.split('@')[0][6:]
-					
-					user = user.replace('%40','@')
-					
-					if ';' in user:
-						user = user.split(';')[0]
-					
-					(result, item) =  GnomeKeyring.item_get_info_sync(self._defaultKeyring, \
-						displayNameDict[displayName])
-					password = item.get_secret()
-					
-					accounts.append(Account(enabled = True, name = "%s (%s)" % (server, user), \
-						server = server, user = user, password = password, imap = imap))
-		return accounts
-
-
 	def set(self, protocol, user, server, password): # store password in Gnome-Keyring
 		if password != '':
 			displayNameDict = {}

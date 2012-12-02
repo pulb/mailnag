@@ -92,12 +92,7 @@ class AccountList(list):
 		# delete obsolete entries from Keyring
 		self._keyring.remove(self)
 	
-	
-	def import_from_keyring(self):
-		# append imported accounts to existing accounts
-		self.extend(self._keyring.import_accounts())
-	
-	
+		
 	def _get_account_cfg(self, cfg, section_name, option_name):
 		if cfg.has_option(section_name, option_name):
 			return cfg.get(section_name, option_name)
