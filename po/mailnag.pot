@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-20 18:40+0200\n"
+"POT-Creation-Date: 2012-12-02 13:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -127,21 +127,19 @@ msgstr ""
 msgid ""
 "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
 "for GNOME 3\n"
-"Copyright (c) 2011 Patrick Ulbrich\n"
-"\n"
-"Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
-"Copyright (c) 2011 Ralf Hersel"
+"Copyright (c) 2011, 2012 Patrick Ulbrich \n"
+"and contributors."
 msgstr ""
 
-#: data/config_window.ui.h:25
+#: data/config_window.ui.h:23
 msgid "About"
 msgstr ""
 
-#: data/config_window.ui.h:26
+#: data/config_window.ui.h:24
 msgid "Single"
 msgstr ""
 
-#: data/config_window.ui.h:27
+#: data/config_window.ui.h:25
 msgid "Summary"
 msgstr ""
 
