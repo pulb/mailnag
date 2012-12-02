@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-02 13:09+0100\n"
+"POT-Creation-Date: 2012-12-02 18:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,18 +141,4 @@ msgstr ""
 
 #: data/config_window.ui.h:25
 msgid "Summary"
-msgstr ""
-
-#: data/keyring_dialog.ui.h:1
-msgid "Mailnag"
-msgstr ""
-
-#: data/keyring_dialog.ui.h:2
-msgid ""
-"Mailnag can't access the keyring because it is locked.\n"
-"Please enter the password:"
-msgstr ""
-
-#: data/message_dialog.ui.h:1
-msgid "Mailnag Message"
 msgstr ""
