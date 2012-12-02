@@ -133,7 +133,10 @@ def main():
 		mailchecker = MailChecker(cfg)
 		
 		# immediate check, check *all* accounts
-		mailchecker.check(accounts)
+		try:		
+			mailchecker.check(accounts)
+		except:
+			traceback.print_exc()
 		
 		idle_accounts = filter(lambda acc: acc.imap and acc.idle, accounts)
 		non_idle_accounts = filter(lambda acc: (not acc.imap) or (acc.imap and not acc.idle), accounts)
