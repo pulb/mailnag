@@ -40,8 +40,8 @@ though make sure the requirements stated below are met.
 * gir-notify
 * gir-gstreamer
 * gir-glib-2.0
+* gir-gnomekeyring-1.0
 * python-httplib2
-* python2-gnomekeyring
 * python-dbus
 * pyxdg
 * gettext
