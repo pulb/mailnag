@@ -22,7 +22,7 @@
 # MA 02110-1301, USA.
 #
 
-from gi.repository import GObject, GLib, GdkPixbuf, Gtk, GnomeKeyring
+from gi.repository import GnomeKeyring
 
 from common.i18n import _
 from common.account import Account
