@@ -61,18 +61,26 @@ def delete_pid(): # delete file mailnag.pid
 
 
 # Workaround: 
-# sometimes the notification system doesn't seem to be up immediately
-# upon session start, so prevent Mailnag from crashing 
-# by checking if the notification DBUS interface is available yet.
-def wait_for_notification_interface():	
+# sometimes gnomeshell's notification server (org.freedesktop.Notifications implementation)
+# doesn't seem to be up immediately upon session start, so prevent Mailnag from crashing 
+# by checking if the org.freedesktop.Notifications DBUS interface is available yet.
+# See https://github.com/pulb/mailnag/issues/48
+def wait_for_notification_server():	
 	import dbus
 	bus = dbus.SessionBus()
+	
 	while True:	
-		main_obj = bus.get_object('org.freedesktop.DBus', '/')
-		if 'org.freedesktop.Notifications' in main_obj.ListNames():
-			break
+		try:		
+			notify = bus.get_object('org.freedesktop.Notifications', '/org/freedesktop/Notifications')
+			iface = dbus.Interface(notify, 'org.freedesktop.Notifications')
+			inf = iface.GetServerInformation()
+			
+			if inf[0] == u'gnome-shell':
+				break
+		except:
+			pass
 		
-		print 'Waiting for org.freedesktop.Notifications DBUS interface...'			
+		print 'Waiting for GNOME-Shell notification server...'			
 		time.sleep(5)
 
 
@@ -116,7 +124,7 @@ def main():
 			print 'Error: Cannot find configuration file. Please run mailnag_config first.'
 			exit(1)
 		
-		wait_for_notification_interface()		
+		wait_for_notification_server()		
 		wait_for_inet_connection()
 		
 		accounts = AccountList()
