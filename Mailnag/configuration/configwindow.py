@@ -23,6 +23,7 @@
 #
 
 import os
+import xdg.BaseDirectory as bd
 from gi.repository import GLib, GdkPixbuf, Gtk, GObject
 
 from common.dist_cfg import PACKAGE_NAME, APP_VERSION
@@ -231,7 +232,7 @@ class ConfigWindow:
 		"OnlyShowIn=GNOME;\n" \
 		"AutostartCondition=GNOME3 if-session gnome"
 
-		autostart_folder = "%s/.config/autostart/" % (os.path.expanduser("~/"))
+		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
 		if not os.path.exists(autostart_folder):
 			os.makedirs(autostart_folder)
 		autostart_file = autostart_folder + "mailnag.desktop"
@@ -241,7 +242,7 @@ class ConfigWindow:
 
 
 	def _delete_autostart(self):
-		autostart_folder = "%s/.config/autostart/" % (os.path.expanduser("~/"))
+		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
 		autostart_file = autostart_folder + "mailnag.desktop"
 		if os.path.exists(autostart_file):
 			os.remove(autostart_file)
