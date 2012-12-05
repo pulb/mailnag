@@ -7,205 +7,101 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-03-11 21:40+0100\n"
+"POT-Creation-Date: 2012-12-02 18:41+0100\n"
 "PO-Revision-Date: 2012-06-14 09:13+0000\n"
 "Last-Translator: Eugene Marshal <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-09-22 12:42+0000\n"
-"X-Generator: Launchpad (build 15985)\n"
-
-#: Mailnag/common/keyring.py:52
-msgid ""
-"Failed to unlock Keyring \"{0}\".\n"
-"Wrong password.\n"
-"\n"
-"Do you want to try again?"
-msgstr ""
-"Невозможно разблокировать связку ключей \"{0}\".\n"
-"Неверный пароль.\n"
-"\n"
-"Попытаться ещё раз?"
-
-#: Mailnag/common/config.py:34
-msgid "New email"
-msgstr "Новое письмо"
-
-#: Mailnag/common/account.py:42
-msgid "Unnamed"
-msgstr "Без названия"
-
-#: Mailnag/daemon/mailchecker.py:127
-msgid "(and {0} more)"
-msgstr "(и ещё {0})"
-
-#: Mailnag/daemon/mailchecker.py:130
-msgid "You have {0} new mails."
-msgstr "У вас {0} новых писем."
-
-#: Mailnag/daemon/mailchecker.py:132
-msgid "You have a new mail."
-msgstr "У вас новое письмо."
-
-#: Mailnag/daemon/mailchecker.py:142
-msgid "Mark as read"
-msgstr "Отметить как прочитанное"
-
-#: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
-msgid "No subject"
-msgstr "Без темы"
-
-#: Mailnag/configuration/accountdialog.py:58
-#: Mailnag/configuration/accountdialog.py:59
-msgid "optional"
-msgstr "необязательно"
-
-#: Mailnag/configuration/configwindow.py:70
-msgid "Enabled"
-msgstr "Включено"
-
-#: Mailnag/configuration/configwindow.py:76
-msgid "Name"
-msgstr "Название"
-
-#: Mailnag/configuration/configwindow.py:148
-#, python-format
-msgid ""
-"Mailnag found %s mail accounts on this computer.\n"
-"\n"
-"Do you want to import them?"
-msgstr ""
-"Mailnag обнаружил %s учётных записей почты на этом компьютере.\n"
-"\n"
-"Импортировать их?"
-
-#: Mailnag/configuration/configwindow.py:283
-msgid "Delete this account:"
-msgstr "Удалить эту учётную запись:"
+"X-Launchpad-Export-Date: 2012-12-05 13:56+0000\n"
+"X-Generator: Launchpad (build 16335)\n"
 
 #: data/account_dialog.ui.h:1
-msgid "Account type:"
-msgstr "Тип учётной записи:"
-
-#: data/account_dialog.ui.h:2
-msgid "Accountname:"
-msgstr "Название учётной записи:"
-
-#: data/account_dialog.ui.h:3
-msgid "Enable Push-IMAP"
-msgstr "Включить Push-IMAP"
-
-#: data/account_dialog.ui.h:4
-msgid "Enable SSL encryption"
-msgstr "Включить SSL шифрование"
-
-#: data/account_dialog.ui.h:5
-msgid "Folders:"
-msgstr "Папки:"
-
-#: data/account_dialog.ui.h:6
 msgid "Mail Account"
 msgstr "Учётная запись почты"
 
-#: data/account_dialog.ui.h:7
-msgid "Password:"
-msgstr "Пароль:"
-
-#: data/account_dialog.ui.h:8
+#: data/account_dialog.ui.h:2
 msgid "Port:"
 msgstr "Порт:"
 
-#: data/account_dialog.ui.h:9
+#: data/account_dialog.ui.h:3
 msgid "Server:"
 msgstr "Сервер:"
 
-#: data/account_dialog.ui.h:10
+#: data/account_dialog.ui.h:4
+msgid "Password:"
+msgstr "Пароль:"
+
+#: data/account_dialog.ui.h:5
 msgid "User:"
 msgstr "Владелец:"
 
+#: data/account_dialog.ui.h:6
+msgid "Accountname:"
+msgstr "Название учётной записи:"
+
+#: data/account_dialog.ui.h:7
+msgid "Folders:"
+msgstr "Папки:"
+
+#: data/account_dialog.ui.h:8
+msgid "Enable Push-IMAP"
+msgstr "Включить Push-IMAP"
+
+#: data/account_dialog.ui.h:9
+msgid "Account type:"
+msgstr "Тип учётной записи:"
+
+#: data/account_dialog.ui.h:10
+msgid "Enable SSL encryption"
+msgstr "Включить SSL шифрование"
+
 #: data/config_window.ui.h:1
-msgid ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
-"for GNOME 3\n"
-"Copyright (c) 2011 Patrick Ulbrich\n"
-"\n"
-"Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
-"Copyright (c) 2011 Ralf Hersel"
-msgstr ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
-"for GNOME 3\n"
-"Copyright (c) 2011 Patrick Ulbrich\n"
-"\n"
-"Mailnag основан на <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
-"Copyright (c) 2011 Ralf Hersel"
-
-#: data/config_window.ui.h:6
-msgid "<b>On mail arrival</b>"
-msgstr "<b>При получении писем</b>"
-
-#: data/config_window.ui.h:7
-msgid "<b>On mail check</b>"
-msgstr "<b>При проверке почты</b>"
-
-#: data/config_window.ui.h:8
-msgid "About"
-msgstr "О Mailnag"
-
-#: data/config_window.ui.h:9
-msgid "Accounts"
-msgstr "Аккаунты"
-
-#: data/config_window.ui.h:10
-msgid "Check interval:"
-msgstr "Интервал проверки:"
-
-#: data/config_window.ui.h:11
-msgid "Enable spamfilter"
-msgstr "Включить спам-фильтр"
-
-#: data/config_window.ui.h:12
-msgid "Events"
-msgstr "События"
-
-#: data/config_window.ui.h:13
-msgid "General"
-msgstr "Общие"
-
-#: data/config_window.ui.h:14
 msgid "Mailnag Configuration"
 msgstr "Настройки Mailnag"
 
-#: data/config_window.ui.h:15
-msgid "Messagetray label:"
-msgstr "Название элемента в меню сообщений:"
+#: data/config_window.ui.h:2
+msgid "Accounts"
+msgstr "Аккаунты"
 
-#: data/config_window.ui.h:16
-msgid "Notification mode:"
-msgstr "Режим уведомлений:"
-
-#: data/config_window.ui.h:17
+#: data/config_window.ui.h:3
 msgid "Play sound on new mails"
 msgstr "Проигрывать мелодию при получении нового сообщения"
 
-#: data/config_window.ui.h:18
-msgid "Single"
-msgstr "Одиночный"
-
-#: data/config_window.ui.h:19
-msgid "Spamfilter"
-msgstr "Спам-фильтр"
-
-#: data/config_window.ui.h:20
+#: data/config_window.ui.h:4
 msgid "Start Mailnag automatically"
 msgstr "Запускать Mailnag автоматически"
 
-#: data/config_window.ui.h:21
-msgid "Summary"
-msgstr "Сводная информация"
+#: data/config_window.ui.h:5
+msgid "Check interval:"
+msgstr "Интервал проверки:"
 
-#: data/config_window.ui.h:22
+#: data/config_window.ui.h:6
+msgid "minutes"
+msgstr "минут"
+
+#: data/config_window.ui.h:7
+msgid "Notification mode:"
+msgstr "Режим уведомлений:"
+
+#: data/config_window.ui.h:8
+msgid "General"
+msgstr "Общие"
+
+#: data/config_window.ui.h:9
+msgid "Enable spamfilter"
+msgstr "Включить спам-фильтр"
+
+#: data/config_window.ui.h:10
+msgid "Spamfilter"
+msgstr "Спам-фильтр"
+
+#: data/config_window.ui.h:11
+msgid "<b>On mail check</b>"
+msgstr "<b>При проверке почты</b>"
+
+#: data/config_window.ui.h:12
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -215,7 +111,11 @@ msgstr ""
 "Mailnag передаёт общее количество новых писем этому скрипту,\n"
 "добавляя в конец пары вида <i>\"&lt;отправитель&gt; &lt;тема&gt;\"</i>."
 
-#: data/config_window.ui.h:25
+#: data/config_window.ui.h:15
+msgid "<b>On mail arrival</b>"
+msgstr "<b>При получении писем</b>"
+
+#: data/config_window.ui.h:16
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -225,23 +125,26 @@ msgstr ""
 "Mailnag передаёт общее количество новых писем этому скрипту,\n"
 "добавляя в конец пары вида <i>\"&lt;отправитель&gt; &lt;тема&gt;\"</i>."
 
-#: data/config_window.ui.h:28
-msgid "minutes"
-msgstr "минут"
+#: data/config_window.ui.h:19
+msgid "Events"
+msgstr "События"
 
-#: data/keyring_dialog.ui.h:1
-msgid "Mailnag"
-msgstr "Mailnag"
-
-#: data/keyring_dialog.ui.h:2
+#: data/config_window.ui.h:20
 msgid ""
-"Mailnag can't access the keyring because it is locked.\n"
-"Please enter the password:"
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
+"for GNOME 3\n"
+"Copyright (c) 2011, 2012 Patrick Ulbrich \n"
+"and contributors."
 msgstr ""
-"Mailnag не может получить доступ к связке ключей, поскольку она "
-"заблокирована.\n"
-"Пожалуйста, введите пароль:"
 
-#: data/message_dialog.ui.h:1
-msgid "Mailnag Message"
-msgstr "Сообщение Mailnag"
+#: data/config_window.ui.h:23
+msgid "About"
+msgstr "О Mailnag"
+
+#: data/config_window.ui.h:24
+msgid "Single"
+msgstr "Одиночный"
+
+#: data/config_window.ui.h:25
+msgid "Summary"
+msgstr "Сводная информация"

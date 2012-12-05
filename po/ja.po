@@ -7,205 +7,101 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-11 21:40+0100\n"
+"POT-Creation-Date: 2012-12-02 18:41+0100\n"
 "PO-Revision-Date: 2012-05-02 12:46+0000\n"
 "Last-Translator: Akihiro Tsukada <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-09-22 12:42+0000\n"
-"X-Generator: Launchpad (build 15985)\n"
-
-#: Mailnag/common/keyring.py:52
-msgid ""
-"Failed to unlock Keyring \"{0}\".\n"
-"Wrong password.\n"
-"\n"
-"Do you want to try again?"
-msgstr ""
-"キーリング\"{0}\"のロック解除に失敗しました。\n"
-"パスワードが間違っています。\n"
-"\n"
-"もう一度やり直しますか？"
-
-#: Mailnag/common/config.py:34
-msgid "New email"
-msgstr "新着メール"
-
-#: Mailnag/common/account.py:42
-msgid "Unnamed"
-msgstr "無記名"
-
-#: Mailnag/daemon/mailchecker.py:127
-msgid "(and {0} more)"
-msgstr "(他 {0} 通)"
-
-#: Mailnag/daemon/mailchecker.py:130
-msgid "You have {0} new mails."
-msgstr "{0} 通の新着メールがあります。"
-
-#: Mailnag/daemon/mailchecker.py:132
-msgid "You have a new mail."
-msgstr "メールが来ました。"
-
-#: Mailnag/daemon/mailchecker.py:142
-msgid "Mark as read"
-msgstr "確認済"
-
-#: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
-msgid "No subject"
-msgstr "件名無し"
-
-#: Mailnag/configuration/accountdialog.py:58
-#: Mailnag/configuration/accountdialog.py:59
-msgid "optional"
-msgstr "省略可"
-
-#: Mailnag/configuration/configwindow.py:70
-msgid "Enabled"
-msgstr "使用する"
-
-#: Mailnag/configuration/configwindow.py:76
-msgid "Name"
-msgstr "名前"
-
-#: Mailnag/configuration/configwindow.py:148
-#, python-format
-msgid ""
-"Mailnag found %s mail accounts on this computer.\n"
-"\n"
-"Do you want to import them?"
-msgstr ""
-"Mailnag: %s 個のメールアカウントを見つけました。\n"
-"\n"
-"これらのアカウントをインポートしますか？"
-
-#: Mailnag/configuration/configwindow.py:283
-msgid "Delete this account:"
-msgstr "このアカウントを削除:"
+"X-Launchpad-Export-Date: 2012-12-05 13:56+0000\n"
+"X-Generator: Launchpad (build 16335)\n"
 
 #: data/account_dialog.ui.h:1
-msgid "Account type:"
-msgstr "アカウントの種類:"
-
-#: data/account_dialog.ui.h:2
-msgid "Accountname:"
-msgstr "アカウントの名前:"
-
-#: data/account_dialog.ui.h:3
-msgid "Enable Push-IMAP"
-msgstr "Push-IMAP を使う"
-
-#: data/account_dialog.ui.h:4
-msgid "Enable SSL encryption"
-msgstr "SSL暗号化を使う"
-
-#: data/account_dialog.ui.h:5
-msgid "Folders:"
-msgstr "フォルダ:"
-
-#: data/account_dialog.ui.h:6
 msgid "Mail Account"
 msgstr "メールアカウント"
 
-#: data/account_dialog.ui.h:7
-msgid "Password:"
-msgstr "パスワード:"
-
-#: data/account_dialog.ui.h:8
+#: data/account_dialog.ui.h:2
 msgid "Port:"
 msgstr "ポート番号:"
 
-#: data/account_dialog.ui.h:9
+#: data/account_dialog.ui.h:3
 msgid "Server:"
 msgstr "サーバー:"
 
-#: data/account_dialog.ui.h:10
+#: data/account_dialog.ui.h:4
+msgid "Password:"
+msgstr "パスワード:"
+
+#: data/account_dialog.ui.h:5
 msgid "User:"
 msgstr "ユーザー:"
 
+#: data/account_dialog.ui.h:6
+msgid "Accountname:"
+msgstr "アカウントの名前:"
+
+#: data/account_dialog.ui.h:7
+msgid "Folders:"
+msgstr "フォルダ:"
+
+#: data/account_dialog.ui.h:8
+msgid "Enable Push-IMAP"
+msgstr "Push-IMAP を使う"
+
+#: data/account_dialog.ui.h:9
+msgid "Account type:"
+msgstr "アカウントの種類:"
+
+#: data/account_dialog.ui.h:10
+msgid "Enable SSL encryption"
+msgstr "SSL暗号化を使う"
+
 #: data/config_window.ui.h:1
-msgid ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
-"for GNOME 3\n"
-"Copyright (c) 2011 Patrick Ulbrich\n"
-"\n"
-"Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
-"Copyright (c) 2011 Ralf Hersel"
-msgstr ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - GNOME 3 "
-"向けメール通知アプリ\n"
-"Copyright (c) 2011 Patrick Ulbrich\n"
-"\n"
-"Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
-"Copyright (c) 2011 Ralf Hersel"
-
-#: data/config_window.ui.h:6
-msgid "<b>On mail arrival</b>"
-msgstr "<b>メール到着時に</b>"
-
-#: data/config_window.ui.h:7
-msgid "<b>On mail check</b>"
-msgstr "<b>メールチェック時に</b>"
-
-#: data/config_window.ui.h:8
-msgid "About"
-msgstr "About"
-
-#: data/config_window.ui.h:9
-msgid "Accounts"
-msgstr "アカウント"
-
-#: data/config_window.ui.h:10
-msgid "Check interval:"
-msgstr "チェック間隔:"
-
-#: data/config_window.ui.h:11
-msgid "Enable spamfilter"
-msgstr "スパムフィルターを使う"
-
-#: data/config_window.ui.h:12
-msgid "Events"
-msgstr "イベント"
-
-#: data/config_window.ui.h:13
-msgid "General"
-msgstr "一般"
-
-#: data/config_window.ui.h:14
 msgid "Mailnag Configuration"
 msgstr "Mailnag 設定"
 
-#: data/config_window.ui.h:15
-msgid "Messagetray label:"
-msgstr "メッセージトレイのラベル:"
+#: data/config_window.ui.h:2
+msgid "Accounts"
+msgstr "アカウント"
 
-#: data/config_window.ui.h:16
-msgid "Notification mode:"
-msgstr "通知モード:"
-
-#: data/config_window.ui.h:17
+#: data/config_window.ui.h:3
 msgid "Play sound on new mails"
 msgstr "メールが新着したら音を鳴らす"
 
-#: data/config_window.ui.h:18
-msgid "Single"
-msgstr "一通毎"
-
-#: data/config_window.ui.h:19
-msgid "Spamfilter"
-msgstr "スパムフィルター"
-
-#: data/config_window.ui.h:20
+#: data/config_window.ui.h:4
 msgid "Start Mailnag automatically"
 msgstr "Mailnagを自動的に起動する"
 
-#: data/config_window.ui.h:21
-msgid "Summary"
-msgstr "サマリー"
+#: data/config_window.ui.h:5
+msgid "Check interval:"
+msgstr "チェック間隔:"
 
-#: data/config_window.ui.h:22
+#: data/config_window.ui.h:6
+msgid "minutes"
+msgstr "分"
+
+#: data/config_window.ui.h:7
+msgid "Notification mode:"
+msgstr "通知モード:"
+
+#: data/config_window.ui.h:8
+msgid "General"
+msgstr "一般"
+
+#: data/config_window.ui.h:9
+msgid "Enable spamfilter"
+msgstr "スパムフィルターを使う"
+
+#: data/config_window.ui.h:10
+msgid "Spamfilter"
+msgstr "スパムフィルター"
+
+#: data/config_window.ui.h:11
+msgid "<b>On mail check</b>"
+msgstr "<b>メールチェック時に</b>"
+
+#: data/config_window.ui.h:12
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -215,7 +111,11 @@ msgstr ""
 "新着メールの総数と、<i>\"&lt;送信者&gt; &lt;件名&gt;\"</i> のペアが\n"
 "Mailnagからこのスクリプトへ渡されます。"
 
-#: data/config_window.ui.h:25
+#: data/config_window.ui.h:15
+msgid "<b>On mail arrival</b>"
+msgstr "<b>メール到着時に</b>"
+
+#: data/config_window.ui.h:16
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
@@ -225,22 +125,26 @@ msgstr ""
 "新着メールの総数と、<i>\"&lt;送信者&gt; &lt;件名&gt;\"</i> のペアが\n"
 "Mailnagからこのスクリプトへ渡されます。"
 
-#: data/config_window.ui.h:28
-msgid "minutes"
-msgstr "分"
+#: data/config_window.ui.h:19
+msgid "Events"
+msgstr "イベント"
 
-#: data/keyring_dialog.ui.h:1
-msgid "Mailnag"
-msgstr "Mailnag"
-
-#: data/keyring_dialog.ui.h:2
+#: data/config_window.ui.h:20
 msgid ""
-"Mailnag can't access the keyring because it is locked.\n"
-"Please enter the password:"
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
+"for GNOME 3\n"
+"Copyright (c) 2011, 2012 Patrick Ulbrich \n"
+"and contributors."
 msgstr ""
-"キーリングがロックされているため、Mailnagがアクセスできません。\n"
-"パスワードを入力してください:"
 
-#: data/message_dialog.ui.h:1
-msgid "Mailnag Message"
-msgstr "Mailnagからのメッセージ"
+#: data/config_window.ui.h:23
+msgid "About"
+msgstr "About"
+
+#: data/config_window.ui.h:24
+msgid "Single"
+msgstr "一通毎"
+
+#: data/config_window.ui.h:25
+msgid "Summary"
+msgstr "サマリー"

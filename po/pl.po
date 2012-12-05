@@ -7,222 +7,138 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-03-11 21:40+0100\n"
+"POT-Creation-Date: 2012-12-02 18:41+0100\n"
 "PO-Revision-Date: 2011-12-18 13:13+0000\n"
 "Last-Translator: RapierTG <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-09-22 12:42+0000\n"
-"X-Generator: Launchpad (build 15985)\n"
-
-#: Mailnag/common/keyring.py:52
-msgid ""
-"Failed to unlock Keyring \"{0}\".\n"
-"Wrong password.\n"
-"\n"
-"Do you want to try again?"
-msgstr ""
-
-#: Mailnag/common/config.py:34
-msgid "New email"
-msgstr "Nowa wiadomość"
-
-#: Mailnag/common/account.py:42
-msgid "Unnamed"
-msgstr "Anonimowy"
-
-#: Mailnag/daemon/mailchecker.py:127
-msgid "(and {0} more)"
-msgstr "(i {0} więcej)"
-
-#: Mailnag/daemon/mailchecker.py:130
-msgid "You have {0} new mails."
-msgstr "Masz {0} nowych wiadomości."
-
-#: Mailnag/daemon/mailchecker.py:132
-msgid "You have a new mail."
-msgstr "Masz nową wiadomość."
-
-#: Mailnag/daemon/mailchecker.py:142
-msgid "Mark as read"
-msgstr "Oznacz jako przeczytana"
-
-#: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
-msgid "No subject"
-msgstr "Brak tematu"
-
-#: Mailnag/configuration/accountdialog.py:58
-#: Mailnag/configuration/accountdialog.py:59
-msgid "optional"
-msgstr ""
-
-#: Mailnag/configuration/configwindow.py:70
-msgid "Enabled"
-msgstr "Włączone"
-
-#: Mailnag/configuration/configwindow.py:76
-msgid "Name"
-msgstr "Nazwa"
-
-#: Mailnag/configuration/configwindow.py:148
-#, python-format
-msgid ""
-"Mailnag found %s mail accounts on this computer.\n"
-"\n"
-"Do you want to import them?"
-msgstr ""
-"Mailnag znalazł %s kont pocztowych na tym komputerze\n"
-"\n"
-"Czy chcesz je zaimportować?"
-
-#: Mailnag/configuration/configwindow.py:283
-msgid "Delete this account:"
-msgstr "Usuń to konto:"
+"X-Launchpad-Export-Date: 2012-12-05 13:56+0000\n"
+"X-Generator: Launchpad (build 16335)\n"
 
 #: data/account_dialog.ui.h:1
-msgid "Account type:"
-msgstr "Typ konta:"
-
-#: data/account_dialog.ui.h:2
-msgid "Accountname:"
-msgstr "Nazwa konta:"
-
-#: data/account_dialog.ui.h:3
-msgid "Enable Push-IMAP"
-msgstr "Włącz Push-IMAP"
-
-#: data/account_dialog.ui.h:4
-msgid "Enable SSL encryption"
-msgstr ""
-
-#: data/account_dialog.ui.h:5
-msgid "Folders:"
-msgstr ""
-
-#: data/account_dialog.ui.h:6
 msgid "Mail Account"
 msgstr ""
 
-#: data/account_dialog.ui.h:7
-msgid "Password:"
-msgstr "Hasło:"
-
-#: data/account_dialog.ui.h:8
+#: data/account_dialog.ui.h:2
 msgid "Port:"
 msgstr "Port:"
 
-#: data/account_dialog.ui.h:9
+#: data/account_dialog.ui.h:3
 msgid "Server:"
 msgstr "Serwer:"
 
-#: data/account_dialog.ui.h:10
+#: data/account_dialog.ui.h:4
+msgid "Password:"
+msgstr "Hasło:"
+
+#: data/account_dialog.ui.h:5
 msgid "User:"
 msgstr "Użytkownik:"
 
+#: data/account_dialog.ui.h:6
+msgid "Accountname:"
+msgstr "Nazwa konta:"
+
+#: data/account_dialog.ui.h:7
+msgid "Folders:"
+msgstr ""
+
+#: data/account_dialog.ui.h:8
+msgid "Enable Push-IMAP"
+msgstr "Włącz Push-IMAP"
+
+#: data/account_dialog.ui.h:9
+msgid "Account type:"
+msgstr "Typ konta:"
+
+#: data/account_dialog.ui.h:10
+msgid "Enable SSL encryption"
+msgstr ""
+
 #: data/config_window.ui.h:1
-msgid ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
-"for GNOME 3\n"
-"Copyright (c) 2011 Patrick Ulbrich\n"
-"\n"
-"Mailnag is based on <a href=\"http:/launchpad.net/popper\">Popper</a>\n"
-"Copyright (c) 2011 Ralf Hersel"
-msgstr ""
-
-#: data/config_window.ui.h:6
-msgid "<b>On mail arrival</b>"
-msgstr "<b>Po przybyciu poczty</b>"
-
-#: data/config_window.ui.h:7
-msgid "<b>On mail check</b>"
-msgstr "<b>Sprawdź pocztę</b>"
-
-#: data/config_window.ui.h:8
-msgid "About"
-msgstr "O aplikacji"
-
-#: data/config_window.ui.h:9
-msgid "Accounts"
-msgstr "Konta"
-
-#: data/config_window.ui.h:10
-msgid "Check interval:"
-msgstr "Częstotliwość sprawdzania:"
-
-#: data/config_window.ui.h:11
-msgid "Enable spamfilter"
-msgstr ""
-
-#: data/config_window.ui.h:12
-msgid "Events"
-msgstr "Wydarzenia"
-
-#: data/config_window.ui.h:13
-msgid "General"
-msgstr ""
-
-#: data/config_window.ui.h:14
 msgid "Mailnag Configuration"
 msgstr "Konfiguracja Mailnag"
 
-#: data/config_window.ui.h:15
-msgid "Messagetray label:"
-msgstr ""
+#: data/config_window.ui.h:2
+msgid "Accounts"
+msgstr "Konta"
 
-#: data/config_window.ui.h:16
-msgid "Notification mode:"
-msgstr ""
-
-#: data/config_window.ui.h:17
+#: data/config_window.ui.h:3
 msgid "Play sound on new mails"
 msgstr ""
 
-#: data/config_window.ui.h:18
-msgid "Single"
-msgstr ""
-
-#: data/config_window.ui.h:19
-msgid "Spamfilter"
-msgstr ""
-
-#: data/config_window.ui.h:20
+#: data/config_window.ui.h:4
 msgid "Start Mailnag automatically"
 msgstr "Uruchamiaj Mailnag automatycznie"
 
-#: data/config_window.ui.h:21
-msgid "Summary"
-msgstr "Podsumowanie"
+#: data/config_window.ui.h:5
+msgid "Check interval:"
+msgstr "Częstotliwość sprawdzania:"
 
-#: data/config_window.ui.h:22
+#: data/config_window.ui.h:6
+msgid "minutes"
+msgstr ""
+
+#: data/config_window.ui.h:7
+msgid "Notification mode:"
+msgstr ""
+
+#: data/config_window.ui.h:8
+msgid "General"
+msgstr ""
+
+#: data/config_window.ui.h:9
+msgid "Enable spamfilter"
+msgstr ""
+
+#: data/config_window.ui.h:10
+msgid "Spamfilter"
+msgstr ""
+
+#: data/config_window.ui.h:11
+msgid "<b>On mail check</b>"
+msgstr "<b>Sprawdź pocztę</b>"
+
+#: data/config_window.ui.h:12
 msgid ""
 "The following script will be executed on every single mail check.\n"
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
 
-#: data/config_window.ui.h:25
+#: data/config_window.ui.h:15
+msgid "<b>On mail arrival</b>"
+msgstr "<b>Po przybyciu poczty</b>"
+
+#: data/config_window.ui.h:16
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
 
-#: data/config_window.ui.h:28
-msgid "minutes"
-msgstr ""
+#: data/config_window.ui.h:19
+msgid "Events"
+msgstr "Wydarzenia"
 
-#: data/keyring_dialog.ui.h:1
-msgid "Mailnag"
-msgstr ""
-
-#: data/keyring_dialog.ui.h:2
+#: data/config_window.ui.h:20
 msgid ""
-"Mailnag can't access the keyring because it is locked.\n"
-"Please enter the password:"
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
+"for GNOME 3\n"
+"Copyright (c) 2011, 2012 Patrick Ulbrich \n"
+"and contributors."
 msgstr ""
 
-#: data/message_dialog.ui.h:1
-msgid "Mailnag Message"
+#: data/config_window.ui.h:23
+msgid "About"
+msgstr "O aplikacji"
+
+#: data/config_window.ui.h:24
+msgid "Single"
 msgstr ""
+
+#: data/config_window.ui.h:25
+msgid "Summary"
+msgstr "Podsumowanie"
