@@ -73,7 +73,6 @@ class Idler(object):
 		
 	# idle thread
 	def _idle(self):
-		self._reconnect()
 		while True:
 			# if the event is set here, 
 			# disposed() must have been called
