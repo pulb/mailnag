@@ -5,11 +5,11 @@ Maintainer: Patrick Ulbrich <zulu99@gmx.net>
 Build-Depends: debhelper (>= 8.0.0),
                gettext,
                gir1.2-glib-2.0 (>= 1.32.0),
+               gir1.2-gnomekeyring-1.0,
                gir1.2-gstreamer-0.10 (>= 0.10.36),
                gir1.2-notify-0.7 (>= 0.7.5),
                python (>= 2.7.3),
                python-dbus (>= 1.0.0),
-               python-gnomekeyring (>= 2.32.0),
                python-gobject (>= 3.2.0),
                python-httplib2 (>= 0.7.2),
                python-xdg
@@ -22,12 +22,12 @@ Vcs-Browser: https://github.com/pulb/mailnag.git
 Package: mailnag
 Architecture: all
 Depends: gir1.2-glib-2.0 (>= 1.32.0),
+         gir1.2-gnomekeyring-1.0,
          gir1.2-gstreamer-0.10 (>= 0.10.36),
          gir1.2-notify-0.7 (>= 0.7.5),
          gstreamer0.10-plugins-base,
          python (>= 2.7.3),
          python-dbus (>= 1.0.0),
-         python-gnomekeyring (>= 2.32.0),
          python-gobject (>= 3.2.0),
          python-httplib2 (>= 0.7.2),
          python-xdg,
