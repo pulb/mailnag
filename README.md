@@ -21,11 +21,11 @@ Issue the following commands in a terminal to enable the PPA and install Mailnag
     sudo apt-get update
     sudo apt-get install mailnag
 
-As of Ubuntu 13.04 (Raring) onwards, Mailnag is also available in the official repos.
+As of Ubuntu 13.04 (Raring), Mailnag is also available in the official repos.  
 Run `sudo apt-get install mailnag` in a terminal to install it.
 
 ### Debian
-Mailnag is currently available in Debian unstable.
+Mailnag is currently available in Debian unstable.  
 Run `sudo apt-get install mailnag` in a terminal to install it.
 
 ### Fedora
