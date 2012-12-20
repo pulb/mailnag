@@ -20,7 +20,7 @@ for f in $glade_dir/*.ui ; do
 done
 
 # write template files
-pyfiles=`find $python_dir -iname *.py -printf "%p "`
+pyfiles=`find $python_dir -iname "*.py" -printf "%p "`
 xgettext $pyfiles $glade_dir/*.h --keyword=_ --keyword=N_ --from-code=UTF-8 --output=$pot_file
 
 # clean up
