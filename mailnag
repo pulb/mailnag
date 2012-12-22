@@ -6,7 +6,12 @@ config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/mailnag"
 mkdir --parents "$config_dir"
 
 if [ -f "$config_dir/mailnag.pid" ]; then
-	kill $(cat "$config_dir/mailnag.pid") 2> /dev/null
+	pid=$(cat "$config_dir/mailnag.pid")
+	kill $pid 2> /dev/null
+	# wait until mailnag teminates and removes it's pid file
+	while ps -p $pid > /dev/null; do
+		sleep 1
+	done
 fi
 
 rm --force "$config_dir/mailnag.log"
