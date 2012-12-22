@@ -29,6 +29,8 @@ from common.account import Account
 
 class Keyring:
 	def __init__(self):
+		self.KEYRING_ITEM_NAME = 'Mailnag password for %s://%s@%s'
+		
 		(result, kr_name) = GnomeKeyring.get_default_keyring_sync()
 		self._defaultKeyring = kr_name
 		
@@ -49,9 +51,9 @@ class Keyring:
 				(result, item) = GnomeKeyring.item_get_info_sync(self._defaultKeyring, identity)
 				displayNameDict[item.get_display_name()] = identity
 
-			if 'Mailnag password for %s://%s@%s' % (protocol, user, server) in displayNameDict:
+			if self.KEYRING_ITEM_NAME % (protocol, user, server) in displayNameDict:
 				(result, item) = GnomeKeyring.item_get_info_sync(self._defaultKeyring, \
-					displayNameDict['Mailnag password for %s://%s@%s' % \
+					displayNameDict[self.KEYRING_ITEM_NAME % \
 					(protocol, user, server)])
 
 				if item.get_secret() != '':
@@ -65,7 +67,7 @@ class Keyring:
 				return ''
 
 		else:
-			# DEBUG print "Keyring.get(): Either default- nor 'login'-Keyring available."
+			# DEBUG print "Keyring.get(): Neither default- nor 'login'-Keyring available."
 			return ''
 
 
@@ -83,20 +85,20 @@ class Keyring:
 			GnomeKeyring.Attribute.list_append_string(attrs, 'user',		user)
 			GnomeKeyring.Attribute.list_append_string(attrs, 'server',		server)
 			
-			if 'Mailnag password for %s://%s@%s' % (protocol, user, server) in displayNameDict:
+			if self.KEYRING_ITEM_NAME % (protocol, user, server) in displayNameDict:
 				(result, item) = GnomeKeyring.item_get_info_sync(self._defaultKeyring, \
-					displayNameDict['Mailnag password for %s://%s@%s' % \
+					displayNameDict[self.KEYRING_ITEM_NAME % \
 					(protocol, user, server)])
 				
 				if password != item.get_secret():
 					GnomeKeyring.item_create_sync(self._defaultKeyring, \
 						GnomeKeyring.ItemType.GENERIC_SECRET, \
-						'Mailnag password for %s://%s@%s' % (protocol, user, server), \
+						self.KEYRING_ITEM_NAME % (protocol, user, server), \
 						attrs, password, True)
 			else:
 				GnomeKeyring.item_create_sync(self._defaultKeyring, \
 					GnomeKeyring.ItemType.GENERIC_SECRET, \
-					'Mailnag password for %s://%s@%s' % (protocol, user, server), \
+					self.KEYRING_ITEM_NAME % (protocol, user, server), \
 					attrs, password, True)
 
 
@@ -104,7 +106,7 @@ class Keyring:
 		valid_accounts = []
 		for acc in accounts:											# create list of all valid accounts
 			protocol = 'imap' if acc.imap else 'pop'
-			valid_accounts.append('Mailnag password for %s://%s@%s' % \
+			valid_accounts.append(self.KEYRING_ITEM_NAME % \
 			(protocol, acc.user, acc.server))
 
 		(result, ids) = GnomeKeyring.list_item_ids_sync(self._defaultKeyring)
