@@ -7,15 +7,56 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-02 18:41+0100\n"
-"PO-Revision-Date: 2011-09-15 06:26+0000\n"
-"Last-Translator: Bae Taegil <Unknown>\n"
+"POT-Creation-Date: 2012-12-20 21:44+0100\n"
+"PO-Revision-Date: 2012-12-21 17:39+0000\n"
+"Last-Translator: Patrick Ulbrich <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-05 13:56+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2012-12-22 13:52+0000\n"
+"X-Generator: Launchpad (build 16378)\n"
+
+#: Mailnag/common/account.py:42
+msgid "Unnamed"
+msgstr "이름 없음"
+
+#: Mailnag/daemon/mailchecker.py:131
+msgid "(and {0} more)"
+msgstr "(그리고 {0}개 더)"
+
+#: Mailnag/daemon/mailchecker.py:134
+msgid "You have {0} new mails."
+msgstr "{0}개의 새 메일이 있습니다."
+
+#: Mailnag/daemon/mailchecker.py:136
+msgid "You have a new mail."
+msgstr "한 개의 새 메일이 있습니다."
+
+#: Mailnag/daemon/mailchecker.py:146
+msgid "Mark as read"
+msgstr ""
+
+#: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
+msgid "No subject"
+msgstr ""
+
+#: Mailnag/configuration/accountdialog.py:59
+#: Mailnag/configuration/accountdialog.py:60
+msgid "optional"
+msgstr ""
+
+#: Mailnag/configuration/configwindow.py:72
+msgid "Enabled"
+msgstr "활성화 됨"
+
+#: Mailnag/configuration/configwindow.py:78
+msgid "Name"
+msgstr "이름"
+
+#: Mailnag/configuration/configwindow.py:276
+msgid "Delete this account:"
+msgstr "이 계정을 지웁니다:"
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"

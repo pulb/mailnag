@@ -7,16 +7,57 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: Philippe Poumaroux <poum@cpan.org>\n"
-"POT-Creation-Date: 2012-12-02 18:41+0100\n"
-"PO-Revision-Date: 2012-04-16 14:40+0000\n"
-"Last-Translator: LEROY Jean-Christophe <Unknown>\n"
+"POT-Creation-Date: 2012-12-20 21:44+0100\n"
+"PO-Revision-Date: 2012-12-21 17:13+0000\n"
+"Last-Translator: Patrick Ulbrich <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-05 13:56+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2012-12-22 13:52+0000\n"
+"X-Generator: Launchpad (build 16378)\n"
 "Language: \n"
+
+#: Mailnag/common/account.py:42
+msgid "Unnamed"
+msgstr "Non nommé"
+
+#: Mailnag/daemon/mailchecker.py:131
+msgid "(and {0} more)"
+msgstr "(et {0} de plus)"
+
+#: Mailnag/daemon/mailchecker.py:134
+msgid "You have {0} new mails."
+msgstr "Vous avez {0} nouveaux courriels."
+
+#: Mailnag/daemon/mailchecker.py:136
+msgid "You have a new mail."
+msgstr "Vous avez un nouveau courriel."
+
+#: Mailnag/daemon/mailchecker.py:146
+msgid "Mark as read"
+msgstr "Marquer comme lu"
+
+#: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
+msgid "No subject"
+msgstr "Sans objet"
+
+#: Mailnag/configuration/accountdialog.py:59
+#: Mailnag/configuration/accountdialog.py:60
+msgid "optional"
+msgstr "facultatif"
+
+#: Mailnag/configuration/configwindow.py:72
+msgid "Enabled"
+msgstr "Activé"
+
+#: Mailnag/configuration/configwindow.py:78
+msgid "Name"
+msgstr "Nom"
+
+#: Mailnag/configuration/configwindow.py:276
+msgid "Delete this account:"
+msgstr "Supprimer ce compte:"
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
