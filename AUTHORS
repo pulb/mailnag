@@ -3,9 +3,12 @@ Maintainer:
 Patrick Ulbrich <zulu99@gmx.net>
 
 
-Author of the original Popper software:
-=======================================
-Ralf Hersel <ralf.hersel@gmx.net>
+Related software:
+=================
+Even though many parts of Mailnag have completely been
+rewritten by now, Mailnag started out as a fork of 
+Popper (http://launchpad.net/popper).
+Popper was written by Ralf Hersel <ralf.hersel@gmx.net>.
 
 
 Contributors:
