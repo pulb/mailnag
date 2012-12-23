@@ -35,4 +35,4 @@ Depends: gir1.2-glib-2.0 (>= 1.32.0),
          ${python:Depends}
 Description: Mail notification daemon for GNOME 3
  Mailnag checks POP3 and IMAP servers for new mail. When it finds new
- messsages, it creates a GNOME 3 notification that mentions sender and subject.
+ messsages, it creates a GNOME-Shell notification that mentions sender and subject.
