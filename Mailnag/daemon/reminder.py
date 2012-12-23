@@ -27,47 +27,57 @@ from common.config import cfg_folder
 
 class Reminder(dict):
 
-	def load(self):														# load last known messages from mailnag.dat
+	def load(self):
+		# load last known messages from mailnag.dat
 		dat_file = os.path.join(cfg_folder, 'mailnag.dat')
 		
 		if os.path.exists(dat_file):
-			f = open(dat_file, 'r')										# reopen file
+			f = open(dat_file, 'r')	# reopen file
 			for line in f:
-				stripedline = line.strip()								# remove CR at the end
-				content = stripedline.split(',')						# get all items from one line in a list: ["mailid", show_only_new flag"]
+				# remove CR at the end
+				stripedline = line.strip()
+				# get all items from one line in a list: ["mailid", show_only_new flag"]
+				content = stripedline.split(',')
 				try:
-					self[content[0]] = content[1]						# add to dict [id : flag]
+					# add to dict [id : flag]
+					self[content[0]] = content[1]
 				except IndexError:
-					self[content[0]] = '0'								# no flags in mailnag.dat
-			f.close()							   						# close file
+					# no flags in mailnag.dat
+					self[content[0]] = '0'
+			f.close()
 
 
-	def save(self, mail_list):											# save mail ids to file
+	# save mail ids to file
+	def save(self, mail_list):
 		dat_file = os.path.join(cfg_folder, 'mailnag.dat')
-		f = open(dat_file, 'w')											# open the file for overwrite
+		f = open(dat_file, 'w')	# open for overwrite
 		for m in mail_list:
 			try:
 				seen_flag = self[m.id]
 			except KeyError:
-				seen_flag = '0'											# id of a new mail is not yet known to reminder
-			line = m.id + ',' + seen_flag + '\n'						# construct line: email_id, seen_flag
-			f.write(line)												# write line to file
-			self[m.id] = seen_flag										# add to dict
-		f.close()					   									# close the file
+				# id of a new mail is not yet known to reminder
+				seen_flag = '0'
+			# construct line: email_id, seen_flag
+			line = m.id + ',' + seen_flag + '\n'
+			f.write(line)
+			self[m.id] = seen_flag
+		f.close()
 
 
-	def contains(self, id):												# check if mail id is in reminder list
+	# check if mail id is in reminder list
+	def contains(self, id):
 		return (id in self)
 
 
-	def set_to_seen(self, id):											# set seen flag for this email on True
+	# set seen flag for this email on True
+	def set_to_seen(self, id):
 		try:
 			self[id] = '1'
 		except KeyError:
 			pass
 
 
-	def unseen(self, id):												# return True if flag == '0'
+	def unseen(self, id):
 		try:
 			flag = self[id]
 			return (flag == '0')

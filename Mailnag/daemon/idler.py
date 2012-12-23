@@ -35,7 +35,9 @@ class Idler(object):
 		self._event = threading.Event()
 		self._sync_callback = sync_callback
 		self._account = account
-		self._conn = account.get_connection(use_existing = True) # connection has been opened in mailnag.py already (immediate check)
+		# use_existing = True:
+		# connection has been opened in mailnag.py already (immediate check)
+		self._conn = account.get_connection(use_existing = True)
 		self._disposed = False
 				
 		if self._conn == None:

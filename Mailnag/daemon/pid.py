@@ -22,15 +22,21 @@
 # MA 02110-1301, USA.
 #
 
-class Pid(list):														# List class to manage subprocess PIDs
+# List class to manage subprocess PIDs
+class Pid(list):
 
-	def kill(self):														# kill all zombies
-		removals = []													# list of PIDs to remove from list
+	# kill all zombies
+	def kill(self):
+		# list of PIDs to remove from list
+		removals = []
 		for p in self:
-			returncode = p.poll()										# get returncode of subprocess
+			# get returncode of subprocess
+			returncode = p.poll()
+			# zombie will be removed
 			if returncode == 0:
-				removals.append(p)										# zombie will be removed
+				removals.append(p)
+		# remove non-zombies from list
 		for p in removals:
-			self.remove(p)												# remove non-zombies from list
+			self.remove(p)
 
 

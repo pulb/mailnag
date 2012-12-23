@@ -50,13 +50,15 @@ class MailChecker:
 		self._notifications = {}
 		
 		self._reminder.load()
-		Notify.init("Mailnag") # initialize Notification		
+		# initialize Notification
+		Notify.init("Mailnag")
 		
 	
 	def check(self, accounts):
 		with self._mailcheck_lock:
 			print 'Checking %s email account(s) at: %s' % (len(accounts), time.asctime())
-			self._pid.kill() # kill all zombies	
+			# kill all zombies
+			self._pid.kill()
 
 			if not is_online():
 				print 'Error: No internet connection'
@@ -103,8 +105,10 @@ class MailChecker:
 					gstplay(get_data_file(self._cfg.get('general', 'soundfile')))
 
 			self._reminder.save(self._mail_list)
-			self._run_user_scripts("on_mail_check", script_data) # process user scripts
-			sys.stdout.flush() # write stdout to log file
+			# process user scripts
+			self._run_user_scripts("on_mail_check", script_data)
+			# write stdout to log file
+			sys.stdout.flush()
 			self._firstcheck = False
 		
 		return

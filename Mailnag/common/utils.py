@@ -69,7 +69,8 @@ def get_default_mail_reader():
 	return mail_reader
 
 
-def is_online(): # check for internet connection
+# check for internet connection
+def is_online():
 	try:
 		urllib2.urlopen("http://www.google.com/")
 		return True

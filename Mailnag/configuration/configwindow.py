@@ -68,14 +68,14 @@ class ConfigWindow:
 		self._button_remove = builder.get_object("button_remove")
 
 		renderer_on = Gtk.CellRendererToggle()
-		renderer_on.connect("toggled", self._on_account_toggled)		# bind toggle signal
-		column_on = Gtk.TreeViewColumn(_('Enabled'), renderer_on)		# Account On/Off
+		renderer_on.connect("toggled", self._on_account_toggled)
+		column_on = Gtk.TreeViewColumn(_('Enabled'), renderer_on)
 		column_on.add_attribute(renderer_on, "active", 1)
-		column_on.set_alignment(0.5)									# center column heading
+		column_on.set_alignment(0.5)
 		self._treeview_accounts.append_column(column_on)
 
 		renderer_name = Gtk.CellRendererText()
-		column_name = Gtk.TreeViewColumn(_('Name'), renderer_name, text=2)	# Account Name
+		column_name = Gtk.TreeViewColumn(_('Name'), renderer_name, text=2)
 		self._treeview_accounts.append_column(column_name)
 
 		#
@@ -177,28 +177,29 @@ class ConfigWindow:
 		else: self._delete_autostart()
 
 
-	def _show_yesno_dialog(self, text):									# Show YesNo Dialog
+	def _show_yesno_dialog(self, text):
 		message = Gtk.MessageDialog(self._window, Gtk.DialogFlags.MODAL, \
 			Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO, text)
-		resp = message.run()											# show dialog window
-		message.destroy()												# close dialog
-		if resp == Gtk.ResponseType.YES: return True					# if YES clicked
-		else: return False												# if NO clicked
+		resp = message.run()
+		message.destroy()
+		if resp == Gtk.ResponseType.YES: return True
+		else: return False
 	
 	
-	def _get_selected_account(self):									# return selected row
-		treeselection = self._treeview_accounts.get_selection()			# get tree_selection object
-		selection = treeselection.get_selected()						# get selected tupel (model, iter)
-		model, iter = selection											# get selected iter
-		if iter != None: acc = model.get_value(iter, 0)					# get account object from treeviews 1. column
+	def _get_selected_account(self):
+		treeselection = self._treeview_accounts.get_selection()
+		selection = treeselection.get_selected()
+		model, iter = selection
+		# get account object from treeviews 1. column
+		if iter != None: acc = model.get_value(iter, 0)
 		else: acc = None
 		return acc, model, iter
 	
 	
-	def _select_path(self, path):										# select path in treeview
-		treeselection = self._treeview_accounts.get_selection()			# get tree selection object
-		treeselection.select_path(path)									# select path
-		self._treeview_accounts.grab_focus()							# put focus on treeview
+	def _select_path(self, path):
+		treeselection = self._treeview_accounts.get_selection()
+		treeselection.select_path(path)
+		self._treeview_accounts.grab_focus()
 
 
 	def _edit_account(self):
@@ -211,8 +212,10 @@ class ConfigWindow:
 
 
 	def _create_autostart(self):
-		curdir = os.getcwd()											# get working directory
-		exec_file = os.path.join(curdir, "mailnag")						# path of the shell script to start mailnag.py
+		# get current working directory
+		curdir = os.getcwd()
+		# path to mailnag startscript
+		exec_file = os.path.join(curdir, "mailnag")
 
 		content = "\n" + \
 		"[Desktop Entry]\n" + \
@@ -230,8 +233,8 @@ class ConfigWindow:
 		if not os.path.exists(autostart_folder):
 			os.makedirs(autostart_folder)
 		autostart_file = autostart_folder + "mailnag.desktop"
-		f = open(autostart_file, 'w')
-		f.write(content) # create it
+		f = open(autostart_file, 'w') # create file
+		f.write(content)
 		f.close()
 
 
@@ -242,7 +245,7 @@ class ConfigWindow:
 			os.remove(autostart_file)
 
 
-	def _on_account_toggled(self, cell, path):							# chk_box account_on toggled
+	def _on_account_toggled(self, cell, path):
 		model = self._liststore_accounts
 		iter = model.get_iter(path)
 		acc = model.get_value(iter, 0)
@@ -276,13 +279,16 @@ class ConfigWindow:
 			if self._show_yesno_dialog(_('Delete this account:') + \
 				'\n\n' + acc.name):
 				
+				# select prev/next account
 				p = model.get_path(iter)
 				if not p.prev():
 					p.next()
-				self._select_path(p)									# select prev/next account
+				self._select_path(p)
 				
-				model.remove(iter)										# delete in treeview
-				self._accounts.remove(acc)								# delete in accounts list
+				# remove from treeview
+				model.remove(iter)
+				# remove from accounts list
+				self._accounts.remove(acc)
 
 
 	def _on_treeview_accounts_row_activated(self, treeview, path, view_column):

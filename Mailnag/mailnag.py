@@ -47,14 +47,14 @@ def read_config():
 		return read_cfg()
 
 
-def write_pid(): # write Mailnags's process id to file
+def write_pid():
 	pid_file = os.path.join(cfg_folder, 'mailnag.pid')
 	f = open(pid_file, 'w')
 	f.write(str(os.getpid()))
 	f.close()
 
 
-def delete_pid(): # delete file mailnag.pid
+def delete_pid():
 	pid_file = os.path.join(cfg_folder, 'mailnag.pid')
 	if os.path.exists(pid_file):
 		os.remove(pid_file)
@@ -117,7 +117,8 @@ def main():
 	signal.signal(signal.SIGTERM, sig_handler)
 	
 	try:
-		write_pid() # write Mailnag's process id to file
+		# write Mailnag's process id to file
+		write_pid()
 		cfg = read_config()
 		
 		if (cfg == None):

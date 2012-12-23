@@ -43,7 +43,8 @@ class Keyring:
 			raise Exception('Failed to unlock default keyring')
 
 
-	def get(self, protocol, user, server):								# get password for account from Gnome Keyring
+	# get password for account from Gnome Keyring
+	def get(self, protocol, user, server):
 		(result, ids) = GnomeKeyring.list_item_ids_sync(self._defaultKeyring)		
 		if result == GnomeKeyring.Result.OK:
 			displayNameDict = {}
@@ -71,7 +72,8 @@ class Keyring:
 			return ''
 
 
-	def set(self, protocol, user, server, password): # store password in Gnome-Keyring
+	# store password in Gnome-Keyring
+	def set(self, protocol, user, server, password):
 		if password != '':
 			displayNameDict = {}
 			(result, ids) = GnomeKeyring.list_item_ids_sync(self._defaultKeyring)
@@ -102,15 +104,18 @@ class Keyring:
 					attrs, password, True)
 
 
-	def remove(self, accounts):											# delete obsolete entries from Keyring
+	# delete obsolete entries from Keyring
+	def remove(self, accounts):
+		# create list of all valid accounts
 		valid_accounts = []
-		for acc in accounts:											# create list of all valid accounts
+		for acc in accounts:
 			protocol = 'imap' if acc.imap else 'pop'
 			valid_accounts.append(self.KEYRING_ITEM_NAME % \
 			(protocol, acc.user, acc.server))
 
+		# find and delete invalid entries
 		(result, ids) = GnomeKeyring.list_item_ids_sync(self._defaultKeyring)
-		if result == GnomeKeyring.Result.OK:				# find and delete invalid entries
+		if result == GnomeKeyring.Result.OK:
 			displayNameDict = {}
 			for identity in ids:
 				(result, item) = GnomeKeyring.item_get_info_sync(self._defaultKeyring, identity)
