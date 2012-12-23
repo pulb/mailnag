@@ -2,8 +2,9 @@
 A mail notification daemon for GNOME 3.  
 https://github.com/pulb/mailnag
 
-Mailnag is a fork of the Popper mail notifier (http://launchpad.net/popper).  
-What Popper is to Ubuntu's Unity, Mailnag is to GNOME-Shell.
+Mailnag checks POP3 and IMAP servers for new mail.  
+When it finds new messsages, it creates a GNOME-Shell notification   
+that mentions sender and subject.
 
 __This project needs contributors!__  
 [Code](https://github.com/pulb/mailnag)  
