@@ -1,3 +1,10 @@
+Version 0.5.1 (2012-12-23):
+===========================
+* Restored translated strings (previously available in mailnag <= 0.4.3)
+  that were removed due to a bug in the gen_po_template script
+* Fixed a race condition that can lead to mutliple mailnag instances
+
+
 Version 0.5.0 (2012-12-05):
 ===========================
 * Bugfix: (really) don't crash on session start 
