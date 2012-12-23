@@ -1,2 +1,2 @@
 version=3
-https://github.com/downloads/pulb/mailnag/mailnag-(.+)\.tar\.gz
+https://launchpad.net/mailnag/trunk/mailnag/+download/mailnag-(.+)\.tar\.gz
