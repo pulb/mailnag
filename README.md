@@ -38,7 +38,7 @@ Mailnag is available in Arch's user community repository [AUR](https://aur.archl
 Please either run `yaourt -S mailnag` or `packer -S mailnag` (as root) to install the package.
 
 ### Generic Tarballs
-Distribution independent tarball releases are available [here](https://github.com/pulb/mailnag/downloads).  
+Distribution independent tarball releases are available [here](https://launchpad.net/mailnag/trunk/mailnag).  
 Just run `./setup.py install` (as root) to install Mailnag,  
 though make sure the requirements stated below are met.
 
