@@ -8,3 +8,6 @@ override_dh_clean:
 	python setup.py clean
 	find $(CURDIR) -name *.pyc -delete
 	dh_clean
+
+override_dh_installchangelogs:
+	dh_installchangelogs NEWS
