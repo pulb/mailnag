@@ -232,7 +232,7 @@ class ConfigWindow:
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
 		if not os.path.exists(autostart_folder):
 			os.makedirs(autostart_folder)
-		autostart_file = autostart_folder + "mailnag.desktop"
+		autostart_file = autostart_folder + "/" + "mailnag.desktop"
 		f = open(autostart_file, 'w') # create file
 		f.write(content)
 		f.close()
