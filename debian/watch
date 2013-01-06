@@ -1,2 +1,2 @@
 version=3
-https://launchpad.net/mailnag/.*mailnag-(.+)\.tar\.gz
+https://launchpad.net/mailnag/ .*mailnag-(.+)\.tar\.gz
