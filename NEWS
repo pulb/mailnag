@@ -1,3 +1,9 @@
+Version 0.5.2 (2013-01-06):
+===========================
+* Fixed path of the autstart file
+* Minor other fixes
+
+
 Version 0.5.1 (2012-12-23):
 ===========================
 * Restored translated strings (previously available in mailnag <= 0.4.3)
