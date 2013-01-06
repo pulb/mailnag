@@ -3,7 +3,7 @@
 #
 # configwindow.py
 #
-# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -232,7 +232,7 @@ class ConfigWindow:
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
 		if not os.path.exists(autostart_folder):
 			os.makedirs(autostart_folder)
-		autostart_file = autostart_folder + "mailnag.desktop"
+		autostart_file = os.path.join(autostart_folder, "mailnag.desktop")
 		f = open(autostart_file, 'w') # create file
 		f.write(content)
 		f.close()
