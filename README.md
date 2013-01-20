@@ -33,7 +33,7 @@ Run `sudo apt-get install mailnag` in a terminal to install it.
 As of Fedora 17, Mailnag is available in the official Fedora repos.  
 Just run `yum install mailnag` (as root) in a terminal to install the package.
 
-## Arch Linux
+### Arch Linux
 Mailnag is available in the [AUR](https://aur.archlinux.org/packages.php?ID=49581) repository.  
 Please either run `yaourt -S mailnag` or `packer -S mailnag` (as root) to install the package.
 
