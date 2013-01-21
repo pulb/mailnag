@@ -35,7 +35,7 @@ Just run `yum install mailnag` (as root) in a terminal to install the package.
 
 ### Arch Linux
 Mailnag is available in the [AUR](https://aur.archlinux.org/packages.php?ID=49581) repository.  
-Please either run `yaourt -S mailnag` or `packer -S mailnag` (as root) to install the package.
+You're an Arch user - you know what to do ;-)
 
 ### Generic Tarballs
 Distribution independent tarball releases are available [here](https://launchpad.net/mailnag/trunk/mailnag-master).  
