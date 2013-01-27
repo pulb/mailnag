@@ -3,7 +3,7 @@
 
 pkgname=mailnag
 pkgver=0.5.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A mail notification daemon for GNOME 3."
 arch=('any')
 url="https://github.com/pulb/mailnag"
