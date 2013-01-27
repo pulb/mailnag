@@ -18,12 +18,13 @@ install='mailnag.install'
 
 build() {
   # python2 fix
-  sed -i 's/python/python2/g' "${srcdir}/mailnag"
-  sed -i 's/python/python2/g' "${srcdir}/mailnag_config"
+  cd "${srcdir}"
+  sed -i 's/python/python2/g' mailnag
+  sed -i 's/python/python2/g' mailnag_config
   find -name "*.py" -exec sed -i 's_#!.*/usr/bin/env.*python_#!/usr/bin/env python2_' {} \;
 }
 
 package() {
-  cd ${srcdir}
+  cd "${srcdir}"
   python2 setup.py install --root=${pkgdir}
 }
