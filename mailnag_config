@@ -1,8 +1,6 @@
 #!/bin/bash
 LIB_DIR=./Mailnag
 
-cd $(dirname $(readlink -f $0))
-
 python $LIB_DIR/config.py
 
 if [ $? -eq 0 ]; then
