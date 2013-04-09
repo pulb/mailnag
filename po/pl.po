@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-20 21:44+0100\n"
-"PO-Revision-Date: 2012-12-21 17:47+0000\n"
-"Last-Translator: Patrick Ulbrich <Unknown>\n"
+"PO-Revision-Date: 2013-03-04 12:22+0000\n"
+"Last-Translator: Isamu715 <isamu715@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-22 13:52+0000\n"
-"X-Generator: Launchpad (build 16378)\n"
+"X-Launchpad-Export-Date: 2013-04-09 11:00+0000\n"
+"X-Generator: Launchpad (build 16550)\n"
 
 #: Mailnag/common/account.py:42
 msgid "Unnamed"
@@ -60,7 +60,7 @@ msgstr "Usuń to konto:"
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
-msgstr ""
+msgstr "Konto pocztowe"
 
 #: data/account_dialog.ui.h:2
 msgid "Port:"
@@ -84,7 +84,7 @@ msgstr "Nazwa konta:"
 
 #: data/account_dialog.ui.h:7
 msgid "Folders:"
-msgstr ""
+msgstr "Katalogi:"
 
 #: data/account_dialog.ui.h:8
 msgid "Enable Push-IMAP"
@@ -96,7 +96,7 @@ msgstr "Typ konta:"
 
 #: data/account_dialog.ui.h:10
 msgid "Enable SSL encryption"
-msgstr ""
+msgstr "Włącz szyfrowanie SSL"
 
 #: data/config_window.ui.h:1
 msgid "Mailnag Configuration"
@@ -108,7 +108,7 @@ msgstr "Konta"
 
 #: data/config_window.ui.h:3
 msgid "Play sound on new mails"
-msgstr ""
+msgstr "Odtwórz dźwięk przy nowej wiadomości"
 
 #: data/config_window.ui.h:4
 msgid "Start Mailnag automatically"
@@ -120,23 +120,23 @@ msgstr "Częstotliwość sprawdzania:"
 
 #: data/config_window.ui.h:6
 msgid "minutes"
-msgstr ""
+msgstr "minuty"
 
 #: data/config_window.ui.h:7
 msgid "Notification mode:"
-msgstr ""
+msgstr "Tryb powiadamiania:"
 
 #: data/config_window.ui.h:8
 msgid "General"
-msgstr ""
+msgstr "Ogólne"
 
 #: data/config_window.ui.h:9
 msgid "Enable spamfilter"
-msgstr ""
+msgstr "Włącz filtr antyspamowy"
 
 #: data/config_window.ui.h:10
 msgid "Spamfilter"
-msgstr ""
+msgstr "Filtr antyspamowy"
 
 #: data/config_window.ui.h:11
 msgid "<b>On mail check</b>"
@@ -148,6 +148,9 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
+"Następujący skrypt będzie wykonywany przy każdym  sprawdzeniu poczty.\n"
+"Mailnag przekazuje temu skryptowi całkowitą liczbę nowych wiadomości,\n"
+"a następnie pary <i>\"&lt;sender&gt; &lt;subject&gt;\"</i>."
 
 #: data/config_window.ui.h:15
 msgid "<b>On mail arrival</b>"
@@ -159,6 +162,9 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
 msgstr ""
+"Następujący skrypt będzie wykonywany kiedy pojawią się nowe wiadomości.\n"
+"Mailnag przekazuje temu skryptowi całkowitą liczbę nowych wiadomości,\n"
+"a następnie pary <i>\"&lt;sender&gt; &lt;subject&gt;\"</i>."
 
 #: data/config_window.ui.h:19
 msgid "Events"
