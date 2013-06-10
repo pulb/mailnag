@@ -3,7 +3,7 @@
 #
 # utils.py
 #
-# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2007 Marco Ferragina <marco.ferragina@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -23,10 +23,7 @@
 #
 
 import xdg.BaseDirectory as base
-from gi.repository import Gst, Gio
-import threading
 import os
-import time
 import urllib2
 
 from common.dist_cfg import PACKAGE_NAME
@@ -56,19 +53,6 @@ def set_procname(newname):
 	libc.prctl(15, byref(buff), 0, 0, 0)
 
 
-def get_default_mail_reader():
-	mail_reader = None
-	app_info = Gio.AppInfo.get_default_for_type ("x-scheme-handler/mailto", False)
-	
-	if app_info != None:
-		executable = Gio.AppInfo.get_executable(app_info)
-	
-		if (executable != None) and (len(executable) > 0):
-			mail_reader = executable
-	
-	return mail_reader
-
-
 # check for internet connection
 def is_online():
 	try:
@@ -76,41 +60,3 @@ def is_online():
 		return True
 	except:
 		return False
-			
-
-class _GstPlayThread(threading.Thread):
-	def __init__(self, ply):
-		self.ply = ply
-		threading.Thread.__init__(self)
-	
-	
-	def run(self):
-		def on_eos(bus, msg):
-#			print "EOS" # debug
-			self.ply.set_state(Gst.State.NULL)
-			return True
-		
-		bus = self.ply.get_bus()
-		bus.add_signal_watch()
-		bus.connect('message::eos', on_eos)
-		
-		self.ply.set_state(Gst.State.PLAYING)
-		
-
-_gst_initialized = False
-
-def gstplay(filename):
-	global _gst_initialized
-	if not _gst_initialized:
-		Gst.init(None)
-		_gst_initialized = True
-		
-	try:
-		cwd = os.getcwd()
-		location = os.path.join(cwd, filename)
-		ply = Gst.ElementFactory.make("playbin", "player")
-		ply.set_property("uri", "file://" + location)
-		pt = _GstPlayThread(ply)
-		pt.start()
-	except:
-		pass

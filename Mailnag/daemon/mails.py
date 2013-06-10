@@ -3,7 +3,7 @@
 #
 # mails.py
 #
-# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -97,16 +97,14 @@ class Mails:
 								try:
 									try:
 										# get date and format it
-										datetime, seconds = self._format_header('date', msg['Date'])
+										datetime = self._format_header('date', msg['Date'])
 									except KeyError:
 										print "KeyError exception for key 'Date' in message." # debug
-										datetime, seconds = self._format_header('date', msg['date'])
+										datetime = self._format_header('date', msg['date'])
 								except:
 									print "Could not get date from IMAP message." # debug
-									# take current time as "2010.12.31 13:57:04"
-									datetime = time.strftime('%Y.%m.%d %X')
 									# current time to seconds
-									seconds = time.time()
+									datetime = time.time()
 								try:
 									try:
 										# get subject and format it
@@ -130,8 +128,8 @@ class Mails:
 						# prevent duplicates caused by Gmail labels
 						if id not in mail_ids:
 							if not (filter_enabled and self._in_filter(sender + subject)): # check filter
-								mail_list.append(Mail(seconds, subject, \
-									sender, datetime, id, acc.get_id()))
+								mail_list.append(Mail(datetime, subject, \
+									sender, id, acc.get_id()))
 								mail_ids.append(id)
 				
 				# don't close IMAP idle connections
@@ -171,16 +169,14 @@ class Mails:
 					try:
 						try:
 							# get date and format it
-							datetime, seconds = self._format_header('date', msg['Date'])
+							datetime = self._format_header('date', msg['Date'])
 						except KeyError:
 							print "KeyError exception for key 'Date' in message." # debug
-							datetime, seconds = self._format_header('date', msg['date'])
+							datetime = self._format_header('date', msg['date'])
 					except:
 						print "Could not get date from POP message." # debug
-						# take current time as "2010.12.31 13:57:04"
-						datetime = time.strftime('%Y.%m.%d %X')
 						# current time to seconds
-						seconds = time.time()
+						datetime = time.time()
 					try:
 						try:
 							# get subject and format it
@@ -206,8 +202,8 @@ class Mails:
 						id = acc.user + uidl.split(' ')[2]
 					
 					if not (filter_enabled and self._in_filter(sender + subject)): # check filter
-						mail_list.append(Mail(seconds, subject, sender, \
-							datetime, id, acc.get_id()))
+						mail_list.append(Mail(datetime, subject, sender, \
+							id, acc.get_id()))
 
 				# disconnect from Email-Server
 				srv.quit()
@@ -246,7 +242,7 @@ class Mails:
 	def sort_mails(mail_list, sort_order):
 		sort_list = []
 		for mail in mail_list:
-			sort_list.append([mail.seconds, mail])
+			sort_list.append([mail.datetime, mail])
 		# sort asc
 		sort_list.sort()
 		if sort_order == 'desc':
@@ -286,18 +282,12 @@ class Mails:
 				# make a 10-tupel (UTC)
 				parsed_date = email.utils.parsedate_tz(content)
 				# convert 10-tupel to seconds incl. timezone shift
-				seconds = email.utils.mktime_tz(parsed_date)
-				# convert seconds to tupel
-				tupel = time.localtime(seconds)
-				# convert tupel to string
-				datetime = time.strftime('%Y.%m.%d %X', tupel)
+				datetime = email.utils.mktime_tz(parsed_date)
 			except:
 				print 'Error: cannot format date.'
-				# take current time as "2010.12.31 13:57:04"
-				datetime = time.strftime('%Y.%m.%d %X')
 				# current time to seconds
-				seconds = time.time()
-			return datetime, seconds
+				datetime = time.time()
+			return datetime
 
 		if field == 'subject':
 			try:

@@ -3,7 +3,7 @@
 #
 # mailnag.py
 #
-# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -25,6 +25,8 @@
 
 import os
 from gi.repository import GObject, GLib
+from dbus.mainloop.glib import DBusGMainLoop
+import threading
 import time
 import signal
 import traceback
@@ -33,12 +35,14 @@ from common.config import read_cfg, cfg_exists, cfg_folder
 from common.utils import set_procname, is_online
 from common.accountlist import AccountList
 from daemon.mailchecker import MailChecker
+from daemon.dbusservice import DBUSService
 from daemon.idlers import Idlers
 
 mainloop = None
-mailchecker = None
 idlers = None
-
+start_thread = None
+poll_thread = None
+poll_thread_stop = threading.Event()
 
 def read_config():
 	if not cfg_exists():
@@ -60,30 +64,6 @@ def delete_pid():
 		os.remove(pid_file)
 
 
-# Workaround: 
-# sometimes gnomeshell's notification server (org.freedesktop.Notifications implementation)
-# doesn't seem to be up immediately upon session start, so prevent Mailnag from crashing 
-# by checking if the org.freedesktop.Notifications DBUS interface is available yet.
-# See https://github.com/pulb/mailnag/issues/48
-def wait_for_notification_server():	
-	import dbus
-	bus = dbus.SessionBus()
-	
-	while True:	
-		try:		
-			notify = bus.get_object('org.freedesktop.Notifications', '/org/freedesktop/Notifications')
-			iface = dbus.Interface(notify, 'org.freedesktop.Notifications')
-			inf = iface.GetServerInformation()
-			
-			if inf[0] == u'gnome-shell':
-				break
-		except:
-			pass
-		
-		print 'Waiting for GNOME-Shell notification server...'			
-		time.sleep(5)
-
-
 def wait_for_inet_connection():
 	if not is_online():
 		print 'Waiting for internet connection...'
@@ -93,11 +73,15 @@ def wait_for_inet_connection():
 
 def cleanup():
 	# clean up resources
-	if mailchecker != None:
-		mailchecker.dispose()
-
 	if idlers != None:
 		idlers.dispose()
+	
+	if (start_thread != None) and (start_thread.is_alive()):
+		start_thread.join()
+		
+	if (poll_thread != None) and (poll_thread.is_alive()):
+		poll_thread_stop.set()
+		poll_thread.join()
 	
 	delete_pid()
 
@@ -108,12 +92,12 @@ def sig_handler(signum, frame):
 
 
 def main():
-	global mainloop, mailchecker, idlers
+	global mainloop, start_thread
 	
 	set_procname("mailnag")
 	
 	GObject.threads_init()
-	
+	DBusGMainLoop(set_as_default = True)
 	signal.signal(signal.SIGTERM, sig_handler)
 	
 	try:
@@ -125,13 +109,32 @@ def main():
 			print 'Error: Cannot find configuration file. Please run mailnag_config first.'
 			exit(1)
 		
-		wait_for_notification_server()		
 		wait_for_inet_connection()
+				
+		dbusservice = DBUSService()
+				
+		# start checking for mails asynchronously 
+		start_thread = threading.Thread(target = start, args = (cfg, dbusservice,))
+		start_thread.start()
 		
+		# start mainloop for DBus communication
+		mainloop = GObject.MainLoop()
+		mainloop.run()
+	
+	except KeyboardInterrupt:
+		pass # ctrl+c pressed
+	finally:
+		cleanup()
+
+
+def start(cfg, dbusservice):
+	global poll_thread, idlers
+	
+	try:
 		accounts = AccountList()
 		accounts.load_from_cfg(cfg, enabled_only = True)
 		
-		mailchecker = MailChecker(cfg)
+		mailchecker = MailChecker(cfg, dbusservice)
 		
 		# immediate check, check *all* accounts
 		try:		
@@ -141,20 +144,27 @@ def main():
 		
 		idle_accounts = filter(lambda acc: acc.imap and acc.idle, accounts)
 		non_idle_accounts = filter(lambda acc: (not acc.imap) or (acc.imap and not acc.idle), accounts)
-		
+	
 		# start polling thread for POP3 accounts and
 		# IMAP accounts without idle support
 		if len(non_idle_accounts) > 0:
+			check_interval = int(cfg.get('general', 'check_interval'))
+		
 			def poll_func():
 				try:
-					mailchecker.check(non_idle_accounts)
+					while (True):
+						poll_thread_stop.wait(timeout = 60.0 * check_interval)
+						if poll_thread_stop.is_set():
+							break
+					
+						mailchecker.check(non_idle_accounts)
 				except:
 					traceback.print_exc()
-				return True
-			
-			check_interval = int(cfg.get('general', 'check_interval'))
-			GObject.timeout_add_seconds(60 * check_interval, poll_func)
 		
+			poll_thread = threading.Thread(target = poll_func)
+			poll_thread.start()
+		
+	
 		# start idler threads for IMAP accounts with idle support
 		if len(idle_accounts) > 0:
 			def sync_func(account):
@@ -162,16 +172,13 @@ def main():
 					mailchecker.check([account])
 				except:
 					traceback.print_exc()
-			
+
+		
 			idlers = Idlers(idle_accounts, sync_func)
 			idlers.run()
+	except:
+		traceback.print_exc()
+		mainloop.quit()
 		
-		mainloop = GObject.MainLoop()
-		mainloop.run()
-	except KeyboardInterrupt:
-		pass # ctrl+c pressed
-	finally:
-		cleanup()
-
 
 if __name__ == '__main__': main()
