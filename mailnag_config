@@ -1,7 +1,7 @@
 #!/bin/bash
 LIB_DIR=./Mailnag
 
-python $LIB_DIR/config.py
+python2 $LIB_DIR/config.py
 
 if [ $? -eq 0 ]; then
 	# Restart mailnag daemon
