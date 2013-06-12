@@ -82,10 +82,6 @@ class ConfigWindow:
 		# general tab
 		#	
 		self._spinbutton_interval = builder.get_object("spinbutton_interval")
-		self._cb_notification_mode = builder.get_object("cb_notification_mode")
-		cell = Gtk.CellRendererText()
-		self._cb_notification_mode.pack_start(cell, True)
-		self._cb_notification_mode.add_attribute(cell, "text", 0)
 		self._chk_playsound = builder.get_object("chk_playsound")
 		self._chk_autostart = builder.get_object("chk_autostart")
 		
@@ -120,7 +116,6 @@ class ConfigWindow:
 
 	def _load_config(self):
 		self._spinbutton_interval.set_value(int(self._cfg.get('general', 'check_interval')))
-		self._cb_notification_mode.set_active(int(self._cfg.get('general', 'notification_mode')))
 		self._chk_playsound.set_active(bool(int(self._cfg.get('general', 'playsound'))))
 		self._chk_autostart.set_active(bool(int(self._cfg.get('general', 'autostart'))))
 
@@ -150,7 +145,6 @@ class ConfigWindow:
 
 	def _save_config(self):
 		self._cfg.set('general', 'check_interval', int(self._spinbutton_interval.get_value()))
-		self._cfg.set('general', 'notification_mode', int(self._cb_notification_mode.get_active()))
 		self._cfg.set('general', 'playsound',int(self._chk_playsound.get_active()))
 		autostart = self._chk_autostart.get_active()
 		self._cfg.set('general', 'autostart', int(autostart))

@@ -3,7 +3,7 @@
 #
 # config.py
 #
-# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@ mailnag_defaults = {
 	'general':
 	{
 		'check_interval'	: '5',
-		'notification_mode'	: '0',
 		'sender_format'		: '1',
 		'playsound'		: '1',
 		'soundfile'		: 'mailnag.ogg',
