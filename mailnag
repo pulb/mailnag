@@ -4,18 +4,6 @@ LIB_DIR=./Mailnag
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/mailnag"
 
 mkdir --parents "$config_dir"
-
-if [ -f "$config_dir/mailnag.pid" ]; then
-	pid=$(cat "$config_dir/mailnag.pid")
-	if [ "`ps -p $pid -o comm=`" == "mailnag" ]; then
-		kill $pid 2> /dev/null
-		# wait until mailnag teminates and removes it's pid file
-		while ps -p $pid > /dev/null; do
-			sleep 1
-		done
-	fi
-fi
-
 rm --force "$config_dir/mailnag.log"
 
 python2 $LIB_DIR/mailnag.py >> "$config_dir/mailnag.log" 2>&1 &

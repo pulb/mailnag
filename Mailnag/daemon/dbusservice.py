@@ -26,8 +26,9 @@ import dbus.service
 
 # DBUS server that exports mailnag signals end methods 
 class DBUSService(dbus.service.Object):
-	def __init__(self):
+	def __init__(self, shutdown_cb):
 		self._mails = []
+		self._shutdown_cb = shutdown_cb
 		bus_name = dbus.service.BusName('mailnag.MailnagService', bus = dbus.SessionBus())
 		dbus.service.Object.__init__(self, bus_name, '/mailnag/MailnagService')
 	
@@ -64,3 +65,8 @@ class DBUSService(dbus.service.Object):
 	@dbus.service.method(dbus_interface = 'mailnag.MailnagService', out_signature = 'u')
 	def GetMailCount(self):
 		return len(self._mails)
+
+
+	@dbus.service.method(dbus_interface = 'mailnag.MailnagService')
+	def Shutdown(self):
+		self._shutdown_cb()

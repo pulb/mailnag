@@ -23,8 +23,9 @@
 # MA 02110-1301, USA.
 #
 
-import os
+import sys
 from gi.repository import GObject, GLib
+import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 import threading
 import time
@@ -51,19 +52,6 @@ def read_config():
 		return read_cfg()
 
 
-def write_pid():
-	pid_file = os.path.join(cfg_folder, 'mailnag.pid')
-	f = open(pid_file, 'w')
-	f.write(str(os.getpid()))
-	f.close()
-
-
-def delete_pid():
-	pid_file = os.path.join(cfg_folder, 'mailnag.pid')
-	if os.path.exists(pid_file):
-		os.remove(pid_file)
-
-
 def wait_for_inet_connection():
 	if not is_online():
 		print 'Waiting for internet connection...'
@@ -71,19 +59,43 @@ def wait_for_inet_connection():
 			time.sleep(5)
 
 
+def shutdown_existing_instance():
+	BUS_NAME = 'mailnag.MailnagService'
+	OBJ_PATH = '/mailnag/MailnagService'
+	
+	bus = dbus.SessionBus()
+	
+	if bus.name_has_owner(BUS_NAME):
+		sys.stdout.write('Shutting down existing Mailnag process...')
+		sys.stdout.flush()
+		
+		try:
+			proxy = bus.get_object(BUS_NAME, OBJ_PATH)
+			shutdown = proxy.get_dbus_method('Shutdown', BUS_NAME)
+			
+			shutdown()
+			
+			while bus.name_has_owner(BUS_NAME):
+				time.sleep(2)
+			
+			sys.stdout.write('OK\n')
+		except:
+			sys.stdout.write('FAILED\n')
+	
+
 def cleanup():
 	# clean up resources
-	if idlers != None:
-		idlers.dispose()
-	
 	if (start_thread != None) and (start_thread.is_alive()):
 		start_thread.join()
-		
+		print "Starter thread exited successfully"
+
 	if (poll_thread != None) and (poll_thread.is_alive()):
 		poll_thread_stop.set()
 		poll_thread.join()
+		print "Polling thread exited successfully"
 	
-	delete_pid()
+	if idlers != None:
+		idlers.dispose()
 
 
 def sig_handler(signum, frame):
@@ -100,9 +112,11 @@ def main():
 	DBusGMainLoop(set_as_default = True)
 	signal.signal(signal.SIGTERM, sig_handler)
 	
+	# shut down an (possibly) already running Mailnag daemon
+	# (must be called before instantiation of the DBUSService).
+	shutdown_existing_instance()
+	
 	try:
-		# write Mailnag's process id to file
-		write_pid()
 		cfg = read_config()
 		
 		if (cfg == None):
@@ -110,8 +124,8 @@ def main():
 			exit(1)
 		
 		wait_for_inet_connection()
-				
-		dbusservice = DBUSService()
+		
+		dbusservice = DBUSService(shutdown_cb = lambda: mainloop.quit())
 				
 		# start checking for mails asynchronously 
 		start_thread = threading.Thread(target = start, args = (cfg, dbusservice,))
@@ -124,6 +138,7 @@ def main():
 	except KeyboardInterrupt:
 		pass # ctrl+c pressed
 	finally:
+		print "Shutting down..."
 		cleanup()
 
 
