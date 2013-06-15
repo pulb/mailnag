@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 # To install Mailnag run this script as root:
 # ./setup.py install
