@@ -1,4 +1,5 @@
 #!/bin/bash
 LIB_DIR=./Mailnag
 
+cd $(dirname $(readlink -f $0))
 python2 $LIB_DIR/config.py
