@@ -31,21 +31,7 @@ mailnag_defaults = {
 	{
 		'check_interval'	: '5',
 		'sender_format'		: '1',
-		'playsound'		: '1',
-		'soundfile'		: 'mailnag.ogg',
-		'autostart'		: '1'
-	},
-	'filter':
-	{
-		'filter_enabled'	: '0',
-		'filter_text'		: 'newsletter, viagra'
-	},
-	'script':
-	{
-		'script0_enabled'	: '0',
-		'script1_enabled'	: '0',
-		'script0_file'		: '',
-		'script1_file'		: ''
+		'autostart'			: '1'
 	}
 }
 

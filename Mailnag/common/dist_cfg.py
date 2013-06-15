@@ -42,3 +42,11 @@ PACKAGE_NAME = "mailnag"
 # The LOCALE_DIR variable specifies the root path for localization files
 # (usually you have to make it point to '/usr/share/locale').
 LOCALE_DIR = './locale'
+
+# The BIN_DIR variable specifies the path for the mailnag start scripts
+# (usually you have to make it point to '/usr/bin').
+BIN_DIR = '.'
+
+# DBUS service configuration
+DBUS_BUS_NAME = 'mailnag.MailnagService'
+DBUS_OBJ_PATH = '/mailnag/MailnagService'

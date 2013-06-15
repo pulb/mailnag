@@ -47,25 +47,35 @@ class ConfigWindow:
 			"treeview_accounts_row_activated" : self._on_treeview_accounts_row_activated, \
 			"liststore_accounts_row_deleted" : self._on_liststore_accounts_row_deleted, \
 			"liststore_accounts_row_inserted" : self._on_liststore_accounts_row_inserted, \
-			"chk_enable_filter_toggled" : self._on_chk_enable_filter_toggled, \
-			"chk_script0_toggled" : self._on_chk_script0_toggled, \
-			"chk_script1_toggled" : self._on_chk_script1_toggled \
 		})
 
 		self._window = builder.get_object("config_window")
 		self._window.set_icon(GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 48, 48));
 		self._cfg = read_cfg()
 		
+		self.daemon_enabled = False
+		
 		#
-		# account tab
+		# general tab
+		#
+		self._image_logo = builder.get_object("image_logo")
+		pb = GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 180, 180)
+		pb = pb.new_subpixbuf(0, 10, 180, 146) # crop whitespace at the bottom
+		self._image_logo.set_from_pixbuf(pb)
+		self._label_app_desc = builder.get_object("label_app_desc")
+		self._label_app_desc.set_markup("<span font=\"24\"><b>Mailnag</b></span>\nVersion %s" % str(APP_VERSION))
+		self._switch_daemon_enabled = builder.get_object("switch_daemon_enabled")
+		
+		#
+		# accounts tab
 		#
 		self._accounts = AccountList()
 
 		self._treeview_accounts = builder.get_object("treeview_accounts")
 		self._liststore_accounts = builder.get_object("liststore_accounts")
 
-		self._button_edit = builder.get_object("button_edit")
-		self._button_remove = builder.get_object("button_remove")
+		self._button_edit = builder.get_object("btn_edit")
+		self._button_remove = builder.get_object("btn_remove")
 
 		renderer_on = Gtk.CellRendererToggle()
 		renderer_on.connect("toggled", self._on_account_toggled)
@@ -78,62 +88,21 @@ class ConfigWindow:
 		column_name = Gtk.TreeViewColumn(_('Name'), renderer_name, text=2)
 		self._treeview_accounts.append_column(column_name)
 
-		#
-		# general tab
-		#	
 		self._spinbutton_interval = builder.get_object("spinbutton_interval")
-		self._chk_playsound = builder.get_object("chk_playsound")
-		self._chk_autostart = builder.get_object("chk_autostart")
 		
 		#
-		# spam filter tab
+		# plugins tab
 		#
-		self._chk_enable_filter = builder.get_object("chk_enable_filter")
-		self._textview_filter = builder.get_object("textview_filter")	
-		self._textbuffer_filter = builder.get_object("textbuffer_filter")	
-
-		#
-		# events tab
-		#
-		self._chk_script0 = builder.get_object("chk_script0")
-		self._filechooser_script0 = builder.get_object("filechooser_script0")
-		self._chk_script1 = builder.get_object("chk_script1")
-		self._filechooser_script1 = builder.get_object("filechooser_script1")
 		
-		#
-		# about tab
-		#
-		self._image_logo = builder.get_object("image_logo")
-		pb = GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 180, 180)
-		pb = pb.new_subpixbuf(0, 10, 180, 146) # crop whitespace at the bottom
-		self._image_logo.set_from_pixbuf(pb)
-		self._label_app_desc = builder.get_object("label_app_desc")
-		self._label_app_desc.set_markup("<span font=\"24\"><b>Mailnag</b></span>\nVersion %s" % str(APP_VERSION))
-
+		# TODO
+		
 		self._load_config()
 		self._window.show()
 
 
 	def _load_config(self):
+		self._switch_daemon_enabled.set_active(bool(int(self._cfg.get('general', 'autostart'))))
 		self._spinbutton_interval.set_value(int(self._cfg.get('general', 'check_interval')))
-		self._chk_playsound.set_active(bool(int(self._cfg.get('general', 'playsound'))))
-		self._chk_autostart.set_active(bool(int(self._cfg.get('general', 'autostart'))))
-
-		
-		self._chk_enable_filter.set_active(bool(int(self._cfg.get('filter', 'filter_enabled'))))
-		self._textbuffer_filter.set_text(self._cfg.get('filter', 'filter_text'))
-
-		self._chk_script0.set_active(bool(int(self._cfg.get('script', 'script0_enabled'))))
-		
-		tmp = self._cfg.get('script', 'script0_file')
-		if len(tmp) > 0:
-			self._filechooser_script0.set_filename(tmp)
-		
-		self._chk_script1.set_active(bool(int(self._cfg.get('script', 'script1_enabled'))))
-		
-		tmp = self._cfg.get('script', 'script1_file')
-		if len(tmp) > 0:
-			self._filechooser_script1.set_filename(tmp)
 		
 		self._accounts.load_from_cfg(self._cfg)
 		
@@ -144,25 +113,10 @@ class ConfigWindow:
 		
 
 	def _save_config(self):
-		self._cfg.set('general', 'check_interval', int(self._spinbutton_interval.get_value()))
-		self._cfg.set('general', 'playsound',int(self._chk_playsound.get_active()))
-		autostart = self._chk_autostart.get_active()
+		autostart = self._switch_daemon_enabled.get_active()
 		self._cfg.set('general', 'autostart', int(autostart))
+		self._cfg.set('general', 'check_interval', int(self._spinbutton_interval.get_value()))
 
-		self._cfg.set('filter', 'filter_enabled', int(self._chk_enable_filter.get_active()))
-		start, end = self._textbuffer_filter.get_bounds()		
-		self._cfg.set('filter', 'filter_text', self._textbuffer_filter.get_text(start, end, True))	
-		
-		self._cfg.set('script', 'script0_enabled', int(self._chk_script0.get_active()))
-		tmp = self._filechooser_script0.get_filename()
-		if tmp == None: tmp = ""
-		self._cfg.set('script', 'script0_file', tmp)
-		
-		self._cfg.set('script', 'script1_enabled', int(self._chk_script1.get_active()))
-		tmp = self._filechooser_script1.get_filename()
-		if tmp == None: tmp = ""
-		self._cfg.set('script', 'script1_file', tmp)
-		
 		self._accounts.save_to_cfg(self._cfg)
 				
 		write_cfg(self._cfg)
@@ -297,22 +251,11 @@ class ConfigWindow:
 	def _on_liststore_accounts_row_inserted(self, model, path, user_param):
 		self._button_edit.set_sensitive(len(model) > 0)
 		self._button_remove.set_sensitive(len(model) > 0)
-
-
-	def _on_chk_enable_filter_toggled(self, widget):
-		self._textview_filter.set_sensitive(self._chk_enable_filter.get_active())
-
-
-	def _on_chk_script0_toggled(self, widget):
-		self._filechooser_script0.set_sensitive(self._chk_script0.get_active())
-		
-	
-	def _on_chk_script1_toggled(self, widget):
-		self._filechooser_script1.set_sensitive(self._chk_script1.get_active())
 		
 	
 	def _save_and_quit(self):
 		self._save_config()	
+		self.daemon_enabled = self._switch_daemon_enabled.get_active()
 		Gtk.main_quit()
 		
 

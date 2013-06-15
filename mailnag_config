@@ -2,10 +2,3 @@
 LIB_DIR=./Mailnag
 
 python2 $LIB_DIR/config.py
-
-if [ $? -eq 0 ]; then
-	# Restart mailnag daemon
-	./mailnag &
-else
-	echo mailnag-config discarded
-fi

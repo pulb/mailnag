@@ -24,9 +24,12 @@
 
 import xdg.BaseDirectory as base
 import os
+import sys
+import time
+import dbus
 import urllib2
 
-from common.dist_cfg import PACKAGE_NAME
+from common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
 
 def get_data_file(filename):
 	"""
@@ -60,3 +63,24 @@ def is_online():
 		return True
 	except:
 		return False
+
+
+def shutdown_existing_instance():
+	bus = dbus.SessionBus()
+	
+	if bus.name_has_owner(DBUS_BUS_NAME):
+		sys.stdout.write('Shutting down existing Mailnag process...')
+		sys.stdout.flush()
+		
+		try:
+			proxy = bus.get_object(DBUS_BUS_NAME, DBUS_OBJ_PATH)
+			shutdown = proxy.get_dbus_method('Shutdown', DBUS_BUS_NAME)
+			
+			shutdown()
+			
+			while bus.name_has_owner(DBUS_BUS_NAME):
+				time.sleep(2)
+			
+			sys.stdout.write('OK\n')
+		except:
+			sys.stdout.write('FAILED\n')

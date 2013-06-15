@@ -23,9 +23,7 @@
 
 import dbus
 import dbus.service
-
-DBUS_BUS_NAME = 'mailnag.MailnagService'
-DBUS_OBJ_PATH = '/mailnag/MailnagService'
+from common.dist_cfg import DBUS_BUS_NAME, DBUS_OBJ_PATH
 	
 # DBUS server that exports mailnag signals end methods 
 class DBUSService(dbus.service.Object):

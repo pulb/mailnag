@@ -23,9 +23,7 @@
 # MA 02110-1301, USA.
 #
 
-import sys
 from gi.repository import GObject, GLib
-import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 import threading
 import time
@@ -33,10 +31,10 @@ import signal
 import traceback
 
 from common.config import read_cfg, cfg_exists, cfg_folder
-from common.utils import set_procname, is_online
+from common.utils import set_procname, is_online, shutdown_existing_instance
 from common.accountlist import AccountList
 from daemon.mailchecker import MailChecker
-from daemon.dbusservice import DBUSService, DBUS_BUS_NAME, DBUS_OBJ_PATH
+from daemon.dbusservice import DBUSService
 from daemon.idlers import Idlers
 
 mainloop = None
@@ -58,27 +56,6 @@ def wait_for_inet_connection():
 		while not is_online():
 			time.sleep(5)
 
-
-def shutdown_existing_instance():
-	bus = dbus.SessionBus()
-	
-	if bus.name_has_owner(DBUS_BUS_NAME):
-		sys.stdout.write('Shutting down existing Mailnag process...')
-		sys.stdout.flush()
-		
-		try:
-			proxy = bus.get_object(DBUS_BUS_NAME, DBUS_OBJ_PATH)
-			shutdown = proxy.get_dbus_method('Shutdown', DBUS_BUS_NAME)
-			
-			shutdown()
-			
-			while bus.name_has_owner(DBUS_BUS_NAME):
-				time.sleep(2)
-			
-			sys.stdout.write('OK\n')
-		except:
-			sys.stdout.write('FAILED\n')
-	
 
 def cleanup():
 	# clean up resources

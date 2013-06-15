@@ -41,8 +41,6 @@ class Mails:
 		mail_list = []
 		mail_ids = []
 		
-		filter_enabled = bool(int(self._cfg.get('filter', 'filter_enabled')))
-
 		for acc in self._accounts:
 			# get server connection for this account
 			srv = acc.get_connection(use_existing = True)
@@ -127,10 +125,9 @@ class Mails:
 					
 						# prevent duplicates caused by Gmail labels
 						if id not in mail_ids:
-							if not (filter_enabled and self._in_filter(sender + subject)): # check filter
-								mail_list.append(Mail(datetime, subject, \
-									sender, id, acc.get_id()))
-								mail_ids.append(id)
+							mail_list.append(Mail(datetime, subject, \
+								sender, id, acc.get_id()))
+							mail_ids.append(id)
 				
 				# don't close IMAP idle connections
 				if not acc.idle:
@@ -201,9 +198,8 @@ class Mails:
 						# create unique id
 						id = acc.user + uidl.split(' ')[2]
 					
-					if not (filter_enabled and self._in_filter(sender + subject)): # check filter
-						mail_list.append(Mail(datetime, subject, sender, \
-							id, acc.get_id()))
+					mail_list.append(Mail(datetime, subject, sender, \
+						id, acc.get_id()))
 
 				# disconnect from Email-Server
 				srv.quit()
@@ -215,26 +211,6 @@ class Mails:
 		# write stdout to log file
 		sys.stdout.flush()
 		return mail_list
-
-
-	# check if filter appears in sendersubject
-	def _in_filter(self, sendersubject):
-		status = False
-		filter_text = self._cfg.get('filter', 'filter_text')
-		# convert text to list
-		filter_list = filter_text.replace('\n', '').split(',')
-		for filter_item in filter_list:
-			# remove CR and white space
-			filter_stripped_item = filter_item.strip()
-			
-			if len(filter_stripped_item) == 0:
-				continue
-			
-			if filter_stripped_item.lower() in sendersubject.lower():
-				# subject contains filter item
-				status = True
-				break
-		return status
 
 
 	# sort mail list by field 'seconds'

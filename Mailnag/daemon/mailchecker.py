@@ -24,25 +24,20 @@
 
 import threading
 import sys
-import subprocess
-import os
 import time
 
-from common.utils import get_data_file, is_online
+from common.utils import is_online
 from common.i18n import _
 from daemon.reminder import Reminder
 from daemon.mailsyncer import MailSyncer
-from daemon.pid import Pid
 
 class MailChecker:
 	def __init__(self, cfg, dbusservice):
-		self._firstcheck = True; # first check after startup
+		self._firstcheck = True # first check after startup
 		self._mailcheck_lock = threading.Lock()
 		self._mailsyncer = MailSyncer(cfg)
 		self._reminder = Reminder()
 		self._dbusservice = dbusservice
-		self._pid = Pid()
-		self._cfg = cfg
 		
 		self._reminder.load()
 		
@@ -52,9 +47,7 @@ class MailChecker:
 		# don't check for mails simultaneously.
 		with self._mailcheck_lock:
 			print 'Checking %s email account(s) at: %s' % (len(accounts), time.asctime())
-			# kill all zombies
-			self._pid.kill()
-
+			
 			if not is_online():
 				print 'Error: No internet connection'
 				return
@@ -62,9 +55,6 @@ class MailChecker:
 			all_mails = self._mailsyncer.sync(accounts)
 			unseen_mails = []
 			new_mail_count = 0
-		
-			script_data = ""
-			script_data_mailcount = 0
 			
 			for mail in all_mails:
 				if self._reminder.contains(mail.id): # mail was fetched before
@@ -76,10 +66,6 @@ class MailChecker:
 				else: # mail is fetched the first time
 					unseen_mails.append(mail)
 					new_mail_count += 1
-					script_data += ' "<%s> %s"' % (mail.sender, mail.subject)
-					script_data_mailcount += 1
-			
-			script_data = str(script_data_mailcount) + script_data
 			
 			self._dbusservice.set_mails(unseen_mails)
 			# TODO : signal MailsRemoved if not all mails have been removed
@@ -90,28 +76,9 @@ class MailChecker:
 				self._dbusservice.MailsAdded(new_mail_count)
 			
 			self._reminder.save(all_mails)
-			# process user scripts
-			self._run_user_scripts("on_mail_check", script_data)
+			
 			# write stdout to log file
 			sys.stdout.flush()
 			self._firstcheck = False
 		
 		return
-
-			
-	def _run_user_scripts(self, event, data):
-		if event == "on_mail_check":
-			if self._cfg.get('script', 'script0_enabled') == '1':
-				script_file = self._cfg.get('script', 'script0_file')
-				if script_file != '' and os.path.exists(script_file):
-					self._pid.append(subprocess.Popen("%s %s" % (script_file, data), shell = True))
-				else:
-					print 'Warning: cannot execute script:', script_file
-		
-			if (data != '0') and (self._cfg.get('script', 'script1_enabled') == '1'):
-				script_file = self._cfg.get('script', 'script1_file')
-				if script_file != '' and os.path.exists(script_file):
-					self._pid.append(subprocess.Popen("%s %s" % (script_file, data), shell = True))
-				else:
-					print 'Warning: cannot execute script:', script_file
-
