@@ -2,8 +2,8 @@
 [Desktop Entry]
 Name=Mailnag Configuration
 Name[de]=Mailnag Configuration
-Comment=A notifier for new emails
-Comment[de]=Ein Benachrichtiger für neue Emails
+Comment=An extendable mail notification daemon
+Comment[de]=Ein erweiterbarar Mail Benachrichtigungs-Dämon
 Keywords=mail;notify;notification;config;settings;preferences;
 Exec=/usr/bin/mailnag_config
 Icon=/usr/share/mailnag/mailnag.svg

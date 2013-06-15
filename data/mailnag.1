@@ -1,12 +1,11 @@
 .TH MAILNAG "1" "November 2012" "Mailnag 0.5.0"
 .SH NAME
-mailnag \- a mail notification daemon for GNOME 3
+mailnag \- an extendable mail notification daemon
 .SH SYNOPSIS
 \fBmailnag\fP
 .SH DESCRIPTION
 \fBmailnag\fP checks POP3 and IMAP servers for new mail. When it finds new
-messages, it creates a GNOME 3 notification (integrated with the Shell) that
-mentions sender and subject.
+messages, it calls various plugins to handle them (e. g. for desktop notifications).
 .PP
 Note that you must first run \fBmailnag_config\fR to setup Mailnag.
 .SH SEE ALSO
