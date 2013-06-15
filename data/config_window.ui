@@ -65,7 +65,7 @@
               <object class="GtkLabel" id="label8">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="label" translatable="yes">&lt;a href="https://github.com/pulb/mailnag"&gt;Mailnag&lt;/a&gt; - An extendable mail notifier.
+                <property name="label" translatable="yes">&lt;a href="https://github.com/pulb/mailnag"&gt;Mailnag&lt;/a&gt; - An extendable mail notification daemon.
 Copyright (c) 2011 - 2013 Patrick Ulbrich
 and contributors.</property>
                 <property name="use_markup">True</property>
