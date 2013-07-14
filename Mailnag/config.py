@@ -42,7 +42,7 @@ def main():
 			# the launched daemon shuts down 
 			# an already running daemon
 			print "Launching Mailnag daemon."
-			subprocess.Popen(os.path.join(BIN_DIR, "mailnag"))
+			subprocess.Popen(os.path.join(BIN_DIR, "mailnagd"))
 		except:
 			print "ERROR: Failed to launch Mailnag daemon."
 	else:

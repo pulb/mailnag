@@ -56,7 +56,7 @@ class BuildData(build):
 		shutil.copytree('Mailnag/common', os.path.join(BUILD_PATCH_DIR, 'common'))
 		
 		# patch paths
-		self._patch_file('./mailnag', os.path.join(BUILD_PATCH_DIR, 'mailnag'), './Mailnag', INSTALL_LIB_DIR)
+		self._patch_file('./mailnagd', os.path.join(BUILD_PATCH_DIR, 'mailnagd'), './Mailnag', INSTALL_LIB_DIR)
 		self._patch_file('./mailnag_config', os.path.join(BUILD_PATCH_DIR, 'mailnag_config'), './Mailnag', INSTALL_LIB_DIR)
 		self._patch_file('./data/mailnag_config.desktop', os.path.join(BUILD_PATCH_DIR, 'mailnag_config.desktop'), '/usr', PREFIX)
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 

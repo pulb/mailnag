@@ -254,7 +254,7 @@ class ConfigWindow:
 		# get current working directory
 		curdir = os.getcwd()
 		# path to mailnag startscript
-		exec_file = os.path.join(curdir, "mailnag")
+		exec_file = os.path.join(curdir, "mailnagd")
 
 		content = "\n" + \
 		"[Desktop Entry]\n" + \
