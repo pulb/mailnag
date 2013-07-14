@@ -145,7 +145,7 @@ def unload_plugins():
 def main():
 	global mainloop, start_thread
 	
-	set_procname("mailnag")
+	set_procname("mailnagd")
 	
 	GObject.threads_init()
 	DBusGMainLoop(set_as_default = True)
