@@ -182,7 +182,7 @@ class ConfigWindow:
 		else: self._delete_autostart()
 
 
-	def _show_yesno_dialog(self, text):
+	def _show_confirmation_dialog(self, text):
 		message = Gtk.MessageDialog(self._window, Gtk.DialogFlags.MODAL, \
 			Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO, text)
 		resp = message.run()
@@ -309,7 +309,7 @@ class ConfigWindow:
 	def _on_btn_remove_account_clicked(self, widget):
 		acc, model, iter = self._get_selected_account()
 		if iter != None:
-			if self._show_yesno_dialog(_('Delete this account:') + \
+			if self._show_confirmation_dialog(_('Delete this account:') + \
 				'\n\n' + acc.name):
 				
 				# select prev/next account
