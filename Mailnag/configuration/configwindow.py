@@ -171,8 +171,12 @@ class ConfigWindow:
 					enabled_plugins += ', '
 				enabled_plugins += modname
 			
-			for k, v in plugin.get_config():
-				self._cfg.set(modname, k, v)
+			config = plugin.get_config()
+			if len(config) > 0:
+				if not self._cfg.has_section(modname):
+					self._cfg.add_section(modname)
+				for k, v in config.iteritems():
+					self._cfg.set(modname, k, v)
 		
 		self._cfg.set('general', 'enabled_plugins', enabled_plugins)
 		

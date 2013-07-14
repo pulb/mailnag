@@ -188,7 +188,8 @@ class Plugin:
 				config[name] = value
 		
 		# sync with default config
-		for k, v in self.get_default_config():
+		default_config = self.get_default_config()
+		for k, v in default_config.iteritems():
 			if not config.has_key(k):
 				config[k] = v
 		
