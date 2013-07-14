@@ -25,6 +25,7 @@ import dbus
 import dbus.service
 from common.dist_cfg import DBUS_BUS_NAME, DBUS_OBJ_PATH
 from common.plugins import Plugin, HookTypes
+from common.i18n import _
 
 plugin_defaults = {}
 
@@ -73,8 +74,8 @@ class DBusPlugin(Plugin):
 
 	
 	def get_manifest(self):
-		return ("DBus Service",
-				"Exposes Mailnag's functionality via a DBus service.",
+		return (_("DBus Service"),
+				_("Exposes Mailnag's functionality via a DBus service."),
 				"1.0",
 				"Patrick Ulbrich <zulu99@gmx.net>",
 				True)

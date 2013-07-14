@@ -25,6 +25,7 @@ import os
 import threading
 from common.plugins import Plugin, HookTypes
 from common.utils import get_data_file
+from common.i18n import _
 from gi.repository import Gst, Gio
 
 plugin_defaults = { 'soundfile' : 'mailnag.ogg' }
@@ -64,8 +65,8 @@ class SoundPlugin(Plugin):
 
 	
 	def get_manifest(self):
-		return ("Sound notifications",
-				"Plays a sound when new mails arrive.",
+		return (_("Sound notifications"),
+				_("Plays a sound when new mails arrive."),
 				"1.0",
 				"Patrick Ulbrich <zulu99@gmx.net>",
 				False)
