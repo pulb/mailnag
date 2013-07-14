@@ -82,17 +82,18 @@ class MailChecker:
 					new_mail_count += 1
 			
 			# apply filter plugin hooks
+			filtered_mails = unseen_mails
 			for f in self._hookreg.get_hook_funcs(HookTypes.FILTER_MAILS):
-				unseen_mails = try_call( lambda: f(unseen_mails), unseen_mails )
+				filtered_mails = try_call( lambda: f(filtered_mails), filtered_mails )
 			
 			# TODO : signal MailsRemoved if not all mails have been removed
 			# (i.e. if mailcount has been decreased)
 			if len(all_mails) == 0:
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_REMOVED):
-					try_call( lambda: f(unseen_mails) )	
-			elif new_mail_count > 0:
+					try_call( lambda: f(filtered_mails) )	
+			elif (new_mail_count > 0) and (filtered_mails > 0):
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_ADDED):
-					try_call( lambda: f(unseen_mails, new_mail_count) )
+					try_call( lambda: f(filtered_mails, new_mail_count) )
 			
 			self._reminder.save(all_mails)
 			
