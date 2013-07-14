@@ -32,6 +32,7 @@ from common.utils import get_data_file
 from common.config import read_cfg, write_cfg
 from common.accountlist import AccountList
 from common.account import Account
+from common.plugins import Plugin
 from configuration.accountdialog import AccountDialog
 
 class ConfigWindow:
@@ -41,12 +42,15 @@ class ConfigWindow:
 		builder.add_from_file(get_data_file("config_window.ui"))
 		builder.connect_signals({ \
 			"config_window_deleted" : self._on_config_window_deleted, \
-			"btn_add_clicked" : self._on_btn_add_clicked, \
-			"btn_edit_clicked" : self._on_btn_edit_clicked, \
-			"btn_remove_clicked" : self._on_btn_remove_clicked, \
+			"btn_add_account_clicked" : self._on_btn_add_account_clicked, \
+			"btn_edit_account_clicked" : self._on_btn_edit_account_clicked, \
+			"btn_remove_account_clicked" : self._on_btn_remove_account_clicked, \
 			"treeview_accounts_row_activated" : self._on_treeview_accounts_row_activated, \
 			"liststore_accounts_row_deleted" : self._on_liststore_accounts_row_deleted, \
 			"liststore_accounts_row_inserted" : self._on_liststore_accounts_row_inserted, \
+			"btn_edit_plugin_clicked" : self._on_btn_edit_plugin_clicked, \
+			"treeview_plugins_row_activated" : self._on_treeview_plugins_row_activated, \
+			"treeview_plugins_cursor_changed" : self._on_treeview_plugins_cursor_changed, \
 		})
 
 		self._window = builder.get_object("config_window")
@@ -73,29 +77,53 @@ class ConfigWindow:
 
 		self._treeview_accounts = builder.get_object("treeview_accounts")
 		self._liststore_accounts = builder.get_object("liststore_accounts")
+		
+		self._button_edit_account = builder.get_object("btn_edit_account")
+		self._button_remove_account = builder.get_object("btn_remove_account")
+		
+		self._button_edit_account.set_sensitive(False)
+		self._button_remove_account.set_sensitive(False)
+		
+		renderer_acc_enabled = Gtk.CellRendererToggle()
+		renderer_acc_enabled.connect("toggled", self._on_account_toggled)
+		column_acc_enabled = Gtk.TreeViewColumn(_('Enabled'), renderer_acc_enabled)
+		column_acc_enabled.add_attribute(renderer_acc_enabled, "active", 1)
+		column_acc_enabled.set_alignment(0.5)
+		self._treeview_accounts.append_column(column_acc_enabled)
 
-		self._button_edit = builder.get_object("btn_edit")
-		self._button_remove = builder.get_object("btn_remove")
-
-		renderer_on = Gtk.CellRendererToggle()
-		renderer_on.connect("toggled", self._on_account_toggled)
-		column_on = Gtk.TreeViewColumn(_('Enabled'), renderer_on)
-		column_on.add_attribute(renderer_on, "active", 1)
-		column_on.set_alignment(0.5)
-		self._treeview_accounts.append_column(column_on)
-
-		renderer_name = Gtk.CellRendererText()
-		column_name = Gtk.TreeViewColumn(_('Name'), renderer_name, text=2)
-		self._treeview_accounts.append_column(column_name)
+		renderer_acc_name = Gtk.CellRendererText()
+		column_acc_name = Gtk.TreeViewColumn(_('Name'), renderer_acc_name, text = 2)
+		self._treeview_accounts.append_column(column_acc_name)
 
 		self._spinbutton_interval = builder.get_object("spinbutton_interval")
 		
 		#
 		# plugins tab
 		#
+		self._treeview_plugins = builder.get_object("treeview_plugins")
+		self._liststore_plugins = builder.get_object("liststore_plugins")
 		
-		# TODO
+		self._button_edit_plugin = builder.get_object("btn_edit_plugin")
+		self._button_edit_plugin.set_sensitive(False)
 		
+		def renderer_plugin_enabled_func(column, cell_renderer, model, iter, data):
+			plugin = model.get_value(iter, 0)
+			name, desc, ver, author, mandatory = plugin.get_manifest()
+			cell_renderer.set_sensitive(not mandatory)
+		
+		renderer_plugin_enabled = Gtk.CellRendererToggle()
+		renderer_plugin_enabled.connect("toggled", self._on_plugin_toggled)
+		column_plugin_enabled = Gtk.TreeViewColumn(_('Enabled'), renderer_plugin_enabled)
+		column_plugin_enabled.add_attribute(renderer_plugin_enabled, "active", 1)
+		column_plugin_enabled.set_alignment(0.5)
+		column_plugin_enabled.set_cell_data_func(renderer_plugin_enabled, renderer_plugin_enabled_func)
+		self._treeview_plugins.append_column(column_plugin_enabled)
+
+		renderer_plugin_name = Gtk.CellRendererText()
+		column_plugin_name = Gtk.TreeViewColumn(_('Name'), renderer_plugin_name, markup = 2)
+		self._treeview_plugins.append_column(column_plugin_name)
+		
+		# load config
 		self._load_config()
 		self._window.show()
 
@@ -106,11 +134,25 @@ class ConfigWindow:
 		
 		self._accounts.load_from_cfg(self._cfg)
 		
+		# load accounts
 		for acc in self._accounts:
 			row = [acc, acc.enabled, acc.name]
 			self._liststore_accounts.append(row)
-		self._select_path((0,))		
+		self._select_account_path((0,))
 		
+		# load plugins
+		enabled_lst = self._cfg.get('general', 'enabled_plugins').split(',')
+		enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
+		
+		plugins = Plugin.load_plugins(self._cfg)
+		for plugin in plugins:
+			name, desc, ver, author, mandatory = plugin.get_manifest()
+			enabled = True if plugin.get_modname() in enabled_lst else False
+			description = '<b>%s</b> (%s)\n%s' % (name, ver, desc)
+			row = [plugin, enabled, description]
+			self._liststore_plugins.append(row)
+		self._select_plugin_path((0,))
+	
 
 	def _save_config(self):
 		autostart = self._switch_daemon_enabled.get_active()
@@ -118,7 +160,22 @@ class ConfigWindow:
 		self._cfg.set('general', 'check_interval', int(self._spinbutton_interval.get_value()))
 
 		self._accounts.save_to_cfg(self._cfg)
-				
+		
+		enabled_plugins = ''
+		for row in self._liststore_plugins:
+			plugin = row[0]
+			modname = plugin.get_modname()
+			
+			if row[1] == True:
+				if len(enabled_plugins) > 0:
+					enabled_plugins += ', '
+				enabled_plugins += modname
+			
+			for k, v in plugin.get_config():
+				self._cfg.set(modname, k, v)
+		
+		self._cfg.set('general', 'enabled_plugins', enabled_plugins)
+		
 		write_cfg(self._cfg)
 
 		if autostart: self._create_autostart()
@@ -138,13 +195,13 @@ class ConfigWindow:
 		treeselection = self._treeview_accounts.get_selection()
 		selection = treeselection.get_selected()
 		model, iter = selection
-		# get account object from treeviews 1. column
+		# get account object from treeviews 1st column
 		if iter != None: acc = model.get_value(iter, 0)
 		else: acc = None
 		return acc, model, iter
 	
 	
-	def _select_path(self, path):
+	def _select_account_path(self, path):
 		treeselection = self._treeview_accounts.get_selection()
 		treeselection.select_path(path)
 		self._treeview_accounts.grab_focus()
@@ -159,6 +216,36 @@ class ConfigWindow:
 				model.set_value(iter, 2, acc.name)
 
 
+	def _get_selected_plugin(self):
+		treeselection = self._treeview_plugins.get_selection()
+		selection = treeselection.get_selected()
+		model, iter = selection
+		# get plugin object from treeviews 1st column
+		if iter != None: plugin = model.get_value(iter, 0)
+		else: plugin = None
+		return plugin, model, iter
+	
+	
+	def _select_plugin_path(self, path):
+		treeselection = self._treeview_plugins.get_selection()
+		treeselection.select_path(path)
+		self._treeview_plugins.grab_focus()
+	
+	
+	def _edit_plugin(self):
+		plugin, model, iter = self._get_selected_plugin()
+		
+		if (iter != None) and plugin.has_config_ui():
+			config_widget = plugin.get_config_ui()
+		
+			# TODO : show plugin dialog and load its config
+			if config_widget != None:
+				plugin.load_ui_from_config(config_widget)
+				#d = PluginDialog(self._window, widget)
+				#d.run()
+				plugin.save_ui_to_config(config_widget)
+	
+	
 	def _create_autostart(self):
 		# get current working directory
 		curdir = os.getcwd()
@@ -200,7 +287,7 @@ class ConfigWindow:
 		self._liststore_accounts.set_value(iter, 1, not cell.get_active())
 		
 
-	def _on_btn_add_clicked(self, widget):
+	def _on_btn_add_account_clicked(self, widget):
 		acc = Account(enabled = True, name = '')
 		d = AccountDialog(self._window, acc)
 	
@@ -215,11 +302,11 @@ class ConfigWindow:
 			self._treeview_accounts.grab_focus()
 
 
-	def _on_btn_edit_clicked(self, widget):
+	def _on_btn_edit_account_clicked(self, widget):
 		self._edit_account()
 
 
-	def _on_btn_remove_clicked(self, widget):
+	def _on_btn_remove_account_clicked(self, widget):
 		acc, model, iter = self._get_selected_account()
 		if iter != None:
 			if self._show_yesno_dialog(_('Delete this account:') + \
@@ -229,7 +316,7 @@ class ConfigWindow:
 				p = model.get_path(iter)
 				if not p.prev():
 					p.next()
-				self._select_path(p)
+				self._select_account_path(p)
 				
 				# remove from treeview
 				model.remove(iter)
@@ -242,14 +329,34 @@ class ConfigWindow:
 
 
 	def _on_liststore_accounts_row_deleted(self, model, path):
-		self._button_edit.set_sensitive(len(model) > 0)
-		self._button_remove.set_sensitive(len(model) > 0)
+		self._button_edit_account.set_sensitive(len(model) > 0)
+		self._button_remove_account.set_sensitive(len(model) > 0)
 
 
 	def _on_liststore_accounts_row_inserted(self, model, path, user_param):
-		self._button_edit.set_sensitive(len(model) > 0)
-		self._button_remove.set_sensitive(len(model) > 0)
+		self._button_edit_account.set_sensitive(len(model) > 0)
+		self._button_remove_account.set_sensitive(len(model) > 0)
 		
+	
+	def _on_plugin_toggled(self, cell, path):
+		model = self._liststore_plugins
+		iter = model.get_iter(path)
+		self._liststore_plugins.set_value(iter, 1, not cell.get_active())
+	
+	
+	def _on_btn_edit_plugin_clicked(self, widget):
+		self._edit_plugin()
+	
+	
+	def _on_treeview_plugins_row_activated(self, treeview, path, view_column):
+		self._edit_plugin()
+	
+		
+	def _on_treeview_plugins_cursor_changed(self, treeview):
+		plugin, model, iter = self._get_selected_plugin()
+		if iter != None:
+			self._button_edit_plugin.set_sensitive(plugin.has_config_ui())
+	
 	
 	def _save_and_quit(self):
 		self._save_config()	

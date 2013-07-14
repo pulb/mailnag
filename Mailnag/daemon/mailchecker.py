@@ -25,19 +25,30 @@
 import threading
 import sys
 import time
+import traceback
 
 from common.utils import is_online
 from common.i18n import _
+from common.plugins import HookTypes
 from daemon.reminder import Reminder
 from daemon.mailsyncer import MailSyncer
 
+
+def try_call(f, err_retval = None):
+	try:
+		return f()
+	except:
+		traceback.print_exc()
+		return err_retval
+
+			
 class MailChecker:
-	def __init__(self, cfg, dbusservice):
+	def __init__(self, cfg, hookreg):
 		self._firstcheck = True # first check after startup
 		self._mailcheck_lock = threading.Lock()
 		self._mailsyncer = MailSyncer(cfg)
 		self._reminder = Reminder()
-		self._dbusservice = dbusservice
+		self._hookreg = hookreg
 		
 		self._reminder.load()
 		
@@ -48,6 +59,9 @@ class MailChecker:
 		with self._mailcheck_lock:
 			print 'Checking %s email account(s) at: %s' % (len(accounts), time.asctime())
 			
+			for f in self._hookreg.get_hook_funcs(HookTypes.MAIL_CHECK):
+				try_call( f )
+				
 			if not is_online():
 				print 'Error: No internet connection'
 				return
@@ -67,13 +81,18 @@ class MailChecker:
 					unseen_mails.append(mail)
 					new_mail_count += 1
 			
-			self._dbusservice.set_mails(unseen_mails)
+			# apply filter plugin hooks
+			for f in self._hookreg.get_hook_funcs(HookTypes.FILTER_MAILS):
+				unseen_mails = try_call( lambda: f(unseen_mails), unseen_mails )
+			
 			# TODO : signal MailsRemoved if not all mails have been removed
-			# (i. e. if mailcount has been decreased)
+			# (i.e. if mailcount has been decreased)
 			if len(all_mails) == 0:
-				self._dbusservice.MailsRemoved(0)
+				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_REMOVED):
+					try_call( lambda: f(unseen_mails) )	
 			elif new_mail_count > 0:
-				self._dbusservice.MailsAdded(new_mail_count)
+				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_ADDED):
+					try_call( lambda: f(unseen_mails, new_mail_count) )
 			
 			self._reminder.save(all_mails)
 			

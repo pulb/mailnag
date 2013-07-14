@@ -33,16 +33,41 @@ import traceback
 from common.config import read_cfg, cfg_exists, cfg_folder
 from common.utils import set_procname, is_online, shutdown_existing_instance
 from common.accountlist import AccountList
+from common.plugins import Plugin, HookRegistry, MailnagController
 from daemon.mailchecker import MailChecker
-from daemon.dbusservice import DBUSService
 from daemon.idlers import Idlers
 
 mainloop = None
 idlers = None
+plugins = []
+hook_registry = HookRegistry()
 start_thread = None
 poll_thread = None
 poll_thread_stop = threading.Event()
 
+
+# Mailnag controller implementation passed to plugins
+class MailnagController_Impl(MailnagController):
+	def __init__(self, hookreg):
+		MailnagController.__init__(self, hookreg)
+	
+	
+	def shutdown(self):
+		if mainloop != None:
+			mainloop.quit()
+			return True
+		else:
+			return False
+	
+	
+	def check_for_mails(self):
+		if (mailchecker != None): #and (non_idle_accounts != None):
+		#	TODO mailchecker.check(non_idle_accounts)
+			return True
+		else:
+			return False
+	
+	
 def read_config():
 	if not cfg_exists():
 		return None
@@ -71,10 +96,50 @@ def cleanup():
 	if idlers != None:
 		idlers.dispose()
 
+	# Clear vars used in the MailnagController 
+	# so plugins can't perform unwanted calls to 
+	# shutdown() or check_for_mail() 
+	# when being disabled on shut down.
+	mainloop = None
+	mailchecker = None
+	
+	unload_plugins()
+
 
 def sig_handler(signum, frame):
 	if mainloop != None:
 		mainloop.quit()
+
+
+def load_plugins(cfg, hookreg):
+	global plugins
+	controller = MailnagController_Impl(hookreg)
+	
+	enabled_lst = cfg.get('general', 'enabled_plugins').split(',')
+	enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
+	plugins = Plugin.load_plugins(cfg, controller, enabled_lst)
+	
+	for p in plugins:
+		try:
+			p.enable()
+			print "Successfully enabled plugin '%s'" % p.get_modname()
+		except:
+			print "Failed to enable plugin '%s'" % p.get_modname()
+
+
+def unload_plugins():
+	if len(plugins) > 0:
+		err = False
+		
+		for p in plugins:
+			try:
+				p.disable()
+			except:
+				err = True
+				print "Failed to disable plugin '%s'" % p.get_modname()
+		
+		if not err:
+			print "Plugins disabled successfully"
 
 
 def main():
@@ -99,10 +164,10 @@ def main():
 		
 		wait_for_inet_connection()
 		
-		dbusservice = DBUSService(shutdown_cb = lambda: mainloop.quit())
+		load_plugins(cfg, hook_registry)
 				
 		# start checking for mails asynchronously 
-		start_thread = threading.Thread(target = start, args = (cfg, dbusservice,))
+		start_thread = threading.Thread(target = start, args = (cfg, hook_registry, ))
 		start_thread.start()
 		
 		# start mainloop for DBus communication
@@ -116,14 +181,14 @@ def main():
 		cleanup()
 
 
-def start(cfg, dbusservice):
+def start(cfg, hookreg):
 	global poll_thread, idlers
 	
 	try:
 		accounts = AccountList()
 		accounts.load_from_cfg(cfg, enabled_only = True)
 		
-		mailchecker = MailChecker(cfg, dbusservice)
+		mailchecker = MailChecker(cfg, hookreg)
 		
 		# immediate check, check *all* accounts
 		try:		
