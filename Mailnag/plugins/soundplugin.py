@@ -81,6 +81,8 @@ class SoundPlugin(Plugin):
 	
 	
 	def get_config_ui(self):
+		# TODO : Add ui to specify the path 
+		# of a custom sound file.
 		return None
 	
 	
