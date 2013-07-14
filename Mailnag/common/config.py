@@ -32,7 +32,7 @@ mailnag_defaults = {
 		'check_interval'	: '5',
 		'sender_format'		: '1',
 		'autostart'			: '1',
-		'enabled_plugins'	: 'dbusplugin'
+		'enabled_plugins'	: 'dbusplugin, soundplugin'
 	}
 }
 
