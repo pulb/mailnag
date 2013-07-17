@@ -30,8 +30,7 @@ from common.dist_cfg import PACKAGE_NAME, APP_VERSION
 from common.i18n import _
 from common.utils import get_data_file
 from common.config import read_cfg, write_cfg
-from common.accountlist import AccountList
-from common.account import Account
+from common.accounts import Account, AccountList
 from common.plugins import Plugin
 from configuration.accountdialog import AccountDialog
 

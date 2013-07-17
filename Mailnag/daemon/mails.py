@@ -26,11 +26,28 @@
 import time
 import sys
 import email
+import os
 
 from common.i18n import _
+from common.config import cfg_folder
 from email.header import decode_header
-from daemon.mail import Mail
 
+
+#
+# Mail class
+#
+class Mail:
+	def __init__(self, datetime, subject, sender, id, account_id):
+		self.datetime = datetime
+		self.subject = subject
+		self.sender = sender
+		self.id = id
+		self.account_id = account_id
+
+
+#
+# Mails class
+#
 class Mails:
 	def __init__(self, cfg, accounts):
 		self._cfg = cfg
@@ -296,3 +313,121 @@ class Mails:
 
 		return decoded_content
 
+
+#
+# MailSyncer class
+#
+class MailSyncer:
+	def __init__(self, cfg):
+		self._cfg = cfg
+		self._mails_by_account = {}
+		self._mail_list = []
+	
+	
+	def sync(self, accounts):
+		needs_rebuild = False
+		
+		# get mails from given accounts
+		rcv_lst = Mails(self._cfg, accounts).get_mail()
+	
+		# group received mails by account
+		tmp = {}
+		for acc in accounts:
+			tmp[acc.get_id()] = {}
+		for mail in rcv_lst:
+			tmp[mail.account_id][mail.id] = mail
+	
+		# compare current mails against received mails
+		# and remove those that are gone (probably opened in mail client).
+		for acc_id in self._mails_by_account.iterkeys():
+			if acc_id in tmp:
+				del_ids = []
+				for mail_id in self._mails_by_account[acc_id].iterkeys():
+					if not (mail_id in tmp[acc_id]):
+						del_ids.append(mail_id)
+						needs_rebuild = True
+				for mail_id in del_ids:
+					del self._mails_by_account[acc_id][mail_id]
+	
+		# compare received mails against current mails
+		# and add new mails.
+		for acc_id in tmp:
+			if not (acc_id in self._mails_by_account):
+				self._mails_by_account[acc_id] = {}
+			for mail_id in tmp[acc_id]:
+				if not (mail_id in self._mails_by_account[acc_id]):
+					self._mails_by_account[acc_id][mail_id] = tmp[acc_id][mail_id]
+					needs_rebuild = True
+		
+		# rebuild and sort mail list
+		if needs_rebuild:
+			self._mail_list = []
+			for acc_id in self._mails_by_account:
+				for mail_id in self._mails_by_account[acc_id]:
+					self._mail_list.append(self._mails_by_account[acc_id][mail_id])
+			self._mail_list = Mails.sort_mails(self._mail_list, 'desc')
+		
+		return self._mail_list
+
+
+#
+# Reminder class
+#
+class Reminder(dict):
+
+	def load(self):
+		# load last known messages from mailnag.dat
+		dat_file = os.path.join(cfg_folder, 'mailnag.dat')
+		
+		if os.path.exists(dat_file):
+			f = open(dat_file, 'r')	# reopen file
+			for line in f:
+				# remove CR at the end
+				stripedline = line.strip()
+				# get all items from one line in a list: ["mailid", show_only_new flag"]
+				content = stripedline.split(',')
+				try:
+					# add to dict [id : flag]
+					self[content[0]] = content[1]
+				except IndexError:
+					# no flags in mailnag.dat
+					self[content[0]] = '0'
+			f.close()
+
+
+	# save mail ids to file
+	def save(self, mail_list):
+		dat_file = os.path.join(cfg_folder, 'mailnag.dat')
+		f = open(dat_file, 'w')	# open for overwrite
+		for m in mail_list:
+			try:
+				seen_flag = self[m.id]
+			except KeyError:
+				# id of a new mail is not yet known to reminder
+				seen_flag = '0'
+			# construct line: email_id, seen_flag
+			line = m.id + ',' + seen_flag + '\n'
+			f.write(line)
+			self[m.id] = seen_flag
+		f.close()
+
+
+	# check if mail id is in reminder list
+	def contains(self, id):
+		return (id in self)
+
+
+	# set seen flag for this email on True
+	def set_to_seen(self, id):
+		try:
+			self[id] = '1'
+		except KeyError:
+			pass
+
+
+	def unseen(self, id):
+		try:
+			flag = self[id]
+			return (flag == '0')
+		except KeyError:
+			return True

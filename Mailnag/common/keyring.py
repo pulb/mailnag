@@ -3,7 +3,7 @@
 #
 # keyring.py
 #
-# Copyright 2011, 2012 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -23,9 +23,8 @@
 #
 
 from gi.repository import GnomeKeyring
-
 from common.i18n import _
-from common.account import Account
+
 
 class Keyring:
 	def __init__(self):

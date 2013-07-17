@@ -30,8 +30,7 @@ import traceback
 from common.utils import is_online
 from common.i18n import _
 from common.plugins import HookTypes
-from daemon.reminder import Reminder
-from daemon.mailsyncer import MailSyncer
+from daemon.mails import MailSyncer, Reminder
 
 
 def try_call(f, err_retval = None):
