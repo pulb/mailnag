@@ -95,7 +95,7 @@ class Uninstall(Command):
 
 setup(name=PACKAGE_NAME,
 	version=APP_VERSION,
-	description='Mail notification daemon for GNOME 3',
+	description='An extendable mail notification daemon',
 	author='Patrick Ulbrich',
 	author_email='zulu99@gmx.net',
 	url='https://github.com/pulb/mailnag',
