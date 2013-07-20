@@ -46,15 +46,15 @@ class Mail:
 
 
 #
-# Mails class
+# MailCollector class
 #
-class Mails:
+class MailCollector:
 	def __init__(self, cfg, accounts):
 		self._cfg = cfg
 		self._accounts = accounts
 		
 		
-	def get_mail(self, sort_order = None):
+	def collect_mail(self, sort_order = None):
 		mail_list = []
 		mail_ids = []
 		
@@ -327,8 +327,8 @@ class MailSyncer:
 	def sync(self, accounts):
 		needs_rebuild = False
 		
-		# get mails from given accounts
-		rcv_lst = Mails(self._cfg, accounts).get_mail()
+		# collect mails from given accounts
+		rcv_lst = MailCollector(self._cfg, accounts).collect_mail()
 	
 		# group received mails by account
 		tmp = {}
@@ -365,7 +365,7 @@ class MailSyncer:
 			for acc_id in self._mails_by_account:
 				for mail_id in self._mails_by_account[acc_id]:
 					self._mail_list.append(self._mails_by_account[acc_id][mail_id])
-			self._mail_list = Mails.sort_mails(self._mail_list, 'desc')
+			self._mail_list = MailCollector.sort_mails(self._mail_list, 'desc')
 		
 		return self._mail_list
 

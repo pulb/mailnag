@@ -35,10 +35,10 @@ from common.utils import set_procname, is_online, shutdown_existing_instance
 from common.accounts import AccountList
 from common.plugins import Plugin, HookRegistry, MailnagController
 from daemon.mailchecker import MailChecker
-from daemon.idlers import Idlers
+from daemon.idlers import IdlerRunner
 
 mainloop = None
-idlers = None
+idlrunner = None
 plugins = []
 hook_registry = HookRegistry()
 start_thread = None
@@ -93,8 +93,8 @@ def cleanup():
 		poll_thread.join()
 		print "Polling thread exited successfully"
 	
-	if idlers != None:
-		idlers.dispose()
+	if idlrunner != None:
+		idlrunner.dispose()
 
 	# Clear vars used in the MailnagController 
 	# so plugins can't perform unwanted calls to 
@@ -182,7 +182,7 @@ def main():
 
 
 def start(cfg, hookreg):
-	global poll_thread, idlers
+	global poll_thread, idlrunner
 	
 	try:
 		accounts = AccountList()
@@ -228,8 +228,8 @@ def start(cfg, hookreg):
 					traceback.print_exc()
 
 		
-			idlers = Idlers(idle_accounts, sync_func)
-			idlers.run()
+			idlrunner = IdlerRunner(idle_accounts, sync_func)
+			idlrunner.run()
 	except:
 		traceback.print_exc()
 		mainloop.quit()

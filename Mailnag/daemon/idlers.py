@@ -157,9 +157,9 @@ class Idler(object):
 
 
 #
-# Idlers class
+# IdlerRunner class
 #
-class Idlers:
+class IdlerRunner:
 	def __init__(self, accounts, sync_callback):
 		self._idlerlist = []
 		self._accounts = accounts
