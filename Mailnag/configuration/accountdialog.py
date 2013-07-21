@@ -25,7 +25,6 @@ from gi.repository import GLib, GdkPixbuf, Gtk
 from common.dist_cfg import PACKAGE_NAME
 from common.i18n import _
 from common.utils import get_data_file
-from common.accounts import Account
 
 class AccountDialog:
 	def __init__(self, parent, acc):
