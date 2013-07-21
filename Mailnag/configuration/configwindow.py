@@ -33,6 +33,8 @@ from common.config import read_cfg, write_cfg
 from common.accounts import Account, AccountList
 from common.plugins import Plugin
 from configuration.accountdialog import AccountDialog
+from configuration.plugindialog import PluginDialog
+
 
 class ConfigWindow:
 	def __init__(self):
@@ -239,14 +241,8 @@ class ConfigWindow:
 		plugin, model, iter = self._get_selected_plugin()
 		
 		if (iter != None) and plugin.has_config_ui():
-			config_widget = plugin.get_config_ui()
-		
-			# TODO : show plugin dialog and load its config
-			if config_widget != None:
-				plugin.load_ui_from_config(config_widget)
-				#d = PluginDialog(self._window, widget)
-				#d.run()
-				plugin.save_ui_to_config(config_widget)
+			d = PluginDialog(self._window, plugin)
+			d.run()
 	
 	
 	def _create_autostart(self):
