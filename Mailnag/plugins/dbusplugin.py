@@ -41,9 +41,9 @@ class DBusPlugin(Plugin):
 		controller = self.get_mailnag_controller()
 		self._dbusservice = DBusService(controller)
 		
-		def mails_added_hook(all_mails, new_mail_count):
+		def mails_added_hook(new_mails, all_mails):
 			self._dbusservice.set_mails(all_mails)
-			self._dbusservice.MailsAdded(new_mail_count)
+			self._dbusservice.MailsAdded(len(new_mails))
 		
 		def mails_removed_hook(remaining_mails):
 			self._dbusservice.set_mails(remaining_mails)

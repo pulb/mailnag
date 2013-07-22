@@ -25,7 +25,10 @@ from gi.repository import Notify
 from common.plugins import Plugin, HookTypes
 from common.i18n import _
 
-plugin_defaults = { 'notification_mode' : '1' }
+NOTIFICATION_MODE_SINGLE = '0'
+NOTIFICATION_MODE_SUMMARY = '1'
+
+plugin_defaults = { 'notification_mode' : NOTIFICATION_MODE_SUMMARY }
 
 
 class LibNotifyPlugin(Plugin):
@@ -48,12 +51,10 @@ class LibNotifyPlugin(Plugin):
 			Notify.init("Mailnag")
 			self._initialized = True
 		
-		def mails_added_hook(all_mails, new_mail_count):
+		def mails_added_hook(new_mails, all_mails):
 			config = self.get_config()
-			if config['notification_mode'] == 0:
-				# TODO : not supported by plugin API yet 
-				# self._notify_single(new_mails)
-				pass
+			if config['notification_mode'] == NOTIFICATION_MODE_SINGLE:
+				self._notify_single(new_mails)
 			else:
 				self._notify_summary(all_mails)
 		
@@ -150,7 +151,7 @@ class LibNotifyPlugin(Plugin):
 	def _notify_single(self, mails):
 		for mail in mails:
 			n = self._get_notification(mail.sender, mail.subject, "mail-unread")
-			# notification_id = str(id(n))
+			notification_id = str(id(n))
 			# n.add_action("mark-as-read", _("Mark as read"), self._notification_action_handler, (mail, notification_id), None)			
 			n.show()
 			self._notifications[notification_id] = n

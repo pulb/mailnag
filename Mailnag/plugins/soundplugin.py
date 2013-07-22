@@ -40,7 +40,7 @@ class SoundPlugin(Plugin):
 	def enable(self):
 		self._gsettings = Gio.Settings.new('org.gnome.shell')
 		
-		def mails_added_hook(all_mails, new_mail_count):
+		def mails_added_hook(new_mails, all_mails):
 			if self._gsettings.get_int('saved-session-presence') != 2:
 				config = self.get_config()
 				gstplay(get_data_file(config['soundfile']))

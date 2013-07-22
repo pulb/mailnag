@@ -67,32 +67,34 @@ class MailChecker:
 			
 			all_mails = self._mailsyncer.sync(accounts)
 			unseen_mails = []
-			new_mail_count = 0
+			new_mails = []
 			
 			for mail in all_mails:
 				if self._reminder.contains(mail.id): # mail was fetched before
 					if self._reminder.unseen(mail.id): # mail was not marked as seen
 						unseen_mails.append(mail)
 						if self._firstcheck:
-							new_mail_count += 1
+							new_mails.append(mail)
 				
 				else: # mail is fetched the first time
 					unseen_mails.append(mail)
-					new_mail_count += 1
+					new_mails.append(mail)
 			
 			# apply filter plugin hooks
-			filtered_mails = unseen_mails
+			filtered_unseen_mails = unseen_mails
 			for f in self._hookreg.get_hook_funcs(HookTypes.FILTER_MAILS):
-				filtered_mails = try_call( lambda: f(filtered_mails), filtered_mails )
+				filtered_unseen_mails = try_call( lambda: f(filtered_unseen_mails), filtered_unseen_mails )
+			
+			filtered_new_mails = [m for m in new_mails if m in filtered_unseen_mails]
 			
 			# TODO : signal MailsRemoved if not all mails have been removed
 			# (i.e. if mailcount has been decreased)
 			if len(all_mails) == 0:
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_REMOVED):
-					try_call( lambda: f(filtered_mails) )	
-			elif (new_mail_count > 0) and (filtered_mails > 0):
+					try_call( lambda: f(filtered_unseen_mails) )	
+			elif len(filtered_new_mails) > 0:
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_ADDED):
-					try_call( lambda: f(filtered_mails, new_mail_count) )
+					try_call( lambda: f(filtered_new_mails, filtered_unseen_mails) )
 			
 			self._reminder.save(all_mails)
 			

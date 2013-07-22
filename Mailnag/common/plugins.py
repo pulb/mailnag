@@ -41,7 +41,7 @@ class HookTypes:
 	# OUT:	None
 	MAIL_CHECK = 'mail-check'
 	# func signature: 
-	# IN:	all mails, count of new mails
+	# IN:	new mails, all mails
 	# OUT:	None
 	MAILS_ADDED = 'mails-added'
 	# func signature:
@@ -49,7 +49,7 @@ class HookTypes:
 	# OUT:	None
 	MAILS_REMOVED = 'mails-removed'
 	# func signature:
-	# IN:	new mails
+	# IN:	all mails
 	# OUT:	filtered mails
 	FILTER_MAILS = 'filter-mails'
 

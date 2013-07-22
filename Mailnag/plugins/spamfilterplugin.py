@@ -37,9 +37,9 @@ class SpamfilterPlugin(Plugin):
 		config = self.get_config()
 		self._filter_list = config['filter_text'].replace('\n', '').split(',')
 		
-		def filter_mails_hook(new_mails):
+		def filter_mails_hook(mails):
 			lst = []
-			for m in new_mails:
+			for m in mails:
 				if not self._is_filtered(m):
 					lst.append(m)
 			return lst
