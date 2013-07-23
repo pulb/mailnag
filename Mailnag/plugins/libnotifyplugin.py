@@ -24,6 +24,7 @@
 from gi.repository import Notify
 from common.plugins import Plugin, HookTypes
 from common.i18n import _
+from daemon.mails import sort_mails
 
 NOTIFICATION_MODE_SINGLE = '0'
 NOTIFICATION_MODE_SUMMARY = '1'
@@ -149,6 +150,10 @@ class LibNotifyPlugin(Plugin):
 	
 	
 	def _notify_single(self, mails):
+		# In single notification mode new mails are
+		# added to the *bottom* of the notification list.
+		mails = sort_mails(mails, sort_desc = False)
+		
 		for mail in mails:
 			n = self._get_notification(mail.sender, mail.subject, "mail-unread")
 			notification_id = str(id(n))
