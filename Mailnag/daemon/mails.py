@@ -47,6 +47,7 @@ class Mail:
 
 #
 # MailCollector class
+# TODO : unspaghettize me!
 #
 class MailCollector:
 	def __init__(self, cfg, accounts):
@@ -54,7 +55,7 @@ class MailCollector:
 		self._accounts = accounts
 		
 		
-	def collect_mail(self, sort_order = None):
+	def collect_mail(self, sort = True):
 		mail_list = []
 		mail_ids = []
 		
@@ -221,31 +222,12 @@ class MailCollector:
 				# disconnect from Email-Server
 				srv.quit()
 		
-		if (sort_order != None):
-			# sort mails
-			mail_list = self.sort_mails(mail_list, sort_order)
+		# sort mails
+		if sort:
+			mail_list = sort_mails(mail_list, sort_desc = True)
 		
 		# write stdout to log file
 		sys.stdout.flush()
-		return mail_list
-
-
-	# sort mail list by field 'seconds'
-	@staticmethod
-	def sort_mails(mail_list, sort_order):
-		sort_list = []
-		for mail in mail_list:
-			sort_list.append([mail.datetime, mail])
-		# sort asc
-		sort_list.sort()
-		if sort_order == 'desc':
-			# sort desc
-			sort_list.reverse()
-		
-		# recreate mail_list
-		mail_list = []
-		for mail in sort_list:
-			mail_list.append(mail[1])
 		return mail_list
 
 
@@ -328,7 +310,7 @@ class MailSyncer:
 		needs_rebuild = False
 		
 		# collect mails from given accounts
-		rcv_lst = MailCollector(self._cfg, accounts).collect_mail()
+		rcv_lst = MailCollector(self._cfg, accounts).collect_mail(sort = False)
 	
 		# group received mails by account
 		tmp = {}
@@ -365,9 +347,29 @@ class MailSyncer:
 			for acc_id in self._mails_by_account:
 				for mail_id in self._mails_by_account[acc_id]:
 					self._mail_list.append(self._mails_by_account[acc_id][mail_id])
-			self._mail_list = MailCollector.sort_mails(self._mail_list, 'desc')
+			self._mail_list = sort_mails(self._mail_list, sort_desc = True)
 		
 		return self._mail_list
+
+
+#
+# sort_mails function
+#
+def sort_mails(mail_list, sort_desc = False):
+	sort_list = []
+	for mail in mail_list:
+		sort_list.append([mail.datetime, mail])
+	
+	# sort asc
+	sort_list.sort()
+	if sort_desc:
+		sort_list.reverse()
+
+	# recreate mail_list
+	mail_list = []
+	for mail in sort_list:
+		mail_list.append(mail[1])
+	return mail_list
 
 
 #
