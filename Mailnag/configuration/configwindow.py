@@ -352,6 +352,10 @@ class ConfigWindow:
 	
 		
 	def _on_treeview_plugins_cursor_changed(self, treeview):
+		# Workaround for a bug in GTK < 3.8,
+		# see http://permalink.gmane.org/gmane.comp.gnome.svn/694089
+		if not self._window.get_visible(): return
+		
 		plugin, model, iter = self._get_selected_plugin()
 		if iter != None:
 			self._button_edit_plugin.set_sensitive(plugin.has_config_ui())
