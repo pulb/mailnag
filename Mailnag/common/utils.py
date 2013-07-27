@@ -28,6 +28,8 @@ import sys
 import time
 import dbus
 import urllib2
+import subprocess
+import threading
 
 from common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
 
@@ -84,3 +86,14 @@ def shutdown_existing_instance():
 			sys.stdout.write('OK\n')
 		except:
 			sys.stdout.write('FAILED\n')
+
+
+def start_subprocess(args, callback = None):
+	def thread():
+		p = subprocess.Popen(args)
+		retcode = p.wait()
+		if callback != None:
+			callback(retcode)
+	
+	t = threading.Thread(target = thread)
+	t.start()
