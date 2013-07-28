@@ -146,7 +146,7 @@ class ConfigWindow:
 		enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
 		
 		plugins = Plugin.load_plugins(self._cfg)
-		plugins.sort(key = lambda p : (not p.get_manifest()[4], p.get_modname()))
+		plugins.sort(key = lambda p : (not p.get_manifest()[4], p.get_manifest()[0]))
 		
 		for plugin in plugins:
 			name, desc, ver, author, mandatory = plugin.get_manifest()
