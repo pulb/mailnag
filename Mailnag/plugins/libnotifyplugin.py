@@ -91,7 +91,7 @@ class LibNotifyPlugin(Plugin):
 				self._mails_removed_hook)
 			self._mails_removed_hook = None
 		
-		self._close_close_notifications()
+		self._close_notifications()
 
 	
 	def get_manifest(self):
