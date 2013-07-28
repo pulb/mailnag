@@ -21,9 +21,11 @@
 # MA 02110-1301, USA.
 #
 
-from gi.repository import Notify
+import threading
+from gi.repository import Notify, Gio
 from common.plugins import Plugin, HookTypes
 from common.i18n import _
+from common.utils import start_subprocess
 from daemon.mails import sort_mails
 
 NOTIFICATION_MODE_SINGLE = '0'
@@ -40,6 +42,7 @@ class LibNotifyPlugin(Plugin):
 		# dict that tracks all notifications that need to be closed
 		self._notifications = {}
 		self._initialized = False
+		self._lock = threading.Lock()
 		self._mails_added_hook = None
 		self._mails_removed_hook = None
 		
@@ -62,9 +65,7 @@ class LibNotifyPlugin(Plugin):
 		def mails_removed_hook(remaining_mails):
 			if remaining_mails == 0:
 				# no mails (e.g. email client has been launched) -> close notifications
-				for n in self._notifications.itervalues():
-					n.close()
-				self._notifications = {}
+				self._close_notifications()
 		
 		self._mails_added_hook = mails_added_hook
 		self._mails_removed_hook = mails_removed_hook
@@ -90,9 +91,7 @@ class LibNotifyPlugin(Plugin):
 				self._mails_removed_hook)
 			self._mails_removed_hook = None
 		
-		for n in self._notifications.itervalues():
-			n.close()
-		self._notifications = {}
+		self._close_close_notifications()
 
 	
 	def get_manifest(self):
@@ -128,43 +127,76 @@ class LibNotifyPlugin(Plugin):
 	def _notify_summary(self, mails):
 		summary = ""		
 		body = ""
+		
+		with self._lock:
+			if len(self._notifications) == 0:
+				self._notifications['0'] = self._get_notification(" ", None, None) # empty string will emit a gtk warning
 
-		if len(self._notifications) == 0:
-			self._notifications['0'] = self._get_notification(" ", None, None) # empty string will emit a gtk warning
+			ubound = len(mails) if len(mails) <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT
 
-		ubound = len(mails) if len(mails) <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT
+			for i in range(ubound):
+				body += mails[i].sender + ":\n<i>" + mails[i].subject + "</i>\n\n"
 
-		for i in range(ubound):
-			body += mails[i].sender + ":\n<i>" + mails[i].subject + "</i>\n\n"
+			if len(mails) > self.MAIL_LIST_LIMIT:
+				body += "<i>" + _("(and {0} more)").format(str(len(mails) - self.MAIL_LIST_LIMIT)) + "</i>"
 
-		if len(mails) > self.MAIL_LIST_LIMIT:
-			body += "<i>" + _("(and {0} more)").format(str(len(mails) - self.MAIL_LIST_LIMIT)) + "</i>"
+			if len(mails) > 1: # multiple new emails
+				summary = _("You have {0} new mails.").format(str(len(mails)))
+			else:
+				summary = _("You have a new mail.")
 
-		if len(mails) > 1: # multiple new emails
-			summary = _("You have {0} new mails.").format(str(len(mails)))
-		else:
-			summary = _("You have a new mail.")
-
-		self._notifications['0'].update(summary, body, "mail-unread")
-		self._notifications['0'].show()
+			self._notifications['0'].update(summary, body, "mail-unread")
+			self._notifications['0'].show()
 	
 	
 	def _notify_single(self, mails):
 		# In single notification mode new mails are
 		# added to the *bottom* of the notification list.
 		mails = sort_mails(mails, sort_desc = False)
-		
-		for mail in mails:
-			n = self._get_notification(mail.sender, mail.subject, "mail-unread")
-			notification_id = str(id(n))
-			# n.add_action("mark-as-read", _("Mark as read"), self._notification_action_handler, (mail, notification_id), None)			
-			n.show()
-			self._notifications[notification_id] = n
+		with self._lock:
+			for mail in mails:
+				n = self._get_notification(mail.sender, mail.subject, "mail-unread")
+				notification_id = str(id(n))
+				# n.add_action("mark-as-read", _("Mark as read"), self._notification_action_handler, (mail, notification_id), None)			
+				n.show()
+				self._notifications[notification_id] = n
 
 
+	def _close_notifications(self):
+		with self._lock:
+			for n in self._notifications.itervalues():
+				n.close()
+			self._notifications = {}
+	
+	
 	def _get_notification(self, summary, body, icon):
 		n = Notify.Notification.new(summary, body, icon)		
 		n.set_category("email")
-		# n.add_action("default", "default", self._notification_action_handler, None, None)
+		n.add_action("default", "default", self._notification_action_handler, None, None)
 
 		return n
+	
+	
+	def _notification_action_handler(self, n, action, user_data):
+		with self._lock:
+			if action == "default":
+				mailclient = get_default_mail_reader()
+				if mailclient != None:
+					start_subprocess(mailclient)
+
+				# clicking the notification bubble has closed all notifications
+				# so clear the reference array as well. 
+				self._notifications = {}
+
+
+def get_default_mail_reader():
+	mail_reader = None
+	app_info = Gio.AppInfo.get_default_for_type ("x-scheme-handler/mailto", False)
+
+	if app_info != None:
+		executable = Gio.AppInfo.get_executable(app_info)
+
+		if (executable != None) and (len(executable) > 0):
+			mail_reader = executable
+
+	return mail_reader
