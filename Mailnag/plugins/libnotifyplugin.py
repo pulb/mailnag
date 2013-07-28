@@ -23,14 +23,15 @@
 
 import dbus
 import threading
-from gi.repository import Notify, Gio
+from gi.repository import Notify, Gio, Gtk
 from common.plugins import Plugin, HookTypes
 from common.i18n import _
 from common.utils import start_subprocess
 from daemon.mails import sort_mails
 
-NOTIFICATION_MODE_SINGLE = '0'
-NOTIFICATION_MODE_SUMMARY = '1'
+NOTIFICATION_MODE_COUNT		= '0'
+NOTIFICATION_MODE_SUMMARY	= '1'
+NOTIFICATION_MODE_SINGLE	= '2'
 
 plugin_defaults = { 'notification_mode' : NOTIFICATION_MODE_SUMMARY }
 
@@ -113,21 +114,57 @@ class LibNotifyPlugin(Plugin):
 	
 	
 	def has_config_ui(self):
-		return False
+		return True
 	
 	
 	def get_config_ui(self):
-		# TODO : Add ui to specify the
-		# notification mode.
-		return None
+		box = Gtk.Box()
+		box.set_spacing(12)
+		box.set_orientation(Gtk.Orientation.VERTICAL)
+		
+		label = Gtk.Label()
+		label.set_markup('<b>%s</b>' % _('Please select a notifcation mode:'))
+		label.set_alignment(0.0, 0.0)
+		box.pack_start(label, True, True, 0)
+		
+		inner_box = Gtk.Box()
+		inner_box.set_spacing(6)
+		inner_box.set_orientation(Gtk.Orientation.VERTICAL)
+		
+		cb_count = Gtk.RadioButton(label = _('Count of new mails'))
+		inner_box.pack_start(cb_count, True, True, 0)
+		
+		cb_summary = Gtk.RadioButton(label = _('Summary of new mails'), group = cb_count)
+		inner_box.pack_start(cb_summary, True, True, 0)
+		
+		cb_single = Gtk.RadioButton(label = _('One notification per new mail'), group = cb_count)
+		inner_box.pack_start(cb_single, True, True, 0)
+		
+		alignment = Gtk.Alignment()
+		alignment.set_padding(0, 0, 18, 0)
+		alignment.add(inner_box)
+		
+		box.pack_start(alignment, True, True, 0)
+		
+		return box
 	
 	
 	def load_ui_from_config(self, config_ui):
-		pass
+		config = self.get_config()
+		inner_box = config_ui.get_children()[1].get_child()
+		cb = inner_box.get_children()[int(config['notification_mode'])]
+		cb.set_active(True)
 	
 	
 	def save_ui_to_config(self, config_ui):
-		pass
+		config = self.get_config()
+		inner_box = config_ui.get_children()[1].get_child()
+		idx = 0
+		for cb in inner_box.get_children():
+			if cb.get_active():
+				config['notification_mode'] = str(idx)
+				break
+			idx += 1
 
 
 	def _notify_async(self, new_mails, all_mails):
@@ -141,10 +178,13 @@ class LibNotifyPlugin(Plugin):
 					self._notification_server_ready = True
 			
 				config = self.get_config()
-				if config['notification_mode'] == NOTIFICATION_MODE_SINGLE:
-					self._notify_single(new_mails)
-				else:
+				if config['notification_mode'] == NOTIFICATION_MODE_COUNT:
+					self._notify_count(len(all_mails))
+				elif config['notification_mode'] == NOTIFICATION_MODE_SUMMARY:
 					self._notify_summary(all_mails)
+				else:
+					self._notify_single(new_mails)
+					
 		
 		t = threading.Thread(target = thread)
 		t.start()
@@ -187,6 +227,19 @@ class LibNotifyPlugin(Plugin):
 			self._notifications[notification_id] = n
 
 
+	def _notify_count(self, count):
+		if len(self._notifications) == 0:
+			self._notifications['0'] = self._get_notification(" ", None, None) # empty string will emit a gtk warning
+		
+		if count > 1: # multiple new emails
+			summary = _("You have {0} new mails.").format(str(count))
+		else:
+			summary = _("You have a new mail.")
+		
+		self._notifications['0'].update(summary, None, "mail-unread")
+		self._notifications['0'].show()
+	
+	
 	def _close_notifications(self):
 		with self._lock:
 			for n in self._notifications.itervalues():
