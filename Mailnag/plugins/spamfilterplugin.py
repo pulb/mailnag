@@ -21,7 +21,7 @@
 # MA 02110-1301, USA.
 #
 
-from gi.repository import GLib, GdkPixbuf, Gtk
+from gi.repository import Gtk
 from common.plugins import Plugin, HookTypes
 from common.i18n import _
 
