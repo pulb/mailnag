@@ -31,10 +31,10 @@ PLUGIN_USER_PATH = os.path.join(cfg_folder, 'plugins')
 PLUGIN_PATHS = [ './Mailnag/plugins', PLUGIN_USER_PATH ]
 
 #
-# All known hook types
+# All known hook types.
+#
 # TODO : make this class an enum 
 # when Mailnag is ported to python3
-#
 class HookTypes:
 	# func signature: 
 	# IN:	None
@@ -55,8 +55,11 @@ class HookTypes:
 
 
 #
-# Registry class for plugin hooks
+# Registry class for plugin hooks.
 #
+# Registered hook functions must not block the mailnag daemon.
+# Hook functions with an execution time > 1s should be 
+# implemented non-blocking (i. e. asynchronously).
 class HookRegistry:
 	def __init__(self):
 		self._hooks = {
@@ -129,7 +132,9 @@ class Plugin:
 	
 	def disable(self):
 		# Plugins are expected to
-		# unregister all hooks here.
+		# unregister all hooks here, 
+		# free all allocated resources, 
+		# and terminate threads (if any).
 		raise NotImplementedError
 	
 	
