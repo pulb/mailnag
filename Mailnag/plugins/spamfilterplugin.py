@@ -81,7 +81,7 @@ class SpamfilterPlugin(Plugin):
 	
 	def get_config_ui(self):
 		box = Gtk.Box()
-		box.set_spacing(6)
+		box.set_spacing(12)
 		box.set_orientation(Gtk.Orientation.VERTICAL)
 		#box.set_size_request(100, -1)
 		
@@ -103,7 +103,7 @@ class SpamfilterPlugin(Plugin):
 		
 		scrollwin.add(txtview)
 		
-		box.pack_end(scrollwin, True, True, 0)
+		box.pack_start(scrollwin, True, True, 0)
 		
 		return box
 	
