@@ -88,9 +88,9 @@ def shutdown_existing_instance():
 			sys.stdout.write('FAILED\n')
 
 
-def start_subprocess(args, callback = None):
+def start_subprocess(args, shell = False, callback = None):
 	def thread():
-		p = subprocess.Popen(args)
+		p = subprocess.Popen(args, shell = shell)
 		retcode = p.wait()
 		if callback != None:
 			callback(retcode)
