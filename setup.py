@@ -57,8 +57,8 @@ class BuildData(build):
 		
 		# patch paths
 		self._patch_file('./mailnagd', os.path.join(BUILD_PATCH_DIR, 'mailnagd'), './Mailnag', INSTALL_LIB_DIR)
-		self._patch_file('./mailnag_config', os.path.join(BUILD_PATCH_DIR, 'mailnag_config'), './Mailnag', INSTALL_LIB_DIR)
-		self._patch_file('./data/mailnag_config.desktop', os.path.join(BUILD_PATCH_DIR, 'mailnag_config.desktop'), '/usr', PREFIX)
+		self._patch_file('./mailnag-config', os.path.join(BUILD_PATCH_DIR, 'mailnag-config'), './Mailnag', INSTALL_LIB_DIR)
+		self._patch_file('./data/mailnag-config.desktop', os.path.join(BUILD_PATCH_DIR, 'mailnag-config.desktop'), '/usr', PREFIX)
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
 			'./locale', os.path.join(PREFIX, 'share/locale'))
 		
@@ -102,11 +102,11 @@ setup(name=PACKAGE_NAME,
 	license='GNU GPL3',
 	package_dir = {'Mailnag.common' : os.path.join(BUILD_PATCH_DIR, 'common')},
 	packages=['Mailnag', 'Mailnag.common', 'Mailnag.configuration', 'Mailnag.daemon'],
-	scripts=[os.path.join(BUILD_PATCH_DIR, 'mailnag'), os.path.join(BUILD_PATCH_DIR, 'mailnag_config')],
+	scripts=[os.path.join(BUILD_PATCH_DIR, 'mailnag'), os.path.join(BUILD_PATCH_DIR, 'mailnag-config')],
 	data_files=[('share/mailnag', glob.glob('data/*.ui')),
 		('share/mailnag', ['data/mailnag.ogg']),
 		('share/mailnag', ['data/mailnag.svg']),
-		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnag_config.desktop')])],
+		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnag-config.desktop')])],
 	cmdclass={'build': BuildData, 
                 'install_data': InstallData,
                 'uninstall': Uninstall}
