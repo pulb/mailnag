@@ -103,8 +103,6 @@ class ConfigWindow:
 		renderer_acc_name = Gtk.CellRendererText()
 		column_acc_name = Gtk.TreeViewColumn(_('Name'), renderer_acc_name, text = 2)
 		self._treeview_accounts.append_column(column_acc_name)
-
-		self._spinbutton_interval = builder.get_object("spinbutton_interval")
 		
 		#
 		# plugins page
@@ -139,7 +137,6 @@ class ConfigWindow:
 
 	def _load_config(self):
 		self._switch_daemon_enabled.set_active(bool(int(self._cfg.get('general', 'autostart'))))
-		self._spinbutton_interval.set_value(int(self._cfg.get('general', 'check_interval')))
 		
 		self._accounts.load_from_cfg(self._cfg)
 		
@@ -168,7 +165,6 @@ class ConfigWindow:
 	def _save_config(self):
 		autostart = self._switch_daemon_enabled.get_active()
 		self._cfg.set('general', 'autostart', int(autostart))
-		self._cfg.set('general', 'check_interval', int(self._spinbutton_interval.get_value()))
 
 		self._accounts.save_to_cfg(self._cfg)
 		

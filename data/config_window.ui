@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkAdjustment" id="adjustment1">
-    <property name="lower">1</property>
-    <property name="upper">999</property>
-    <property name="value">5</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+  <object class="GtkListStore" id="liststore_accounts">
+    <columns>
+      <!-- column-name account_obj -->
+      <column type="PyObject"/>
+      <!-- column-name account_enabled -->
+      <column type="gboolean"/>
+      <!-- column-name account_name -->
+      <column type="gchararray"/>
+    </columns>
+    <signal name="row-deleted" handler="liststore_accounts_row_deleted" swapped="no"/>
+    <signal name="row-inserted" handler="liststore_accounts_row_inserted" swapped="no"/>
+  </object>
+  <object class="GtkListStore" id="liststore_plugins">
+    <columns>
+      <!-- column-name plugin_obj -->
+      <column type="PyObject"/>
+      <!-- column-name plugin_enabled -->
+      <column type="gboolean"/>
+      <!-- column-name plugin_name -->
+      <column type="gchararray"/>
+    </columns>
   </object>
   <object class="GtkWindow" id="config_window">
     <property name="width_request">400</property>
@@ -249,62 +264,6 @@ and contributors.</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
-                <child>
-                  <object class="GtkBox" id="box4">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="margin_top">12</property>
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkLabel" id="label9">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="halign">start</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">Check interval:</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkSpinButton" id="spinbutton_interval">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="invisible_char">•</property>
-                        <property name="invisible_char_set">True</property>
-                        <property name="progress_pulse_step">0.10000000149011612</property>
-                        <property name="adjustment">adjustment1</property>
-                        <property name="numeric">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label10">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">minutes</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -393,27 +352,5 @@ and contributors.</property>
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkListStore" id="liststore_accounts">
-    <columns>
-      <!-- column-name account_obj -->
-      <column type="PyObject"/>
-      <!-- column-name account_enabled -->
-      <column type="gboolean"/>
-      <!-- column-name account_name -->
-      <column type="gchararray"/>
-    </columns>
-    <signal name="row-deleted" handler="liststore_accounts_row_deleted" swapped="no"/>
-    <signal name="row-inserted" handler="liststore_accounts_row_inserted" swapped="no"/>
-  </object>
-  <object class="GtkListStore" id="liststore_plugins">
-    <columns>
-      <!-- column-name plugin_obj -->
-      <column type="PyObject"/>
-      <!-- column-name plugin_enabled -->
-      <column type="gboolean"/>
-      <!-- column-name plugin_name -->
-      <column type="gchararray"/>
-    </columns>
   </object>
 </interface>
