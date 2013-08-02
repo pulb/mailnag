@@ -29,7 +29,7 @@ from common.i18n import _
 mailnag_defaults = {
 	'general':
 	{
-		'check_interval'	: '5',
+		'check_interval'	: '10',
 		'sender_format'		: '1',
 		'autostart'			: '1',
 		'enabled_plugins'	: 'dbusplugin, soundplugin'
