@@ -136,7 +136,7 @@ class ConfigWindow:
 
 
 	def _load_config(self):
-		self._switch_daemon_enabled.set_active(bool(int(self._cfg.get('general', 'autostart'))))
+		self._switch_daemon_enabled.set_active(bool(int(self._cfg.get('core', 'autostart'))))
 		
 		self._accounts.load_from_cfg(self._cfg)
 		
@@ -147,7 +147,7 @@ class ConfigWindow:
 		self._select_account_path((0,))
 		
 		# load plugins
-		enabled_lst = self._cfg.get('general', 'enabled_plugins').split(',')
+		enabled_lst = self._cfg.get('core', 'enabled_plugins').split(',')
 		enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
 		
 		plugins = Plugin.load_plugins(self._cfg)
@@ -164,7 +164,7 @@ class ConfigWindow:
 
 	def _save_config(self):
 		autostart = self._switch_daemon_enabled.get_active()
-		self._cfg.set('general', 'autostart', int(autostart))
+		self._cfg.set('core', 'autostart', int(autostart))
 
 		self._accounts.save_to_cfg(self._cfg)
 		
@@ -185,7 +185,7 @@ class ConfigWindow:
 				for k, v in config.iteritems():
 					self._cfg.set(modname, k, v)
 		
-		self._cfg.set('general', 'enabled_plugins', enabled_plugins)
+		self._cfg.set('core', 'enabled_plugins', enabled_plugins)
 		
 		write_cfg(self._cfg)
 

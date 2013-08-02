@@ -244,7 +244,7 @@ class MailCollector:
 			except:
 				sender = ('','Error: cannot format sender')
 
-			sender_format = self._cfg.get('general', 'sender_format')
+			sender_format = self._cfg.get('core', 'sender_format')
 			if sender_format == '1' and sender[0] != '':
 				# real sender name if not empty
 				sender = sender_real

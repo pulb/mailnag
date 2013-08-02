@@ -115,7 +115,7 @@ def load_plugins(cfg, hookreg):
 	global plugins
 	controller = MailnagController_Impl(hookreg)
 	
-	enabled_lst = cfg.get('general', 'enabled_plugins').split(',')
+	enabled_lst = cfg.get('core', 'enabled_plugins').split(',')
 	enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
 	plugins = Plugin.load_plugins(cfg, controller, enabled_lst)
 	
@@ -202,7 +202,7 @@ def start(cfg, hookreg):
 		# start polling thread for POP3 accounts and
 		# IMAP accounts without idle support
 		if len(non_idle_accounts) > 0:
-			check_interval = int(cfg.get('general', 'check_interval'))
+			check_interval = int(cfg.get('core', 'check_interval'))
 		
 			def poll_func():
 				try:

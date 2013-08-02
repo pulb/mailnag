@@ -27,7 +27,7 @@ from ConfigParser import RawConfigParser
 from common.i18n import _
 
 mailnag_defaults = {
-	'general':
+	'core':
 	{
 		'check_interval'	: '10',
 		'sender_format'		: '1',
