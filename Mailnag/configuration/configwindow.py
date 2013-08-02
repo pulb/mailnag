@@ -43,6 +43,7 @@ class ConfigWindow:
 		builder.add_from_file(get_data_file("config_window.ui"))
 		builder.connect_signals({ \
 			"config_window_deleted" : self._on_config_window_deleted, \
+			"btn_page_toggled" : self._on_btn_page_toggled, \
 			"btn_add_account_clicked" : self._on_btn_add_account_clicked, \
 			"btn_edit_account_clicked" : self._on_btn_edit_account_clicked, \
 			"btn_remove_account_clicked" : self._on_btn_remove_account_clicked, \
@@ -61,7 +62,14 @@ class ConfigWindow:
 		self.daemon_enabled = False
 		
 		#
-		# general tab
+		# toggle buttons / notebook
+		#
+		self._notebook = builder.get_object("notebook")
+		self._box_navigation = builder.get_object("box_navigation")
+		self._box_navigation.get_children()[0].set_active(True)
+		
+		#
+		# general page
 		#
 		self._image_logo = builder.get_object("image_logo")
 		pb = GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 180, 180)
@@ -72,7 +80,7 @@ class ConfigWindow:
 		self._switch_daemon_enabled = builder.get_object("switch_daemon_enabled")
 		
 		#
-		# accounts tab
+		# accounts page
 		#
 		self._accounts = AccountList()
 
@@ -99,7 +107,7 @@ class ConfigWindow:
 		self._spinbutton_interval = builder.get_object("spinbutton_interval")
 		
 		#
-		# plugins tab
+		# plugins page
 		#
 		self._treeview_plugins = builder.get_object("treeview_plugins")
 		self._liststore_plugins = builder.get_object("liststore_plugins")
@@ -279,6 +287,18 @@ class ConfigWindow:
 			os.remove(autostart_file)
 
 
+	def _on_btn_page_toggled(self, button):
+		if not button.get_active():	return
+		
+		page = 0
+		for btn in self._box_navigation.get_children():
+			if btn == button:
+				self._notebook.set_current_page(page)
+			else:
+				btn.set_active(False)
+			page += 1
+	
+	
 	def _on_account_toggled(self, cell, path):
 		model = self._liststore_accounts
 		iter = model.get_iter(path)
