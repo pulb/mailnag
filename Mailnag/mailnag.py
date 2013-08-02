@@ -26,6 +26,7 @@
 from gi.repository import GObject, GLib
 from dbus.mainloop.glib import DBusGMainLoop
 import threading
+import os
 import time
 import signal
 import traceback
@@ -83,27 +84,41 @@ def wait_for_inet_connection():
 
 
 def cleanup():
-	# clean up resources
-	if (start_thread != None) and (start_thread.is_alive()):
-		start_thread.join()
-		print "Starter thread exited successfully"
+	event = threading.Event()
+	def thread():
+		# clean up resources
+		if (start_thread != None) and (start_thread.is_alive()):
+			start_thread.join()
+			print "Starter thread exited successfully"
 
-	if (poll_thread != None) and (poll_thread.is_alive()):
-		poll_thread_stop.set()
-		poll_thread.join()
-		print "Polling thread exited successfully"
+		if (poll_thread != None) and (poll_thread.is_alive()):
+			poll_thread_stop.set()
+			poll_thread.join()
+			print "Polling thread exited successfully"
 	
-	if idlrunner != None:
-		idlrunner.dispose()
+		if idlrunner != None:
+			idlrunner.dispose()
 
-	# Clear vars used in the MailnagController 
-	# so plugins can't perform unwanted calls to 
-	# shutdown() or check_for_mail() 
-	# when being disabled on shut down.
-	mainloop = None
-	mailchecker = None
+		# Clear vars used in the MailnagController 
+		# so plugins can't perform unwanted calls to 
+		# shutdown() or check_for_mail() 
+		# when being disabled on shut down.
+		mainloop = None
+		mailchecker = None
 	
-	unload_plugins()
+		unload_plugins()
+		event.set()
+		
+	threading.Thread(target = thread).start()
+	event.wait(10.0)
+	
+	if not event.is_set():
+		print "Warning: cleanup takes too long. Enforcing termination."
+		os._exit(os.EX_SOFTWARE)
+	
+	if threading.active_count() > 1:
+		print 'Warning: there are still active threads. Enforcing termination.'
+		os._exit(os.EX_SOFTWARE)
 
 
 def sig_handler(signum, frame):
