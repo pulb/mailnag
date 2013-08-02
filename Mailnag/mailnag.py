@@ -121,7 +121,7 @@ def cleanup():
 		os._exit(os.EX_SOFTWARE)
 
 
-def sig_handler(signum, frame):
+def sigterm_handler(data):
 	if mainloop != None:
 		mainloop.quit()
 
@@ -164,7 +164,8 @@ def main():
 	
 	GObject.threads_init()
 	DBusGMainLoop(set_as_default = True)
-	signal.signal(signal.SIGTERM, sig_handler)
+	GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGTERM, 
+		sigterm_handler, None)
 	
 	# shut down an (possibly) already running Mailnag daemon
 	# (must be called before instantiation of the DBUSService).
