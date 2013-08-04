@@ -24,7 +24,7 @@
 
 import os
 import xdg.BaseDirectory as bd
-from gi.repository import GLib, GdkPixbuf, Gtk, GObject
+from gi.repository import GLib, GdkPixbuf, Gdk, Gtk, GObject
 
 from common.dist_cfg import PACKAGE_NAME, APP_VERSION
 from common.i18n import _
@@ -57,6 +57,7 @@ class ConfigWindow:
 
 		self._window = builder.get_object("config_window")
 		self._window.set_icon(GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 48, 48));
+		self._load_stylesheet('config_window.css')
 		self._cfg = read_cfg()
 		
 		self.daemon_enabled = False
@@ -135,6 +136,14 @@ class ConfigWindow:
 		self._window.show()
 
 
+	def _load_stylesheet(self, stylesheet):
+		provider = Gtk.CssProvider()
+		provider.load_from_path(get_data_file(stylesheet))
+		Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(),
+												 provider,
+												 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+	
+	
 	def _load_config(self):
 		self._switch_daemon_enabled.set_active(bool(int(self._cfg.get('core', 'autostart'))))
 		

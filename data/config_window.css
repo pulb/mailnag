@@ -1,0 +1,6 @@
+GtkEventBox {
+	background-image: linear-gradient(to bottom, 
+									  @theme_bg_color, 
+									  shade(@theme_bg_color, 1.06) 
+									  90%);
+}
