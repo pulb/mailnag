@@ -123,7 +123,7 @@ class LibNotifyPlugin(Plugin):
 		box.set_orientation(Gtk.Orientation.VERTICAL)
 		
 		label = Gtk.Label()
-		label.set_markup('<b>%s</b>' % _('Please select a notifcation mode:'))
+		label.set_markup('<b>%s</b>' % _('Please select a notification mode:'))
 		label.set_alignment(0.0, 0.0)
 		box.pack_start(label, True, True, 0)
 		
