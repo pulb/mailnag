@@ -139,7 +139,7 @@ class MailCollector:
 							
 								if id == None or id == '':
 									# create fallback id
-									id = str(hash(acc.server + acc.user + sender[1] + subject))
+									id = str(hash(acc.server + acc.user + sender[1] + subject + str(datetime)))
 					
 						# prevent duplicates caused by Gmail labels
 						if id not in mail_ids:
@@ -211,7 +211,7 @@ class MailCollector:
 					
 					if uidl == None or uidl == '':
 						# create fallback id
-						id = str(hash(acc.server + acc.user + sender[1] + subject))
+						id = str(hash(acc.server + acc.user + sender[1] + subject + str(datetime)))
 					else:
 						# create unique id
 						id = acc.user + uidl.split(' ')[2]
