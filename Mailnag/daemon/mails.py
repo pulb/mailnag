@@ -120,7 +120,7 @@ class MailCollector:
 								except:
 									print "Could not get date from IMAP message." # debug
 									# current time to seconds
-									datetime = time.time()
+									datetime = int(time.time())
 								try:
 									try:
 										# get subject and format it
@@ -191,7 +191,7 @@ class MailCollector:
 					except:
 						print "Could not get date from POP message." # debug
 						# current time to seconds
-						datetime = time.time()
+						datetime = int(time.time())
 					try:
 						try:
 							# get subject and format it
@@ -254,7 +254,7 @@ class MailCollector:
 			except:
 				print 'Error: cannot format date.'
 				# current time to seconds
-				datetime = time.time()
+				datetime = int(time.time())
 			return datetime
 
 		if field == 'subject':
