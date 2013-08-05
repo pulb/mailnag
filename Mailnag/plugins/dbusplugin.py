@@ -129,9 +129,12 @@ class DBusService(dbus.service.Object):
 		mails = []
 		for m in self._mails:
 			d = {}
+			name, addr = m.sender
+			
 			d['datetime'] = m.datetime	# int32 (i)
 			d['subject'] = m.subject	# string (s)
-			d['sender'] = m.sender		# string (s)
+			d['sender_name'] = name		# string (s)
+			d['sender_addr'] = addr		# string (s)
 			d['id'] = m.id				# string (s)
 
 			mails.append(d)

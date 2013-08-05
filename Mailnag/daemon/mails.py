@@ -109,7 +109,7 @@ class MailCollector:
 										sender = self._format_header('sender', msg['from'])
 								except:
 									print "Could not get sender from IMAP message." # debug
-									sender = "Error in sender"
+									sender = ('', '')
 								try:
 									try:
 										# get date and format it
@@ -139,7 +139,7 @@ class MailCollector:
 							
 								if id == None or id == '':
 									# create fallback id
-									id = str(hash(acc.server + acc.user + sender + subject))
+									id = str(hash(acc.server + acc.user + sender[1] + subject))
 					
 						# prevent duplicates caused by Gmail labels
 						if id not in mail_ids:
@@ -180,7 +180,7 @@ class MailCollector:
 							sender = self._format_header('sender', msg['from'])
 					except:
 						print "Could not get sender from POP message." # debug
-						sender = "Error in sender"
+						sender = ('', '')
 					try:
 						try:
 							# get date and format it
@@ -211,7 +211,7 @@ class MailCollector:
 					
 					if uidl == None or uidl == '':
 						# create fallback id
-						id = str(hash(acc.server + acc.user + sender + subject))
+						id = str(hash(acc.server + acc.user + sender[1] + subject))
 					else:
 						# create unique id
 						id = acc.user + uidl.split(' ')[2]
@@ -242,14 +242,7 @@ class MailCollector:
 				# create decoded tupel
 				sender = (sender_real, sender_addr)
 			except:
-				sender = ('','Error: cannot format sender')
-
-			sender_format = self._cfg.get('core', 'sender_format')
-			if sender_format == '1' and sender[0] != '':
-				# real sender name if not empty
-				sender = sender_real
-			else:
-				sender = sender_addr
+				sender = ('', '')
 			return sender
 
 		if field == 'date':
@@ -268,7 +261,7 @@ class MailCollector:
 			try:
 				subject = self._convert(content)
 			except:
-				subject = 'Error: cannot format subject'
+				subject = ''
 			return subject
 
 

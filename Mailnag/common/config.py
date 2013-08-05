@@ -30,7 +30,6 @@ mailnag_defaults = {
 	'core':
 	{
 		'check_interval'	: '10',
-		'sender_format'		: '1',
 		'autostart'			: '1',
 		'enabled_plugins'	: 'dbusplugin, soundplugin'
 	}

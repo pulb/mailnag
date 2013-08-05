@@ -200,7 +200,7 @@ class LibNotifyPlugin(Plugin):
 		ubound = len(mails) if len(mails) <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT
 
 		for i in range(ubound):
-			body += mails[i].sender + ":\n<i>" + mails[i].subject + "</i>\n\n"
+			body += self._get_sender(mails[i].sender) + ":\n<i>" + mails[i].subject + "</i>\n\n"
 
 		if len(mails) > self.MAIL_LIST_LIMIT:
 			body += "<i>" + _("(and {0} more)").format(str(len(mails) - self.MAIL_LIST_LIMIT)) + "</i>"
@@ -220,7 +220,7 @@ class LibNotifyPlugin(Plugin):
 		mails = sort_mails(mails, sort_desc = False)
 		
 		for mail in mails:
-			n = self._get_notification(mail.sender, mail.subject, "mail-unread")
+			n = self._get_notification(self._get_sender(mail.sender), mail.subject, "mail-unread")
 			notification_id = str(id(n))
 			# n.add_action("mark-as-read", _("Mark as read"), self._notification_action_handler, (mail, notification_id), None)			
 			n.show()
@@ -275,7 +275,13 @@ class LibNotifyPlugin(Plugin):
 				# so clear the reference array as well. 
 				self._notifications = {}
 		
-		
+
+	def _get_sender(self, mail):
+		name, addr = mail.sender
+		if len(name) > 0: return name
+		else: return addr
+
+
 def get_default_mail_reader():
 	mail_reader = None
 	app_info = Gio.AppInfo.get_default_for_type ("x-scheme-handler/mailto", False)

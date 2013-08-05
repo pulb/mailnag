@@ -133,7 +133,9 @@ class SpamfilterPlugin(Plugin):
 				continue
 			
 			f = f.lower()
-			if (f in mail.sender.lower()) or (f in mail.subject.lower()):
+			sender_name, sender_addr = mail.sender
+			if (f in sender_name.lower()) or (f in sender_addr.lower()) \
+				or (f in mail.subject.lower()):
 				# sender or subject contains filter string
 				is_filtered = True
 				break

@@ -78,7 +78,7 @@ class UserscriptPlugin(Plugin):
 		box.set_orientation(Gtk.Orientation.VERTICAL)
 		#box.set_size_request(100, -1)
 		
-		markup_str = "\"<i>&lt;%s&gt; &lt;%s&gt;</i>\"" % (_('sender'), _('subject'))
+		markup_str = "<i>&lt;%s&gt; &lt;%s&gt;</i>" % (_('sender'), _('subject'))
 		desc =  _(	"The following script will be executed whenever new mails arrive.\n"
 					"Mailnag passes the total count of new mails to this script,\n"
 					"followed by %s pairs." % markup_str)
@@ -119,7 +119,9 @@ class UserscriptPlugin(Plugin):
 			script_data_mailcount = 0
 	
 			for m in new_mails:
-				script_data += ' "<%s> %s"' % (m.sender, m.subject)
+				sender_name, sender_addr = m.sender
+				if len(sender_addr) == 0: sender_addr = 'UNKNOWN_SENDER'
+				script_data += ' %s "%s"' % (sender_addr, m.subject)
 				script_data_mailcount += 1
 			script_data = str(script_data_mailcount) + script_data
 			start_subprocess('%s %s' % (script_file, script_data), shell = True)
