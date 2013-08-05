@@ -25,7 +25,7 @@
 # Additionally to those variables, packagers have to adjust the following paths:
 # * LOCALE_DIR in file gen_locales
 # * LIB_DIR in bash scripts mailnag and mailnag_cfg
-# * Exec and Icon paths in data/mailnag_config.desktop
+# * Exec and Icon paths in data/mailnag-config.desktop
 
 # Application version displayed in the 
 # about dialog of the config window.

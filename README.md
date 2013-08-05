@@ -56,7 +56,7 @@ though make sure the requirements stated below are met.
 
 
 ## Configuration
-Run `mailnag_config` to setup Mailnag.  
+Run `mailnag-config` to setup Mailnag.  
 Closing the configuration window will start Mailnag automatically.
 
 ### Default Mail Client
