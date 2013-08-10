@@ -40,7 +40,8 @@ from daemon.idlers import IdlerRunner
 
 LOG_FILE = 'mailnagd.log'
 LOG_LEVEL = logging.DEBUG
-LOG_FORMAT = '%(levelname)s: %(message)s'
+LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
+LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 mainloop = None
 idlrunner = None
@@ -130,14 +131,15 @@ def init_logging():
 		os.makedirs(cfg_folder)
 	
 	logging.basicConfig(
-	filename = os.path.join(cfg_folder, LOG_FILE),
-	filemode = 'w',
-	format = LOG_FORMAT,
-	level = LOG_LEVEL)
+		filename = os.path.join(cfg_folder, LOG_FILE),
+		filemode = 'w',
+		format = LOG_FORMAT,
+		datefmt = LOG_DATE_FORMAT,
+		level = LOG_LEVEL)
 	
 	stdout_handler = logging.StreamHandler()
 	stdout_handler.setLevel(LOG_LEVEL)
-	stdout_handler.setFormatter(logging.Formatter(LOG_FORMAT))
+	stdout_handler.setFormatter(logging.Formatter(LOG_FORMAT, LOG_DATE_FORMAT))
 	logging.getLogger('').addHandler(stdout_handler)
 
 

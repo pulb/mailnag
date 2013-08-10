@@ -24,7 +24,6 @@
 
 import threading
 import logging
-import time
 
 from common.utils import is_online
 from common.i18n import _
@@ -55,7 +54,7 @@ class MailChecker:
 		# make sure multiple threads (idler and polling thread) 
 		# don't check for mails simultaneously.
 		with self._mailcheck_lock:
-			logging.info('Checking %s email account(s) at: %s.' % (len(accounts), time.asctime()))
+			logging.info('Checking %s email account(s).' % len(accounts))
 			
 			for f in self._hookreg.get_hook_funcs(HookTypes.MAIL_CHECK):
 				try_call( f )
