@@ -26,10 +26,10 @@
 from gi.repository import GObject, GLib
 from dbus.mainloop.glib import DBusGMainLoop
 import threading
+import logging
 import os
 import time
 import signal
-import traceback
 
 from common.config import read_cfg, cfg_exists, cfg_folder
 from common.utils import set_procname, is_online, shutdown_existing_instance
@@ -37,6 +37,10 @@ from common.accounts import AccountList
 from common.plugins import Plugin, HookRegistry, MailnagController
 from daemon.mailchecker import MailChecker
 from daemon.idlers import IdlerRunner
+
+LOG_FILE = 'mailnagd.log'
+LOG_LEVEL = logging.DEBUG
+LOG_FORMAT = '%(levelname)s: %(message)s'
 
 mainloop = None
 idlrunner = None
@@ -78,7 +82,7 @@ def read_config():
 
 def wait_for_inet_connection():
 	if not is_online():
-		print 'Waiting for internet connection...'
+		logging.info('Waiting for internet connection...')
 		while not is_online():
 			time.sleep(5)
 
@@ -89,12 +93,12 @@ def cleanup():
 		# clean up resources
 		if (start_thread != None) and (start_thread.is_alive()):
 			start_thread.join()
-			print "Starter thread exited successfully"
+			logging.info('Starter thread exited successfully.')
 
 		if (poll_thread != None) and (poll_thread.is_alive()):
 			poll_thread_stop.set()
 			poll_thread.join()
-			print "Polling thread exited successfully"
+			logging.info('Polling thread exited successfully.')
 	
 		if idlrunner != None:
 			idlrunner.dispose()
@@ -113,12 +117,28 @@ def cleanup():
 	event.wait(10.0)
 	
 	if not event.is_set():
-		print "Warning: cleanup takes too long. Enforcing termination."
+		logging.warning('Cleanup takes too long. Enforcing termination.')
 		os._exit(os.EX_SOFTWARE)
 	
 	if threading.active_count() > 1:
-		print 'Warning: there are still active threads. Enforcing termination.'
+		logging.warning('There are still active threads. Enforcing termination.')
 		os._exit(os.EX_SOFTWARE)
+
+
+def init_logging():
+	if not os.path.exists(cfg_folder):
+		os.makedirs(cfg_folder)
+	
+	logging.basicConfig(
+	filename = os.path.join(cfg_folder, LOG_FILE),
+	filemode = 'w',
+	format = LOG_FORMAT,
+	level = LOG_LEVEL)
+	
+	stdout_handler = logging.StreamHandler()
+	stdout_handler.setLevel(LOG_LEVEL)
+	stdout_handler.setFormatter(logging.Formatter(LOG_FORMAT))
+	logging.getLogger('').addHandler(stdout_handler)
 
 
 def sigterm_handler(data):
@@ -137,9 +157,9 @@ def load_plugins(cfg, hookreg):
 	for p in plugins:
 		try:
 			p.enable()
-			print "Successfully enabled plugin '%s'" % p.get_modname()
+			logging.info("Successfully enabled plugin '%s'." % p.get_modname())
 		except:
-			print "Failed to enable plugin '%s'" % p.get_modname()
+			logging.error("Failed to enable plugin '%s'." % p.get_modname())
 
 
 def unload_plugins():
@@ -151,16 +171,18 @@ def unload_plugins():
 				p.disable()
 			except:
 				err = True
-				print "Failed to disable plugin '%s'" % p.get_modname()
+				logging.error("Failed to disable plugin '%s'." % p.get_modname())
 		
 		if not err:
-			print "Plugins disabled successfully"
+			logging.info('Plugins disabled successfully.')
 
 
 def main():
 	global mainloop, start_thread
 	
 	set_procname("mailnagd")
+	
+	init_logging()
 	
 	GObject.threads_init()
 	DBusGMainLoop(set_as_default = True)
@@ -175,7 +197,7 @@ def main():
 		cfg = read_config()
 		
 		if (cfg == None):
-			print 'Error: Cannot find configuration file. Please run mailnag_config first.'
+			logging.critical('Cannot find configuration file. Please run mailnag-config first.')
 			exit(1)
 		
 		wait_for_inet_connection()
@@ -193,7 +215,7 @@ def main():
 	except KeyboardInterrupt:
 		pass # ctrl+c pressed
 	finally:
-		print "Shutting down..."
+		logging.info('Shutting down...')
 		cleanup()
 
 
@@ -210,7 +232,7 @@ def start(cfg, hookreg):
 		try:		
 			mailchecker.check(accounts)
 		except:
-			traceback.print_exc()
+			logging.exception('Caught an exception.')
 		
 		idle_accounts = filter(lambda acc: acc.imap and acc.idle, accounts)
 		non_idle_accounts = filter(lambda acc: (not acc.imap) or (acc.imap and not acc.idle), accounts)
@@ -229,7 +251,7 @@ def start(cfg, hookreg):
 					
 						mailchecker.check(non_idle_accounts)
 				except:
-					traceback.print_exc()
+					logging.exception('Caught an exception.')
 		
 			poll_thread = threading.Thread(target = poll_func)
 			poll_thread.start()
@@ -241,13 +263,13 @@ def start(cfg, hookreg):
 				try:
 					mailchecker.check([account])
 				except:
-					traceback.print_exc()
+					logging.exception('Caught an exception.')
 
 		
 			idlrunner = IdlerRunner(idle_accounts, sync_func)
 			idlrunner.run()
 	except:
-		traceback.print_exc()
+		logging.exception('Caught an exception.')
 		mainloop.quit()
 		
 

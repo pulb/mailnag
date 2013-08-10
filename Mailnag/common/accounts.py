@@ -23,6 +23,7 @@
 #
 
 import poplib
+import logging
 import daemon.imaplib2 as imaplib
 from common.i18n import _
 from common.keyring import Keyring
@@ -95,7 +96,7 @@ class Account:
 			
 			self._conn = conn
 		except:
-			print "Error: Cannot connect to IMAP account: %s. " % self.server
+			logging.error("Cannot connect to IMAP account '%s'." % self.server)
 			try:
 				if conn != None:
 					# conn.close() # allowed in SELECTED state only
@@ -131,7 +132,7 @@ class Account:
 			
 			self._conn = conn
 		except:
-			print "Error: Cannot connect to POP account: %s. " % self.server
+			logging.error("Cannot connect to POP account: '%s'." % self.server)
 			try:
 				if conn != None:
 					conn.quit()

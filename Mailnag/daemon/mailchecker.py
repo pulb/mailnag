@@ -23,9 +23,8 @@
 #
 
 import threading
-import sys
+import logging
 import time
-import traceback
 
 from common.utils import is_online
 from common.i18n import _
@@ -37,7 +36,7 @@ def try_call(f, err_retval = None):
 	try:
 		return f()
 	except:
-		traceback.print_exc()
+		logging.exception('Caught an exception.')
 		return err_retval
 
 			
@@ -56,13 +55,13 @@ class MailChecker:
 		# make sure multiple threads (idler and polling thread) 
 		# don't check for mails simultaneously.
 		with self._mailcheck_lock:
-			print 'Checking %s email account(s) at: %s' % (len(accounts), time.asctime())
+			logging.info('Checking %s email account(s) at: %s.' % (len(accounts), time.asctime()))
 			
 			for f in self._hookreg.get_hook_funcs(HookTypes.MAIL_CHECK):
 				try_call( f )
 				
 			if not is_online():
-				print 'Error: No internet connection'
+				logging.error('No internet connection.')
 				return
 			
 			all_mails = self._mailsyncer.sync(accounts)
@@ -97,9 +96,6 @@ class MailChecker:
 					try_call( lambda: f(filtered_new_mails, filtered_unseen_mails) )
 			
 			self._reminder.save(all_mails)
-			
-			# write stdout to log file
-			sys.stdout.flush()
 			self._firstcheck = False
 		
 		return

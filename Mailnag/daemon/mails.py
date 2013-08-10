@@ -24,9 +24,9 @@
 #
 
 import time
-import sys
 import email
 import os
+import logging
 
 from common.i18n import _
 from common.config import cfg_folder
@@ -80,16 +80,16 @@ class MailCollector:
 					try:
 						status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
 					except:
-						print "The folder:", folder, "does not exist, using INBOX instead"
+						logging.warning('The folder: %s does not exist, using INBOX instead.', folder)
 						try:
 							# if search fails select INBOX and try again
 							srv.select('INBOX', readonly=True)
 							status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
 						except:
-							print "INBOX Could not be found", sys.exc_info()[0]
+							logging.warning("INBOX couldn't be found.")
 
 					if status != 'OK' or None in [d for d in data]:
-						print "Folder", folder, "in status", status, "| Data:", data, "\n"
+						logging.debug('Folder %s in status %s | Data: %s', (folder, status, data))
 						continue # Bugfix LP-735071
 					for num in data[0].split():
 						typ, msg_data = srv.fetch(num, '(BODY.PEEK[HEADER])') # header only (without setting READ flag)
@@ -98,27 +98,27 @@ class MailCollector:
 								try:
 									msg = email.message_from_string(response_part[1])
 								except:
-									print "Could not get IMAP message." # debug
+									logging.debug("Couldn't get IMAP message.")
 									continue
 								try:
 									try:
 										# get sender and format it
 										sender = self._format_header('sender', msg['From'])
 									except KeyError:
-										print "KeyError exception for key 'From' in message." # debug
+										logging.debug("Caught KeyError exception for key 'From' in message.")
 										sender = self._format_header('sender', msg['from'])
 								except:
-									print "Could not get sender from IMAP message." # debug
+									logging.debug("Couldn't get sender from IMAP message.")
 									sender = ('', '')
 								try:
 									try:
 										# get date and format it
 										datetime = self._format_header('date', msg['Date'])
 									except KeyError:
-										print "KeyError exception for key 'Date' in message." # debug
+										logging.debug("Caught KeyError exception for key 'Date' in message.")
 										datetime = self._format_header('date', msg['date'])
 								except:
-									print "Could not get date from IMAP message." # debug
+									logging.debug("Couldn't get date from IMAP message.")
 									# current time to seconds
 									datetime = int(time.time())
 								try:
@@ -126,15 +126,15 @@ class MailCollector:
 										# get subject and format it
 										subject = self._format_header('subject', msg['Subject'])
 									except KeyError:
-										print "KeyError exception for key 'Subject' in message." # debug
+										logging.debug("Caught KeyError exception for key 'Subject' in message.")
 										subject = self._format_header('subject', msg['subject'])
 								except:
-									print "Could not get subject from IMAP message." # debug
+									logging.debug("Couldn't get subject from IMAP message.")
 									subject = _('No subject')
 								try:
 									id = msg['Message-Id']
 								except:
-									print "Could not get id from IMAP message."	# debug
+									logging.debug("Couldn't get id from IMAP message.")
 									id = None
 							
 								if id == None or id == '':
@@ -159,7 +159,7 @@ class MailCollector:
 						# header plus first 0 lines from body
 						message = srv.top(i, 0)[1]
 					except:
-						print "Could not get POP message." # debug
+						logging.debug("Couldn't get POP message.")
 						continue
 					
 					# convert list to string
@@ -169,27 +169,27 @@ class MailCollector:
 						# put message into email object and make a dictionary
 						msg = dict(email.message_from_string(message_string))
 					except:
-						print "Could not get msg from POP message."	# debug
+						logging.debug("Couldn't get msg from POP message.")
 						continue
 					try:
 						try:
 							# get sender and format it
 							sender = self._format_header('sender', msg['From'])
 						except KeyError:
-							print "KeyError exception for key 'From' in message." # debug
+							logging.debug("Caught KeyError exception for key 'From' in message.")
 							sender = self._format_header('sender', msg['from'])
 					except:
-						print "Could not get sender from POP message." # debug
+						logging.debug("Couldn't get sender from POP message.")
 						sender = ('', '')
 					try:
 						try:
 							# get date and format it
 							datetime = self._format_header('date', msg['Date'])
 						except KeyError:
-							print "KeyError exception for key 'Date' in message." # debug
+							logging.debug("Caught KeyError exception for key 'Date' in message.")
 							datetime = self._format_header('date', msg['date'])
 					except:
-						print "Could not get date from POP message." # debug
+						logging.debug("Couldn't get date from POP message.")
 						# current time to seconds
 						datetime = int(time.time())
 					try:
@@ -197,16 +197,16 @@ class MailCollector:
 							# get subject and format it
 							subject = self._format_header('subject', msg['Subject'])
 						except KeyError:
-							print "KeyError exception for key 'Subject' in message." # debug
+							logging.debug("Caught KeyError exception for key 'Subject' in message.")
 							subject = self._format_header('subject', msg['subject'])
 					except:
-						print "Could not get subject from POP message."
+						logging.debug("Couldn't get subject from POP message.")
 						subject = _('No subject')
 					try:
 						# get id
 						uidl = srv.uidl(i)
 					except:
-						print "Could not get id from POP message." # debug
+						logging.debug("Couldn't get id from POP message.")
 						uidl = None
 					
 					if uidl == None or uidl == '':
@@ -226,8 +226,6 @@ class MailCollector:
 		if sort:
 			mail_list = sort_mails(mail_list, sort_desc = True)
 		
-		# write stdout to log file
-		sys.stdout.flush()
 		return mail_list
 
 
@@ -252,7 +250,7 @@ class MailCollector:
 				# convert 10-tupel to seconds incl. timezone shift
 				datetime = email.utils.mktime_tz(parsed_date)
 			except:
-				print 'Error: cannot format date.'
+				logging.warning('Cannot format date. Using current time.')
 				# current time to seconds
 				datetime = int(time.time())
 			return datetime
@@ -392,6 +390,9 @@ class Reminder(dict):
 
 	# save mail ids to file
 	def save(self, mail_list):
+		if not os.path.exists(cfg_folder):
+			os.makedirs(cfg_folder)
+		
 		dat_file = os.path.join(cfg_folder, 'mailnag.dat')
 		f = open(dat_file, 'w')	# open for overwrite
 		for m in mail_list:

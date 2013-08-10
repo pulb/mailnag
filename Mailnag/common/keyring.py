@@ -59,15 +59,15 @@ class Keyring:
 				if item.get_secret() != '':
 					return item.get_secret()
 				else:
-					# DEBUG print "Keyring.get(): No Keyring Password for %s://%s@%s." % (protocol, user, server)
+					# logging.debug("Keyring.get(): No Keyring Password for %s://%s@%s." % (protocol, user, server))
 					return ''
 
 			else:
-				# DEBUG print "Keyring.get(): %s://%s@%s not in Keyring." % (protocol, user, server)
+				# logging.debug("Keyring.get(): %s://%s@%s not in Keyring." % (protocol, user, server))
 				return ''
 
 		else:
-			# DEBUG print "Keyring.get(): Neither default- nor 'login'-Keyring available."
+			# logging.debug("Keyring.get(): Neither default- nor 'login'-Keyring available.")
 			return ''
 
 

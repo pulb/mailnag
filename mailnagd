@@ -1,11 +1,6 @@
 #!/bin/bash
 LIB_DIR=./Mailnag
 
-config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/mailnag"
-
-mkdir --parents "$config_dir"
-rm --force "$config_dir/mailnag.log"
-
 cd $(dirname $(readlink -f $0))
-python2 $LIB_DIR/mailnag.py >> "$config_dir/mailnag.log" 2>&1 &
+python2 $LIB_DIR/mailnag.py &
 

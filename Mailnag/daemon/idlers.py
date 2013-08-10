@@ -24,7 +24,7 @@
 
 import threading
 import time
-import sys
+import logging
 from daemon.imaplib2 import AUTH
 
 
@@ -74,7 +74,7 @@ class Idler(object):
 			pass
 		
 		self._disposed = True
-		print "Idler closed"
+		logging.info('Idler closed')
 
 		
 	# idle thread
@@ -119,7 +119,7 @@ class Idler(object):
 			
 	def _reconnect(self):
 		# connection has been reset by provider -> try to reconnect
-		print "Idler thread for account '%s' has been disconnected" % self._account.name
+		logging.info("Idler thread for account '%s' has been disconnected" % self._account.name)
 		
 		# conn has already been closed, don't try to close it again
 		# self._conn.close() # (calls idle_callback)
@@ -129,14 +129,15 @@ class Idler(object):
 		self._conn = None
 		
 		while (self._conn == None) and (not self._event.isSet()): 
-			sys.stdout.write("Trying to reconnect Idler thread for account '%s'..." % self._account.name)
+			logging.info("Trying to reconnect Idler thread for account '%s'." % self._account.name)
 			self._conn = self._account.get_connection(use_existing = False)
 			if self._conn == None:
-				sys.stdout.write("FAILED\n")
-				print "Trying again in %s minutes" % self.RECONNECT_RETRY_INTERVAL
+				logging.error("Failed to reconnect Idler thread for account '%s'." % self._account.name)
+				lgging.info("Trying to reconnect Idler thread for account '%s' in %s minutes", 
+					(self._account.name , self.RECONNECT_RETRY_INTERVAL))
 				self._wait(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer the server
 			else:
-				sys.stdout.write("OK\n")
+				logging.error("Successfully reconnected Idler thread for account '%s'." % self._account.name)
 		
 		if self._conn != None:
 			self._select(self._conn, self._account.folder)
@@ -174,7 +175,7 @@ class IdlerRunner:
 					idler.run()
 					self._idlerlist.append(idler)
 				except Exception as ex:
-					print "Error: Failed to create an idler thread for account '%s'" % acc.name
+					logging.error("Error: Failed to create an idler thread for account '%s'" % acc.name)
 					
 	
 	def dispose(self):

@@ -24,6 +24,7 @@
 import os
 import imp
 import inspect
+import logging
 
 from common.config import cfg_folder
 
@@ -242,7 +243,7 @@ class Plugin:
 					p.init(modname, cfg, mailnag_controller)
 					plugins.append(p)
 			except:
-				print "Failed to instantiate plugin '%s'" % modname
+				logging.exception("Failed to instantiate plugin '%s'" % modname)
 		
 		return plugins
 	
@@ -275,6 +276,6 @@ class Plugin:
 								plugin_types.append((modname, t))
 						
 				except:
-					print "Error while opening plugin file '%s'" % f
+					logging.exception("Error while opening plugin file '%s'" % f)
 		
 		return plugin_types
