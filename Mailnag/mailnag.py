@@ -181,9 +181,6 @@ def main():
 	global mainloop, start_thread
 	
 	set_procname("mailnagd")
-	
-	init_logging()
-	
 	GObject.threads_init()
 	DBusGMainLoop(set_as_default = True)
 	GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGTERM, 
@@ -192,6 +189,10 @@ def main():
 	# shut down an (possibly) already running Mailnag daemon
 	# (must be called before instantiation of the DBUSService).
 	shutdown_existing_instance()
+	
+	# Note: don't start logging before an existing Mailnag 
+	# instance has been shut down completely (will corrupt logfile).
+	init_logging()
 	
 	try:
 		cfg = read_config()

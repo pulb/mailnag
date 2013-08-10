@@ -24,12 +24,12 @@
 
 import xdg.BaseDirectory as base
 import os
+import sys
 import time
 import dbus
 import urllib2
 import subprocess
 import threading
-import logging
 
 from common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
 
@@ -71,7 +71,8 @@ def shutdown_existing_instance():
 	bus = dbus.SessionBus()
 	
 	if bus.name_has_owner(DBUS_BUS_NAME):
-		logging.info('Shutting down existing Mailnag process...')
+		sys.stdout.write('Shutting down existing Mailnag process...')
+		sys.stdout.flush()
 		
 		try:
 			proxy = bus.get_object(DBUS_BUS_NAME, DBUS_OBJ_PATH)
@@ -82,9 +83,9 @@ def shutdown_existing_instance():
 			while bus.name_has_owner(DBUS_BUS_NAME):
 				time.sleep(2)
 			
-			logging.info('Mailnag has been shut down successfully.')
+			print 'OK'
 		except:
-			logging.error('Failed to shut down Mailnag.')
+			print 'FAILED'
 
 
 def start_subprocess(args, shell = False, callback = None):
