@@ -115,13 +115,11 @@ class UserscriptPlugin(Plugin):
 		config = self.get_config()
 		script_file = config['script_file'].strip()
 		if (len(script_file) > 0) and os.path.exists(script_file):
-			script_data = ''
-			script_data_mailcount = 0
-	
+			script_args = [ script_file, str(len(new_mails)) ]
+			
 			for m in new_mails:
 				sender_name, sender_addr = m.sender
 				if len(sender_addr) == 0: sender_addr = 'UNKNOWN_SENDER'
-				script_data += ' %s "%s"' % (sender_addr, m.subject)
-				script_data_mailcount += 1
-			script_data = str(script_data_mailcount) + script_data
-			start_subprocess('%s %s' % (script_file, script_data), shell = True)
+				script_args.append(sender_addr)
+				script_args.append(m.subject)
+			start_subprocess(script_args)
