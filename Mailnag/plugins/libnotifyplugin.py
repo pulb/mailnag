@@ -26,7 +26,7 @@ import threading
 from gi.repository import Notify, Gio, Gtk
 from common.plugins import Plugin, HookTypes
 from common.i18n import _
-from common.utils import start_subprocess
+from common.subproc import start_subprocess
 from daemon.mails import sort_mails
 
 NOTIFICATION_MODE_COUNT		= '0'

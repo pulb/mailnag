@@ -35,6 +35,7 @@ from common.config import read_cfg, cfg_exists, cfg_folder
 from common.utils import set_procname, is_online, shutdown_existing_instance
 from common.accounts import AccountList
 from common.plugins import Plugin, HookRegistry, MailnagController
+from common.subproc import terminate_subprocesses
 from daemon.mailchecker import MailChecker
 from daemon.idlers import IdlerRunner
 
@@ -112,6 +113,7 @@ def cleanup():
 		mailchecker = None
 	
 		unload_plugins()
+		terminate_subprocesses()
 		event.set()
 		
 	threading.Thread(target = thread).start()
