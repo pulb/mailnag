@@ -26,33 +26,37 @@ import threading
 import logging
 import time
 
-_plock = threading.Lock()
-_tlock = threading.Lock()
-_procs = []
-_threads = []
+_lock = threading.Lock()
+_procs = {}
+
 
 def start_subprocess(args, shell = False, callback = None):
 	def thread():
 		p = subprocess.Popen(args, shell = shell)
-		with _plock: _procs.append(p)
+		t = threading.currentThread()
+		
+		with _lock: _procs[t] = p
 		retcode = p.wait()
-		with _plock: _procs.remove(p)
+		with _lock: del _procs[t]
 		if callback != None:
 			callback(retcode)
 	
 	t = threading.Thread(target = thread)
-	with _tlock:
-		_threads.append(t)
+	with _lock:
+		_procs[t] = None
 		t.start()
 
 
 def terminate_subprocesses():
-	with _tlock:
-		if len(_threads) == 0:
-			return
+	threads = []
 	
-	with _plock:
-		for p in _procs:
+	with _lock:
+		if len(_procs) == 0:
+			return
+		
+		for t, p in _procs.iteritems():
+			threads.append(t)
+			
 			# Ask all runnig processes to terminate.
 			# This will also terminate threads waiting for p.wait().
 			# Note : terminate() does not block.
@@ -64,11 +68,9 @@ def terminate_subprocesses():
 	wd = _Watchdog(3.0)
 	wd.start()
 	
-	with _tlock:
-		# Wait for all threads to terminate
-		for t in _threads:
-			t.join()
-		del _threads[0 : len(_threads)]
+	# Wait for all threads to terminate
+	for t in threads:
+		t.join()
 	
 	wd.stop()
 	
@@ -91,8 +93,8 @@ class _Watchdog(threading.Thread):
 		if not self._event.is_set():
 			logging.warning('Process termination took too long - watchdog starts killing...')
 			self.triggered = True
-			with _plock:
-				for p in _procs:
+			with _lock:
+				for t, p in _procs.iteritems():
 					try:
 						# Kill process p and quit the thread 
 						# waiting for p to terminate (p.wait()).
