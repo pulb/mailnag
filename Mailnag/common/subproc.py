@@ -32,19 +32,28 @@ _procs = {}
 
 def start_subprocess(args, shell = False, callback = None):
 	def thread():
-		p = subprocess.Popen(args, shell = shell)
 		t = threading.currentThread()
 		
-		with _lock: _procs[t] = p
-		retcode = p.wait()
-		with _lock: del _procs[t]
-		if callback != None:
-			callback(retcode)
+		try:
+			p = None
+			with _lock: p = _procs[t]
+			retcode = p.wait()
+			
+			if callback != None:
+				callback(retcode)
+		finally:
+			with _lock: del _procs[t]
 	
-	t = threading.Thread(target = thread)
-	with _lock:
-		_procs[t] = None
-		t.start()
+	p = None
+	try:
+		p = subprocess.Popen(args, shell = shell)
+	except: logging.exception('Caught an exception.')
+	
+	if p != None:
+		t = threading.Thread(target = thread)
+		with _lock:
+			_procs[t] = p
+			t.start()
 
 
 def terminate_subprocesses():
