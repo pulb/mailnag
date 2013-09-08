@@ -137,7 +137,7 @@ class Idler(object):
 					(self._account.name , self.RECONNECT_RETRY_INTERVAL))
 				self._wait(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer the server
 			else:
-				logging.error("Successfully reconnected Idler thread for account '%s'." % self._account.name)
+				logging.info("Successfully reconnected Idler thread for account '%s'." % self._account.name)
 		
 		if self._conn != None:
 			self._select(self._conn, self._account.folder)
