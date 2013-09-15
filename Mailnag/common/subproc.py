@@ -45,15 +45,19 @@ def start_subprocess(args, shell = False, callback = None):
 			with _lock: del _procs[t]
 	
 	p = None
+	pid = -1
 	try:
 		p = subprocess.Popen(args, shell = shell)
 	except: logging.exception('Caught an exception.')
 	
 	if p != None:
+		pid = p.pid
 		t = threading.Thread(target = thread)
 		with _lock:
 			_procs[t] = p
 			t.start()
+	
+	return pid
 
 
 def terminate_subprocesses():
