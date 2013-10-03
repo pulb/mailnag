@@ -27,6 +27,7 @@ from gi.repository import GObject, GLib
 from dbus.mainloop.glib import DBusGMainLoop
 import threading
 import logging
+import logging.handlers
 import os
 import time
 import signal
@@ -39,7 +40,6 @@ from common.subproc import terminate_subprocesses
 from daemon.mailchecker import MailChecker
 from daemon.idlers import IdlerRunner
 
-LOG_FILE = 'mailnagd.log'
 LOG_LEVEL = logging.DEBUG
 LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
@@ -129,20 +129,15 @@ def cleanup():
 
 
 def init_logging():
-	if not os.path.exists(cfg_folder):
-		os.makedirs(cfg_folder)
-	
 	logging.basicConfig(
-		filename = os.path.join(cfg_folder, LOG_FILE),
-		filemode = 'w',
 		format = LOG_FORMAT,
 		datefmt = LOG_DATE_FORMAT,
 		level = LOG_LEVEL)
 	
-	stdout_handler = logging.StreamHandler()
-	stdout_handler.setLevel(LOG_LEVEL)
-	stdout_handler.setFormatter(logging.Formatter(LOG_FORMAT, LOG_DATE_FORMAT))
-	logging.getLogger('').addHandler(stdout_handler)
+	syslog_handler = logging.handlers.SysLogHandler(address='/dev/log')
+	syslog_handler.setLevel(LOG_LEVEL)
+	syslog_handler.setFormatter(logging.Formatter(LOG_FORMAT, LOG_DATE_FORMAT))
+	logging.getLogger('').addHandler(syslog_handler)
 
 
 def sigterm_handler(data):
