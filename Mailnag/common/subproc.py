@@ -122,8 +122,6 @@ class _Watchdog(threading.Thread):
 
 
 	def run(self):
-		# Note : keep in mind that cleanup() in mailnag.py 
-		# has a timeout as well, so don't wait too long.
 		self._event.wait(self._timeout)
 		if not self._event.is_set():
 			logging.warning('Process termination took too long - watchdog starts killing...')

@@ -113,7 +113,7 @@ def cleanup():
 		mailchecker = None
 	
 		unload_plugins()
-		terminate_subprocesses()
+		terminate_subprocesses(timeout = 3.0)
 		event.set()
 		
 	threading.Thread(target = thread).start()
