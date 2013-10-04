@@ -108,7 +108,7 @@ def terminate_subprocesses(timeout = 3.0):
 	
 		wd.stop()
 	
-		if (not wd.triggered):
+		if not wd.triggered:
 			logging.info('All subprocesses exited normally.')
 
 

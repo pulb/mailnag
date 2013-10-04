@@ -38,7 +38,7 @@ class Keyring:
 
 		result = GnomeKeyring.unlock_sync(self._defaultKeyring, None)
 		
-		if (result != GnomeKeyring.Result.OK):
+		if result != GnomeKeyring.Result.OK:
 			raise Exception('Failed to unlock default keyring')
 
 

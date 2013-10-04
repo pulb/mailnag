@@ -196,7 +196,7 @@ def main():
 	try:
 		cfg = read_config()
 		
-		if (cfg == None):
+		if cfg == None:
 			logging.critical('Cannot find configuration file. Please run mailnag-config first.')
 			exit(1)
 		
@@ -244,7 +244,7 @@ def start(cfg, hookreg):
 		
 			def poll_func():
 				try:
-					while (True):
+					while True:
 						poll_thread_stop.wait(timeout = 60.0 * check_interval)
 						if poll_thread_stop.is_set():
 							break
