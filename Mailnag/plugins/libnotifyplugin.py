@@ -222,7 +222,7 @@ class LibNotifyPlugin(Plugin):
 		for mail in mails:
 			n = self._get_notification(self._get_sender(mail), mail.subject, "mail-unread")
 			notification_id = str(id(n))
-			# n.add_action("mark-as-read", _("Mark as read"), self._notification_action_handler, (mail, notification_id), None)			
+			# n.add_action("mark-as-read", _("Mark as read"), self._notification_action_handler, (mail, notification_id))			
 			n.show()
 			self._notifications[notification_id] = n
 
@@ -250,7 +250,7 @@ class LibNotifyPlugin(Plugin):
 	def _get_notification(self, summary, body, icon):
 		n = Notify.Notification.new(summary, body, icon)		
 		n.set_category("email")
-		n.add_action("default", "default", self._notification_action_handler, None, None)
+		n.add_action("default", "default", self._notification_action_handler, None)
 
 		return n
 	
