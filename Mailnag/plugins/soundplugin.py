@@ -26,7 +26,7 @@ import threading
 from common.plugins import Plugin, HookTypes
 from common.utils import get_data_file
 from common.i18n import _
-from gi.repository import Gst, Gio
+from gi.repository import Gst
 
 plugin_defaults = { 'soundfile' : 'mailnag.ogg' }
 
@@ -34,16 +34,12 @@ plugin_defaults = { 'soundfile' : 'mailnag.ogg' }
 class SoundPlugin(Plugin):
 	def __init__(self):
 		self._mails_added_hook = None
-		self._gsettings = None
 
 	
 	def enable(self):
-		self._gsettings = Gio.Settings.new('org.gnome.shell')
-		
 		def mails_added_hook(new_mails, all_mails):
-			if self._gsettings.get_int('saved-session-presence') != 2:
-				config = self.get_config()
-				gstplay(get_data_file(config['soundfile']))
+			config = self.get_config()
+			gstplay(get_data_file(config['soundfile']))
 		
 		self._mails_added_hook = mails_added_hook
 		
@@ -60,8 +56,6 @@ class SoundPlugin(Plugin):
 			controller.hooks.unregister_hook_func(HookTypes.MAILS_ADDED,
 				self._mails_added_hook)
 			self._mails_added_hook = None
-		
-		self._gsettings = None
 
 	
 	def get_manifest(self):
