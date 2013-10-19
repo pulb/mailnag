@@ -1,9 +1,9 @@
 # Mailnag
-A mail notification daemon for GNOME 3.  
+An extendable mail notification daemon.  
 https://github.com/pulb/mailnag
 
 Mailnag checks POP3 and IMAP servers for new mail.  
-When it finds new messsages, it creates a GNOME-Shell notification   
+When it finds new messsages, it creates a notification   
 that mentions sender and subject.
 
 __This project needs contributors!__  
