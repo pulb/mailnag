@@ -15,7 +15,7 @@ __This project needs contributors!__
 ###### Requirements
 * python2 (python3 won't work!)
 * pygobject
-* gir-notify
+* gir-notify (>= 0.7.6)
 * gir-gstreamer
 * gir-glib-2.0
 * gir-gnomekeyring-1.0
