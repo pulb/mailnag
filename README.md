@@ -38,8 +38,8 @@ By default, Mailnag emits libnotify notifications, which work fine on most deskt
 but are visible for a few seconds only. If you like to have a tighter desktop integration  
 (e.g. a permanently visible indicator in your top panel) you have to install an appropriate  
 extension/plugin for your desktop shell. Currently the following desktops shells are supported:  
-* GNOME-Shell [GNOME-Shell extension](https://github.com/pulb/mailnag-gnome-shell)  
-* Ubuntu Unity [MessagingMenu plugin](#) (TBD, help is very appreciated!)
+* GNOME-Shell ([GNOME-Shell extension](https://github.com/pulb/mailnag-gnome-shell))  
+* Ubuntu Unity ([MessagingMenu plugin](#)) (TBD, help is very appreciated!)
 
 ## Screenshots
 TODO
