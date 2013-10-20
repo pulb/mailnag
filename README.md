@@ -37,7 +37,7 @@ If you're a webmail (e.g. gmail) user and want your account to be launched in a 
 By default, Mailnag emits libnotify notifications, which work fine on most desktop environments  
 but are visible for a few seconds only. If you like to have a tighter desktop integration  
 (e.g. a permanently visible indicator in your top panel) you have to install an appropriate  
-extension/plugin for your desktop shell. Currently the following desktops shells are supported:  
+extension/plugin for your desktop shell. Currently the following desktop shells are supported:  
 * GNOME-Shell ([GNOME-Shell extension](https://github.com/pulb/mailnag-gnome-shell))  
 * Ubuntu Unity ([MessagingMenu plugin](#)) (TBD, help is very appreciated!)
 
