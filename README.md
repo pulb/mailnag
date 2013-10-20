@@ -33,9 +33,13 @@ Closing the configuration window will start Mailnag automatically.
 Clicking a mail notification popup will open the default mail client specified in `System Settings -> System Info -> Default Applications`.  
 If you're a webmail (e.g. gmail) user and want your account to be launched in a browser, please install a tool like [gnome-gmail](http://gnome-gmail.sourceforge.net).
 
-### Permanent Notifications
-GNOME-Shell notifications are visible for a few seconds only before they vanish in GNOME's hidden messaging tray.  
-If you like to have a permanently visible notification counter in your top panel, you probably want to install [this](https://github.com/pulb/shell-message-notifier) GNOME-Shell extension.
+### Desktop integration
+By default, Mailnag emits libnotify notifications, which work fine on most desktop environments  
+but are visible for a few seconds only. If you like to have a tighter desktop integration  
+(e.g. a permanently visible indicator in your top panel) you have to install an appropriate  
+extension/plugin for your desktop shell. Currently the following desktops shells are supported:  
+* GNOME-Shell [GNOME-Shell extension](https://github.com/pulb/mailnag-gnome-shell)  
+* Ubuntu Unity [MessagingMenu plugin](#) (TBD, help is very appreciated!)
 
 ## Screenshots
-![Screenshot](http://www.shockshit.net/mailnag/screenshots/mailnag_flyer.png)
+TODO
