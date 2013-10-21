@@ -43,6 +43,10 @@ PACKAGE_NAME = "mailnag"
 # (usually you have to make it point to '/usr/share/locale').
 LOCALE_DIR = './locale'
 
+# The LIB_DIR variable specifies the root path for the Mailnag python files
+# (usually you have to make it point to <PYTHON_LIB_DIR>/Mailnag).
+LIB_DIR = "./Mailnag"
+
 # The BIN_DIR variable specifies the path for the mailnag start scripts
 # (usually you have to make it point to '/usr/bin').
 BIN_DIR = '.'
