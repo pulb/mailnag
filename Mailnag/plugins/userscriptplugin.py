@@ -58,7 +58,7 @@ class UserscriptPlugin(Plugin):
 	
 	def get_manifest(self):
 		return (_("User script"),
-				_("Runs a user defined script on mail arrival."),
+				_("Runs an user defined script on mail arrival."),
 				"1.0",
 				"Patrick Ulbrich <zulu99@gmx.net>",
 				False)
