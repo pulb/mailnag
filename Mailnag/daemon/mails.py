@@ -80,13 +80,8 @@ class MailCollector:
 					try:
 						status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
 					except:
-						logging.warning('The folder: %s does not exist, using INBOX instead.', folder)
-						try:
-							# if search fails select INBOX and try again
-							srv.select('INBOX', readonly = True)
-							status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
-						except:
-							logging.warning("INBOX couldn't be found.")
+						logging.warning('Folder %s does not exist.', folder)
+						continue
 
 					if status != 'OK' or None in [d for d in data]:
 						logging.debug('Folder %s in status %s | Data: %s', (folder, status, data))
