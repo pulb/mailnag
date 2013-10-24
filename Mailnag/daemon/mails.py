@@ -76,14 +76,14 @@ class MailCollector:
 						continue
 					
 					# select IMAP folder
-					srv.select(folder, readonly=True)
+					srv.select(folder, readonly = True)
 					try:
 						status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
 					except:
 						logging.warning('The folder: %s does not exist, using INBOX instead.', folder)
 						try:
 							# if search fails select INBOX and try again
-							srv.select('INBOX', readonly=True)
+							srv.select('INBOX', readonly = True)
 							status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
 						except:
 							logging.warning("INBOX couldn't be found.")
@@ -100,6 +100,7 @@ class MailCollector:
 								except:
 									logging.debug("Couldn't get IMAP message.")
 									continue
+								
 								try:
 									try:
 										# get sender and format it
@@ -110,6 +111,7 @@ class MailCollector:
 								except:
 									logging.debug("Couldn't get sender from IMAP message.")
 									sender = ('', '')
+								
 								try:
 									try:
 										# get date and format it
@@ -121,6 +123,7 @@ class MailCollector:
 									logging.debug("Couldn't get date from IMAP message.")
 									# current time to seconds
 									datetime = int(time.time())
+								
 								try:
 									try:
 										# get subject and format it
@@ -131,6 +134,7 @@ class MailCollector:
 								except:
 									logging.debug("Couldn't get subject from IMAP message.")
 									subject = _('No subject')
+								
 								try:
 									id = msg['Message-Id']
 								except:
@@ -171,6 +175,7 @@ class MailCollector:
 					except:
 						logging.debug("Couldn't get msg from POP message.")
 						continue
+					
 					try:
 						try:
 							# get sender and format it
@@ -181,6 +186,7 @@ class MailCollector:
 					except:
 						logging.debug("Couldn't get sender from POP message.")
 						sender = ('', '')
+					
 					try:
 						try:
 							# get date and format it
@@ -192,6 +198,7 @@ class MailCollector:
 						logging.debug("Couldn't get date from POP message.")
 						# current time to seconds
 						datetime = int(time.time())
+					
 					try:
 						try:
 							# get subject and format it
@@ -202,6 +209,7 @@ class MailCollector:
 					except:
 						logging.debug("Couldn't get subject from POP message.")
 						subject = _('No subject')
+					
 					try:
 						# get id
 						uidl = srv.uidl(i)
