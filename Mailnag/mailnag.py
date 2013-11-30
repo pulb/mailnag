@@ -26,6 +26,7 @@
 from gi.repository import GObject, GLib
 from dbus.mainloop.glib import DBusGMainLoop
 import threading
+import argparse
 import logging
 import logging.handlers
 import os
@@ -39,6 +40,8 @@ from common.plugins import Plugin, HookRegistry, MailnagController
 from common.subproc import terminate_subprocesses
 from daemon.mailchecker import MailChecker
 from daemon.idlers import IdlerRunner
+
+PROGNAME = 'mailnagd'
 
 LOG_LEVEL = logging.DEBUG
 LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
@@ -128,16 +131,32 @@ def cleanup():
 		os._exit(os.EX_SOFTWARE)
 
 
-def init_logging():
+def get_args():
+	parser = argparse.ArgumentParser(prog=PROGNAME)
+	parser.add_argument('--quiet', action = 'store_true', 
+		help = "don't print log messages to stdout")
+	
+	return parser.parse_args()
+
+
+def init_logging(enable_stdout = True):
 	logging.basicConfig(
 		format = LOG_FORMAT,
 		datefmt = LOG_DATE_FORMAT,
 		level = LOG_LEVEL)
 	
+	logger = logging.getLogger('')
+	
 	syslog_handler = logging.handlers.SysLogHandler(address='/dev/log')
 	syslog_handler.setLevel(LOG_LEVEL)
 	syslog_handler.setFormatter(logging.Formatter(LOG_FORMAT, LOG_DATE_FORMAT))
-	logging.getLogger('').addHandler(syslog_handler)
+	
+	stdout_handler = logger.handlers[0]
+	
+	logger.addHandler(syslog_handler)
+	
+	if not enable_stdout:
+		logger.removeHandler(stdout_handler)	
 
 
 def sigterm_handler(data):
@@ -179,11 +198,14 @@ def unload_plugins():
 def main():
 	global mainloop, start_thread
 	
-	set_procname("mailnagd")
+	set_procname(PROGNAME)
 	GObject.threads_init()
 	DBusGMainLoop(set_as_default = True)
 	GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGTERM, 
 		sigterm_handler, None)
+	
+	# Get commandline arguments
+	args = get_args()
 	
 	# shut down an (possibly) already running Mailnag daemon
 	# (must be called before instantiation of the DBUSService).
@@ -191,7 +213,7 @@ def main():
 	
 	# Note: don't start logging before an existing Mailnag 
 	# instance has been shut down completely (will corrupt logfile).
-	init_logging()
+	init_logging(not args.quiet)
 	
 	try:
 		cfg = read_config()
