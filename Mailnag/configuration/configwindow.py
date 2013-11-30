@@ -269,7 +269,7 @@ class ConfigWindow:
 		content = "\n" + \
 		"[Desktop Entry]\n" + \
 		"Type=Application\n" + \
-		"Exec=" + exec_file + "\n" + \
+		"Exec=" + exec_file + " --quiet\n" + \
 		"Hidden=false\n" + \
 		"NoDisplay=false\n" + \
 		"X-GNOME-Autostart-enabled=true\n" + \
