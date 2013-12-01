@@ -27,6 +27,7 @@ import time
 import email
 import os
 import logging
+import hashlib
 
 from common.i18n import _
 from common.config import cfg_folder
@@ -111,13 +112,16 @@ class MailCollector:
 									try:
 										# get date and format it
 										datetime = self._format_header('date', msg['Date'])
+										hash_datetime = str(datetime)
 									except KeyError:
 										logging.debug("Caught KeyError exception for key 'Date' in message.")
 										datetime = self._format_header('date', msg['date'])
+										hash_datetime = str(datetime)
 								except:
 									logging.debug("Couldn't get date from IMAP message.")
 									# current time to seconds
 									datetime = int(time.time())
+									hash_datetime = ''
 								
 								try:
 									try:
@@ -130,15 +134,10 @@ class MailCollector:
 									logging.debug("Couldn't get subject from IMAP message.")
 									subject = _('No subject')
 								
-								try:
-									id = msg['Message-Id']
-								except:
-									logging.debug("Couldn't get id from IMAP message.")
-									id = None
-							
-								if id == None or id == '':
-									# create fallback id
-									id = str(hash(acc.server + acc.user + sender[1] + subject + str(datetime)))
+								# Note: mails received in the same folder with identical sender and subject but *no datetime* 
+								# will have the same hash id, i.e. only the first mail is notified. (Should happen very rarely).
+								id = hashlib.md5((acc.server + folder + acc.user + sender[1] + subject + hash_datetime)
+									.encode('utf-8')).hexdigest()
 					
 						# prevent duplicates caused by Gmail labels
 						if id not in mail_ids:
@@ -186,13 +185,16 @@ class MailCollector:
 						try:
 							# get date and format it
 							datetime = self._format_header('date', msg['Date'])
+							hash_datetime = str(datetime)
 						except KeyError:
 							logging.debug("Caught KeyError exception for key 'Date' in message.")
 							datetime = self._format_header('date', msg['date'])
+							hash_datetime = str(datetime)
 					except:
 						logging.debug("Couldn't get date from POP message.")
 						# current time to seconds
 						datetime = int(time.time())
+						hash_datetime = ''
 					
 					try:
 						try:
@@ -205,19 +207,10 @@ class MailCollector:
 						logging.debug("Couldn't get subject from POP message.")
 						subject = _('No subject')
 					
-					try:
-						# get id
-						uidl = srv.uidl(i)
-					except:
-						logging.debug("Couldn't get id from POP message.")
-						uidl = None
-					
-					if uidl == None or uidl == '':
-						# create fallback id
-						id = str(hash(acc.server + acc.user + sender[1] + subject + str(datetime)))
-					else:
-						# create unique id
-						id = acc.user + uidl.split(' ')[2]
+					# Note: mails received on the same server with identical sender and subject but *no datetime* 
+					# will have the same hash id, i.e. only the first mail is notified. (Should happen very rarely).
+					id = hashlib.md5((acc.server + acc.user + sender[1] + subject + hash_datetime)
+						.encode('utf-8')).hexdigest()
 					
 					mail_list.append(Mail(datetime, subject, sender, \
 						id, acc.get_id()))
