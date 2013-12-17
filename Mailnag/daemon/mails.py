@@ -154,7 +154,7 @@ class MailCollector:
 		return mail_list
 
 
-	def _get_header(self, msg_dict):						
+	def _get_header(self, msg_dict):
 		try:
 			content = self._get_header_field(msg_dict, 'From')
 			sender = self._format_header_field('sender', content)
@@ -184,14 +184,13 @@ class MailCollector:
 	
 	
 	def _get_header_field(self, msg_dict, key):
-		try:
+		if msg_dict.has_key(key):
 			value = msg_dict[key]
-		except KeyError:
-			try:
-				value = msg_dict[key.lower()]
-			except KeyError, err:
-				logging.debug("Couldn't get %s from message." % key)
-				raise err
+		elif msg_dict.has_key(key.lower()):
+			value = msg_dict[key.lower()]
+		else:
+			logging.debug("Couldn't get %s from message." % key)
+			raise KeyError
 		
 		return value
 
