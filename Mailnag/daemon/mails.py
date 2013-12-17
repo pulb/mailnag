@@ -48,7 +48,6 @@ class Mail:
 
 #
 # MailCollector class
-# TODO : unspaghettize me!
 #
 class MailCollector:
 	def __init__(self, cfg, accounts):
@@ -65,7 +64,7 @@ class MailCollector:
 			srv = acc.get_connection(use_existing = True)
 			if srv == None:
 				continue
-			elif acc.imap:# IMAP
+			elif acc.imap: # IMAP
 				if len(acc.folder.strip()) == 0:
 					folder_list = ["INBOX"]
 				else:
@@ -97,43 +96,8 @@ class MailCollector:
 									logging.debug("Couldn't get IMAP message.")
 									continue
 								
-								try:
-									try:
-										# get sender and format it
-										sender = self._format_header('sender', msg['From'])
-									except KeyError:
-										logging.debug("Caught KeyError exception for key 'From' in message.")
-										sender = self._format_header('sender', msg['from'])
-								except:
-									logging.debug("Couldn't get sender from IMAP message.")
-									sender = ('', '')
-								
-								try:
-									try:
-										# get date and format it
-										datetime = self._format_header('date', msg['Date'])
-										hash_datetime = str(datetime)
-									except KeyError:
-										logging.debug("Caught KeyError exception for key 'Date' in message.")
-										datetime = self._format_header('date', msg['date'])
-										hash_datetime = str(datetime)
-								except:
-									logging.debug("Couldn't get date from IMAP message.")
-									# current time to seconds
-									datetime = int(time.time())
-									hash_datetime = ''
-								
-								try:
-									try:
-										# get subject and format it
-										subject = self._format_header('subject', msg['Subject'])
-									except KeyError:
-										logging.debug("Caught KeyError exception for key 'Subject' in message.")
-										subject = self._format_header('subject', msg['subject'])
-								except:
-									logging.debug("Couldn't get subject from IMAP message.")
-									subject = _('No subject')
-								
+								sender, subject, datetime, hash_datetime = self._get_header(msg)
+																
 								# Note: mails received in the same folder with identical sender and subject but *no datetime* 
 								# will have the same hash id, i.e. only the first mail is notified. (Should happen very rarely).
 								id = hashlib.md5((acc.server + folder + acc.user + sender[1] + subject + hash_datetime)
@@ -152,7 +116,7 @@ class MailCollector:
 			else: # POP
 				# number of mails on the server
 				mail_total = len(srv.list()[1])
-				for i in range(1, mail_total+1): # for each mail
+				for i in range(1, mail_total + 1): # for each mail
 					try:
 						# header plus first 0 lines from body
 						message = srv.top(i, 0)[1]
@@ -170,42 +134,7 @@ class MailCollector:
 						logging.debug("Couldn't get msg from POP message.")
 						continue
 					
-					try:
-						try:
-							# get sender and format it
-							sender = self._format_header('sender', msg['From'])
-						except KeyError:
-							logging.debug("Caught KeyError exception for key 'From' in message.")
-							sender = self._format_header('sender', msg['from'])
-					except:
-						logging.debug("Couldn't get sender from POP message.")
-						sender = ('', '')
-					
-					try:
-						try:
-							# get date and format it
-							datetime = self._format_header('date', msg['Date'])
-							hash_datetime = str(datetime)
-						except KeyError:
-							logging.debug("Caught KeyError exception for key 'Date' in message.")
-							datetime = self._format_header('date', msg['date'])
-							hash_datetime = str(datetime)
-					except:
-						logging.debug("Couldn't get date from POP message.")
-						# current time to seconds
-						datetime = int(time.time())
-						hash_datetime = ''
-					
-					try:
-						try:
-							# get subject and format it
-							subject = self._format_header('subject', msg['Subject'])
-						except KeyError:
-							logging.debug("Caught KeyError exception for key 'Subject' in message.")
-							subject = self._format_header('subject', msg['subject'])
-					except:
-						logging.debug("Couldn't get subject from POP message.")
-						subject = _('No subject')
+					sender, subject, datetime, hash_datetime = self._get_header(msg)
 					
 					# Note: mails received on the same server with identical sender and subject but *no datetime* 
 					# will have the same hash id, i.e. only the first mail is notified. (Should happen very rarely).
@@ -225,38 +154,66 @@ class MailCollector:
 		return mail_list
 
 
+	def _get_header(self, msg_dict):						
+		try:
+			content = self._get_header_field(msg_dict, 'From')
+			sender = self._format_header_field('sender', content)
+		except:
+			sender = ('', '')
+
+		try:
+			content = self._get_header_field(msg_dict, 'Subject')
+		except:
+			content = _('No subject')
+		try:
+			subject = self._format_header_field('subject', content)
+		except:
+			subject = ''
+		
+		try:
+			content = self._get_header_field(msg_dict, 'Date')
+			datetime = self._format_header_field('date', content)
+			hash_datetime = str(datetime)
+		except:
+			logging.warning('Using current time for email date.')
+			# current time to seconds
+			datetime = int(time.time())
+			hash_datetime = ''
+			
+		return (sender, subject, datetime, hash_datetime)
+	
+	
+	def _get_header_field(self, msg_dict, key):
+		try:
+			value = msg_dict[key]
+		except KeyError:
+			try:
+				value = msg_dict[key.lower()]
+			except KeyError, err:
+				logging.debug("Couldn't get %s from message." % key)
+				raise err
+		
+		return value
+
+	
 	# format sender, date, subject etc.
-	def _format_header(self, field, content):
-		if field == 'sender':
-			try:
-				# get the two parts of the sender
-				sender_real, sender_addr = email.utils.parseaddr(content)
-				sender_real = self._convert(sender_real)
-				sender_addr = self._convert(sender_addr)
-				# create decoded tupel
-				sender = (sender_real, sender_addr)
-			except:
-				sender = ('', '')
-			return sender
+	def _format_header_field(self, field_name, content):
+		if field_name == 'sender':
+			# get the two parts of the sender
+			sender_real, sender_addr = email.utils.parseaddr(content)
+			sender_real = self._convert(sender_real)
+			sender_addr = self._convert(sender_addr)
+			# create decoded tupel
+			return (sender_real, sender_addr)
 
-		if field == 'date':
-			try:
-				# make a 10-tupel (UTC)
-				parsed_date = email.utils.parsedate_tz(content)
-				# convert 10-tupel to seconds incl. timezone shift
-				datetime = email.utils.mktime_tz(parsed_date)
-			except:
-				logging.warning('Cannot format date. Using current time.')
-				# current time to seconds
-				datetime = int(time.time())
-			return datetime
+		if field_name == 'date':
+			# make a 10-tupel (UTC)
+			parsed_date = email.utils.parsedate_tz(content)
+			# convert 10-tupel to seconds incl. timezone shift
+			return email.utils.mktime_tz(parsed_date)
 
-		if field == 'subject':
-			try:
-				subject = self._convert(content)
-			except:
-				subject = ''
-			return subject
+		if field_name == 'subject':
+			return self._convert(content)
 
 
 	# decode and concatenate multi-coded header parts
