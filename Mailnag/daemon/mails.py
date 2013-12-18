@@ -184,9 +184,9 @@ class MailCollector:
 	
 	
 	def _get_header_field(self, msg_dict, key):
-		if msg_dict.has_key(key):
+		if key in msg_dict:
 			value = msg_dict[key]
-		elif msg_dict.has_key(key.lower()):
+		elif key.lower() in msg_dict:
 			value = msg_dict[key.lower()]
 		else:
 			logging.debug("Couldn't get %s from message." % key)
