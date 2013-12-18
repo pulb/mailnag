@@ -57,7 +57,7 @@ class MailCollector:
 		
 	def collect_mail(self, sort = True):
 		mail_list = []
-		mail_ids = []
+		mail_ids = {}
 		
 		for acc in self._accounts:
 			# get server connection for this account
@@ -107,7 +107,7 @@ class MailCollector:
 						if id not in mail_ids:
 							mail_list.append(Mail(datetime, subject, \
 								sender, id, acc.get_id()))
-							mail_ids.append(id)
+							mail_ids[id] = None
 				
 				# don't close IMAP idle connections
 				if not acc.idle:
