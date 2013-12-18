@@ -103,7 +103,11 @@ class MailCollector:
 								id = hashlib.md5((acc.server + folder + acc.user + sender[1] + subject + hash_datetime)
 									.encode('utf-8')).hexdigest()
 					
-						# prevent duplicates caused by Gmail labels
+						
+						# Discard mails with identical IDs (caused 
+						# by mails received in the same folder with 
+						# identical sender and subject but *no datetime*).
+						# Also filter duplicates caused by Gmail labels.
 						if id not in mail_ids:
 							mail_list.append(Mail(datetime, subject, \
 								sender, id, acc.get_id()))
@@ -141,8 +145,12 @@ class MailCollector:
 					id = hashlib.md5((acc.server + acc.user + sender[1] + subject + hash_datetime)
 						.encode('utf-8')).hexdigest()
 					
-					mail_list.append(Mail(datetime, subject, sender, \
-						id, acc.get_id()))
+					# Discard mails with identical IDs (caused 
+					# by mails with identical sender and subject but *no datetime*).
+					if id not in mail_ids:
+						mail_list.append(Mail(datetime, subject, sender, \
+							id, acc.get_id()))
+						mail_ids[id] = None
 
 				# disconnect from Email-Server
 				srv.quit()
