@@ -96,17 +96,14 @@ class MailCollector:
 									logging.debug("Couldn't get IMAP message.")
 									continue
 								
-								sender, subject, datetime, hash_datetime = self._get_header(msg)
-																
-								# Note: mails received in the same folder with identical sender and subject but *no datetime* 
-								# will have the same hash id, i.e. only the first mail is notified. (Should happen very rarely).
-								id = hashlib.md5((acc.server + folder + acc.user + sender[1] + subject + hash_datetime)
-									.encode('utf-8')).hexdigest()
-					
+								sender, subject, datetime, msgid = self._get_header(msg)
+								id = self._get_id(msgid, acc, folder, sender, subject, datetime)
 						
 						# Discard mails with identical IDs (caused 
-						# by mails received in the same folder with 
-						# identical sender and subject but *no datetime*).
+						# by mails with a non-unique fallback ID, 
+						# i.e. mails received in the same folder with 
+						# identical sender and subject but *no datetime*, 
+						# see _get_id()).
 						# Also filter duplicates caused by Gmail labels.
 						if id not in mail_ids:
 							mail_list.append(Mail(datetime, subject, \
@@ -138,15 +135,13 @@ class MailCollector:
 						logging.debug("Couldn't get msg from POP message.")
 						continue
 					
-					sender, subject, datetime, hash_datetime = self._get_header(msg)
-					
-					# Note: mails received on the same server with identical sender and subject but *no datetime* 
-					# will have the same hash id, i.e. only the first mail is notified. (Should happen very rarely).
-					id = hashlib.md5((acc.server + acc.user + sender[1] + subject + hash_datetime)
-						.encode('utf-8')).hexdigest()
+					sender, subject, datetime, msgid = self._get_header(msg)
+					id = self._get_id(msgid, acc, '', sender, subject, datetime)
 					
 					# Discard mails with identical IDs (caused 
-					# by mails with identical sender and subject but *no datetime*).
+					# by mails with a non-unique fallback ID, 
+					# i.e. mails with identical sender and subject 
+					# but *no datetime*, see _get_id()).
 					if id not in mail_ids:
 						mail_list.append(Mail(datetime, subject, sender, \
 							id, acc.get_id()))
@@ -181,14 +176,16 @@ class MailCollector:
 		try:
 			content = self._get_header_field(msg_dict, 'Date')
 			datetime = self._format_header_field('date', content)
-			hash_datetime = str(datetime)
 		except:
-			logging.warning('Using current time for email date.')
-			# current time to seconds
-			datetime = int(time.time())
-			hash_datetime = ''
+			logging.warning('Email date set to zero.')
+			datetime = 0
 			
-		return (sender, subject, datetime, hash_datetime)
+		try:
+			msgid = self._get_header_field(msg_dict, 'Message-ID')
+		except:
+			msgid = ''
+		
+		return (sender, subject, datetime, msgid)
 	
 	
 	def _get_header_field(self, msg_dict, key):
@@ -245,6 +242,23 @@ class MailCollector:
 		decoded_content = decoded_content.strip()
 
 		return decoded_content
+
+
+	def _get_id(self, msgid, acc, folder, sender, subject, datetime):
+		if len(msgid) > 0:
+			id = hashlib.md5(msgid.encode('utf-8')).hexdigest()
+		else:
+			# Fallback ID. 
+			# Note: mails received on the same server, 
+			# in the same folder with identical sender and 
+			# subject but *no datetime* will have the same hash id, 
+			# i.e. only the first mail is notified. 
+			# (Should happen very rarely).
+			id = hashlib.md5((acc.server + folder + acc.user + 
+				sender[1] + subject + str(datetime))
+				.encode('utf-8')).hexdigest()
+		
+		return id
 
 
 #
