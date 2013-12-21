@@ -181,7 +181,7 @@ class LibNotifyPlugin(Plugin):
 				if config['notification_mode'] == NOTIFICATION_MODE_COUNT:
 					self._notify_count(len(all_mails))
 				elif config['notification_mode'] == NOTIFICATION_MODE_SUMMARY:
-					self._notify_summary(all_mails)
+					self._notify_summary(new_mails, all_mails)
 				else:
 					self._notify_single(new_mails)
 					
@@ -190,9 +190,17 @@ class LibNotifyPlugin(Plugin):
 		t.start()
 	
 	
-	def _notify_summary(self, mails):
+	def _notify_summary(self, new_mails, all_mails):
 		summary = ""		
 		body = ""
+		
+		# The mail list (all_mails) is sorted by date (mails with most recent 
+		# date on top). New mails with no date or older mails that come in 
+		# delayed won't be listed on top. So if a mail with no or an older date 
+		# arrives, it gives the impression that the top most mail (i.e. the mail 
+		# with the most recent date) is re-notified.
+		# To fix that, simply put new mails on top explicitly.  
+		mails = new_mails + [m for m in all_mails if m not in new_mails]
 		
 		if len(self._notifications) == 0:
 			self._notifications['0'] = self._get_notification(" ", None, None) # empty string will emit a gtk warning
