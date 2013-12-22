@@ -42,12 +42,15 @@ class DBusPlugin(Plugin):
 		self._dbusservice = DBusService(controller)
 		
 		def mails_added_hook(new_mails, all_mails):
-			self._dbusservice.set_mails(all_mails)
-			self._dbusservice.MailsAdded(len(new_mails))
+			conv_new_mails = self._convert_mails(new_mails)
+			conv_all_mails = self._convert_mails(all_mails)
+			self._dbusservice.set_mails(conv_all_mails)
+			self._dbusservice.MailsAdded(conv_new_mails, conv_all_mails)
 		
 		def mails_removed_hook(remaining_mails):
-			self._dbusservice.set_mails(remaining_mails)
-			self._dbusservice.MailsRemoved(len(remaining_mails))
+			conv_remaining_mails = self._convert_mails(remaining_mails)
+			self._dbusservice.set_mails(conv_remaining_mails)
+			self._dbusservice.MailsRemoved(conv_remaining_mails)
 		
 		self._mails_added_hook = mails_added_hook
 		self._mails_removed_hook = mails_removed_hook
@@ -101,7 +104,24 @@ class DBusPlugin(Plugin):
 		pass
 
 
-# DBUS server that exports Mailnag signals end methods 
+	def _convert_mails(self, mails):
+		converted_mails = []
+		for m in mails:
+			d = {}
+			name, addr = m.sender
+			
+			d['datetime'] = m.datetime	# int32 (i)
+			d['subject'] = m.subject	# string (s)
+			d['sender_name'] = name		# string (s)
+			d['sender_addr'] = addr		# string (s)
+			d['id'] = m.id				# string (s)
+
+			converted_mails.append(d)
+		
+		return converted_mails
+
+
+# DBUS server that exports Mailnag signals and methods 
 class DBusService(dbus.service.Object):
 	def __init__(self, mailnag_controller):
 		self._mails = []
@@ -114,33 +134,20 @@ class DBusService(dbus.service.Object):
 		self._mails = mails
 	
 	
-	@dbus.service.signal(dbus_interface = DBUS_BUS_NAME, signature = 'u')
-	def MailsAdded(self, new_count):
+	@dbus.service.signal(dbus_interface = DBUS_BUS_NAME, signature = 'aa{sv}aa{sv}')
+	def MailsAdded(self, new_mails, all_mails):
 		pass
 	
 	
-	@dbus.service.signal(dbus_interface = DBUS_BUS_NAME, signature = 'u')
-	def MailsRemoved(self, new_count):
+	@dbus.service.signal(dbus_interface = DBUS_BUS_NAME, signature = 'aa{sv}')
+	def MailsRemoved(self, remaining_mails):
 		pass
 	
 		
 	@dbus.service.method(dbus_interface = DBUS_BUS_NAME, out_signature = 'aa{sv}')
 	def GetMails(self):
-		mails = []
-		for m in self._mails:
-			d = {}
-			name, addr = m.sender
-			
-			d['datetime'] = m.datetime	# int32 (i)
-			d['subject'] = m.subject	# string (s)
-			d['sender_name'] = name		# string (s)
-			d['sender_addr'] = addr		# string (s)
-			d['id'] = m.id				# string (s)
-
-			mails.append(d)
+		return self._mails
 		
-		return mails
-	
 	
 	@dbus.service.method(dbus_interface = DBUS_BUS_NAME, out_signature = 'u')
 	def GetMailCount(self):
@@ -150,3 +157,4 @@ class DBusService(dbus.service.Object):
 	@dbus.service.method(dbus_interface = DBUS_BUS_NAME)
 	def Shutdown(self):
 		self._mailnag_controller.shutdown()
+
