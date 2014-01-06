@@ -3,7 +3,7 @@
 #
 # configwindow.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -265,11 +265,15 @@ class ConfigWindow:
 		curdir = os.getcwd()
 		# path to mailnag startscript
 		exec_file = os.path.join(curdir, "mailnagd")
-
+		# path to mailnag icon file (use abspath to translate a 
+		# relative path like './data/mailnag.svg' to an absolute path).
+		icon_file = os.path.abspath(get_data_file("mailnag.svg"))
+		
 		content = "\n" + \
 		"[Desktop Entry]\n" + \
 		"Type=Application\n" + \
-		"Exec=" + exec_file + " --quiet\n" + \
+		"Exec=%s --quiet\n" % exec_file + \
+		"Icon=%s\n" % icon_file + \
 		"Hidden=false\n" + \
 		"NoDisplay=false\n" + \
 		"X-GNOME-Autostart-enabled=true\n" + \
