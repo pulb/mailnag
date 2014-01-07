@@ -3,7 +3,7 @@
 #
 # idlers.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -32,13 +32,14 @@ from daemon.imaplib2 import AUTH
 # Idler class
 #
 class Idler(object):
-	def __init__(self, account, sync_callback):
+	def __init__(self, account, sync_callback, idle_timeout):
 		self.RECONNECT_RETRY_INTERVAL = 5 # minutes
 		
 		self._thread = threading.Thread(target=self._idle)
 		self._event = threading.Event()
 		self._sync_callback = sync_callback
 		self._account = account
+		self._idle_timeout = idle_timeout
 		# use_existing = True:
 		# connection has been opened in mailnag.py already (immediate check)
 		self._conn = account.get_connection(use_existing = True)
@@ -90,8 +91,9 @@ class Idler(object):
 			self._conn_closed = False
 
 			# register idle callback that is called whenever an idle event arrives (new mail / mail deleted).
-			# the callback is called after 10 minutes at the latest. gmail sends keepalive events every 5 minutes.
-			self._conn.idle(callback = self._idle_callback, timeout = 60 * 10)
+			# the callback is called after <idle_timeout> minutes at the latest. 
+			# gmail sends keepalive events every 5 minutes.
+			self._conn.idle(callback = self._idle_callback, timeout = 60 * self._idle_timeout)
 			
 			# waits for the event to be set
 			# (in idle callback or in dispose())
@@ -161,17 +163,18 @@ class Idler(object):
 # IdlerRunner class
 #
 class IdlerRunner:
-	def __init__(self, accounts, sync_callback):
+	def __init__(self, accounts, sync_callback, idle_timeout):
 		self._idlerlist = []
 		self._accounts = accounts
 		self._sync_callback = sync_callback
+		self._idle_timeout = idle_timeout
 	
 	
 	def run(self):
 		for acc in self._accounts:
 			if acc.imap and acc.idle:
 				try:
-					idler = Idler(acc, self._sync_callback)
+					idler = Idler(acc, self._sync_callback, self._idle_timeout)
 					idler.run()
 					self._idlerlist.append(idler)
 				except Exception as ex:

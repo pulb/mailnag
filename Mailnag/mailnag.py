@@ -3,7 +3,7 @@
 #
 # mailnag.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -262,12 +262,12 @@ def start(cfg, hookreg):
 		# start polling thread for POP3 accounts and
 		# IMAP accounts without idle support
 		if len(non_idle_accounts) > 0:
-			check_interval = int(cfg.get('core', 'check_interval'))
+			poll_interval = int(cfg.get('core', 'poll_interval'))
 		
 			def poll_func():
 				try:
 					while True:
-						poll_thread_stop.wait(timeout = 60.0 * check_interval)
+						poll_thread_stop.wait(timeout = 60.0 * poll_interval)
 						if poll_thread_stop.is_set():
 							break
 					
@@ -288,7 +288,8 @@ def start(cfg, hookreg):
 					logging.exception('Caught an exception.')
 
 		
-			idlrunner = IdlerRunner(idle_accounts, sync_func)
+			idle_timeout = int(cfg.get('core', 'imap_idle_timeout'))
+			idlrunner = IdlerRunner(idle_accounts, sync_func, idle_timeout)
 			idlrunner.run()
 	except:
 		logging.exception('Caught an exception.')

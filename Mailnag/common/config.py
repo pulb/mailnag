@@ -3,7 +3,7 @@
 #
 # config.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,7 +29,8 @@ from common.i18n import _
 mailnag_defaults = {
 	'core':
 	{
-		'check_interval'	: '10',
+		'poll_interval'		: '10',
+		'imap_idle_timeout'	: '10',
 		'autostart'			: '1',
 		'enabled_plugins'	: 'dbusplugin, soundplugin'
 	}
