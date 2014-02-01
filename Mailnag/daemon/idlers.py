@@ -26,8 +26,12 @@ import threading
 import time
 import logging
 from daemon.imaplib2 import AUTH
+from common.exceptions import InvalidOperationException
 
 
+class ConnectionException(Exception):
+	def __init__(self, message):
+		Exception.__init__(self, message)
 #
 # Idler class
 #
@@ -41,21 +45,22 @@ class Idler(object):
 		self._account = account
 		self._idle_timeout = idle_timeout
 		# use_existing = True:
-		# connection has been opened in mailnag.py already (immediate check)
+		# connection has been opened in mailnagdaemon.py already (immediate check)
 		self._conn = account.get_connection(use_existing = True)
 		self._disposed = False
 				
 		if self._conn == None:
-			raise Exception("Failed to establish a connection for account '%s'" % account.name)
+			raise ConnectionException(
+				"Failed to establish a connection for account '%s'" % account.name)
 					
 		# Need to get out of AUTH mode of fresh connections.
 		if self._conn.state == AUTH:
 			self._select(self._conn, account.folder)
 
 
-	def run(self):
+	def start(self):
 		if self._disposed:
-			raise Exception("Idler has been disposed")
+			raise InvalidOperationException("Idler has been disposed")
 			
 		self._thread.start()
 
@@ -67,10 +72,9 @@ class Idler(object):
 		
 		try:
 			if self._conn != None:
-				# (calls idle_callback)
-				self._conn.close()
-				# shutdown existing callback thread
-				self._conn.logout()
+				# Exit possible active idle state.
+				# (also calls idle_callback)
+				self._conn.noop()
 		except:
 			pass
 		
@@ -170,12 +174,12 @@ class IdlerRunner:
 		self._idle_timeout = idle_timeout
 	
 	
-	def run(self):
+	def start(self):
 		for acc in self._accounts:
 			if acc.imap and acc.idle:
 				try:
 					idler = Idler(acc, self._sync_callback, self._idle_timeout)
-					idler.run()
+					idler.start()
 					self._idlerlist.append(idler)
 				except Exception as ex:
 					logging.error("Error: Failed to create an idler thread for account '%s'" % acc.name)

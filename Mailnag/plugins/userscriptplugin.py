@@ -3,7 +3,7 @@
 #
 # userscriptplugin.py
 #
-# Copyright 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013, 2014 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,16 +42,18 @@ class UserscriptPlugin(Plugin):
 		self._mails_added_hook = mails_added_hook
 		
 		controller = self.get_mailnag_controller()
+		hooks = controller.get_hooks()
 		
-		controller.hooks.register_hook_func(HookTypes.MAILS_ADDED, 
+		hooks.register_hook_func(HookTypes.MAILS_ADDED, 
 			self._mails_added_hook)
 		
 	
 	def disable(self):
 		controller = self.get_mailnag_controller()
+		hooks = controller.get_hooks()
 		
 		if self._mails_added_hook != None:
-			controller.hooks.unregister_hook_func(HookTypes.MAILS_ADDED,
+			hooks.unregister_hook_func(HookTypes.MAILS_ADDED,
 				self._mails_added_hook)
 			self._mails_added_hook = None
 

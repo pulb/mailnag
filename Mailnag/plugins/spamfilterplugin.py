@@ -3,7 +3,7 @@
 #
 # smamfilterplugin.py
 #
-# Copyright 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013, 2014 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,16 +47,18 @@ class SpamfilterPlugin(Plugin):
 		self._filter_mails_hook = filter_mails_hook
 		
 		controller = self.get_mailnag_controller()
+		hooks = controller.get_hooks()
 		
-		controller.hooks.register_hook_func(HookTypes.FILTER_MAILS, 
+		hooks.register_hook_func(HookTypes.FILTER_MAILS, 
 			self._filter_mails_hook)
 		
 	
 	def disable(self):
 		controller = self.get_mailnag_controller()
+		hooks = controller.get_hooks()
 		
 		if self._filter_mails_hook != None:
-			controller.hooks.unregister_hook_func(HookTypes.FILTER_MAILS,
+			hooks.unregister_hook_func(HookTypes.FILTER_MAILS,
 				self._filter_mails_hook)
 			self._filter_mails_hook = None
 		

@@ -33,56 +33,17 @@ import os
 import time
 import signal
 
-from common.config import read_cfg, cfg_exists, cfg_folder
+from common.config import cfg_exists
 from common.utils import set_procname, is_online, shutdown_existing_instance
-from common.accounts import AccountList
-from common.plugins import Plugin, HookRegistry, MailnagController
 from common.subproc import terminate_subprocesses
-from daemon.mailchecker import MailChecker
-from daemon.idlers import IdlerRunner
+from common.exceptions import InvalidOperationException
+from daemon.mailnagdaemon import MailnagDaemon
 
 PROGNAME = 'mailnagd'
 
 LOG_LEVEL = logging.DEBUG
 LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-
-mainloop = None
-idlrunner = None
-plugins = []
-hook_registry = HookRegistry()
-start_thread = None
-poll_thread = None
-poll_thread_stop = threading.Event()
-
-
-# Mailnag controller implementation passed to plugins
-class MailnagController_Impl(MailnagController):
-	def __init__(self, hookreg):
-		MailnagController.__init__(self, hookreg)
-	
-	
-	def shutdown(self):
-		if mainloop != None:
-			mainloop.quit()
-			return True
-		else:
-			return False
-	
-	
-	def check_for_mails(self):
-		if (mailchecker != None): #and (non_idle_accounts != None):
-		#	TODO mailchecker.check(non_idle_accounts)
-			return True
-		else:
-			return False
-	
-	
-def read_config():
-	if not cfg_exists():
-		return None
-	else:
-		return read_cfg()
 
 
 def wait_for_inet_connection():
@@ -92,30 +53,12 @@ def wait_for_inet_connection():
 			time.sleep(5)
 
 
-def cleanup():
+def cleanup(daemon):
 	event = threading.Event()
 	def thread():
-		# clean up resources
-		if (start_thread != None) and (start_thread.is_alive()):
-			start_thread.join()
-			logging.info('Starter thread exited successfully.')
-
-		if (poll_thread != None) and (poll_thread.is_alive()):
-			poll_thread_stop.set()
-			poll_thread.join()
-			logging.info('Polling thread exited successfully.')
-	
-		if idlrunner != None:
-			idlrunner.dispose()
-
-		# Clear vars used in the MailnagController 
-		# so plugins can't perform unwanted calls to 
-		# shutdown() or check_for_mail() 
-		# when being disabled on shut down.
-		mainloop = None
-		mailchecker = None
-	
-		unload_plugins()
+		if daemon != None:
+			daemon.dispose()
+		
 		terminate_subprocesses(timeout = 3.0)
 		event.set()
 		
@@ -159,55 +102,25 @@ def init_logging(enable_stdout = True):
 		logger.removeHandler(stdout_handler)	
 
 
-def sigterm_handler(data):
+def sigterm_handler(mainloop):
 	if mainloop != None:
 		mainloop.quit()
 
 
-def load_plugins(cfg, hookreg):
-	global plugins
-	controller = MailnagController_Impl(hookreg)
-	
-	enabled_lst = cfg.get('core', 'enabled_plugins').split(',')
-	enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
-	plugins = Plugin.load_plugins(cfg, controller, enabled_lst)
-	
-	for p in plugins:
-		try:
-			p.enable()
-			logging.info("Successfully enabled plugin '%s'." % p.get_modname())
-		except:
-			logging.error("Failed to enable plugin '%s'." % p.get_modname())
-
-
-def unload_plugins():
-	if len(plugins) > 0:
-		err = False
-		
-		for p in plugins:
-			try:
-				p.disable()
-			except:
-				err = True
-				logging.error("Failed to disable plugin '%s'." % p.get_modname())
-		
-		if not err:
-			logging.info('Plugins disabled successfully.')
-
-
 def main():
-	global mainloop, start_thread
+	mainloop = GObject.MainLoop()
+	daemon = None
 	
 	set_procname(PROGNAME)
 	GObject.threads_init()
 	DBusGMainLoop(set_as_default = True)
 	GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGTERM, 
-		sigterm_handler, None)
+		sigterm_handler, mainloop)
 	
 	# Get commandline arguments
 	args = get_args()
 	
-	# shut down an (possibly) already running Mailnag daemon
+	# Shut down an (possibly) already running Mailnag daemon
 	# (must be called before instantiation of the DBUSService).
 	shutdown_existing_instance()
 	
@@ -216,84 +129,40 @@ def main():
 	init_logging(not args.quiet)
 	
 	try:
-		cfg = read_config()
-		
-		if cfg == None:
-			logging.critical('Cannot find configuration file. Please run mailnag-config first.')
+		if not cfg_exists():
+			logging.critical(
+				"Cannot find configuration file. " + \
+				"Please run mailnag-config first.")
 			exit(1)
 		
 		wait_for_inet_connection()
 		
-		load_plugins(cfg, hook_registry)
-				
-		# start checking for mails asynchronously 
-		start_thread = threading.Thread(target = start, args = (cfg, hook_registry, ))
-		start_thread.start()
+		def fatal_error_hdlr(ex):
+			# Note: don't raise an exception 
+			# (e.g InvalidOperationException) 
+			# in the error handler.
+			mainloop.quit()
+			
+		def shutdown_request_hdlr():
+			if not mainloop.is_running():
+				raise InvalidOperationException(
+					"Mainloop is not running")
+			mainloop.quit()
 		
+		daemon = MailnagDaemon(
+			fatal_error_hdlr, 
+			shutdown_request_hdlr)
+		
+		daemon.init()
+				
 		# start mainloop for DBus communication
-		mainloop = GObject.MainLoop()
 		mainloop.run()
 	
 	except KeyboardInterrupt:
 		pass # ctrl+c pressed
 	finally:
 		logging.info('Shutting down...')
-		cleanup()
+		cleanup(daemon)
 
-
-def start(cfg, hookreg):
-	global poll_thread, idlrunner
-	
-	try:
-		accounts = AccountList()
-		accounts.load_from_cfg(cfg, enabled_only = True)
-		
-		mailchecker = MailChecker(cfg, hookreg)
-		
-		# immediate check, check *all* accounts
-		try:		
-			mailchecker.check(accounts)
-		except:
-			logging.exception('Caught an exception.')
-		
-		idle_accounts = filter(lambda acc: acc.imap and acc.idle, accounts)
-		non_idle_accounts = filter(lambda acc: (not acc.imap) or (acc.imap and not acc.idle), accounts)
-	
-		# start polling thread for POP3 accounts and
-		# IMAP accounts without idle support
-		if len(non_idle_accounts) > 0:
-			poll_interval = int(cfg.get('core', 'poll_interval'))
-		
-			def poll_func():
-				try:
-					while True:
-						poll_thread_stop.wait(timeout = 60.0 * poll_interval)
-						if poll_thread_stop.is_set():
-							break
-					
-						mailchecker.check(non_idle_accounts)
-				except:
-					logging.exception('Caught an exception.')
-		
-			poll_thread = threading.Thread(target = poll_func)
-			poll_thread.start()
-		
-	
-		# start idler threads for IMAP accounts with idle support
-		if len(idle_accounts) > 0:
-			def sync_func(account):
-				try:
-					mailchecker.check([account])
-				except:
-					logging.exception('Caught an exception.')
-
-		
-			idle_timeout = int(cfg.get('core', 'imap_idle_timeout'))
-			idlrunner = IdlerRunner(idle_accounts, sync_func, idle_timeout)
-			idlrunner.run()
-	except:
-		logging.exception('Caught an exception.')
-		mainloop.quit()
-		
 
 if __name__ == '__main__': main()

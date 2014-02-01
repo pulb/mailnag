@@ -3,7 +3,7 @@
 #
 # accounts.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -67,15 +67,35 @@ class Account:
 			return self._get_POP3_connection(use_existing)
 	
 	
+	# Indicates whether the account 
+	# holds an active existing connection.
+	# Note: this method only indicates if the 
+	# account *holds* (caches) an existing connection. 
+	# There may be further, but no longer
+	# associated connections if get_connection() 
+	# was called multiple times (with use_existing 
+	# set to False).
+	def has_connection(self):
+		if self.imap:
+			return self._has_IMAP_connection()
+		else:
+			return self._has_POP3_connection()
+	
+	
 	def get_id(self):
 		# TODO : this id is not really unique...
 		return str(hash(self.user + self.server + self.folder))
 	
+
+	def _has_IMAP_connection(self):
+		return (self._conn != None) and \
+				(self._conn.state != imaplib.LOGOUT) and \
+				(not self._conn.Terminate)
+	
 	
 	def _get_IMAP_connection(self, use_existing):
 		# try to reuse existing connection
-		if use_existing and (self._conn != None) and \
-		(self._conn.state != imaplib.LOGOUT) and (not self._conn.Terminate):
+		if use_existing and self._has_IMAP_connection():
 			return self._conn
 		
 		self._conn = conn = None
@@ -107,9 +127,14 @@ class Account:
 		return self._conn
 	
 	
+	def _has_POP3_connection(self):
+		return (self._conn != None) and \
+				('sock' in self._conn.__dict__)
+	
+	
 	def _get_POP3_connection(self, use_existing):
 		# try to reuse existing connection
-		if use_existing and (self._conn != None) and ('sock' in self._conn.__dict__):
+		if use_existing and self._has_POP3_connection():
 			return self._conn
 		
 		self._conn = conn = None

@@ -3,7 +3,7 @@
 #
 # plugins.py
 #
-# Copyright 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013, 2014 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -86,29 +86,16 @@ class HookRegistry:
 
 
 # Abstract base class for a MailnagController instance 
-# passed to plugins
+# passed to plugins.
 class MailnagController:
-	def __init__(self, hook_registry):
-		self.hooks = hook_registry
-	
-	#
-	# Abstract methods
-	# to be implemented by a concrete 
-	# MailnagController implementation
-	#
-	
-	def shutdown(self):
-		# Expected to shut down the Mailnag daemon.
-		# Must return True if shutdown succeeded,
-		# otherwise False.
-		raise NotImplementedError
-	
-	
-	def check_for_mails(self):
-		# Expected to check for new mails (non-idle accounts only).
-		# Must return True if mail checking succeeded,
-		# otherwise False.
-		raise NotImplementedError
+	# Returns a HookRegistry object.
+	def get_hooks(self):		pass
+	# Shuts down the Mailnag process.
+	# May throw an InvalidOperationException.
+	def shutdown(self):			pass
+	# Enforces a manual mail check.
+	# May throw an InvalidOperationException.
+	def check_for_mails(self):	pass
 
 
 #

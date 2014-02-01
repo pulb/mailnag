@@ -3,7 +3,7 @@
 #
 # keyring.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,11 @@ from gi.repository import GnomeKeyring
 from common.i18n import _
 
 
+class KeyringUnlockException(Exception):
+	def __init__(self, message):
+		Exception.__init__(self, message)
+
+
 class Keyring:
 	def __init__(self):
 		self.KEYRING_ITEM_NAME = 'Mailnag password for %s://%s@%s'
@@ -39,7 +44,7 @@ class Keyring:
 		result = GnomeKeyring.unlock_sync(self._defaultKeyring, None)
 		
 		if result != GnomeKeyring.Result.OK:
-			raise Exception('Failed to unlock default keyring')
+			raise KeyringUnlockException('Failed to unlock default keyring')
 
 
 	# get password for account from Gnome Keyring
