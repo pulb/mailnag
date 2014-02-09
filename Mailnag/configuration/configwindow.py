@@ -159,6 +159,10 @@ class ConfigWindow:
 		enabled_lst = self._cfg.get('core', 'enabled_plugins').split(',')
 		enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
 		
+		# make sure the mandatory dbusplugin is enabled
+		if not ('dbusplugin' in enabled_lst):
+			enabled_lst.append('dbusplugin')
+		
 		plugins = Plugin.load_plugins(self._cfg)
 		plugins.sort(key = lambda p : (not p.get_manifest()[4], p.get_manifest()[0]))
 		
