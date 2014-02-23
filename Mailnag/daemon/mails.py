@@ -3,7 +3,7 @@
 #
 # mails.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -341,63 +341,79 @@ def sort_mails(mail_list, sort_desc = False):
 # Reminder class
 #
 class Reminder(dict):
-
+	def __init__(self):
+		dict.__init__(self)
+		self._changed = False
+	
+	
 	def load(self):
+		self.clear()
+		self._changed = False
+		
 		# load last known messages from mailnag.dat
 		dat_file = os.path.join(cfg_folder, 'mailnag.dat')
 		
 		if os.path.exists(dat_file):
-			f = open(dat_file, 'r')	# reopen file
-			for line in f:
-				# remove CR at the end
-				stripedline = line.strip()
-				# get all items from one line in a list: ["mailid", show_only_new flag"]
-				content = stripedline.split(',')
-				try:
+			with open(dat_file, 'r') as f:
+				for line in f:
+					# remove CR at the end
+					stripedline = line.strip()
+					# get all items from one line in a list: [mailid, seen_flag]
+					pair = stripedline.split(',')
 					# add to dict [id : flag]
-					self[content[0]] = content[1]
-				except IndexError:
-					# no flags in mailnag.dat
-					self[content[0]] = '0'
-			f.close()
+					self[pair[0]] = pair[1]
 
-
-	# save mail ids to file
-	def save(self, mail_list):
+	
+	# save mail ids to a file
+	def save(self, force = False):
+		if (not self._changed) and (not force):
+			return
+		
 		if not os.path.exists(cfg_folder):
 			os.makedirs(cfg_folder)
 		
 		dat_file = os.path.join(cfg_folder, 'mailnag.dat')
-		f = open(dat_file, 'w')	# open for overwrite
+		with open(dat_file, 'w') as f:
+			for id, seen_flag in self.items():
+				line = id + ',' + seen_flag + '\n'
+				f.write(line)
+
+		self._changed = False
+
+
+	def sync(self, mail_list):
 		for m in mail_list:
-			try:
-				seen_flag = self[m.id]
-			except KeyError:
-				# id of a new mail is not yet known to reminder
-				seen_flag = '0'
-			# construct line: email_id, seen_flag
-			line = m.id + ',' + seen_flag + '\n'
-			f.write(line)
-			self[m.id] = seen_flag
-		f.close()
-
-
+			if not m.id in self:
+				# new mail is not yet known to the reminder
+				self[m.id] = '0'
+				self._changed = True
+		
+		for id in self.keys():
+			found = False
+			for m in mail_list:			
+				if id == m.id:
+					found = True
+					# break inner for loop
+					break
+			if not found:
+				del self[id]
+				self._changed = True
+	
+	
 	# check if mail id is in reminder list
 	def contains(self, id):
 		return (id in self)
 
 
-	# set seen flag for this email on True
+	# set seen flag for this email
 	def set_to_seen(self, id):
-		try:
-			self[id] = '1'
-		except KeyError:
-			pass
+		self[id] = '1'
+		self._changed = True
 
 
-	def unseen(self, id):
-		try:
+	def is_unseen(self, id):
+		if id in self:
 			flag = self[id]
 			return (flag == '0')
-		except KeyError:
+		else:
 			return True

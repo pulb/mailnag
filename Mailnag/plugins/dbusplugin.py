@@ -172,3 +172,11 @@ class DBusService(dbus.service.Object):
 		except InvalidOperationException:
 			pass
 
+
+	@dbus.service.method(dbus_interface = DBUS_BUS_NAME, in_signature = 's')
+	def MarkMailAsRead(self, mail_id):
+		self._mails = filter(lambda m: m['id'] != mail_id, self._mails)
+		try:
+			self._mailnag_controller.mark_mail_as_read(mail_id)
+		except InvalidOperationException:
+			pass

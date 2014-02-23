@@ -27,6 +27,7 @@ from gi.repository import Notify, Gio, Gtk
 from common.plugins import Plugin, HookTypes
 from common.i18n import _
 from common.subproc import start_subprocess
+from common.exceptions import InvalidOperationException
 from daemon.mails import sort_mails
 
 NOTIFICATION_MODE_COUNT		= '0'
@@ -232,7 +233,7 @@ class LibNotifyPlugin(Plugin):
 		for mail in mails:
 			n = self._get_notification(self._get_sender(mail), mail.subject, "mail-unread")
 			notification_id = str(id(n))
-			# n.add_action("mark-as-read", _("Mark as read"), self._notification_action_handler, (mail, notification_id))			
+			n.add_action("mark-as-read", _("Mark as read"), self._notification_action_handler, (mail, notification_id))			
 			n.show()
 			self._notifications[notification_id] = n
 
@@ -284,7 +285,17 @@ class LibNotifyPlugin(Plugin):
 				# clicking the notification bubble has closed all notifications
 				# so clear the reference array as well. 
 				self._notifications = {}
-		
+			elif action == "mark-as-read":
+				controller = self.get_mailnag_controller()
+				try:
+					controller.mark_mail_as_read(user_data[0].id)
+				except InvalidOperationException:
+					pass
+				
+				# clicking the action has closed the notification
+				# so remove its reference.
+				del self._notifications[user_data[1]]
+	
 
 	def _get_sender(self, mail):
 		name, addr = mail.sender

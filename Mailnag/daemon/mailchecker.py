@@ -3,7 +3,7 @@
 #
 # mailchecker.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,7 @@ import logging
 from common.utils import is_online
 from common.i18n import _
 from common.plugins import HookTypes
-from daemon.mails import MailSyncer, Reminder
+from daemon.mails import MailSyncer
 
 
 def try_call(f, err_retval = None):
@@ -38,16 +38,14 @@ def try_call(f, err_retval = None):
 		logging.exception('Caught an exception.')
 		return err_retval
 
-			
+
 class MailChecker:
-	def __init__(self, cfg, hookreg):
+	def __init__(self, cfg, reminder, hookreg):
 		self._firstcheck = True # first check after startup
 		self._mailcheck_lock = threading.Lock()
 		self._mailsyncer = MailSyncer(cfg)
-		self._reminder = Reminder()
+		self._reminder = reminder
 		self._hookreg = hookreg
-		
-		self._reminder.load()
 		
 	
 	def check(self, accounts):
@@ -69,7 +67,7 @@ class MailChecker:
 			
 			for mail in all_mails:
 				if self._reminder.contains(mail.id): # mail was fetched before
-					if self._reminder.unseen(mail.id): # mail was not marked as seen
+					if self._reminder.is_unseen(mail.id): # mail was not marked as seen
 						unseen_mails.append(mail)
 						if self._firstcheck:
 							new_mails.append(mail)
@@ -77,6 +75,10 @@ class MailChecker:
 				else: # mail is fetched the first time
 					unseen_mails.append(mail)
 					new_mails.append(mail)
+			
+			self._reminder.sync(all_mails)
+			self._reminder.save()
+			self._firstcheck = False
 			
 			# apply filter plugin hooks
 			filtered_unseen_mails = unseen_mails
@@ -93,8 +95,5 @@ class MailChecker:
 			elif len(filtered_new_mails) > 0:
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_ADDED):
 					try_call( lambda: f(filtered_new_mails, filtered_unseen_mails) )
-			
-			self._reminder.save(all_mails)
-			self._firstcheck = False
 		
 		return

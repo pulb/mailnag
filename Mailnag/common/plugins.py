@@ -89,13 +89,16 @@ class HookRegistry:
 # passed to plugins.
 class MailnagController:
 	# Returns a HookRegistry object.
-	def get_hooks(self):		pass
+	def get_hooks(self):					pass
 	# Shuts down the Mailnag process.
 	# May throw an InvalidOperationException.
-	def shutdown(self):			pass
+	def shutdown(self):						pass
 	# Enforces a manual mail check.
 	# May throw an InvalidOperationException.
-	def check_for_mails(self):	pass
+	def check_for_mails(self):				pass
+	# Marks the mail with specified mail_id as read.
+	# May throw an InvalidOperationException.
+	def mark_mail_as_read(self, mail_id):	pass
 
 
 #
