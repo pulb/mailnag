@@ -32,7 +32,7 @@ mailnag_defaults = {
 		'poll_interval'		: '10',
 		'imap_idle_timeout'	: '10',
 		'autostart'			: '1',
-		'enabled_plugins'	: 'dbusplugin, soundplugin'
+		'enabled_plugins'	: 'dbusplugin, soundplugin, libnotifyplugin'
 	}
 }
 
