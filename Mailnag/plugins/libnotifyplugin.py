@@ -21,6 +21,7 @@
 # MA 02110-1301, USA.
 #
 
+import os
 import dbus
 import threading
 from gi.repository import Notify, Gio, Gtk
@@ -48,6 +49,7 @@ class LibNotifyPlugin(Plugin):
 		self._lock = threading.Lock()
 		self._notification_server_wait_event = threading.Event()
 		self._notification_server_ready = False
+		self._is_ubuntu = False
 		self._mails_added_hook = None
 		self._mails_removed_hook = None
 		
@@ -60,6 +62,7 @@ class LibNotifyPlugin(Plugin):
 		# initialize Notification
 		if not self._initialized:
 			Notify.init("Mailnag")
+			self._is_ubuntu = (os.environ['GDMSESSION'] == 'ubuntu')
 			self._initialized = True
 		
 		def mails_added_hook(new_mails, all_mails):
@@ -233,7 +236,9 @@ class LibNotifyPlugin(Plugin):
 		for mail in mails:
 			n = self._get_notification(self._get_sender(mail), mail.subject, "mail-unread")
 			notification_id = str(id(n))
-			n.add_action("mark-as-read", _("Mark as read"), self._notification_action_handler, (mail, notification_id))			
+			if not self._is_ubuntu:
+				n.add_action("mark-as-read", _("Mark as read"), 
+					self._notification_action_handler, (mail, notification_id))			
 			n.show()
 			self._notifications[notification_id] = n
 
@@ -261,7 +266,8 @@ class LibNotifyPlugin(Plugin):
 	def _get_notification(self, summary, body, icon):
 		n = Notify.Notification.new(summary, body, icon)		
 		n.set_category("email")
-		n.add_action("default", "default", self._notification_action_handler, None)
+		if not self._is_ubuntu:
+			n.add_action("default", "default", self._notification_action_handler, None)
 
 		return n
 	
