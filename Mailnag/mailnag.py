@@ -108,7 +108,7 @@ def sigterm_handler(mainloop):
 
 
 def main():
-	mainloop = GObject.MainLoop()
+	mainloop = GLib.MainLoop()
 	daemon = None
 	
 	set_procname(PROGNAME)
