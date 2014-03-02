@@ -3,7 +3,7 @@
 #
 # config.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -33,7 +33,7 @@ from configuration.configwindow import ConfigWindow
 
 
 def main():
-	set_procname("mailnag_config")
+	set_procname("mailnag-config")
 	confwin = ConfigWindow()
 	Gtk.main()
 	
