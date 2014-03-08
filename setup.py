@@ -32,7 +32,7 @@ for arg in sys.argv:
 
 BUILD_LOCALE_DIR = os.path.join(BUILD_DIR, 'locale')
 BUILD_PATCH_DIR = os.path.join(BUILD_DIR, 'patched')
-INSTALL_LIB_DIR =  os.path.join(get_python_lib(prefix=PREFIX), 'Mailnag')
+INSTALL_LIB_DIR =  os.path.join(get_python_lib(prefix=PREFIX).replace('dist', 'site'), 'Mailnag')
 
 
 class BuildData(build):
