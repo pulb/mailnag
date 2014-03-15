@@ -39,7 +39,7 @@ but are visible for a few seconds only. If you like to have a tighter desktop in
 (e.g. a permanently visible indicator in your top panel) you have to install an appropriate  
 extension/plugin for your desktop shell. Currently the following desktop shells are supported:  
 * GNOME-Shell ([GNOME-Shell extension](https://github.com/pulb/mailnag-gnome-shell))  
-* Ubuntu Unity ([MessagingMenu plugin](#)) (TBD, help is very appreciated!)
+* Ubuntu Unity ([MessagingMenu plugin](https://github.com/pulb/mailnag-unity-plugin))
 
 ## Screenshots
 TODO
