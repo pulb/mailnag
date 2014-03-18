@@ -11,4 +11,3 @@ Terminal=false
 Type=Application
 Categories=Network;
 StartupNotify=false
-Name[de_DE]=mailnag-config.desktop
