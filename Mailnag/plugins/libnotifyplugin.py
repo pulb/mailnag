@@ -49,7 +49,7 @@ class LibNotifyPlugin(Plugin):
 		self._lock = threading.Lock()
 		self._notification_server_wait_event = threading.Event()
 		self._notification_server_ready = False
-		self._is_ubuntu = False
+		self._is_gnome = False
 		self._mails_added_hook = None
 		self._mails_removed_hook = None
 		
@@ -62,7 +62,7 @@ class LibNotifyPlugin(Plugin):
 		# initialize Notification
 		if not self._initialized:
 			Notify.init("Mailnag")
-			self._is_ubuntu = (os.environ['GDMSESSION'] == 'ubuntu')
+			self._is_gnome = (os.environ['GDMSESSION'] == 'gnome')
 			self._initialized = True
 		
 		def mails_added_hook(new_mails, all_mails):
@@ -214,10 +214,16 @@ class LibNotifyPlugin(Plugin):
 		ubound = len(mails) if len(mails) <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT
 
 		for i in range(ubound):
-			body += self._get_sender(mails[i]) + ":\n<i>" + mails[i].subject + "</i>\n\n"
+			if self._is_gnome:
+				body += "%s:\n<i>%s</i>\n\n" % (self._get_sender(mails[i]), mails[i].subject)
+			else:
+				body += "%s  -  %s\n" % (ellipsize(self._get_sender(mails[i]), 20), ellipsize(mails[i].subject, 20))
 
 		if len(mails) > self.MAIL_LIST_LIMIT:
-			body += "<i>" + _("(and {0} more)").format(str(len(mails) - self.MAIL_LIST_LIMIT)) + "</i>"
+			if self._is_gnome:
+				body += "<i>%s</i>" % _("(and {0} more)").format(str(len(mails) - self.MAIL_LIST_LIMIT))
+			else:
+				body += _("(and {0} more)").format(str(len(mails) - self.MAIL_LIST_LIMIT))
 
 		if len(mails) > 1: # multiple new emails
 			summary = _("You have {0} new mails.").format(str(len(mails)))
@@ -236,7 +242,7 @@ class LibNotifyPlugin(Plugin):
 		for mail in mails:
 			n = self._get_notification(self._get_sender(mail), mail.subject, "mail-unread")
 			notification_id = str(id(n))
-			if not self._is_ubuntu:
+			if self._is_gnome:
 				n.add_action("mark-as-read", _("Mark as read"), 
 					self._notification_action_handler, (mail, notification_id))			
 			n.show()
@@ -266,7 +272,7 @@ class LibNotifyPlugin(Plugin):
 	def _get_notification(self, summary, body, icon):
 		n = Notify.Notification.new(summary, body, icon)		
 		n.set_category("email")
-		if not self._is_ubuntu:
+		if self._is_gnome:
 			n.add_action("default", "default", self._notification_action_handler, None)
 
 		return n
@@ -321,3 +327,10 @@ def get_default_mail_reader():
 
 	return mail_reader
 
+
+def ellipsize(str, max_len):
+	if max_len < 3: max_len = 3
+	if len(str) <= max_len:
+		return str
+	else:
+		return str[0:max_len - 3] + '...'
