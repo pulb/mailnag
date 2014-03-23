@@ -159,16 +159,12 @@ class ConfigWindow:
 		enabled_lst = self._cfg.get('core', 'enabled_plugins').split(',')
 		enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
 		
-		# make sure the mandatory dbusplugin is enabled
-		if not ('dbusplugin' in enabled_lst):
-			enabled_lst.append('dbusplugin')
-		
 		plugins = Plugin.load_plugins(self._cfg)
 		plugins.sort(key = lambda p : (not p.get_manifest()[4], p.get_manifest()[0]))
 		
 		for plugin in plugins:
 			name, desc, ver, author, mandatory = plugin.get_manifest()
-			enabled = True if plugin.get_modname() in enabled_lst else False
+			enabled = True if (plugin.get_modname() in enabled_lst) or mandatory else False
 			description = '<b>%s</b> (%s)\n%s' % (name, ver, desc)
 			row = [plugin, enabled, description]
 			self._liststore_plugins.append(row)
