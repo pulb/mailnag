@@ -136,7 +136,10 @@ class MailnagDaemon:
 		# loaded/unloaded completely or connections may 
 		# have been closed already.
 		self._ensure_valid_state()
-		self._mailchecker.check(self._accounts)
+		
+		non_idle_accounts = filter(lambda acc: (not acc.imap) or 
+			(acc.imap and not acc.idle), self._accounts)
+		self._mailchecker.check(non_idle_accounts)
 	
 	
 	def _ensure_valid_state(self):
