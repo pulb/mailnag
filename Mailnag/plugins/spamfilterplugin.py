@@ -66,7 +66,7 @@ class SpamfilterPlugin(Plugin):
 	
 	
 	def get_manifest(self):
-		return (_("Spam filter"),
+		return (_("Spam Filter"),
 				_("Filters out unwanted mails."),
 				"1.0",
 				"Patrick Ulbrich <zulu99@gmx.net>",

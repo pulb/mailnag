@@ -108,7 +108,7 @@ class LibNotifyPlugin(Plugin):
 
 	
 	def get_manifest(self):
-		return (_("LibNotify notifications"),
+		return (_("LibNotify Notifications"),
 				_("Shows a popup when new mails arrive."),
 				"1.0",
 				"Patrick Ulbrich <zulu99@gmx.net>",

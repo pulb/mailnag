@@ -61,7 +61,7 @@ class SoundPlugin(Plugin):
 
 	
 	def get_manifest(self):
-		return (_("Sound notifications"),
+		return (_("Sound Notifications"),
 				_("Plays a sound when new mails arrive."),
 				"1.0",
 				"Patrick Ulbrich <zulu99@gmx.net>",
