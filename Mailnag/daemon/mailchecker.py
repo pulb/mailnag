@@ -46,6 +46,7 @@ class MailChecker:
 		self._mailsyncer = MailSyncer(cfg)
 		self._memorizer = memorizer
 		self._hookreg = hookreg
+		self._zero_mails_on_last_check = True
 		
 	
 	def check(self, accounts):
@@ -87,13 +88,15 @@ class MailChecker:
 			
 			filtered_new_mails = [m for m in new_mails if m in filtered_unseen_mails]
 			
-			# TODO : signal MailsRemoved if not all mails have been removed
-			# (i.e. if mailcount has been decreased)
-			if len(all_mails) == 0:
-				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_REMOVED):
-					try_call( lambda: f(filtered_unseen_mails) )	
-			elif len(filtered_new_mails) > 0:
+			if len(filtered_new_mails) > 0:
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_ADDED):
 					try_call( lambda: f(filtered_new_mails, filtered_unseen_mails) )
+			elif (not self._zero_mails_on_last_check) and (len(filtered_unseen_mails) == 0):
+				# TODO : signal MailsRemoved if not all mails have been removed
+				# (i.e. if mailcount has been decreased)
+				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_REMOVED):
+					try_call( lambda: f(filtered_unseen_mails) )
+			
+			self._zero_mails_on_last_check = (filtered_unseen_mails == 0)
 		
 		return
