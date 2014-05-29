@@ -40,11 +40,11 @@ def try_call(f, err_retval = None):
 
 
 class MailChecker:
-	def __init__(self, cfg, reminder, hookreg):
+	def __init__(self, cfg, memorizer, hookreg):
 		self._firstcheck = True # first check after startup
 		self._mailcheck_lock = threading.Lock()
 		self._mailsyncer = MailSyncer(cfg)
-		self._reminder = reminder
+		self._memorizer = memorizer
 		self._hookreg = hookreg
 		
 	
@@ -66,8 +66,8 @@ class MailChecker:
 			new_mails = []
 			
 			for mail in all_mails:
-				if self._reminder.contains(mail.id): # mail was fetched before
-					if self._reminder.is_unseen(mail.id): # mail was not marked as seen
+				if self._memorizer.contains(mail.id): # mail was fetched before
+					if self._memorizer.is_unseen(mail.id): # mail was not marked as seen
 						unseen_mails.append(mail)
 						if self._firstcheck:
 							new_mails.append(mail)
@@ -76,8 +76,8 @@ class MailChecker:
 					unseen_mails.append(mail)
 					new_mails.append(mail)
 			
-			self._reminder.sync(all_mails)
-			self._reminder.save()
+			self._memorizer.sync(all_mails)
+			self._memorizer.save()
 			self._firstcheck = False
 			
 			# apply filter plugin hooks

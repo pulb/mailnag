@@ -26,7 +26,7 @@ import logging
 
 from common.accounts import AccountList
 from daemon.mailchecker import MailChecker
-from daemon.mails import Reminder
+from daemon.mails import Memorizer
 from daemon.idlers import IdlerRunner
 from common.plugins import Plugin, HookRegistry, MailnagController
 from common.exceptions import InvalidOperationException
@@ -67,15 +67,15 @@ class MailnagDaemon:
 			self._accounts.load_from_cfg(self._cfg, enabled_only = True)
 
 			hook_registry = HookRegistry()
-			reminder = Reminder()
-			reminder.load()			
+			memorizer = Memorizer()
+			memorizer.load()
 
-			self._mailchecker = MailChecker(self._cfg, reminder, hook_registry)
+			self._mailchecker = MailChecker(self._cfg, memorizer, hook_registry)
 
 			# Note: all code following _load_plugins() should be executed
 			# asynchronously because the dbus plugin requires an active mainloop
 			# (usually started in the programs main function).
-			self._load_plugins(reminder, hook_registry)
+			self._load_plugins(memorizer, hook_registry)
 
 			# Start checking for mails asynchronously.
 			self._start_thread = threading.Thread(target = self._start)
@@ -201,11 +201,11 @@ class MailnagDaemon:
 				self._fatal_error_handler(ex)
 	
 
-	def _load_plugins(self, reminder, hookreg):
+	def _load_plugins(self, memorizer, hookreg):
 		class MailnagController_Impl(MailnagController):
-			def __init__(self, daemon, reminder, hookreg, shutdown_request_hdlr):
+			def __init__(self, daemon, memorizer, hookreg, shutdown_request_hdlr):
 				self._daemon = daemon
-				self._reminder = reminder
+				self._memorizer = memorizer
 				self._hookreg = hookreg
 				self._shutdown_request_handler = shutdown_request_hdlr
 				
@@ -221,13 +221,13 @@ class MailnagDaemon:
 			
 			def mark_mail_as_read(self, mail_id):
 				# Note: ensure_valid_state() is not really necessary here
-				# (the reminder object is available in init() and dispose()), 
+				# (the memorizer object is available in init() and dispose()), 
 				# but better be consistent with other daemon methods.
 				self._daemon._ensure_valid_state()
-				self._reminder.set_to_seen(mail_id)
-				self._reminder.save()
+				self._memorizer.set_to_seen(mail_id)
+				self._memorizer.save()
 		
-		controller = MailnagController_Impl(self, reminder, hookreg, self._shutdown_request_handler)
+		controller = MailnagController_Impl(self, memorizer, hookreg, self._shutdown_request_handler)
 	
 		enabled_lst = self._cfg.get('core', 'enabled_plugins').split(',')
 		enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))

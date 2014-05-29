@@ -338,9 +338,9 @@ def sort_mails(mail_list, sort_desc = False):
 
 
 #
-# Reminder class
+# Memorizer class
 #
-class Reminder(dict):
+class Memorizer(dict):
 	def __init__(self):
 		dict.__init__(self)
 		self._changed = False
@@ -384,7 +384,7 @@ class Reminder(dict):
 	def sync(self, mail_list):
 		for m in mail_list:
 			if not m.id in self:
-				# new mail is not yet known to the reminder
+				# new mail is not yet known to the memorizer
 				self[m.id] = '0'
 				self._changed = True
 		
@@ -400,7 +400,7 @@ class Reminder(dict):
 				self._changed = True
 	
 	
-	# check if mail id is in reminder list
+	# check if mail id is in the memorizer list
 	def contains(self, id):
 		return (id in self)
 
