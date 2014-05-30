@@ -7,189 +7,309 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-20 21:44+0100\n"
-"PO-Revision-Date: 2012-12-21 16:53+0000\n"
+"POT-Creation-Date: 2014-05-30 17:44+0200\n"
+"PO-Revision-Date: 2014-05-30 16:51+0000\n"
 "Last-Translator: Patrick Ulbrich <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-04-09 11:00+0000\n"
-"X-Generator: Launchpad (build 16550)\n"
+"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
+"X-Generator: Launchpad (build 17031)\n"
 
-#: Mailnag/common/account.py:42
+#: Mailnag/common/accounts.py:47
 msgid "Unnamed"
 msgstr "Unbenannt"
 
-#: Mailnag/daemon/mailchecker.py:131
-msgid "(and {0} more)"
-msgstr "(und {0} weitere)"
-
-#: Mailnag/daemon/mailchecker.py:134
-msgid "You have {0} new mails."
-msgstr "Sie haben {0} neue Emails."
-
-#: Mailnag/daemon/mailchecker.py:136
-msgid "You have a new mail."
-msgstr "Sie haben eine neue Email."
-
-#: Mailnag/daemon/mailchecker.py:146
-msgid "Mark as read"
-msgstr "Als gelesen markieren"
-
-#: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
+#: Mailnag/daemon/mails.py:170
 msgid "No subject"
 msgstr "Kein Betreff"
 
-#: Mailnag/configuration/accountdialog.py:59
-#: Mailnag/configuration/accountdialog.py:60
+#: Mailnag/configuration/accountdialog.py:75
+#: Mailnag/configuration/accountdialog.py:76
 msgid "optional"
 msgstr "optional"
 
-#: Mailnag/configuration/configwindow.py:72
+#: Mailnag/configuration/accountdialog.py:141
+msgid "Other (IMAP)"
+msgstr "Anderer (IMAP)"
+
+#: Mailnag/configuration/accountdialog.py:142
+msgid "Other (POP3)"
+msgstr "Anderer (POP3)"
+
+#: Mailnag/configuration/configwindow.py:99
+#: Mailnag/configuration/configwindow.py:124
 msgid "Enabled"
 msgstr "Aktiviert"
 
-#: Mailnag/configuration/configwindow.py:78
+#: Mailnag/configuration/configwindow.py:105
+#: Mailnag/configuration/configwindow.py:131
 msgid "Name"
 msgstr "Name"
 
-#: Mailnag/configuration/configwindow.py:276
+#: Mailnag/configuration/configwindow.py:342
 msgid "Delete this account:"
 msgstr "Dieses Konto löschen:"
 
+#: Mailnag/plugins/userscriptplugin.py:62
+msgid "User Script"
+msgstr "Benutzer-Script"
+
+#: Mailnag/plugins/userscriptplugin.py:63
+msgid "Runs an user defined script on mail arrival."
+msgstr "Führt ein benutzerdefiniertes Script bei E-Mail-Ankunft aus."
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "sender"
+msgstr "Absender"
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "subject"
+msgstr "Betreff"
+
+#: Mailnag/plugins/userscriptplugin.py:84
+#, python-format
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by %s pairs."
+msgstr ""
+"Das folgende Script wird immer dann ausgeführt, wenn neue E-Mails "
+"eintreffen.\n"
+"Mailnag überreicht die Anzahl der neuen Mails an dieses Script,\n"
+"gefolgt von %s Paaren."
+
+#: Mailnag/plugins/soundplugin.py:64
+msgid "Sound Notifications"
+msgstr "Sound-Benachrichtigungen"
+
+#: Mailnag/plugins/soundplugin.py:65
+msgid "Plays a sound when new mails arrive."
+msgstr "Spielt einen Sound ab, wenn neue E-Mails eintreffen."
+
+#: Mailnag/plugins/libnotifyplugin.py:115
+msgid "LibNotify Notifications"
+msgstr "LibNotify-Benachrichtigungen"
+
+#: Mailnag/plugins/libnotifyplugin.py:116
+msgid "Shows a popup when new mails arrive."
+msgstr "Zeigt eine Popup-Nachricht an, wenn neue E-Mails eintreffen."
+
+#: Mailnag/plugins/libnotifyplugin.py:136
+msgid "Notification mode:"
+msgstr "Benachrichtigungsmodus:"
+
+#: Mailnag/plugins/libnotifyplugin.py:144
+msgid "Count of new mails"
+msgstr "Anzahl der neuen E-Mails"
+
+#: Mailnag/plugins/libnotifyplugin.py:147
+msgid "Summary of new mails"
+msgstr "Zusammenfassung der neuen E-Mails"
+
+#: Mailnag/plugins/libnotifyplugin.py:150
+msgid "One notification per new mail"
+msgstr "Eine Benachrichtigung pro neue E-Mail"
+
+#: Mailnag/plugins/libnotifyplugin.py:157
+msgid "Maximum number of visible mails:"
+msgstr "Maximale Anzahl der neuen E-Mails:"
+
+#: Mailnag/plugins/libnotifyplugin.py:244
+#: Mailnag/plugins/libnotifyplugin.py:246
+#, python-brace-format
+msgid "(and {0} more)"
+msgstr "(und {0} weitere)"
+
+#: Mailnag/plugins/libnotifyplugin.py:249
+#: Mailnag/plugins/libnotifyplugin.py:277
+#, python-brace-format
+msgid "You have {0} new mails."
+msgstr "Sie haben {0} neue E-Mails."
+
+#: Mailnag/plugins/libnotifyplugin.py:251
+#: Mailnag/plugins/libnotifyplugin.py:279
+msgid "You have a new mail."
+msgstr "Sie haben eine neue E-Mail."
+
+#: Mailnag/plugins/libnotifyplugin.py:266
+msgid "Mark as read"
+msgstr "Als gelesen markieren"
+
+#: Mailnag/plugins/dbusplugin.py:83
+msgid "DBus Service"
+msgstr "DBus-Dienst"
+
+#: Mailnag/plugins/dbusplugin.py:84
+msgid "Exposes Mailnag's functionality via a DBus service."
+msgstr "Stellt Mailnag's Funktionalität durch einen DBus-Dienst bereit."
+
+#: Mailnag/plugins/spamfilterplugin.py:69
+msgid "Spam Filter"
+msgstr "Spamfilter"
+
+#: Mailnag/plugins/spamfilterplugin.py:70
+msgid "Filters out unwanted mails."
+msgstr "Filtert unerwünschte E-Mails heraus."
+
+#: Mailnag/plugins/spamfilterplugin.py:90
+msgid ""
+"Mailnag will ignore mails containing at least one of \n"
+"the following words in subject or sender."
+msgstr ""
+"Mailnag ignoriert E-Mails, die mindestens eines der \n"
+"folgenden Wörter in Betreff oder Sender enthalten."
+
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
-msgstr "Mail-Konto"
+msgstr "E-Mail-Konto"
 
 #: data/account_dialog.ui.h:2
-msgid "Port:"
-msgstr "Port :"
-
-#: data/account_dialog.ui.h:3
-msgid "Server:"
-msgstr "Server:"
-
-#: data/account_dialog.ui.h:4
-msgid "Password:"
-msgstr "Passwort:"
-
-#: data/account_dialog.ui.h:5
-msgid "User:"
-msgstr "Benutzer:"
-
-#: data/account_dialog.ui.h:6
-msgid "Accountname:"
-msgstr "Kontoname:"
-
-#: data/account_dialog.ui.h:7
-msgid "Folders:"
-msgstr "Ordner:"
-
-#: data/account_dialog.ui.h:8
 msgid "Enable Push-IMAP"
 msgstr "Push-IMAP aktivieren"
 
-#: data/account_dialog.ui.h:9
+#: data/account_dialog.ui.h:3
+msgid "Enable SSL encryption"
+msgstr "SSL-Verschlüsselung aktivieren"
+
+#: data/account_dialog.ui.h:4
+msgid "Accountname:"
+msgstr "Kontoname:"
+
+#: data/account_dialog.ui.h:5
 msgid "Account type:"
 msgstr "Kontotyp:"
 
+#: data/account_dialog.ui.h:6
+msgid "User:"
+msgstr "Benutzer:"
+
+#: data/account_dialog.ui.h:7
+msgid "Password:"
+msgstr "Passwort:"
+
+#: data/account_dialog.ui.h:8
+msgid "Server:"
+msgstr "Server:"
+
+#: data/account_dialog.ui.h:9
+msgid "Port:"
+msgstr "Port:"
+
 #: data/account_dialog.ui.h:10
-msgid "Enable SSL encryption"
-msgstr "SSL-Verschlüsselung aktivieren"
+msgid "Folders:"
+msgstr "Ordner:"
 
 #: data/config_window.ui.h:1
 msgid "Mailnag Configuration"
 msgstr "Mailnag-Konfiguration"
 
 #: data/config_window.ui.h:2
-msgid "Accounts"
-msgstr "Konten"
-
-#: data/config_window.ui.h:3
-msgid "Play sound on new mails"
-msgstr "Spiele einen Sound bei neuen Emails ab"
-
-#: data/config_window.ui.h:4
-msgid "Start Mailnag automatically"
-msgstr "Mailnag automatisch starten"
-
-#: data/config_window.ui.h:5
-msgid "Check interval:"
-msgstr "Prüfintervall:"
-
-#: data/config_window.ui.h:6
-msgid "minutes"
-msgstr "Minuten"
-
-#: data/config_window.ui.h:7
-msgid "Notification mode:"
-msgstr "Benachrichtigungsmodus:"
-
-#: data/config_window.ui.h:8
 msgid "General"
 msgstr "Allgemein"
 
-#: data/config_window.ui.h:9
-msgid "Enable spamfilter"
-msgstr "Spamfilter aktivieren"
+#: data/config_window.ui.h:3
+msgid "Accounts"
+msgstr "Konten"
 
-#: data/config_window.ui.h:10
-msgid "Spamfilter"
-msgstr "Spamfilter"
+#: data/config_window.ui.h:4
+msgid "Plugins"
+msgstr "Plugins"
 
-#: data/config_window.ui.h:11
-msgid "<b>On mail check</b>"
-msgstr "<b>Bei Mail-Prüfung</b>"
-
-#: data/config_window.ui.h:12
+#: data/config_window.ui.h:5
 msgid ""
-"The following script will be executed on every single mail check.\n"
-"Mailnag passes the total count of new mails to this script,\n"
-"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-msgstr ""
-"Das folgende Script wird bei jeder Mail-Prüfung ausgeführt.\n"
-"Mailnag übergibt die Gesamtanzahl der neuen Mails an dieses Script,\n"
-"gefolgt von <i>\"&lt;Sender&gt; &lt;Betreff&gt;\"</i> Paaren."
-
-#: data/config_window.ui.h:15
-msgid "<b>On mail arrival</b>"
-msgstr "<b>Bei Mail-Ankunft</b>"
-
-#: data/config_window.ui.h:16
-msgid ""
-"The following script will be executed whenever new mails arrive.\n"
-"Mailnag passes the total count of new mails to this script,\n"
-"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-msgstr ""
-"Dieses Script wird immer dann ausgeführt, wenn neue Mails eintreffen.\n"
-"Mailnag übergibt die Gesamtanzahl der neuen Mails an dieses Script,\n"
-"gefolgt von <i>\"&lt;Sender&gt; &lt;Betreff&gt;\"</i> Paaren."
-
-#: data/config_window.ui.h:19
-msgid "Events"
-msgstr "Ereignisse"
-
-#: data/config_window.ui.h:20
-msgid ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
-"for GNOME 3\n"
-"Copyright (c) 2011, 2012 Patrick Ulbrich \n"
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extendable mail "
+"notification daemon.\n"
+"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
 "and contributors."
 msgstr ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Ein Mail-"
-"Benachrichtiger für GNOME 3\n"
-"Copyright (c) 2011, 2012 Patrick Ulbrich \n"
-"und Mitwirkende."
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Ein erweiterbarer "
+"Benachrichtigungs-Dämon.\n"
+"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
+"und weitere Mitwirkende."
 
-#: data/config_window.ui.h:23
-msgid "About"
-msgstr "Info"
+#: data/config_window.ui.h:8
+msgid "Add Account"
+msgstr "Konto hinzufügen"
 
-#: data/config_window.ui.h:24
-msgid "Single"
-msgstr "Einzeln"
+#: data/config_window.ui.h:9
+msgid "Remove Account"
+msgstr "Konto löschen"
 
-#: data/config_window.ui.h:25
-msgid "Summary"
-msgstr "Zusammenfassung"
+#: data/config_window.ui.h:10
+msgid "Edit Account"
+msgstr "Konto bearbeiten"
+
+#: data/config_window.ui.h:11
+msgid "Edit Plugin"
+msgstr "Plugin bearbeiten"
+
+#: data/plugin_dialog.ui.h:1
+msgid "Plugin Configuration"
+msgstr "Plugin-Konfiguration"
+
+#~ msgid "Events"
+#~ msgstr "Ereignisse"
+
+#~ msgid "About"
+#~ msgstr "Über"
+
+#~ msgid "Check interval:"
+#~ msgstr "Prüfintervall:"
+
+#~ msgid "Enable spamfilter"
+#~ msgstr "Spamfilter aktivieren"
+
+#~ msgid "Start Mailnag automatically"
+#~ msgstr "Mailnag automatisch starten"
+
+#~ msgid "Spamfilter"
+#~ msgstr "Spamfilter"
+
+#~ msgid "minutes"
+#~ msgstr "Minuten"
+
+#~ msgid "Summary"
+#~ msgstr "Zusammenfassung"
+
+#~ msgid "Single"
+#~ msgstr "Einzeln"
+
+#~ msgid "Play sound on new mails"
+#~ msgstr "Bei neuen E-Mails einen Klang abspielen"
+
+#~ msgid ""
+#~ "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
+#~ "for GNOME 3\n"
+#~ "Copyright (c) 2011, 2012 Patrick Ulbrich \n"
+#~ "and contributors."
+#~ msgstr ""
+#~ "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Ein E-Mail-"
+#~ "Benachrichtiger für GNOME 3\n"
+#~ "Urheberrecht (c) 2011, 2012 Patrick Ulbrich \n"
+#~ "und Mitwirkende."
+
+#~ msgid ""
+#~ "The following script will be executed on every single mail check.\n"
+#~ "Mailnag passes the total count of new mails to this script,\n"
+#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+#~ msgstr ""
+#~ "Das folgende Skript wird bei jeder E-Mail-Prüfung ausgeführt.\n"
+#~ "Mailnag übergibt die Gesamtanzahl der neuen E-Mails an dieses Skript,\n"
+#~ "gefolgt von <i>»&lt;Absender&gt; &lt;Betreff&gt;«</i>-Paaren."
+
+#~ msgid ""
+#~ "The following script will be executed whenever new mails arrive.\n"
+#~ "Mailnag passes the total count of new mails to this script,\n"
+#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+#~ msgstr ""
+#~ "Dieses Skript wird immer dann ausgeführt, wenn neue E-Mails eintreffen.\n"
+#~ "Mailnag übergibt die Gesamtanzahl der neuen E-Mails an dieses Skript,\n"
+#~ "gefolgt von <i>»&lt;Absender&gt; &lt;Betreff&gt;«</i>-Paaren."
+
+#~ msgid "<b>On mail arrival</b>"
+#~ msgstr "<b>Bei E-Mail-Ankunft</b>"
+
+#~ msgid "<b>On mail check</b>"
+#~ msgstr "<b>Bei E-Mail-Prüfung</b>"

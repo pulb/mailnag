@@ -7,185 +7,288 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-20 21:44+0100\n"
+"POT-Creation-Date: 2014-05-30 17:44+0200\n"
 "PO-Revision-Date: 2012-12-21 17:02+0000\n"
 "Last-Translator: Patrick Ulbrich <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-04-09 11:00+0000\n"
-"X-Generator: Launchpad (build 16550)\n"
+"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
+"X-Generator: Launchpad (build 17031)\n"
 
-#: Mailnag/common/account.py:42
+#: Mailnag/common/accounts.py:47
 msgid "Unnamed"
 msgstr "未命名"
 
-#: Mailnag/daemon/mailchecker.py:131
-msgid "(and {0} more)"
-msgstr "( 还有 {0} 条)"
-
-#: Mailnag/daemon/mailchecker.py:134
-msgid "You have {0} new mails."
-msgstr "您有 {0} 封新邮件。"
-
-#: Mailnag/daemon/mailchecker.py:136
-msgid "You have a new mail."
-msgstr "您有一封新邮件"
-
-#: Mailnag/daemon/mailchecker.py:146
-msgid "Mark as read"
-msgstr "标记为已读"
-
-#: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
+#: Mailnag/daemon/mails.py:170
 msgid "No subject"
 msgstr "无主题"
 
-#: Mailnag/configuration/accountdialog.py:59
-#: Mailnag/configuration/accountdialog.py:60
+#: Mailnag/configuration/accountdialog.py:75
+#: Mailnag/configuration/accountdialog.py:76
 msgid "optional"
 msgstr "可选"
 
-#: Mailnag/configuration/configwindow.py:72
+#: Mailnag/configuration/accountdialog.py:141
+msgid "Other (IMAP)"
+msgstr ""
+
+#: Mailnag/configuration/accountdialog.py:142
+msgid "Other (POP3)"
+msgstr ""
+
+#: Mailnag/configuration/configwindow.py:99
+#: Mailnag/configuration/configwindow.py:124
 msgid "Enabled"
 msgstr "已启用"
 
-#: Mailnag/configuration/configwindow.py:78
+#: Mailnag/configuration/configwindow.py:105
+#: Mailnag/configuration/configwindow.py:131
 msgid "Name"
 msgstr "名称"
 
-#: Mailnag/configuration/configwindow.py:276
+#: Mailnag/configuration/configwindow.py:342
 msgid "Delete this account:"
 msgstr "删除该帐户："
+
+#: Mailnag/plugins/userscriptplugin.py:62
+msgid "User Script"
+msgstr ""
+
+#: Mailnag/plugins/userscriptplugin.py:63
+msgid "Runs an user defined script on mail arrival."
+msgstr ""
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "sender"
+msgstr ""
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "subject"
+msgstr ""
+
+#: Mailnag/plugins/userscriptplugin.py:84
+#, python-format
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by %s pairs."
+msgstr ""
+
+#: Mailnag/plugins/soundplugin.py:64
+msgid "Sound Notifications"
+msgstr ""
+
+#: Mailnag/plugins/soundplugin.py:65
+msgid "Plays a sound when new mails arrive."
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:115
+msgid "LibNotify Notifications"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:116
+msgid "Shows a popup when new mails arrive."
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:136
+msgid "Notification mode:"
+msgstr "提示内容："
+
+#: Mailnag/plugins/libnotifyplugin.py:144
+msgid "Count of new mails"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:147
+msgid "Summary of new mails"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:150
+msgid "One notification per new mail"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:157
+msgid "Maximum number of visible mails:"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:244
+#: Mailnag/plugins/libnotifyplugin.py:246
+#, python-brace-format
+msgid "(and {0} more)"
+msgstr "( 还有 {0} 条)"
+
+#: Mailnag/plugins/libnotifyplugin.py:249
+#: Mailnag/plugins/libnotifyplugin.py:277
+#, python-brace-format
+msgid "You have {0} new mails."
+msgstr "您有 {0} 封新邮件。"
+
+#: Mailnag/plugins/libnotifyplugin.py:251
+#: Mailnag/plugins/libnotifyplugin.py:279
+msgid "You have a new mail."
+msgstr "您有一封新邮件"
+
+#: Mailnag/plugins/libnotifyplugin.py:266
+msgid "Mark as read"
+msgstr "标记为已读"
+
+#: Mailnag/plugins/dbusplugin.py:83
+msgid "DBus Service"
+msgstr ""
+
+#: Mailnag/plugins/dbusplugin.py:84
+msgid "Exposes Mailnag's functionality via a DBus service."
+msgstr ""
+
+#: Mailnag/plugins/spamfilterplugin.py:69
+msgid "Spam Filter"
+msgstr ""
+
+#: Mailnag/plugins/spamfilterplugin.py:70
+msgid "Filters out unwanted mails."
+msgstr ""
+
+#: Mailnag/plugins/spamfilterplugin.py:90
+msgid ""
+"Mailnag will ignore mails containing at least one of \n"
+"the following words in subject or sender."
+msgstr ""
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
 msgstr "邮件账户"
 
 #: data/account_dialog.ui.h:2
-msgid "Port:"
-msgstr "端口："
-
-#: data/account_dialog.ui.h:3
-msgid "Server:"
-msgstr "服务器:"
-
-#: data/account_dialog.ui.h:4
-msgid "Password:"
-msgstr "密码:"
-
-#: data/account_dialog.ui.h:5
-msgid "User:"
-msgstr "用户名："
-
-#: data/account_dialog.ui.h:6
-msgid "Accountname:"
-msgstr "账户名称："
-
-#: data/account_dialog.ui.h:7
-msgid "Folders:"
-msgstr ""
-
-#: data/account_dialog.ui.h:8
 msgid "Enable Push-IMAP"
 msgstr "启用 Push-IMAP"
 
-#: data/account_dialog.ui.h:9
+#: data/account_dialog.ui.h:3
+msgid "Enable SSL encryption"
+msgstr "启用 SSL 加密"
+
+#: data/account_dialog.ui.h:4
+msgid "Accountname:"
+msgstr "账户名称："
+
+#: data/account_dialog.ui.h:5
 msgid "Account type:"
 msgstr "账户类型："
 
+#: data/account_dialog.ui.h:6
+msgid "User:"
+msgstr "用户名："
+
+#: data/account_dialog.ui.h:7
+msgid "Password:"
+msgstr "密码:"
+
+#: data/account_dialog.ui.h:8
+msgid "Server:"
+msgstr "服务器:"
+
+#: data/account_dialog.ui.h:9
+msgid "Port:"
+msgstr "端口："
+
 #: data/account_dialog.ui.h:10
-msgid "Enable SSL encryption"
-msgstr "启用 SSL 加密"
+msgid "Folders:"
+msgstr ""
 
 #: data/config_window.ui.h:1
 msgid "Mailnag Configuration"
 msgstr "Mailnag 配置"
 
 #: data/config_window.ui.h:2
-msgid "Accounts"
-msgstr "帐户"
-
-#: data/config_window.ui.h:3
-msgid "Play sound on new mails"
-msgstr "新邮件到达时播放声音"
-
-#: data/config_window.ui.h:4
-msgid "Start Mailnag automatically"
-msgstr "登陆时自动启动 Mailnag"
-
-#: data/config_window.ui.h:5
-msgid "Check interval:"
-msgstr "检查间隔："
-
-#: data/config_window.ui.h:6
-msgid "minutes"
-msgstr "分钟"
-
-#: data/config_window.ui.h:7
-msgid "Notification mode:"
-msgstr "提示内容："
-
-#: data/config_window.ui.h:8
 msgid "General"
 msgstr "基本设置"
 
-#: data/config_window.ui.h:9
-msgid "Enable spamfilter"
-msgstr "启用垃圾邮件过滤"
+#: data/config_window.ui.h:3
+msgid "Accounts"
+msgstr "帐户"
 
-#: data/config_window.ui.h:10
-msgid "Spamfilter"
-msgstr "垃圾邮件过滤"
-
-#: data/config_window.ui.h:11
-msgid "<b>On mail check</b>"
-msgstr "<b>检查邮件时</b>"
-
-#: data/config_window.ui.h:12
-msgid ""
-"The following script will be executed on every single mail check.\n"
-"Mailnag passes the total count of new mails to this script,\n"
-"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+#: data/config_window.ui.h:4
+msgid "Plugins"
 msgstr ""
-"下列脚本会在每次检查新的邮件时执行。\n"
-"Mailnag 会把新邮件的总数通知给该脚本，\n"
-"并告知 <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> 信息。"
 
-#: data/config_window.ui.h:15
-msgid "<b>On mail arrival</b>"
-msgstr "<b>邮件到达时</b>"
-
-#: data/config_window.ui.h:16
+#: data/config_window.ui.h:5
 msgid ""
-"The following script will be executed whenever new mails arrive.\n"
-"Mailnag passes the total count of new mails to this script,\n"
-"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-msgstr ""
-"下列脚本会在接收到新的邮件时执行。\n"
-"Mailnag 会把新邮件的总数通知给该脚本，\n"
-"并告知 <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> 信息。"
-
-#: data/config_window.ui.h:19
-msgid "Events"
-msgstr "事件"
-
-#: data/config_window.ui.h:20
-msgid ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
-"for GNOME 3\n"
-"Copyright (c) 2011, 2012 Patrick Ulbrich \n"
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extendable mail "
+"notification daemon.\n"
+"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
 "and contributors."
 msgstr ""
 
-#: data/config_window.ui.h:23
-msgid "About"
-msgstr "关于"
+#: data/config_window.ui.h:8
+msgid "Add Account"
+msgstr ""
 
-#: data/config_window.ui.h:24
-msgid "Single"
-msgstr "单一"
+#: data/config_window.ui.h:9
+msgid "Remove Account"
+msgstr ""
 
-#: data/config_window.ui.h:25
-msgid "Summary"
-msgstr "摘要"
+#: data/config_window.ui.h:10
+msgid "Edit Account"
+msgstr ""
+
+#: data/config_window.ui.h:11
+msgid "Edit Plugin"
+msgstr ""
+
+#: data/plugin_dialog.ui.h:1
+msgid "Plugin Configuration"
+msgstr ""
+
+#~ msgid "About"
+#~ msgstr "关于"
+
+#~ msgid "Check interval:"
+#~ msgstr "检查间隔："
+
+#~ msgid "Enable spamfilter"
+#~ msgstr "启用垃圾邮件过滤"
+
+#~ msgid "<b>On mail arrival</b>"
+#~ msgstr "<b>邮件到达时</b>"
+
+#~ msgid "<b>On mail check</b>"
+#~ msgstr "<b>检查邮件时</b>"
+
+#~ msgid "Events"
+#~ msgstr "事件"
+
+#~ msgid "Play sound on new mails"
+#~ msgstr "新邮件到达时播放声音"
+
+#~ msgid "Start Mailnag automatically"
+#~ msgstr "登陆时自动启动 Mailnag"
+
+#~ msgid "Spamfilter"
+#~ msgstr "垃圾邮件过滤"
+
+#~ msgid "Summary"
+#~ msgstr "摘要"
+
+#~ msgid "Single"
+#~ msgstr "单一"
+
+#~ msgid "minutes"
+#~ msgstr "分钟"
+
+#~ msgid ""
+#~ "The following script will be executed on every single mail check.\n"
+#~ "Mailnag passes the total count of new mails to this script,\n"
+#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+#~ msgstr ""
+#~ "下列脚本会在每次检查新的邮件时执行。\n"
+#~ "Mailnag 会把新邮件的总数通知给该脚本，\n"
+#~ "并告知 <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> 信息。"
+
+#~ msgid ""
+#~ "The following script will be executed whenever new mails arrive.\n"
+#~ "Mailnag passes the total count of new mails to this script,\n"
+#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+#~ msgstr ""
+#~ "下列脚本会在接收到新的邮件时执行。\n"
+#~ "Mailnag 会把新邮件的总数通知给该脚本，\n"
+#~ "并告知 <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> 信息。"

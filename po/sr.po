@@ -7,185 +7,299 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-20 21:44+0100\n"
-"PO-Revision-Date: 2012-12-21 17:59+0000\n"
-"Last-Translator: Patrick Ulbrich <Unknown>\n"
+"POT-Creation-Date: 2014-05-30 17:44+0200\n"
+"PO-Revision-Date: 2013-06-07 09:23+0000\n"
+"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-04-09 11:00+0000\n"
-"X-Generator: Launchpad (build 16550)\n"
+"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
+"X-Generator: Launchpad (build 17031)\n"
 
-#: Mailnag/common/account.py:42
+#: Mailnag/common/accounts.py:47
 msgid "Unnamed"
 msgstr "Неименовано"
 
-#: Mailnag/daemon/mailchecker.py:131
-msgid "(and {0} more)"
-msgstr "(и још {0})"
-
-#: Mailnag/daemon/mailchecker.py:134
-msgid "You have {0} new mails."
-msgstr "\"Имате {0} нове поруке."
-
-#: Mailnag/daemon/mailchecker.py:136
-msgid "You have a new mail."
-msgstr "Имате нову пошту."
-
-#: Mailnag/daemon/mailchecker.py:146
-msgid "Mark as read"
-msgstr ""
-
-#: Mailnag/daemon/mails.py:111 Mailnag/daemon/mails.py:172
+#: Mailnag/daemon/mails.py:170
 msgid "No subject"
-msgstr ""
+msgstr "Без теме"
 
-#: Mailnag/configuration/accountdialog.py:59
-#: Mailnag/configuration/accountdialog.py:60
+#: Mailnag/configuration/accountdialog.py:75
+#: Mailnag/configuration/accountdialog.py:76
 msgid "optional"
+msgstr "необавезно"
+
+#: Mailnag/configuration/accountdialog.py:141
+msgid "Other (IMAP)"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:72
+#: Mailnag/configuration/accountdialog.py:142
+msgid "Other (POP3)"
+msgstr ""
+
+#: Mailnag/configuration/configwindow.py:99
+#: Mailnag/configuration/configwindow.py:124
 msgid "Enabled"
 msgstr "Укључено"
 
-#: Mailnag/configuration/configwindow.py:78
+#: Mailnag/configuration/configwindow.py:105
+#: Mailnag/configuration/configwindow.py:131
 msgid "Name"
 msgstr "Назив"
 
-#: Mailnag/configuration/configwindow.py:276
+#: Mailnag/configuration/configwindow.py:342
 msgid "Delete this account:"
 msgstr "Обриши ове налоге:"
+
+#: Mailnag/plugins/userscriptplugin.py:62
+msgid "User Script"
+msgstr ""
+
+#: Mailnag/plugins/userscriptplugin.py:63
+msgid "Runs an user defined script on mail arrival."
+msgstr ""
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "sender"
+msgstr ""
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "subject"
+msgstr ""
+
+#: Mailnag/plugins/userscriptplugin.py:84
+#, python-format
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by %s pairs."
+msgstr ""
+
+#: Mailnag/plugins/soundplugin.py:64
+msgid "Sound Notifications"
+msgstr ""
+
+#: Mailnag/plugins/soundplugin.py:65
+msgid "Plays a sound when new mails arrive."
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:115
+msgid "LibNotify Notifications"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:116
+msgid "Shows a popup when new mails arrive."
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:136
+msgid "Notification mode:"
+msgstr "Режим обавештавања:"
+
+#: Mailnag/plugins/libnotifyplugin.py:144
+msgid "Count of new mails"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:147
+msgid "Summary of new mails"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:150
+msgid "One notification per new mail"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:157
+msgid "Maximum number of visible mails:"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:244
+#: Mailnag/plugins/libnotifyplugin.py:246
+#, python-brace-format
+msgid "(and {0} more)"
+msgstr "(и још {0})"
+
+#: Mailnag/plugins/libnotifyplugin.py:249
+#: Mailnag/plugins/libnotifyplugin.py:277
+#, python-brace-format
+msgid "You have {0} new mails."
+msgstr "\"Имате {0} нове поруке."
+
+#: Mailnag/plugins/libnotifyplugin.py:251
+#: Mailnag/plugins/libnotifyplugin.py:279
+msgid "You have a new mail."
+msgstr "Имате нову пошту."
+
+#: Mailnag/plugins/libnotifyplugin.py:266
+msgid "Mark as read"
+msgstr "Означи као прочитано"
+
+#: Mailnag/plugins/dbusplugin.py:83
+msgid "DBus Service"
+msgstr ""
+
+#: Mailnag/plugins/dbusplugin.py:84
+msgid "Exposes Mailnag's functionality via a DBus service."
+msgstr ""
+
+#: Mailnag/plugins/spamfilterplugin.py:69
+msgid "Spam Filter"
+msgstr ""
+
+#: Mailnag/plugins/spamfilterplugin.py:70
+msgid "Filters out unwanted mails."
+msgstr ""
+
+#: Mailnag/plugins/spamfilterplugin.py:90
+msgid ""
+"Mailnag will ignore mails containing at least one of \n"
+"the following words in subject or sender."
+msgstr ""
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
 msgstr "Налог поште"
 
 #: data/account_dialog.ui.h:2
-msgid "Port:"
-msgstr ""
+msgid "Enable Push-IMAP"
+msgstr "Укључи Гурни-ИМАП"
 
 #: data/account_dialog.ui.h:3
-msgid "Server:"
-msgstr "Сервер:"
+msgid "Enable SSL encryption"
+msgstr "Укључи ССЛ шифровање"
 
 #: data/account_dialog.ui.h:4
-msgid "Password:"
-msgstr "Лозинка:"
-
-#: data/account_dialog.ui.h:5
-msgid "User:"
-msgstr "Корисник:"
-
-#: data/account_dialog.ui.h:6
 msgid "Accountname:"
 msgstr "Назив налога:"
 
+#: data/account_dialog.ui.h:5
+msgid "Account type:"
+msgstr "Врста налога:"
+
+#: data/account_dialog.ui.h:6
+msgid "User:"
+msgstr "Корисник:"
+
 #: data/account_dialog.ui.h:7
-msgid "Folders:"
-msgstr ""
+msgid "Password:"
+msgstr "Лозинка:"
 
 #: data/account_dialog.ui.h:8
-msgid "Enable Push-IMAP"
-msgstr ""
+msgid "Server:"
+msgstr "Сервер:"
 
 #: data/account_dialog.ui.h:9
-msgid "Account type:"
-msgstr ""
+msgid "Port:"
+msgstr "Прикључник:"
 
 #: data/account_dialog.ui.h:10
-msgid "Enable SSL encryption"
-msgstr ""
+msgid "Folders:"
+msgstr "Фасцикле:"
 
 #: data/config_window.ui.h:1
 msgid "Mailnag Configuration"
 msgstr "Подешавања Поштарка"
 
 #: data/config_window.ui.h:2
-msgid "Accounts"
-msgstr "Налози"
-
-#: data/config_window.ui.h:3
-msgid "Play sound on new mails"
-msgstr "Звучно обавести када пристигне нова пошта"
-
-#: data/config_window.ui.h:4
-msgid "Start Mailnag automatically"
-msgstr "Покрени Поштарка аутоматски"
-
-#: data/config_window.ui.h:5
-msgid "Check interval:"
-msgstr "Интервал провере:"
-
-#: data/config_window.ui.h:6
-msgid "minutes"
-msgstr "минута"
-
-#: data/config_window.ui.h:7
-msgid "Notification mode:"
-msgstr ""
-
-#: data/config_window.ui.h:8
 msgid "General"
 msgstr "Опште"
 
-#: data/config_window.ui.h:9
-msgid "Enable spamfilter"
-msgstr "Укључи филтер спама"
+#: data/config_window.ui.h:3
+msgid "Accounts"
+msgstr "Налози"
 
-#: data/config_window.ui.h:10
-msgid "Spamfilter"
-msgstr "Филтер спама"
-
-#: data/config_window.ui.h:11
-msgid "<b>On mail check</b>"
-msgstr "<b>Приликом провере поште</b>"
-
-#: data/config_window.ui.h:12
-msgid ""
-"The following script will be executed on every single mail check.\n"
-"Mailnag passes the total count of new mails to this script,\n"
-"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+#: data/config_window.ui.h:4
+msgid "Plugins"
 msgstr ""
-"Следећа скрипта ће бити извршена при сваком засебном проверавању\n"
-"поште. Поштарко скрипти прослеђује укупан број нових порука,\n"
-"за којим следи пар <i>\"&lt;пошиљалац&gt; &lt;тема&gt;\"</i>."
 
-#: data/config_window.ui.h:15
-msgid "<b>On mail arrival</b>"
-msgstr "<b>Приликом пристизања поште</b>"
-
-#: data/config_window.ui.h:16
+#: data/config_window.ui.h:5
 msgid ""
-"The following script will be executed whenever new mails arrive.\n"
-"Mailnag passes the total count of new mails to this script,\n"
-"followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-msgstr ""
-"Следећа скрипта ће бити извршена при сваком пристизању нове\n"
-"поште. Поштарко скрипти прослеђује укупан број нових порука,\n"
-"за којим следи пар <i>\"&lt;пошиљалац&gt; &lt;тема&gt;\"</i>."
-
-#: data/config_window.ui.h:19
-msgid "Events"
-msgstr "Догађаји"
-
-#: data/config_window.ui.h:20
-msgid ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
-"for GNOME 3\n"
-"Copyright (c) 2011, 2012 Patrick Ulbrich \n"
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extendable mail "
+"notification daemon.\n"
+"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
 "and contributors."
 msgstr ""
 
-#: data/config_window.ui.h:23
-msgid "About"
-msgstr "О програму"
-
-#: data/config_window.ui.h:24
-msgid "Single"
+#: data/config_window.ui.h:8
+msgid "Add Account"
 msgstr ""
 
-#: data/config_window.ui.h:25
-msgid "Summary"
+#: data/config_window.ui.h:9
+msgid "Remove Account"
 msgstr ""
+
+#: data/config_window.ui.h:10
+msgid "Edit Account"
+msgstr ""
+
+#: data/config_window.ui.h:11
+msgid "Edit Plugin"
+msgstr ""
+
+#: data/plugin_dialog.ui.h:1
+msgid "Plugin Configuration"
+msgstr ""
+
+#~ msgid "Events"
+#~ msgstr "Догађаји"
+
+#~ msgid "About"
+#~ msgstr "О програму"
+
+#~ msgid "<b>On mail arrival</b>"
+#~ msgstr "<b>Приликом пристизања поште</b>"
+
+#~ msgid "Check interval:"
+#~ msgstr "Интервал провере:"
+
+#~ msgid "Enable spamfilter"
+#~ msgstr "Укључи филтер спама"
+
+#~ msgid "<b>On mail check</b>"
+#~ msgstr "<b>Приликом провере поште</b>"
+
+#~ msgid "Play sound on new mails"
+#~ msgstr "Звучно обавести када пристигне нова пошта"
+
+#~ msgid "minutes"
+#~ msgstr "минута"
+
+#~ msgid "Start Mailnag automatically"
+#~ msgstr "Покрени Поштарка аутоматски"
+
+#~ msgid "Spamfilter"
+#~ msgstr "Филтер спама"
+
+#~ msgid ""
+#~ "The following script will be executed on every single mail check.\n"
+#~ "Mailnag passes the total count of new mails to this script,\n"
+#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+#~ msgstr ""
+#~ "Следећа скрипта ће бити извршена при сваком засебном проверавању\n"
+#~ "поште. Поштарко скрипти прослеђује укупан број нових порука,\n"
+#~ "за којим следи пар <i>\"&lt;пошиљалац&gt; &lt;тема&gt;\"</i>."
+
+#~ msgid ""
+#~ "The following script will be executed whenever new mails arrive.\n"
+#~ "Mailnag passes the total count of new mails to this script,\n"
+#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
+#~ msgstr ""
+#~ "Следећа скрипта ће бити извршена при сваком пристизању нове\n"
+#~ "поште. Поштарко скрипти прослеђује укупан број нових порука,\n"
+#~ "за којим следи пар <i>\"&lt;пошиљалац&gt; &lt;тема&gt;\"</i>."
+
+#~ msgid "Summary"
+#~ msgstr "Сажетак"
+
+#~ msgid "Single"
+#~ msgstr "Једноструко"
+
+#~ msgid ""
+#~ "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
+#~ "for GNOME 3\n"
+#~ "Copyright (c) 2011, 2012 Patrick Ulbrich \n"
+#~ "and contributors."
+#~ msgstr ""
+#~ "<a href=\"https://github.com/pulb/mailnag\">Поштанаг</a> — Обавештавач поште "
+#~ "за Гном 3\n"
+#~ "Ауторска права (c) 2011, 2012 Патрик Улбрих \n"
+#~ "и сарадници."
