@@ -179,7 +179,7 @@ class AccountList(list):
 		del self[:]
 		
 		i = 1
-		section_name = "Account" + str(i)
+		section_name = "account" + str(i)
 		
 		while cfg.has_section(section_name):
 			enabled		= bool(int(	self._get_account_cfg(cfg, section_name, 'enabled')	))
@@ -201,22 +201,22 @@ class AccountList(list):
 				self.append(acc)
 
 			i = i + 1
-			section_name = "Account" + str(i)
+			section_name = "account" + str(i)
 			
 
 	def save_to_cfg(self, cfg):		
 		# remove existing accounts from cfg
 		i = 1
-		section_name = "Account" + str(i)
+		section_name = "account" + str(i)
 		while cfg.has_section(section_name):
 			cfg.remove_section(section_name)
 			i = i + 1
-			section_name = "Account" + str(i)
+			section_name = "account" + str(i)
 		
 		# add accounts
 		i = 1
 		for acc in self:
-			section_name = "Account" + str(i)
+			section_name = "account" + str(i)
 			
 			cfg.add_section(section_name)
 			
