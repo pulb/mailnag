@@ -31,18 +31,21 @@ from common.subproc import start_subprocess
 from common.exceptions import InvalidOperationException
 from daemon.mails import sort_mails
 
+
+MAX_VISIBLE_MAILS_LIMIT		= 20.0
+
 NOTIFICATION_MODE_COUNT		= '0'
 NOTIFICATION_MODE_SUMMARY	= '1'
 NOTIFICATION_MODE_SINGLE	= '2'
 
-plugin_defaults = { 'notification_mode' : NOTIFICATION_MODE_SUMMARY }
+plugin_defaults = { 
+	'notification_mode' : NOTIFICATION_MODE_SUMMARY,
+	'max_visible_mails' : '10'
+}
 
 
 class LibNotifyPlugin(Plugin):
 	def __init__(self):
-		# prevent flooding of the messaging tray
-		self.MAIL_LIST_LIMIT = 10
-		
 		# dict that tracks all notifications that need to be closed
 		self._notifications = {}
 		self._initialized = False
@@ -55,6 +58,7 @@ class LibNotifyPlugin(Plugin):
 		
 	
 	def enable(self):
+		self._max_mails = int(self.get_config()['max_visible_mails'])
 		self._notification_server_wait_event.clear()
 		self._notification_server_ready = False
 		self._notifications = {}
@@ -129,48 +133,64 @@ class LibNotifyPlugin(Plugin):
 		box.set_orientation(Gtk.Orientation.VERTICAL)
 		
 		label = Gtk.Label()
-		label.set_markup('<b>%s</b>' % _('Please select a notification mode:'))
+		label.set_markup('<b>%s</b>' % _('Notification mode:'))
 		label.set_alignment(0.0, 0.0)
-		box.pack_start(label, True, True, 0)
+		box.pack_start(label, False, False, 0)
 		
 		inner_box = Gtk.Box()
 		inner_box.set_spacing(6)
 		inner_box.set_orientation(Gtk.Orientation.VERTICAL)
 		
 		cb_count = Gtk.RadioButton(label = _('Count of new mails'))
-		inner_box.pack_start(cb_count, True, True, 0)
+		inner_box.pack_start(cb_count, False, False, 0)
 		
 		cb_summary = Gtk.RadioButton(label = _('Summary of new mails'), group = cb_count)
-		inner_box.pack_start(cb_summary, True, True, 0)
+		inner_box.pack_start(cb_summary, False, False, 0)
 		
 		cb_single = Gtk.RadioButton(label = _('One notification per new mail'), group = cb_count)
-		inner_box.pack_start(cb_single, True, True, 0)
+		inner_box.pack_start(cb_single, False, False, 0)
 		
-		alignment = Gtk.Alignment()
-		alignment.set_padding(0, 0, 18, 0)
-		alignment.add(inner_box)
+		inner_box.set_margin_start(18)
+		box.pack_start(inner_box, False, False, 0)
 		
-		box.pack_start(alignment, True, True, 0)
+		label = Gtk.Label()
+		label.set_markup('<b>%s</b>' % _('Maximum number of visible mails:'))
+		label.set_alignment(0.0, 0.0)
+		label.set_margin_top(6)
+		box.pack_start(label, False, False, 0)
+		
+		spinner = Gtk.SpinButton.new_with_range(1.0, MAX_VISIBLE_MAILS_LIMIT, 1.0)
+		spinner.set_margin_start(18)
+		
+		box.pack_start(spinner, False, False, 0)
 		
 		return box
 	
 	
 	def load_ui_from_config(self, config_ui):
 		config = self.get_config()
-		inner_box = config_ui.get_children()[1].get_child()
+		inner_box = config_ui.get_children()[1]
 		cb = inner_box.get_children()[int(config['notification_mode'])]
 		cb.set_active(True)
+		
+		max_mails = float(config['max_visible_mails'])
+		spinner = config_ui.get_children()[3]
+		spinner.set_value(max_mails)
 	
 	
 	def save_ui_to_config(self, config_ui):
 		config = self.get_config()
-		inner_box = config_ui.get_children()[1].get_child()
+		inner_box = config_ui.get_children()[1]
 		idx = 0
 		for cb in inner_box.get_children():
 			if cb.get_active():
 				config['notification_mode'] = str(idx)
 				break
 			idx += 1
+		
+		spinner = config_ui.get_children()[3]
+		max_mails = spinner.get_value()
+		config['max_visible_mails'] = str(int(max_mails))
 
 
 	def _notify_async(self, new_mails, all_mails):
@@ -211,7 +231,7 @@ class LibNotifyPlugin(Plugin):
 		if len(self._notifications) == 0:
 			self._notifications['0'] = self._get_notification(" ", None, None) # empty string will emit a gtk warning
 
-		ubound = len(mails) if len(mails) <= self.MAIL_LIST_LIMIT else self.MAIL_LIST_LIMIT
+		ubound = len(mails) if len(mails) <= self._max_mails else self._max_mails
 
 		for i in range(ubound):
 			if self._is_gnome:
@@ -219,11 +239,11 @@ class LibNotifyPlugin(Plugin):
 			else:
 				body += "%s  -  %s\n" % (ellipsize(self._get_sender(mails[i]), 20), ellipsize(mails[i].subject, 20))
 
-		if len(mails) > self.MAIL_LIST_LIMIT:
+		if len(mails) > self._max_mails:
 			if self._is_gnome:
-				body += "<i>%s</i>" % _("(and {0} more)").format(str(len(mails) - self.MAIL_LIST_LIMIT))
+				body += "<i>%s</i>" % _("(and {0} more)").format(str(len(mails) - self._max_mails))
 			else:
-				body += _("(and {0} more)").format(str(len(mails) - self.MAIL_LIST_LIMIT))
+				body += _("(and {0} more)").format(str(len(mails) - self._max_mails))
 
 		if len(mails) > 1: # multiple new emails
 			summary = _("You have {0} new mails.").format(str(len(mails)))
