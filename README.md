@@ -12,6 +12,32 @@ __This project needs contributors!__
 [Translations](https://translations.launchpad.net/mailnag)  
 [Wiki](https://github.com/pulb/mailnag/wiki) 
 
+## Installation
+
+### Ubuntu
+Mailnag has an official [Ubuntu PPA](https://launchpad.net/~pulb/+archive/mailnag).  
+Issue the following commands in a terminal to enable the PPA and install Mailnag.  
+
+    sudo add-apt-repository ppa:pulb/mailnag
+    sudo apt-get update
+    sudo apt-get install mailnag
+
+As of Ubuntu 13.04 (Raring), Mailnag is also available in the official repos.  
+Run `sudo apt-get install mailnag` in a terminal to install it.
+
+### Debian
+Mailnag is currently available in Debian unstable.  
+Run `sudo apt-get install mailnag` in a terminal to install it.
+
+### Fedora
+As of Fedora 17, Mailnag is available in the official Fedora repos.  
+Just run `yum install mailnag` (as root) in a terminal to install the package.
+
+### Generic Tarballs
+Distribution independent tarball releases are available [here](https://launchpad.net/mailnag/trunk/mailnag-master).  
+Just run `./setup.py install` (as root) to install Mailnag,  
+though make sure the requirements stated below are met.
+
 ###### Requirements
 * python2 (python3 won't work!)
 * pygobject
@@ -42,4 +68,4 @@ extension/plugin for your desktop shell. Currently the following desktop shells 
 * Ubuntu Unity ([MessagingMenu plugin](https://github.com/pulb/mailnag-unity-plugin))
 
 ## Screenshots
-TODO
+![Screenshot](http://www.shockshit.net/mailnag/screenshots/mailnag_flyer.png)
