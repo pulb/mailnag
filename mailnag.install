@@ -1,3 +1,8 @@
 post_install() {
-	echo 'To configure Mailnag run mailnag_config.'
+	echo 'To configure Mailnag run mailnag-config.'
+}
+
+post_upgrade() {
+	echo 'IMPORTANT NOTE: As of version 1.0 the format of the config file has changed.'
+	echo 'It is recommended to move or delete ~/.config/mailnag/mailnag.cfg'
 }
