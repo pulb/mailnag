@@ -38,5 +38,4 @@ Description: An extendable mail notification daemon
  On mail arrival it performs various actions provided by plugins.
  Mailnag comes with a set of desktop-independent default plugins for
  visual/sound notifications, script execution etc. and can be extended
- with additional plugins easily.
- 
+ with additional plugins easily. 
