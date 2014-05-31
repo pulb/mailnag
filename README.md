@@ -1,10 +1,11 @@
 # Mailnag
 An extendable mail notification daemon.  
-https://github.com/pulb/mailnag
 
-Mailnag checks POP3 and IMAP servers for new mail.  
-When it finds new messsages, it creates a notification   
-that mentions sender and subject.
+Mailnag is a daemon program that checks POP3 and IMAP servers for new mail.  
+On mail arrival it performs various actions provided by plugins.  
+Mailnag comes with a set of desktop-independent default plugins for  
+visual/sound notifications, script execution etc. and can be extended  
+with additional plugins easily.
 
 __This project needs contributors!__  
 [Code](https://github.com/pulb/mailnag)  
