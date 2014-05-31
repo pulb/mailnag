@@ -11,6 +11,7 @@ license=('GPL')
 depends=('python2' 'python2-gobject' 'python2-httplib2'
         'libgnome-keyring' 'gnome-keyring' 'python2-xdg'
         'python2-dbus' 'libnotify' 'gstreamer0.10-base-plugins')
+optdepends=('mailnag-gnome-shell: for a tighter GNOME 3 integration')
 makedepends=('gettext')
 source=('https://github.com/pulb/mailnag/archive/0.9.9-testing.tar.gz')
 md5sums=('b8c0986641ac9c911dd3ae62df3187d7')
