@@ -24,7 +24,7 @@ Architecture: all
 Depends: gir1.2-glib-2.0 (>= 1.32.0),
          gir1.2-gnomekeyring-1.0 (>= 3.2.2),
          gir1.2-gstreamer-0.10 (>= 0.10.36),
-         gir1.2-notify-0.7 (>= 0.7.5),
+         gir1.2-notify-0.7 (>= 0.7.6),
          gstreamer0.10-plugins-base,
          python (>= 2.7.3),
          python-dbus (>= 1.0.0),
@@ -33,6 +33,10 @@ Depends: gir1.2-glib-2.0 (>= 1.32.0),
          python-xdg,
          ${misc:Depends},
          ${python:Depends}
-Description: Mail notification daemon for GNOME 3
- Mailnag checks POP3 and IMAP servers for new mail. When it finds new
- messsages, it creates a GNOME-Shell notification that mentions sender and subject.
+Description: An extendable mail notification daemon
+ Mailnag is a daemon program that checks POP3 and IMAP servers for new mail.
+ On mail arrival it performs various actions provided by plugins.
+ Mailnag comes with a set of desktop-independent default plugins for
+ visual/sound notifications, script execution etc. and can be extended
+ with additional plugins easily.
+ 
