@@ -17,9 +17,6 @@ source=('https://github.com/pulb/mailnag/archive/0.9.9-testing.tar.gz')
 md5sums=('b8c0986641ac9c911dd3ae62df3187d7')
 install='mailnag.install'
 
-build() {
-}
-
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}-testing"
   python2 setup.py install --root=${pkgdir}
