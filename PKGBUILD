@@ -3,9 +3,9 @@
 
 pkgname=mailnag
 pkgver=0.9.9
-pkgrel=2
+pkgrel=3
 pkgdesc="An extendable mail notification daemon"
-arch=('i686' 'x86_64' 'armv6h' 'armv7h')
+arch=('any')
 url="https://github.com/pulb/mailnag"
 license=('GPL')
 depends=('python2' 'python2-gobject' 'python2-httplib2'
