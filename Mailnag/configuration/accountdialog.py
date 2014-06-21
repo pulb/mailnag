@@ -3,7 +3,7 @@
 #
 # accountdialog.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 # MA 02110-1301, USA.
 #
 
-from gi.repository import GLib, GdkPixbuf, Gtk
+from gi.repository import GLib, Gtk
 from common.dist_cfg import PACKAGE_NAME
 from common.i18n import _
 from common.utils import get_data_file
