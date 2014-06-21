@@ -273,15 +273,12 @@ class ConfigWindow:
 		curdir = os.getcwd()
 		# path to mailnag startscript
 		exec_file = os.path.join(curdir, "mailnagd")
-		# path to mailnag icon file (use abspath to translate a 
-		# relative path like './data/mailnag.svg' to an absolute path).
-		icon_file = os.path.abspath(get_data_file("mailnag.svg"))
 		
 		content = "\n" + \
 		"[Desktop Entry]\n" + \
 		"Type=Application\n" + \
 		"Exec=%s --quiet\n" % exec_file + \
-		"Icon=%s\n" % icon_file + \
+		"Icon=mailnag\n" + \
 		"Hidden=false\n" + \
 		"NoDisplay=false\n" + \
 		"X-GNOME-Autostart-enabled=true\n" + \
