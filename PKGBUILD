@@ -10,7 +10,8 @@ url="https://github.com/pulb/mailnag"
 license=('GPL')
 depends=('python2' 'python2-gobject' 'python2-httplib2'
         'libgnome-keyring' 'gnome-keyring' 'python2-xdg'
-        'python2-dbus' 'libnotify' 'gstreamer0.10-base-plugins')
+        'python2-dbus' 'libnotify' 'gstreamer0.10-base-plugins'
+        'gtk3' 'gdk-pixbuf2')
 optdepends=('mailnag-gnome-shell: for a tighter GNOME 3 integration')
 makedepends=('gettext')
 source=('https://github.com/pulb/mailnag/archive/0.9.9-testing.tar.gz')
