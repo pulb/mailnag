@@ -3,7 +3,7 @@
 #
 # utils.py
 #
-# Copyright 2011 - 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2007 Marco Ferragina <marco.ferragina@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -31,15 +31,22 @@ import urllib2
 
 from common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
 
+
+def get_data_paths():
+	# Add "./data" in workdir for running from builddir
+	data_paths = []
+	data_paths.append("./data")
+	data_paths.extend(base.load_data_paths(PACKAGE_NAME))
+	return data_paths
+
+
 def get_data_file(filename):
 	"""
 	Return path to @filename if it exists
 	anywhere in the data paths, else return None
 	"""
-	# Add "./data" in workdir for running from builddir
-	data_paths = []
-	data_paths.append("./data")
-	data_paths.extend(base.load_data_paths(PACKAGE_NAME))
+	
+	data_paths = get_data_paths()
 
 	for direc in data_paths:
 		file_path = os.path.join(direc, filename)
