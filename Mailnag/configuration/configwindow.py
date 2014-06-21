@@ -28,7 +28,7 @@ from gi.repository import GLib, GdkPixbuf, Gdk, Gtk, GObject
 
 from common.dist_cfg import PACKAGE_NAME, APP_VERSION
 from common.i18n import _
-from common.utils import get_data_file
+from common.utils import get_data_file, get_data_paths
 from common.config import read_cfg, write_cfg
 from common.accounts import Account, AccountList
 from common.plugins import Plugin
@@ -54,9 +54,16 @@ class ConfigWindow:
 			"treeview_plugins_row_activated" : self._on_treeview_plugins_row_activated, \
 			"treeview_plugins_cursor_changed" : self._on_treeview_plugins_cursor_changed, \
 		})
+		
+		# Add icons in alternative data paths (e.g. ./data/icons) 
+		# to the icon search path in case Mailnag is launched 
+		# from a local directory (without installing).
+		icon_theme = Gtk.IconTheme.get_default()
+		for path in get_data_paths():
+			icon_theme.append_search_path(os.path.join(path, "icons"))
 
 		self._window = builder.get_object("config_window")
-		self._window.set_icon(GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 48, 48));
+		self._window.set_icon_name("mailnag")
 		self._load_stylesheet('config_window.css')
 		self._cfg = read_cfg()
 		
@@ -71,10 +78,11 @@ class ConfigWindow:
 		
 		#
 		# general page
-		#
-		self._image_logo = builder.get_object("image_logo")
-		pb = GdkPixbuf.Pixbuf.new_from_file_at_size(get_data_file("mailnag.svg"), 180, 180)
+		#		
+		# The dimension of the png is expected to be 180x180 px
+		pb = GdkPixbuf.Pixbuf.new_from_file(get_data_file("mailnag.png"))
 		pb = pb.new_subpixbuf(0, 10, 180, 146) # crop whitespace at the bottom
+		self._image_logo = builder.get_object("image_logo")
 		self._image_logo.set_from_pixbuf(pb)
 		self._label_app_desc = builder.get_object("label_app_desc")
 		self._label_app_desc.set_markup("<span font=\"24\"><b>Mailnag</b></span>\nVersion %s" % str(APP_VERSION))

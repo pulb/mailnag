@@ -77,6 +77,7 @@ class BuildData(build):
 class InstallData(install_data):
 	def run (self):
 		self._add_locale_data()
+		self._add_icon_data()
 		install_data.run (self)
 	
 	
@@ -85,6 +86,13 @@ class InstallData(install_data):
 			for file in files:
 				src_path = os.path.join(root, file)
 				dst_path = os.path.join('share/locale', os.path.dirname(src_path[len(BUILD_LOCALE_DIR)+1:]))
+				self.data_files.append((dst_path, [src_path]))
+	
+	def _add_icon_data(self):
+		for root, dirs, files in os.walk('data/icons'):
+			for file in files:
+				src_path = os.path.join(root, file)
+				dst_path = os.path.join('share/icons', os.path.dirname(src_path[len('data/icons')+1:]))
 				self.data_files.append((dst_path, [src_path]))
 
 
@@ -100,14 +108,14 @@ setup(name=PACKAGE_NAME,
 	author='Patrick Ulbrich',
 	author_email='zulu99@gmx.net',
 	url='https://github.com/pulb/mailnag',
-	license='GNU GPL3',
+	license='GNU GPL2',
 	package_dir = {'Mailnag.common' : os.path.join(BUILD_PATCH_DIR, 'common')},
 	packages=['Mailnag', 'Mailnag.common', 'Mailnag.configuration', 'Mailnag.daemon', 'Mailnag.plugins'],
 	scripts=[os.path.join(BUILD_PATCH_DIR, 'mailnagd'), os.path.join(BUILD_PATCH_DIR, 'mailnag-config')],
 	data_files=[('share/mailnag', glob.glob('data/*.ui')),
 		('share/mailnag', ['data/config_window.css']),
 		('share/mailnag', ['data/mailnag.ogg']),
-		('share/mailnag', ['data/mailnag.svg']),
+		('share/mailnag', ['data/mailnag.png']),
 		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnag-config.desktop')])],
 	cmdclass={'build': BuildData, 
                 'install_data': InstallData,
