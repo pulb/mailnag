@@ -3,14 +3,14 @@
 
 pkgname=mailnag
 pkgver=0.9.91
-pkgrel=1
+pkgrel=2
 pkgdesc="An extendable mail notification daemon"
 arch=('any')
 url="https://github.com/pulb/mailnag"
 license=('GPL')
 depends=('python2' 'python2-gobject' 'python2-httplib2'
         'libgnome-keyring' 'gnome-keyring' 'python2-xdg'
-        'python2-dbus' 'libnotify' 'gstreamer0.10-base-plugins'
+        'python2-dbus' 'libnotify' 'gst-plugins-base'
         'gtk3' 'gdk-pixbuf2')
 optdepends=('mailnag-gnome-shell: for a tighter GNOME 3 integration')
 makedepends=('gettext')
