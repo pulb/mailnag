@@ -75,4 +75,4 @@ extension/plugin for your desktop shell. Currently the following desktop shells 
 * Ubuntu Unity ([MessagingMenu plugin](https://github.com/pulb/mailnag-unity-plugin))
 
 ## Screenshots
-![Screenshot](http://www.shockshit.net/mailnag/screenshots/mailnag_flyer.png)
+![Screenshot](https://raw.githubusercontent.com/pulb/mailnag-design/master/Flyer/Mailnag_flyer2.png)
