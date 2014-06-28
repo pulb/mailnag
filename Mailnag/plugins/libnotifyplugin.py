@@ -150,37 +150,41 @@ class LibNotifyPlugin(Plugin):
 		cb_single = Gtk.RadioButton(label = _('One notification per new mail'), group = cb_count)
 		inner_box.pack_start(cb_single, False, False, 0)
 		
-		inner_box.set_margin_start(18)
-		box.pack_start(inner_box, False, False, 0)
+		alignment = Gtk.Alignment()
+		alignment.set_padding(0, 6, 18, 0)
+		alignment.add(inner_box)
+		box.pack_start(alignment, False, False, 0)
 		
 		label = Gtk.Label()
 		label.set_markup('<b>%s</b>' % _('Maximum number of visible mails:'))
 		label.set_alignment(0.0, 0.0)
-		label.set_margin_top(6)
 		box.pack_start(label, False, False, 0)
 		
 		spinner = Gtk.SpinButton.new_with_range(1.0, MAX_VISIBLE_MAILS_LIMIT, 1.0)
-		spinner.set_margin_start(18)
 		
-		box.pack_start(spinner, False, False, 0)
+		alignment = Gtk.Alignment()
+		alignment.set_padding(0, 0, 18, 0)
+		alignment.add(spinner)
+		
+		box.pack_start(alignment, False, False, 0)
 		
 		return box
 	
 	
 	def load_ui_from_config(self, config_ui):
 		config = self.get_config()
-		inner_box = config_ui.get_children()[1]
+		inner_box = config_ui.get_children()[1].get_child()
 		cb = inner_box.get_children()[int(config['notification_mode'])]
 		cb.set_active(True)
 		
 		max_mails = float(config['max_visible_mails'])
-		spinner = config_ui.get_children()[3]
+		spinner = config_ui.get_children()[3].get_child()
 		spinner.set_value(max_mails)
 	
 	
 	def save_ui_to_config(self, config_ui):
 		config = self.get_config()
-		inner_box = config_ui.get_children()[1]
+		inner_box = config_ui.get_children()[1].get_child()
 		idx = 0
 		for cb in inner_box.get_children():
 			if cb.get_active():
@@ -188,7 +192,7 @@ class LibNotifyPlugin(Plugin):
 				break
 			idx += 1
 		
-		spinner = config_ui.get_children()[3]
+		spinner = config_ui.get_children()[3].get_child()
 		max_mails = spinner.get_value()
 		config['max_visible_mails'] = str(int(max_mails))
 
