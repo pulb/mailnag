@@ -105,12 +105,12 @@ class Account:
 				if self.port == '':
 					conn = imaplib.IMAP4_SSL(self.server)
 				else:
-					conn = imaplib.IMAP4_SSL(self.server, self.port)
+					conn = imaplib.IMAP4_SSL(self.server, int(self.port))
 			else:
 				if self.port == '':
 					conn = imaplib.IMAP4(self.server)
 				else:
-					conn = imaplib.IMAP4(self.server, self.port)
+					conn = imaplib.IMAP4(self.server, int(self.port))
 			
 			conn.login(self.user, self.password)
 			
@@ -144,12 +144,12 @@ class Account:
 				if self.port == '':
 					conn = poplib.POP3_SSL(self.server)
 				else:
-					conn = poplib.POP3_SSL(self.server, self.port)
+					conn = poplib.POP3_SSL(self.server, int(self.port))
 			else:
 				if self.port == '':
 					conn = poplib.POP3(self.server)
 				else:
-					conn = poplib.POP3(self.server, self.port)
+					conn = poplib.POP3(self.server, int(self.port))
 		
 			conn.getwelcome()
 			conn.user(self.user)
