@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
-"X-Generator: Launchpad (build 17031)\n"
+"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
@@ -238,57 +238,3 @@ msgstr ""
 #: data/plugin_dialog.ui.h:1
 msgid "Plugin Configuration"
 msgstr ""
-
-#~ msgid "<b>On mail arrival</b>"
-#~ msgstr "<b>メール到着時に</b>"
-
-#~ msgid "<b>On mail check</b>"
-#~ msgstr "<b>メールチェック時に</b>"
-
-#~ msgid "About"
-#~ msgstr "About"
-
-#~ msgid "Check interval:"
-#~ msgstr "チェック間隔:"
-
-#~ msgid "Enable spamfilter"
-#~ msgstr "スパムフィルターを使う"
-
-#~ msgid "Events"
-#~ msgstr "イベント"
-
-#~ msgid "Play sound on new mails"
-#~ msgstr "メールが新着したら音を鳴らす"
-
-#~ msgid "Single"
-#~ msgstr "一通毎"
-
-#~ msgid "Spamfilter"
-#~ msgstr "スパムフィルター"
-
-#~ msgid "Start Mailnag automatically"
-#~ msgstr "Mailnagを自動的に起動する"
-
-#~ msgid "Summary"
-#~ msgstr "サマリー"
-
-#~ msgid ""
-#~ "The following script will be executed on every single mail check.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "メールチェックの度に、このスクリプトを実行します。\n"
-#~ "新着メールの総数と、<i>\"&lt;送信者&gt; &lt;件名&gt;\"</i> のペアが\n"
-#~ "Mailnagからこのスクリプトへ渡されます。"
-
-#~ msgid ""
-#~ "The following script will be executed whenever new mails arrive.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "メール新着の度に、このスクリプトを実行します。\n"
-#~ "新着メールの総数と、<i>\"&lt;送信者&gt; &lt;件名&gt;\"</i> のペアが\n"
-#~ "Mailnagからこのスクリプトへ渡されます。"
-
-#~ msgid "minutes"
-#~ msgstr "分"

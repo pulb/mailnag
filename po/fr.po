@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
-"X-Generator: Launchpad (build 17031)\n"
+"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 "Language: \n"
 
 #: Mailnag/common/accounts.py:47
@@ -239,58 +239,3 @@ msgstr ""
 #: data/plugin_dialog.ui.h:1
 msgid "Plugin Configuration"
 msgstr ""
-
-#~ msgid "<b>On mail arrival</b>"
-#~ msgstr "Lors de l'arrivée d'un courriel"
-
-#~ msgid "<b>On mail check</b>"
-#~ msgstr "Lors de la vérification du courrier"
-
-#~ msgid "About"
-#~ msgstr "A propos"
-
-#~ msgid "Enable spamfilter"
-#~ msgstr "Activer le filtre anti pourriels"
-
-#~ msgid "Events"
-#~ msgstr "Evénements"
-
-#~ msgid "Play sound on new mails"
-#~ msgstr "Jouer un son en cas de nouveaux courriels"
-
-#~ msgid "Spamfilter"
-#~ msgstr "Filtre anti pourriels"
-
-#~ msgid "Start Mailnag automatically"
-#~ msgstr "Démarrer Mailnag automatiquement"
-
-#~ msgid ""
-#~ "The following script will be executed on every single mail check.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Le script suivant sera exécuté à chaque vérification de courriel.\n"
-#~ "Mailnag envoie le nombre total de nouveaux courriels à ce script,\n"
-#~ "suivi par les paires <i>\"&lt;émetteur&gt; &lt;titre&gt;\"</i>."
-
-#~ msgid ""
-#~ "The following script will be executed whenever new mails arrive.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Le script suivant sera exécuté à chaque fois que de nouveaux courriels "
-#~ "arrivent.\n"
-#~ "Mailnag envoie le nombre total de nouveaux courriels à ce script,\n"
-#~ "suivi par les paires <i>\"&lt;émetteur&gt; &lt;titre&gt;\"</i>."
-
-#~ msgid "minutes"
-#~ msgstr "minutes"
-
-#~ msgid "Check interval:"
-#~ msgstr "Intervalle de vérification :"
-
-#~ msgid "Single"
-#~ msgstr "Unique"
-
-#~ msgid "Summary"
-#~ msgstr "Résumé"

@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
-"X-Generator: Launchpad (build 17031)\n"
+"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
@@ -238,52 +238,3 @@ msgstr ""
 #: data/plugin_dialog.ui.h:1
 msgid "Plugin Configuration"
 msgstr ""
-
-#~ msgid "Events"
-#~ msgstr "Događaji"
-
-#~ msgid "About"
-#~ msgstr "O aplikaciji"
-
-#~ msgid "Check interval:"
-#~ msgstr "Period provjere:"
-
-#~ msgid "Enable spamfilter"
-#~ msgstr "Omogući filter neželjenih (SPAM) poruka"
-
-#~ msgid "<b>On mail arrival</b>"
-#~ msgstr "<b>Prilikom primitka e-mail poruke</b>"
-
-#~ msgid "<b>On mail check</b>"
-#~ msgstr "<b>Prilikom dohvata novih e-mail poruka</b>"
-
-#~ msgid "Play sound on new mails"
-#~ msgstr "Izvedi zvuk prilikom primitka nove e-mail poruke"
-
-#~ msgid "minutes"
-#~ msgstr "minute"
-
-#~ msgid "Start Mailnag automatically"
-#~ msgstr "Pokreni Mailnag automatski"
-
-#~ msgid "Spamfilter"
-#~ msgstr "Filter neželjenih (SPAM) poruka"
-
-#~ msgid ""
-#~ "The following script will be executed on every single mail check.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Sljedeća skripta će biti izvedena prilikom svakog dohvata novih e-mail "
-#~ "poruka.\n"
-#~ "Mailnag skripti kao argument predaje konačan broj novih poruka,\n"
-#~ "koje slijede parovi <i>\"&lt;sender&gt; &lt;subject&gt;\"</i>."
-
-#~ msgid ""
-#~ "The following script will be executed whenever new mails arrive.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Sljedeća skripta će biti izvedena prilikom primitka novih e-mail poruka.\n"
-#~ "Mailnag skripti kao argument predaje konačan broj novih poruka,\n"
-#~ "koje slijede parovi <i>\"&lt;sender&gt; &lt;subject&gt;\"</i>."

@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
-"X-Generator: Launchpad (build 17031)\n"
+"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
@@ -238,57 +238,3 @@ msgstr ""
 #: data/plugin_dialog.ui.h:1
 msgid "Plugin Configuration"
 msgstr ""
-
-#~ msgid "Events"
-#~ msgstr "Eventos"
-
-#~ msgid "Play sound on new mails"
-#~ msgstr "Sonido de notificación para nuevos correos"
-
-#~ msgid "minutes"
-#~ msgstr "minutos"
-
-#~ msgid "Start Mailnag automatically"
-#~ msgstr "Iniciar Mailnag automáticamente"
-
-#~ msgid "<b>On mail arrival</b>"
-#~ msgstr "<b>A la llegada de correo</b>"
-
-#~ msgid "About"
-#~ msgstr "Acerca de"
-
-#~ msgid "Check interval:"
-#~ msgstr "Intervalo de comprobación:"
-
-#~ msgid "Spamfilter"
-#~ msgstr "Filtro de spam"
-
-#~ msgid "Summary"
-#~ msgstr "Resumen"
-
-#~ msgid "Single"
-#~ msgstr "Único"
-
-#~ msgid "Enable spamfilter"
-#~ msgstr "Activar filtro de spam"
-
-#~ msgid "<b>On mail check</b>"
-#~ msgstr "<b>Al revisar correo</b>"
-
-#~ msgid ""
-#~ "The following script will be executed on every single mail check.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "El siguiente script será ejecutado para cada revisión de correo.\n"
-#~ "Mailnag pasa la cuenta total de correos nuevos al script,\n"
-#~ "seguido por pares de <i>\"&lt;sender&gt; &lt;subject&gt;\"</i>."
-
-#~ msgid ""
-#~ "The following script will be executed whenever new mails arrive.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "El siguiente script será ejecutado para cada correo que entre.\n"
-#~ "Mailnag pasa la cuenta total de correos nuevos al script,\n"
-#~ "seguido por pares de <i>\"&lt;sender&gt; &lt;subject&gt;\"</i>."

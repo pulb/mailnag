@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-30 17:44+0200\n"
-"PO-Revision-Date: 2014-05-30 16:51+0000\n"
-"Last-Translator: Patrick Ulbrich <Unknown>\n"
+"PO-Revision-Date: 2014-06-19 13:02+0000\n"
+"Last-Translator: Tobias Bannert <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
-"X-Generator: Launchpad (build 17031)\n"
+"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
@@ -114,7 +114,7 @@ msgstr "Eine Benachrichtigung pro neue E-Mail"
 
 #: Mailnag/plugins/libnotifyplugin.py:157
 msgid "Maximum number of visible mails:"
-msgstr "Maximale Anzahl der neuen E-Mails:"
+msgstr "Maximale Anzahl sichtbarer neuer E-Mails:"
 
 #: Mailnag/plugins/libnotifyplugin.py:244
 #: Mailnag/plugins/libnotifyplugin.py:246
@@ -248,68 +248,3 @@ msgstr "Plugin bearbeiten"
 #: data/plugin_dialog.ui.h:1
 msgid "Plugin Configuration"
 msgstr "Plugin-Konfiguration"
-
-#~ msgid "Events"
-#~ msgstr "Ereignisse"
-
-#~ msgid "About"
-#~ msgstr "Über"
-
-#~ msgid "Check interval:"
-#~ msgstr "Prüfintervall:"
-
-#~ msgid "Enable spamfilter"
-#~ msgstr "Spamfilter aktivieren"
-
-#~ msgid "Start Mailnag automatically"
-#~ msgstr "Mailnag automatisch starten"
-
-#~ msgid "Spamfilter"
-#~ msgstr "Spamfilter"
-
-#~ msgid "minutes"
-#~ msgstr "Minuten"
-
-#~ msgid "Summary"
-#~ msgstr "Zusammenfassung"
-
-#~ msgid "Single"
-#~ msgstr "Einzeln"
-
-#~ msgid "Play sound on new mails"
-#~ msgstr "Bei neuen E-Mails einen Klang abspielen"
-
-#~ msgid ""
-#~ "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
-#~ "for GNOME 3\n"
-#~ "Copyright (c) 2011, 2012 Patrick Ulbrich \n"
-#~ "and contributors."
-#~ msgstr ""
-#~ "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Ein E-Mail-"
-#~ "Benachrichtiger für GNOME 3\n"
-#~ "Urheberrecht (c) 2011, 2012 Patrick Ulbrich \n"
-#~ "und Mitwirkende."
-
-#~ msgid ""
-#~ "The following script will be executed on every single mail check.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Das folgende Skript wird bei jeder E-Mail-Prüfung ausgeführt.\n"
-#~ "Mailnag übergibt die Gesamtanzahl der neuen E-Mails an dieses Skript,\n"
-#~ "gefolgt von <i>»&lt;Absender&gt; &lt;Betreff&gt;«</i>-Paaren."
-
-#~ msgid ""
-#~ "The following script will be executed whenever new mails arrive.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Dieses Skript wird immer dann ausgeführt, wenn neue E-Mails eintreffen.\n"
-#~ "Mailnag übergibt die Gesamtanzahl der neuen E-Mails an dieses Skript,\n"
-#~ "gefolgt von <i>»&lt;Absender&gt; &lt;Betreff&gt;«</i>-Paaren."
-
-#~ msgid "<b>On mail arrival</b>"
-#~ msgstr "<b>Bei E-Mail-Ankunft</b>"
-
-#~ msgid "<b>On mail check</b>"
-#~ msgstr "<b>Bei E-Mail-Prüfung</b>"

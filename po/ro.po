@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
-"X-Generator: Launchpad (build 17031)\n"
+"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
@@ -238,51 +238,3 @@ msgstr ""
 #: data/plugin_dialog.ui.h:1
 msgid "Plugin Configuration"
 msgstr ""
-
-#~ msgid "Events"
-#~ msgstr "Evenimente"
-
-#~ msgid "About"
-#~ msgstr "Despre"
-
-#~ msgid "<b>On mail arrival</b>"
-#~ msgstr "<b>La primirea de mesaje noi</b>"
-
-#~ msgid "Check interval:"
-#~ msgstr "Interval verificare:"
-
-#~ msgid "Enable spamfilter"
-#~ msgstr "Activează filtrul de spam"
-
-#~ msgid "<b>On mail check</b>"
-#~ msgstr "<b>La verificarea de mesaje noi</b>"
-
-#~ msgid "Play sound on new mails"
-#~ msgstr "Sunet la primirea de mesaje noi"
-
-#~ msgid "minutes"
-#~ msgstr "minute"
-
-#~ msgid "Start Mailnag automatically"
-#~ msgstr "Pornește Mailnag automat"
-
-#~ msgid "Spamfilter"
-#~ msgstr "Filtru de spam"
-
-#~ msgid ""
-#~ "The following script will be executed whenever new mails arrive.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Urmatorul script va fi executat cand primești mesaje noi.\n"
-#~ "Mailnag trimite acestui script numarul total de mesaje noi,\n"
-#~ "urmat de <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-
-#~ msgid ""
-#~ "The following script will be executed on every single mail check.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Scriptul urmator va fi executat la fiecare verificare de mesaje noi.\n"
-#~ "Mailnag trimite acestui script numarul total de mesaje noi,\n"
-#~ "urmat de <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."

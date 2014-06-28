@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
-"X-Generator: Launchpad (build 17031)\n"
+"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
@@ -238,27 +238,3 @@ msgstr ""
 #: data/plugin_dialog.ui.h:1
 msgid "Plugin Configuration"
 msgstr ""
-
-#~ msgid "Enable spamfilter"
-#~ msgstr "Bật bộ lọc thư rác"
-
-#~ msgid "Events"
-#~ msgstr "Sự kiện"
-
-#~ msgid "About"
-#~ msgstr "Giới thiệu"
-
-#~ msgid "Check interval:"
-#~ msgstr "Thời gian kiểm tra thư:"
-
-#~ msgid "minutes"
-#~ msgstr "phút"
-
-#~ msgid "Start Mailnag automatically"
-#~ msgstr "Tự động chạy Mailnag"
-
-#~ msgid "Spamfilter"
-#~ msgstr "Bộ lọc thư rác"
-
-#~ msgid "Play sound on new mails"
-#~ msgstr "Phát âm thanh khi có thư mới"

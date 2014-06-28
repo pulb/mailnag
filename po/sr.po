@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
-"X-Generator: Launchpad (build 17031)\n"
+"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
@@ -238,68 +238,3 @@ msgstr ""
 #: data/plugin_dialog.ui.h:1
 msgid "Plugin Configuration"
 msgstr ""
-
-#~ msgid "Events"
-#~ msgstr "Догађаји"
-
-#~ msgid "About"
-#~ msgstr "О програму"
-
-#~ msgid "<b>On mail arrival</b>"
-#~ msgstr "<b>Приликом пристизања поште</b>"
-
-#~ msgid "Check interval:"
-#~ msgstr "Интервал провере:"
-
-#~ msgid "Enable spamfilter"
-#~ msgstr "Укључи филтер спама"
-
-#~ msgid "<b>On mail check</b>"
-#~ msgstr "<b>Приликом провере поште</b>"
-
-#~ msgid "Play sound on new mails"
-#~ msgstr "Звучно обавести када пристигне нова пошта"
-
-#~ msgid "minutes"
-#~ msgstr "минута"
-
-#~ msgid "Start Mailnag automatically"
-#~ msgstr "Покрени Поштарка аутоматски"
-
-#~ msgid "Spamfilter"
-#~ msgstr "Филтер спама"
-
-#~ msgid ""
-#~ "The following script will be executed on every single mail check.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Следећа скрипта ће бити извршена при сваком засебном проверавању\n"
-#~ "поште. Поштарко скрипти прослеђује укупан број нових порука,\n"
-#~ "за којим следи пар <i>\"&lt;пошиљалац&gt; &lt;тема&gt;\"</i>."
-
-#~ msgid ""
-#~ "The following script will be executed whenever new mails arrive.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Следећа скрипта ће бити извршена при сваком пристизању нове\n"
-#~ "поште. Поштарко скрипти прослеђује укупан број нових порука,\n"
-#~ "за којим следи пар <i>\"&lt;пошиљалац&gt; &lt;тема&gt;\"</i>."
-
-#~ msgid "Summary"
-#~ msgstr "Сажетак"
-
-#~ msgid "Single"
-#~ msgstr "Једноструко"
-
-#~ msgid ""
-#~ "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - A mail notifier "
-#~ "for GNOME 3\n"
-#~ "Copyright (c) 2011, 2012 Patrick Ulbrich \n"
-#~ "and contributors."
-#~ msgstr ""
-#~ "<a href=\"https://github.com/pulb/mailnag\">Поштанаг</a> — Обавештавач поште "
-#~ "за Гном 3\n"
-#~ "Ауторска права (c) 2011, 2012 Патрик Улбрих \n"
-#~ "и сарадници."

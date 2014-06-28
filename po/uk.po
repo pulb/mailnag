@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-30 16:56+0000\n"
-"X-Generator: Launchpad (build 17031)\n"
+"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
@@ -237,57 +237,3 @@ msgstr ""
 #: data/plugin_dialog.ui.h:1
 msgid "Plugin Configuration"
 msgstr ""
-
-#~ msgid "<b>On mail arrival</b>"
-#~ msgstr "<b>При появі нової пошти</b>"
-
-#~ msgid "<b>On mail check</b>"
-#~ msgstr "<b>При перевірці скриньки</b>"
-
-#~ msgid "About"
-#~ msgstr "Про Mailnag"
-
-#~ msgid "Check interval:"
-#~ msgstr "Інтервал перевірки:"
-
-#~ msgid "Enable spamfilter"
-#~ msgstr "Задіяти спам-фільтр"
-
-#~ msgid "Events"
-#~ msgstr "Запуск команд"
-
-#~ msgid "Play sound on new mails"
-#~ msgstr "Відтворювати звуковий сигнал при отриманні пошти"
-
-#~ msgid "Single"
-#~ msgstr "По одному"
-
-#~ msgid "Spamfilter"
-#~ msgstr "Фільтр"
-
-#~ msgid "Start Mailnag automatically"
-#~ msgstr "Запускати сповіщувач автоматично"
-
-#~ msgid "Summary"
-#~ msgstr "Підсумок"
-
-#~ msgid ""
-#~ "The following script will be executed on every single mail check.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Скрипт запускатиметься під час кожної перевірки скриньки.\n"
-#~ "«Mailnag» передаватиме йому загальну кількість повідомлень\n"
-#~ "та пари «<i>&lt;адресант&gt; &lt;тема&gt;</i>»."
-
-#~ msgid ""
-#~ "The following script will be executed whenever new mails arrive.\n"
-#~ "Mailnag passes the total count of new mails to this script,\n"
-#~ "followed by <i>\"&lt;sender&gt; &lt;subject&gt;\"</i> pairs."
-#~ msgstr ""
-#~ "Скрипт запускатиметься щоразу при появі нової пошти.\n"
-#~ "«Mailnag» передаватиме йому загальну кількість повідомлень\n"
-#~ "та пари «<i>&lt;адресант&gt; &lt;тема&gt;</i>»."
-
-#~ msgid "minutes"
-#~ msgstr "хв"
