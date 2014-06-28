@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.18.3 -->
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
+  <requires lib="gtk+" version="3.6"/>
+  <object class="GtkListStore" id="liststore_accounts">
+    <columns>
+      <!-- column-name account_obj -->
+      <column type="PyObject"/>
+      <!-- column-name account_enabled -->
+      <column type="gboolean"/>
+      <!-- column-name account_name -->
+      <column type="gchararray"/>
+    </columns>
+    <signal name="row-deleted" handler="liststore_accounts_row_deleted" swapped="no"/>
+    <signal name="row-inserted" handler="liststore_accounts_row_inserted" swapped="no"/>
+  </object>
+  <object class="GtkListStore" id="liststore_plugins">
+    <columns>
+      <!-- column-name plugin_obj -->
+      <column type="PyObject"/>
+      <!-- column-name plugin_enabled -->
+      <column type="gboolean"/>
+      <!-- column-name plugin_name -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkWindow" id="config_window">
     <property name="width_request">400</property>
     <property name="height_request">380</property>
@@ -22,9 +45,6 @@
             <property name="margin_top">12</property>
             <property name="margin_bottom">12</property>
             <property name="homogeneous">True</property>
-            <style>
-              <class name="linked"/>
-            </style>
             <child>
               <object class="GtkToggleButton" id="btn_page1">
                 <property name="label" translatable="yes">General</property>
@@ -67,6 +87,9 @@
                 <property name="position">2</property>
               </packing>
             </child>
+            <style>
+              <class name="linked"/>
+            </style>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -198,9 +221,6 @@ and contributors.</property>
                     <property name="can_focus">False</property>
                     <property name="toolbar_style">icons</property>
                     <property name="icon_size">1</property>
-                    <style>
-                      <class name="inline-toolbar"/>
-                    </style>
                     <child>
                       <object class="GtkToolButton" id="btn_add_account">
                         <property name="visible">True</property>
@@ -240,6 +260,9 @@ and contributors.</property>
                         <property name="homogeneous">True</property>
                       </packing>
                     </child>
+                    <style>
+                      <class name="inline-toolbar"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -294,9 +317,6 @@ and contributors.</property>
                     <property name="can_focus">False</property>
                     <property name="toolbar_style">icons</property>
                     <property name="icon_size">1</property>
-                    <style>
-                      <class name="inline-toolbar"/>
-                    </style>
                     <child>
                       <object class="GtkToolButton" id="btn_edit_plugin">
                         <property name="visible">True</property>
@@ -310,6 +330,9 @@ and contributors.</property>
                         <property name="homogeneous">True</property>
                       </packing>
                     </child>
+                    <style>
+                      <class name="inline-toolbar"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -334,27 +357,5 @@ and contributors.</property>
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkListStore" id="liststore_accounts">
-    <columns>
-      <!-- column-name account_obj -->
-      <column type="PyObject"/>
-      <!-- column-name account_enabled -->
-      <column type="gboolean"/>
-      <!-- column-name account_name -->
-      <column type="gchararray"/>
-    </columns>
-    <signal name="row-deleted" handler="liststore_accounts_row_deleted" swapped="no"/>
-    <signal name="row-inserted" handler="liststore_accounts_row_inserted" swapped="no"/>
-  </object>
-  <object class="GtkListStore" id="liststore_plugins">
-    <columns>
-      <!-- column-name plugin_obj -->
-      <column type="PyObject"/>
-      <!-- column-name plugin_enabled -->
-      <column type="gboolean"/>
-      <!-- column-name plugin_name -->
-      <column type="gchararray"/>
-    </columns>
   </object>
 </interface>
