@@ -1,3 +1,25 @@
+Version 1.0.0 (2014-06-28):
+===========================
+* Mailnag is desktop-independent now (was GNOME3-only)
+* Added plugin system to allow easy extensibility
+* Cut down the core daemon functionality to mail checking only and 
+  moved everything else to plugins
+* Released GNOME 3/Ubuntu Unity extension/plugin for a tighter desktop integration
+* Added account assistants for popular email providers like Gmail
+* Added DBUS service (for remote control/integration in other apps)
+* Redesigned and simplified config UI
+* Added propper logging (log messages are sent to stdout and the system log now)
+* Heavy code cleanup & refactoring
+* Reduced disk write access, other performance improvements
+* Fixes for various major and minor bugs
+* New icon by Reda Lazri
+
+IMPORTANT NOTES: 
+The fileformat of the config file has changed. 
+It's highly recommended to rename/backup your 
+current config file (~/.config/mailnag/mailnag.cfg).
+
+
 Version 0.5.2 (2013-01-06):
 ===========================
 * Fixed path of the autstart file
