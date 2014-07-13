@@ -1,5 +1,5 @@
 Source: mailnag
-Section: gnome
+Section: mail
 Priority: optional
 Maintainer: Patrick Ulbrich <zulu99@gmx.net>
 Build-Depends: debhelper (>= 9), gettext, python (>= 2.7)
