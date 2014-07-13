@@ -2,8 +2,8 @@
 # Contributor: rasmus <rasmus . pank at gmail . com>
 
 pkgname=mailnag
-pkgver=0.9.91
-pkgrel=2
+pkgver=1.0.0
+pkgrel=1
 pkgdesc="An extendable mail notification daemon"
 arch=('any')
 url="https://github.com/pulb/mailnag"
@@ -14,8 +14,8 @@ depends=('python2' 'python2-gobject' 'python2-httplib2'
         'gtk3' 'gdk-pixbuf2')
 optdepends=('mailnag-gnome-shell: for a tighter GNOME 3 integration')
 makedepends=('gettext')
-source=('https://github.com/pulb/mailnag/archive/0.9.91-testing.tar.gz')
-md5sums=('0bcc4b28d1554f05b3f52718d208fc79')
+source=('https://github.com/pulb/mailnag/archive/v1.0.0.tar.gz')
+md5sums=('f3c0df790a2f5e6b615ef804ee0e5a91')
 install='mailnag.install'
 
 package() {
