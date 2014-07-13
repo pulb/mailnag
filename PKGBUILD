@@ -3,7 +3,7 @@
 
 pkgname=mailnag
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="An extendable mail notification daemon"
 arch=('any')
 url="https://github.com/pulb/mailnag"
@@ -19,7 +19,7 @@ md5sums=('f3c0df790a2f5e6b615ef804ee0e5a91')
 install='mailnag.install'
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}-testing"
+  cd "${srcdir}/${pkgname}-${pkgver}"
   python2 setup.py install --root=${pkgdir}
   install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
