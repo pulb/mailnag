@@ -2,43 +2,31 @@ Source: mailnag
 Section: gnome
 Priority: optional
 Maintainer: Patrick Ulbrich <zulu99@gmx.net>
-Build-Depends: debhelper (>= 8.0.0),
-               gettext,
-               gir1.2-glib-2.0 (>= 1.32.0),
-               gir1.2-gnomekeyring-1.0 (>= 3.2.2),
-               gir1.2-gst-plugins-base-1.0 (>= 1.2.0),
-               gir1.2-gtk-3.0 (>= 3.6.4),
-               gir1.2-notify-0.7 (>= 0.7.6),
-               libgtk-3-bin (>= 3.6.4),
-               python (>= 2.7.3),
-               python-dbus (>= 1.0.0),
-               python-gobject (>= 3.2.0),
-               python-httplib2 (>= 0.7.2),
-               python-xdg
+Build-Depends: debhelper (>= 9), gettext, python (>= 2.7)
 X-Python-Version: >= 2.7
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: https://github.com/pulb/mailnag
 Vcs-Git: git://github.com/pulb/mailnag.git
 Vcs-Browser: https://github.com/pulb/mailnag.git
 
 Package: mailnag
 Architecture: all
-Depends: gir1.2-glib-2.0 (>= 1.32.0),
-         gir1.2-gnomekeyring-1.0 (>= 3.2.2),
-         gir1.2-gst-plugins-base-1.0 (>= 1.2.0),
-         gir1.2-gtk-3.0 (>= 3.6.4),
-         gir1.2-notify-0.7 (>= 0.7.6),
-         libgtk-3-bin (>= 3.6.4),
-         python (>= 2.7.3),
-         python-dbus (>= 1.0.0),
-         python-gobject (>= 3.2.0),
-         python-httplib2 (>= 0.7.2),
-         python-xdg,
-         ${misc:Depends},
-         ${python:Depends}
-Description: An extendable mail notification daemon
+Depends:
+ gir1.2-glib-2.0 (>= 1.32.0),
+ gir1.2-gnomekeyring-1.0 (>= 3.2.2),
+ gir1.2-gst-plugins-base-1.0 (>= 1.2.0),
+ gir1.2-gtk-3.0 (>= 3.6.4),
+ gir1.2-notify-0.7 (>= 0.7.6),
+ libgtk-3-bin (>= 3.6.4),
+ python-dbus (>= 1.0.0),
+ python-gobject (>= 3.2.0),
+ python-httplib2 (>= 0.7.2),
+ python-xdg,
+ ${misc:Depends},
+ ${python:Depends}
+Description: extendable mail notification daemon
  Mailnag is a daemon program that checks POP3 and IMAP servers for new mail.
- On mail arrival it performs various actions provided by plugins.
- Mailnag comes with a set of desktop-independent default plugins for
- visual/sound notifications, script execution etc. and can be extended
- with additional plugins easily. 
+ On mail arrival it performs various actions provided by plugins. Mailnag
+ comes with a set of desktop-independent default plugins for visual/sound
+ notifications, script execution etc. and can be extended with additional
+ plugins easily.

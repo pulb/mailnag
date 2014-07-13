@@ -1,2 +1,3 @@
 version=3
-https://launchpad.net/mailnag/ .*mailnag-(.+)\.tar\.gz
+opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/mailnag-$1\.tar\.gz/ \
+ https://github.com/pulb/mailnag/releases .*/v?(\d\S*)\.tar\.gz

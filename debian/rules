@@ -5,7 +5,6 @@
 
 override_dh_clean:
 	rm -rf $(CURDIR)/build
-	python setup.py clean
 	find $(CURDIR) -name *.pyc -delete
 	dh_clean
 
