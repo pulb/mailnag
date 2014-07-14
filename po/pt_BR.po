@@ -218,7 +218,7 @@ msgstr "Plugins"
 
 #: data/config_window.ui.h:5
 msgid ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extendable mail "
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extensible mail "
 "notification daemon.\n"
 "Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
 "and contributors."

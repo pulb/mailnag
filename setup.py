@@ -104,7 +104,7 @@ class Uninstall(Command):
 
 setup(name=PACKAGE_NAME,
 	version=APP_VERSION,
-	description='An extendable mail notification daemon',
+	description='An extensible mail notification daemon',
 	author='Patrick Ulbrich',
 	author_email='zulu99@gmx.net',
 	url='https://github.com/pulb/mailnag',
