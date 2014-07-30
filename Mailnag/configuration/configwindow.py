@@ -283,7 +283,7 @@ class ConfigWindow:
 		"NoDisplay=false\n" + \
 		"X-GNOME-Autostart-enabled=true\n" + \
 		"Name=Mailnag\n" + \
-		"Comment=An extendable mail notification daemon\n"
+		"Comment=An extensible mail notification daemon\n"
 
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
 		if not os.path.exists(autostart_folder):
