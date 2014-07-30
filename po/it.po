@@ -1,21 +1,150 @@
-# Italian translation for mailnag
-# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
-# This file is distributed under the same license as the mailnag package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-05-30 17:44+0200\n"
-"PO-Revision-Date: 2012-12-21 17:22+0000\n"
-"Last-Translator: Patrick Ulbrich <Unknown>\n"
+"PO-Revision-Date: Mon Jul 14 2014 15:22:37 GMT+0200\n"
+"Last-Translator: Man from Mars\n"
 "Language-Team: Italian <it@li.org>\n"
+"Language: Italian\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Loco-Source-Locale: it_IT\n"
 "X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
-"X-Generator: Launchpad (build 17077)\n"
+"X-Generator: Loco - https://localise.biz/\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-Loco-Target-Locale: it_IT"
+
+#: Mailnag/configuration/accountdialog.py:141
+msgid "Other (IMAP)"
+msgstr "Altro (IMAP)"
+
+#: Mailnag/configuration/accountdialog.py:142
+msgid "Other (POP3)"
+msgstr "Altro (POP3)\n"
+
+#: Mailnag/plugins/userscriptplugin.py:62
+msgid "User Script"
+msgstr "Script utente"
+
+#: Mailnag/plugins/userscriptplugin.py:63
+msgid "Runs an user defined script on mail arrival."
+msgstr "Esegue uno script definito dall'utente all'avvio."
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "sender"
+msgstr "Mittente"
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "subject"
+msgstr "Oggetto"
+
+#: Mailnag/plugins/userscriptplugin.py:84
+#, python-format
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by %s pairs."
+msgstr ""
+"Lo script seguente sarà eseguito all'arrivo di nuova posta.\n"
+"Mailnag passa il numero di nuove mail allo script,\n"
+"seguito da %s coppie."
+
+#: Mailnag/plugins/soundplugin.py:64
+msgid "Sound Notifications"
+msgstr "Notifiche audio"
+
+#: Mailnag/plugins/soundplugin.py:65
+msgid "Plays a sound when new mails arrive."
+msgstr "Riproduci un suono all'arrivo di nuova posta."
+
+#: Mailnag/plugins/libnotifyplugin.py:115
+msgid "LibNotify Notifications"
+msgstr "Notifiche LibNotify"
+
+#: Mailnag/plugins/libnotifyplugin.py:116
+msgid "Shows a popup when new mails arrive."
+msgstr "Mostra un popup all'arrivo di nuova posta."
+
+#: Mailnag/plugins/libnotifyplugin.py:144
+msgid "Count of new mails"
+msgstr "Numero di nuove mail"
+
+#: Mailnag/plugins/libnotifyplugin.py:147
+msgid "Summary of new mails"
+msgstr "Riassunto delle nuove mail"
+
+#: Mailnag/plugins/libnotifyplugin.py:150
+msgid "One notification per new mail"
+msgstr "Una notifica ogni nuova mail"
+
+#: Mailnag/plugins/libnotifyplugin.py:157
+msgid "Maximum number of visible mails:"
+msgstr "Massimo numero di mail visibili:"
+
+#: Mailnag/plugins/dbusplugin.py:83
+msgid "DBus Service"
+msgstr "Servizio DBus"
+
+#: Mailnag/plugins/dbusplugin.py:84
+msgid "Exposes Mailnag's functionality via a DBus service."
+msgstr "Espone le funzioni di Mailnag tramite un servizio DBus."
+
+#: Mailnag/plugins/spamfilterplugin.py:69
+msgid "Spam Filter"
+msgstr "Filtro spam"
+
+#: Mailnag/plugins/spamfilterplugin.py:70
+msgid "Filters out unwanted mails."
+msgstr "Filtra le mail indesiderate."
+
+#: Mailnag/plugins/spamfilterplugin.py:90
+msgid ""
+"Mailnag will ignore mails containing at least one of \n"
+"the following words in subject or sender."
+msgstr ""
+"Mailnag ignorerà le mail contenenti almeno una delle\n"
+"\n"
+"seguenti parole nell'oggetto o nel mittente.\n"
+
+#: data/config_window.ui.h:4
+msgid "Plugins"
+msgstr "Plugin"
+
+#: data/config_window.ui.h:5
+msgid ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extendable mail "
+"notification daemon.\n"
+"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
+"and contributors."
+msgstr ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Demone espandibile "
+"di notifica mail.\n"
+"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
+"and contributors."
+
+#: data/config_window.ui.h:8
+msgid "Add Account"
+msgstr "Aggiungi account"
+
+#: data/config_window.ui.h:9
+msgid "Remove Account"
+msgstr "Rimuovi account"
+
+#: data/config_window.ui.h:10
+msgid "Edit Account"
+msgstr "Modifica account"
+
+#: data/config_window.ui.h:11
+msgid "Edit Plugin"
+msgstr "Modifica plugin"
+
+#: data/plugin_dialog.ui.h:1
+msgid "Plugin Configuration"
+msgstr "Configurazione plugin"
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
@@ -29,14 +158,6 @@ msgstr "Nessun oggetto"
 #: Mailnag/configuration/accountdialog.py:76
 msgid "optional"
 msgstr "opzionale"
-
-#: Mailnag/configuration/accountdialog.py:141
-msgid "Other (IMAP)"
-msgstr ""
-
-#: Mailnag/configuration/accountdialog.py:142
-msgid "Other (POP3)"
-msgstr ""
 
 #: Mailnag/configuration/configwindow.py:99
 #: Mailnag/configuration/configwindow.py:124
@@ -52,75 +173,19 @@ msgstr "Nome"
 msgid "Delete this account:"
 msgstr "Eliminare questo account:"
 
-#: Mailnag/plugins/userscriptplugin.py:62
-msgid "User Script"
-msgstr ""
-
-#: Mailnag/plugins/userscriptplugin.py:63
-msgid "Runs an user defined script on mail arrival."
-msgstr ""
-
-#: Mailnag/plugins/userscriptplugin.py:83
-msgid "sender"
-msgstr ""
-
-#: Mailnag/plugins/userscriptplugin.py:83
-msgid "subject"
-msgstr ""
-
-#: Mailnag/plugins/userscriptplugin.py:84
-#, python-format
-msgid ""
-"The following script will be executed whenever new mails arrive.\n"
-"Mailnag passes the total count of new mails to this script,\n"
-"followed by %s pairs."
-msgstr ""
-
-#: Mailnag/plugins/soundplugin.py:64
-msgid "Sound Notifications"
-msgstr ""
-
-#: Mailnag/plugins/soundplugin.py:65
-msgid "Plays a sound when new mails arrive."
-msgstr ""
-
-#: Mailnag/plugins/libnotifyplugin.py:115
-msgid "LibNotify Notifications"
-msgstr ""
-
-#: Mailnag/plugins/libnotifyplugin.py:116
-msgid "Shows a popup when new mails arrive."
-msgstr ""
-
 #: Mailnag/plugins/libnotifyplugin.py:136
 msgid "Notification mode:"
 msgstr "Modalità di notifica:"
 
-#: Mailnag/plugins/libnotifyplugin.py:144
-msgid "Count of new mails"
-msgstr ""
-
-#: Mailnag/plugins/libnotifyplugin.py:147
-msgid "Summary of new mails"
-msgstr ""
-
-#: Mailnag/plugins/libnotifyplugin.py:150
-msgid "One notification per new mail"
-msgstr ""
-
-#: Mailnag/plugins/libnotifyplugin.py:157
-msgid "Maximum number of visible mails:"
-msgstr ""
-
 #: Mailnag/plugins/libnotifyplugin.py:244
 #: Mailnag/plugins/libnotifyplugin.py:246
-#, python-brace-format
+#, brace-format
 msgid "(and {0} more)"
 msgstr "(e altri {0})"
 
 #: Mailnag/plugins/libnotifyplugin.py:249
 #: Mailnag/plugins/libnotifyplugin.py:277
-#, python-brace-format
+#, brace-format
 msgid "You have {0} new mails."
 msgstr "Hai {0} nuovi messaggi email."
 
@@ -132,28 +197,6 @@ msgstr "Hai un nuovo messaggio email."
 #: Mailnag/plugins/libnotifyplugin.py:266
 msgid "Mark as read"
 msgstr "Contrassegna come \\\"già letto\\\""
-
-#: Mailnag/plugins/dbusplugin.py:83
-msgid "DBus Service"
-msgstr ""
-
-#: Mailnag/plugins/dbusplugin.py:84
-msgid "Exposes Mailnag's functionality via a DBus service."
-msgstr ""
-
-#: Mailnag/plugins/spamfilterplugin.py:69
-msgid "Spam Filter"
-msgstr ""
-
-#: Mailnag/plugins/spamfilterplugin.py:70
-msgid "Filters out unwanted mails."
-msgstr ""
-
-#: Mailnag/plugins/spamfilterplugin.py:90
-msgid ""
-"Mailnag will ignore mails containing at least one of \n"
-"the following words in subject or sender."
-msgstr ""
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
@@ -206,35 +249,3 @@ msgstr "Impostazioni generali"
 #: data/config_window.ui.h:3
 msgid "Accounts"
 msgstr "Account"
-
-#: data/config_window.ui.h:4
-msgid "Plugins"
-msgstr ""
-
-#: data/config_window.ui.h:5
-msgid ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extendable mail "
-"notification daemon.\n"
-"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
-"and contributors."
-msgstr ""
-
-#: data/config_window.ui.h:8
-msgid "Add Account"
-msgstr ""
-
-#: data/config_window.ui.h:9
-msgid "Remove Account"
-msgstr ""
-
-#: data/config_window.ui.h:10
-msgid "Edit Account"
-msgstr ""
-
-#: data/config_window.ui.h:11
-msgid "Edit Plugin"
-msgstr ""
-
-#: data/plugin_dialog.ui.h:1
-msgid "Plugin Configuration"
-msgstr ""
