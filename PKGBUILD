@@ -4,7 +4,7 @@
 pkgname=mailnag
 pkgver=1.0.0
 pkgrel=2
-pkgdesc="An extendable mail notification daemon"
+pkgdesc="An extensible mail notification daemon"
 arch=('any')
 url="https://github.com/pulb/mailnag"
 license=('GPL')
