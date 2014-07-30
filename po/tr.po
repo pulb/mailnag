@@ -1,0 +1,249 @@
+# Turkish translation for mailnag
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-30 17:44+0200\n"
+"PO-Revision-Date: 2014-07-23 13:30+0200\n"
+"Last-Translator: Aydin Yakar <yakar@live.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Mailnag/common/accounts.py:47
+msgid "Unnamed"
+msgstr "Adsız"
+
+#: Mailnag/daemon/mails.py:170
+msgid "No subject"
+msgstr "Konusuz"
+
+#: Mailnag/configuration/accountdialog.py:75
+#: Mailnag/configuration/accountdialog.py:76
+msgid "optional"
+msgstr "opsiyonel"
+
+#: Mailnag/configuration/accountdialog.py:141
+msgid "Other (IMAP)"
+msgstr "Diğer (IMAP)"
+
+#: Mailnag/configuration/accountdialog.py:142
+msgid "Other (POP3)"
+msgstr "Diğer (POP3)"
+
+#: Mailnag/configuration/configwindow.py:99
+#: Mailnag/configuration/configwindow.py:124
+msgid "Enabled"
+msgstr "Etkin"
+
+#: Mailnag/configuration/configwindow.py:105
+#: Mailnag/configuration/configwindow.py:131
+msgid "Name"
+msgstr "Adı"
+
+#: Mailnag/configuration/configwindow.py:342
+msgid "Delete this account:"
+msgstr "Bu hesabı sil:"
+
+#: Mailnag/plugins/userscriptplugin.py:62
+msgid "User Script"
+msgstr "Kullanıcı Script"
+
+#: Mailnag/plugins/userscriptplugin.py:63
+msgid "Runs an user defined script on mail arrival."
+msgstr "Mail geldiğinde kullanıcı tanımlı scripti çalıştır."
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "sender"
+msgstr "gönderen"
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "subject"
+msgstr "konu"
+
+#: Mailnag/plugins/userscriptplugin.py:84
+#, python-format
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by %s pairs."
+msgstr ""
+"Belirtilen script yeni mail alındığında çalıştırılacaktır.\n"
+"Mailnag bu script %s ile eşleşenler için\n"
+"toplam mail sayısını tutmaz."
+
+#: Mailnag/plugins/soundplugin.py:64
+msgid "Sound Notifications"
+msgstr "Sesli Uyarı"
+
+#: Mailnag/plugins/soundplugin.py:65
+msgid "Plays a sound when new mails arrive."
+msgstr "Yeni mail geldiğinde ses çal."
+
+#: Mailnag/plugins/libnotifyplugin.py:115
+msgid "LibNotify Notifications"
+msgstr "LibNotify Uyarıları"
+
+#: Mailnag/plugins/libnotifyplugin.py:116
+msgid "Shows a popup when new mails arrive."
+msgstr "Yeni mail geldiğinde pencerede göster."
+
+#: Mailnag/plugins/libnotifyplugin.py:136
+msgid "Notification mode:"
+msgstr "Uyarı kipi:"
+
+#: Mailnag/plugins/libnotifyplugin.py:144
+msgid "Count of new mails"
+msgstr "Yeni mail sayısı"
+
+#: Mailnag/plugins/libnotifyplugin.py:147
+msgid "Summary of new mails"
+msgstr "Yeni mail özeti"
+
+#: Mailnag/plugins/libnotifyplugin.py:150
+msgid "One notification per new mail"
+msgstr "Her yeni mail için bir uyarı"
+
+#: Mailnag/plugins/libnotifyplugin.py:157
+msgid "Maximum number of visible mails:"
+msgstr "Görüntülenecek en fazla mail sayısı"
+
+#: Mailnag/plugins/libnotifyplugin.py:244
+#: Mailnag/plugins/libnotifyplugin.py:246
+#, python-brace-format
+msgid "(and {0} more)"
+msgstr "ve {0} fazlası"
+
+#: Mailnag/plugins/libnotifyplugin.py:249
+#: Mailnag/plugins/libnotifyplugin.py:277
+#, python-brace-format
+msgid "You have {0} new mails."
+msgstr "{0} yeni mailiniz var."
+
+#: Mailnag/plugins/libnotifyplugin.py:251
+#: Mailnag/plugins/libnotifyplugin.py:279
+msgid "You have a new mail."
+msgstr "Yeni mailiniz var."
+
+#: Mailnag/plugins/libnotifyplugin.py:266
+msgid "Mark as read"
+msgstr "Okundu olarak işaretle"
+
+#: Mailnag/plugins/dbusplugin.py:83
+msgid "DBus Service"
+msgstr "DBus Servisi"
+
+#: Mailnag/plugins/dbusplugin.py:84
+msgid "Exposes Mailnag's functionality via a DBus service."
+msgstr "DBus servisi ile Mailnag işlevselliğini ortaya koyar."
+
+#: Mailnag/plugins/spamfilterplugin.py:69
+msgid "Spam Filter"
+msgstr "Spam filtresi"
+
+#: Mailnag/plugins/spamfilterplugin.py:70
+msgid "Filters out unwanted mails."
+msgstr "İstenmeyen postaları filtreler."
+
+#: Mailnag/plugins/spamfilterplugin.py:90
+msgid ""
+"Mailnag will ignore mails containing at least one of \n"
+"the following words in subject or sender."
+msgstr ""
+"Mailnag belirtilen kelimelerin konu veya gönderende\n"
+"geçmesi durumunda mailleri görmezden gelecektir."
+
+#: data/account_dialog.ui.h:1
+msgid "Mail Account"
+msgstr "Mail Hesabı"
+
+#: data/account_dialog.ui.h:2
+msgid "Enable Push-IMAP"
+msgstr "Push-IMAP Etkin"
+
+#: data/account_dialog.ui.h:3
+msgid "Enable SSL encryption"
+msgstr "SSL şifreleme Erkin"
+
+#: data/account_dialog.ui.h:4
+msgid "Accountname:"
+msgstr "Hesap adı:"
+
+#: data/account_dialog.ui.h:5
+msgid "Account type:"
+msgstr "Hesap türü:"
+
+#: data/account_dialog.ui.h:6
+msgid "User:"
+msgstr "Kullanıcı:"
+
+#: data/account_dialog.ui.h:7
+msgid "Password:"
+msgstr "Parola:"
+
+#: data/account_dialog.ui.h:8
+msgid "Server:"
+msgstr "Sunucu:"
+
+#: data/account_dialog.ui.h:9
+msgid "Port:"
+msgstr "Port:"
+
+#: data/account_dialog.ui.h:10
+msgid "Folders:"
+msgstr "Klasörler:"
+
+#: data/config_window.ui.h:1
+msgid "Mailnag Configuration"
+msgstr "Mailnag Ayarları"
+
+#: data/config_window.ui.h:2
+msgid "General"
+msgstr "Genel"
+
+#: data/config_window.ui.h:3
+msgid "Accounts"
+msgstr "Hesaplar"
+
+#: data/config_window.ui.h:4
+msgid "Plugins"
+msgstr "Eklentiler"
+
+#: data/config_window.ui.h:5
+msgid ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extendable mail "
+"notification daemon.\n"
+"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
+"and contributors."
+msgstr ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Genişletilebilir mail"
+"bilgilendirme servisi.\n"
+"Tüm hakları saklıdır (c) 2011 - 2014 Patrick Ulbrich\n"
+"ve katkı sağlayanlar."
+
+#: data/config_window.ui.h:8
+msgid "Add Account"
+msgstr "Hesap Ekle"
+
+#: data/config_window.ui.h:9
+msgid "Remove Account"
+msgstr "Hesabı Sil"
+
+#: data/config_window.ui.h:10
+msgid "Edit Account"
+msgstr "Hesabı Düzenle"
+
+#: data/config_window.ui.h:11
+msgid "Edit Plugin"
+msgstr "Eklentiyi Düzenle"
+
+#: data/plugin_dialog.ui.h:1
+msgid "Plugin Configuration"
+msgstr "Eklenti Ayarları"
