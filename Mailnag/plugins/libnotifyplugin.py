@@ -250,9 +250,9 @@ class LibNotifyPlugin(Plugin):
 				body += _("(and {0} more)").format(str(len(mails) - self._max_mails))
 
 		if len(mails) > 1: # multiple new emails
-			summary = _("You have {0} new mails.").format(str(len(mails)))
+			summary = _("{0} new mails").format(str(len(mails)))
 		else:
-			summary = _("You have a new mail.")
+			summary = _("New mail")
 
 		self._notifications['0'].update(summary, body, "mail-unread")
 		self._notifications['0'].show()
@@ -278,9 +278,9 @@ class LibNotifyPlugin(Plugin):
 			self._notifications['0'] = self._get_notification(" ", None, None) # empty string will emit a gtk warning
 		
 		if count > 1: # multiple new emails
-			summary = _("You have {0} new mails.").format(str(count))
+			summary = _("{0} new mails").format(str(count))
 		else:
-			summary = _("You have a new mail.")
+			summary = _("New mail")
 		
 		self._notifications['0'].update(summary, None, "mail-unread")
 		self._notifications['0'].show()
