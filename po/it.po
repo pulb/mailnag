@@ -2,21 +2,33 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-05-30 17:44+0200\n"
-"PO-Revision-Date: Mon Jul 14 2014 15:22:37 GMT+0200\n"
-"Last-Translator: Man from Mars\n"
+"POT-Creation-Date: 2014-07-30 21:32+0200\n"
+"PO-Revision-Date: 2014-08-03 13:52+0000\n"
+"Last-Translator: Pedro Beja <althaser@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
-"Language: Italian\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: UTF-8\n"
+"X-Launchpad-Export-Date: 2014-11-21 19:12+0000\n"
+"X-Generator: Launchpad (build 17252)\n"
+"Language: Italian\n"
 "X-Loco-Source-Locale: it_IT\n"
-"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
-"X-Generator: Loco - https://localise.biz/\n"
 "X-Loco-Parser: loco_parse_po\n"
-"X-Loco-Target-Locale: it_IT"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Loco-Target-Locale: it_IT\n"
+
+#: Mailnag/common/accounts.py:47
+msgid "Unnamed"
+msgstr "Senza nome"
+
+#: Mailnag/daemon/mails.py:170
+msgid "No subject"
+msgstr "Nessun oggetto"
+
+#: Mailnag/configuration/accountdialog.py:75
+#: Mailnag/configuration/accountdialog.py:76
+msgid "optional"
+msgstr "opzionale"
 
 #: Mailnag/configuration/accountdialog.py:141
 msgid "Other (IMAP)"
@@ -24,7 +36,21 @@ msgstr "Altro (IMAP)"
 
 #: Mailnag/configuration/accountdialog.py:142
 msgid "Other (POP3)"
-msgstr "Altro (POP3)\n"
+msgstr "Altro (POP3)"
+
+#: Mailnag/configuration/configwindow.py:107
+#: Mailnag/configuration/configwindow.py:132
+msgid "Enabled"
+msgstr "Attivo"
+
+#: Mailnag/configuration/configwindow.py:113
+#: Mailnag/configuration/configwindow.py:139
+msgid "Name"
+msgstr "Nome"
+
+#: Mailnag/configuration/configwindow.py:347
+msgid "Delete this account:"
+msgstr "Eliminare questo account:"
 
 #: Mailnag/plugins/userscriptplugin.py:62
 msgid "User Script"
@@ -69,6 +95,10 @@ msgstr "Notifiche LibNotify"
 msgid "Shows a popup when new mails arrive."
 msgstr "Mostra un popup all'arrivo di nuova posta."
 
+#: Mailnag/plugins/libnotifyplugin.py:136
+msgid "Notification mode:"
+msgstr "Modalità di notifica:"
+
 #: Mailnag/plugins/libnotifyplugin.py:144
 msgid "Count of new mails"
 msgstr "Numero di nuove mail"
@@ -81,9 +111,30 @@ msgstr "Riassunto delle nuove mail"
 msgid "One notification per new mail"
 msgstr "Una notifica ogni nuova mail"
 
-#: Mailnag/plugins/libnotifyplugin.py:157
+#: Mailnag/plugins/libnotifyplugin.py:159
 msgid "Maximum number of visible mails:"
 msgstr "Massimo numero di mail visibili:"
+
+#: Mailnag/plugins/libnotifyplugin.py:248
+#: Mailnag/plugins/libnotifyplugin.py:250
+#, python-brace-format
+msgid "(and {0} more)"
+msgstr "(e altri {0})"
+
+#: Mailnag/plugins/libnotifyplugin.py:253
+#: Mailnag/plugins/libnotifyplugin.py:281
+#, python-brace-format
+msgid "{0} new mails"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:255
+#: Mailnag/plugins/libnotifyplugin.py:283
+msgid "New mail"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:270
+msgid "Mark as read"
+msgstr "Contrassegna come \\\"già letto\\\""
 
 #: Mailnag/plugins/dbusplugin.py:83
 msgid "DBus Service"
@@ -106,97 +157,9 @@ msgid ""
 "Mailnag will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
-"Mailnag ignorerà le mail contenenti almeno una delle\n"
+"Mailnag ignorerà le mail contenenti almeno una delle \n"
 "\n"
-"seguenti parole nell'oggetto o nel mittente.\n"
-
-#: data/config_window.ui.h:4
-msgid "Plugins"
-msgstr "Plugin"
-
-#: data/config_window.ui.h:5
-msgid ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extendable mail "
-"notification daemon.\n"
-"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
-"and contributors."
-msgstr ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Demone espandibile "
-"di notifica mail.\n"
-"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
-"and contributors."
-
-#: data/config_window.ui.h:8
-msgid "Add Account"
-msgstr "Aggiungi account"
-
-#: data/config_window.ui.h:9
-msgid "Remove Account"
-msgstr "Rimuovi account"
-
-#: data/config_window.ui.h:10
-msgid "Edit Account"
-msgstr "Modifica account"
-
-#: data/config_window.ui.h:11
-msgid "Edit Plugin"
-msgstr "Modifica plugin"
-
-#: data/plugin_dialog.ui.h:1
-msgid "Plugin Configuration"
-msgstr "Configurazione plugin"
-
-#: Mailnag/common/accounts.py:47
-msgid "Unnamed"
-msgstr "Senza nome"
-
-#: Mailnag/daemon/mails.py:170
-msgid "No subject"
-msgstr "Nessun oggetto"
-
-#: Mailnag/configuration/accountdialog.py:75
-#: Mailnag/configuration/accountdialog.py:76
-msgid "optional"
-msgstr "opzionale"
-
-#: Mailnag/configuration/configwindow.py:99
-#: Mailnag/configuration/configwindow.py:124
-msgid "Enabled"
-msgstr "Attivo"
-
-#: Mailnag/configuration/configwindow.py:105
-#: Mailnag/configuration/configwindow.py:131
-msgid "Name"
-msgstr "Nome"
-
-#: Mailnag/configuration/configwindow.py:342
-msgid "Delete this account:"
-msgstr "Eliminare questo account:"
-
-#: Mailnag/plugins/libnotifyplugin.py:136
-msgid "Notification mode:"
-msgstr "Modalità di notifica:"
-
-#: Mailnag/plugins/libnotifyplugin.py:244
-#: Mailnag/plugins/libnotifyplugin.py:246
-#, brace-format
-msgid "(and {0} more)"
-msgstr "(e altri {0})"
-
-#: Mailnag/plugins/libnotifyplugin.py:249
-#: Mailnag/plugins/libnotifyplugin.py:277
-#, brace-format
-msgid "You have {0} new mails."
-msgstr "Hai {0} nuovi messaggi email."
-
-#: Mailnag/plugins/libnotifyplugin.py:251
-#: Mailnag/plugins/libnotifyplugin.py:279
-msgid "You have a new mail."
-msgstr "Hai un nuovo messaggio email."
-
-#: Mailnag/plugins/libnotifyplugin.py:266
-msgid "Mark as read"
-msgstr "Contrassegna come \\\"già letto\\\""
+"seguenti parole nell'oggetto o nel mittente."
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
@@ -249,3 +212,39 @@ msgstr "Impostazioni generali"
 #: data/config_window.ui.h:3
 msgid "Accounts"
 msgstr "Account"
+
+#: data/config_window.ui.h:4
+msgid "Plugins"
+msgstr "Plugin"
+
+#: data/config_window.ui.h:5
+msgid ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extensible mail "
+"notification daemon.\n"
+"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
+"and contributors."
+msgstr ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Demone espandibile "
+"di notifica mail.\n"
+"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
+"and contributors."
+
+#: data/config_window.ui.h:8
+msgid "Add Account"
+msgstr "Aggiungi account"
+
+#: data/config_window.ui.h:9
+msgid "Remove Account"
+msgstr "Rimuovi account"
+
+#: data/config_window.ui.h:10
+msgid "Edit Account"
+msgstr "Modifica account"
+
+#: data/config_window.ui.h:11
+msgid "Edit Plugin"
+msgstr "Modifica plugin"
+
+#: data/plugin_dialog.ui.h:1
+msgid "Plugin Configuration"
+msgstr "Configurazione plugin"

@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-05-30 17:44+0200\n"
+"POT-Creation-Date: 2014-07-30 21:32+0200\n"
 "PO-Revision-Date: 2012-12-21 17:39+0000\n"
 "Last-Translator: Patrick Ulbrich <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-06-28 12:08+0000\n"
-"X-Generator: Launchpad (build 17077)\n"
+"X-Launchpad-Export-Date: 2014-11-21 19:12+0000\n"
+"X-Generator: Launchpad (build 17252)\n"
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
@@ -38,17 +38,17 @@ msgstr ""
 msgid "Other (POP3)"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:99
-#: Mailnag/configuration/configwindow.py:124
+#: Mailnag/configuration/configwindow.py:107
+#: Mailnag/configuration/configwindow.py:132
 msgid "Enabled"
 msgstr "활성화 됨"
 
-#: Mailnag/configuration/configwindow.py:105
-#: Mailnag/configuration/configwindow.py:131
+#: Mailnag/configuration/configwindow.py:113
+#: Mailnag/configuration/configwindow.py:139
 msgid "Name"
 msgstr "이름"
 
-#: Mailnag/configuration/configwindow.py:342
+#: Mailnag/configuration/configwindow.py:347
 msgid "Delete this account:"
 msgstr "이 계정을 지웁니다:"
 
@@ -108,28 +108,28 @@ msgstr ""
 msgid "One notification per new mail"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:157
+#: Mailnag/plugins/libnotifyplugin.py:159
 msgid "Maximum number of visible mails:"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:244
-#: Mailnag/plugins/libnotifyplugin.py:246
+#: Mailnag/plugins/libnotifyplugin.py:248
+#: Mailnag/plugins/libnotifyplugin.py:250
 #, python-brace-format
 msgid "(and {0} more)"
 msgstr "(그리고 {0}개 더)"
 
-#: Mailnag/plugins/libnotifyplugin.py:249
-#: Mailnag/plugins/libnotifyplugin.py:277
+#: Mailnag/plugins/libnotifyplugin.py:253
+#: Mailnag/plugins/libnotifyplugin.py:281
 #, python-brace-format
-msgid "You have {0} new mails."
-msgstr "{0}개의 새 메일이 있습니다."
+msgid "{0} new mails"
+msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:251
-#: Mailnag/plugins/libnotifyplugin.py:279
-msgid "You have a new mail."
-msgstr "한 개의 새 메일이 있습니다."
+#: Mailnag/plugins/libnotifyplugin.py:255
+#: Mailnag/plugins/libnotifyplugin.py:283
+msgid "New mail"
+msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:266
+#: Mailnag/plugins/libnotifyplugin.py:270
 msgid "Mark as read"
 msgstr ""
 
@@ -213,7 +213,7 @@ msgstr ""
 
 #: data/config_window.ui.h:5
 msgid ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extendable mail "
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extensible mail "
 "notification daemon.\n"
 "Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
 "and contributors."
