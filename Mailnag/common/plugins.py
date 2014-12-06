@@ -40,6 +40,10 @@ PLUGIN_PATHS = [ PLUGIN_LIB_PATH, PLUGIN_USER_PATH ]
 # when Mailnag is ported to python3
 class HookTypes:
 	# func signature: 
+	# IN:	List of loaded accounts
+	# OUT:	None
+	ACCOUNTS_LOADED = 'accounts-loaded'
+	# func signature: 
 	# IN:	None
 	# OUT:	None
 	MAIL_CHECK = 'mail-check'
@@ -66,10 +70,11 @@ class HookTypes:
 class HookRegistry:
 	def __init__(self):
 		self._hooks = {
-			HookTypes.MAIL_CHECK	: [],
-			HookTypes.MAILS_ADDED	: [],
-			HookTypes.MAILS_REMOVED	: [],
-			HookTypes.FILTER_MAILS 	: []
+			HookTypes.ACCOUNTS_LOADED	: [],
+			HookTypes.MAIL_CHECK		: [],
+			HookTypes.MAILS_ADDED		: [],
+			HookTypes.MAILS_REMOVED		: [],
+			HookTypes.FILTER_MAILS 		: []
 		}
 	
 	

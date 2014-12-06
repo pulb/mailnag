@@ -45,12 +45,13 @@ account_defaults = {
 #
 class Account:
 	def __init__(self, enabled = False, name = _('Unnamed'), user = '', \
-		password = '', server = '', port = '', ssl = True, imap = True, idle = True, folder = '' ):
+		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folder = '' ):
 		
 		self.enabled = enabled # bool
 		self.name = name
 		self.user = user
 		self.password = password
+		self.oauth2string = oauth2string
 		self.server = server
 		self.port = port
 		self.ssl = ssl # bool
@@ -112,7 +113,10 @@ class Account:
 				else:
 					conn = imaplib.IMAP4(self.server, int(self.port))
 			
-			conn.login(self.user, self.password)
+			if self.oauth2string != '':
+				conn.authenticate('XOAUTH2', lambda x: self.oauth2string)
+			else:
+				conn.login(self.user, self.password)
 			
 			self._conn = conn
 		except:
@@ -197,7 +201,7 @@ class AccountList(list):
 				protocol = 'imap' if imap else 'pop'
 				password = self._keyring.get(protocol, user, server)
 			
-				acc = Account(enabled, name, user, password, server, port, ssl, imap, idle, folder)
+				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folder)
 				self.append(acc)
 
 			i = i + 1
@@ -215,7 +219,12 @@ class AccountList(list):
 		
 		# add accounts
 		i = 1
+		lst = []
 		for acc in self:
+			if acc.oauth2string != '':
+				logging.warning("Saving of OAuth2 based accounts is not supported. Account '%s' skipped." % acc.name)
+				continue
+				
 			section_name = "account" + str(i)
 			
 			cfg.add_section(section_name)
@@ -233,10 +242,11 @@ class AccountList(list):
 			protocol = 'imap' if acc.imap else 'pop'
 			self._keyring.set(protocol, acc.user, acc.server, acc.password)
 
+			lst.append(acc)
 			i = i + 1
 		
 		# delete obsolete entries from Keyring
-		self._keyring.remove(self)
+		self._keyring.remove(lst)
 	
 		
 	def _get_account_cfg(self, cfg, section_name, option_name):

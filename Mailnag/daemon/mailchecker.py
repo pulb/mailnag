@@ -25,18 +25,10 @@
 import threading
 import logging
 
-from common.utils import is_online
+from common.utils import is_online, try_call
 from common.i18n import _
 from common.plugins import HookTypes
 from daemon.mails import MailSyncer
-
-
-def try_call(f, err_retval = None):
-	try:
-		return f()
-	except:
-		logging.exception('Caught an exception.')
-		return err_retval
 
 
 class MailChecker:

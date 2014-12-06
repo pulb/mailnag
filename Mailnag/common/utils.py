@@ -28,6 +28,7 @@ import sys
 import time
 import dbus
 import urllib2
+import logging
 
 from common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
 
@@ -70,6 +71,14 @@ def is_online():
 		return True
 	except:
 		return False
+
+
+def try_call(f, err_retval = None):
+	try:
+		return f()
+	except:
+		logging.exception('Caught an exception.')
+		return err_retval
 
 
 def shutdown_existing_instance():

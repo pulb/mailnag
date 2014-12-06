@@ -28,9 +28,11 @@ from common.accounts import AccountList
 from daemon.mailchecker import MailChecker
 from daemon.mails import Memorizer
 from daemon.idlers import IdlerRunner
-from common.plugins import Plugin, HookRegistry, MailnagController
+from common.plugins import Plugin, HookRegistry, HookTypes, MailnagController
 from common.exceptions import InvalidOperationException
 from common.config import read_cfg
+from common.utils import try_call
+
 
 class MailnagDaemon:
 	def __init__(self, fatal_error_handler = None, shutdown_request_handler = None):
@@ -38,6 +40,7 @@ class MailnagDaemon:
 		self._fatal_error_handler = fatal_error_handler
 		self._shutdown_request_handler = shutdown_request_handler
 		self._plugins = []
+		self._hookreg = None
 		self._accounts = None
 		self._mailchecker = None
 		self._start_thread = None
@@ -65,17 +68,17 @@ class MailnagDaemon:
 			self._cfg = read_cfg()
 			self._accounts = AccountList()
 			self._accounts.load_from_cfg(self._cfg, enabled_only = True)
+			self._hookreg = HookRegistry()
 
-			hook_registry = HookRegistry()
 			memorizer = Memorizer()
 			memorizer.load()
 
-			self._mailchecker = MailChecker(self._cfg, memorizer, hook_registry)
+			self._mailchecker = MailChecker(self._cfg, memorizer, self._hookreg)
 
 			# Note: all code following _load_plugins() should be executed
 			# asynchronously because the dbus plugin requires an active mainloop
 			# (usually started in the programs main function).
-			self._load_plugins(memorizer, hook_registry)
+			self._load_plugins(self._cfg, self._hookreg, memorizer)
 
 			# Start checking for mails asynchronously.
 			self._start_thread = threading.Thread(target = self._start)
@@ -154,6 +157,10 @@ class MailnagDaemon:
 	
 	def _start(self):
 		try:
+			# Call Accounts-Loaded plugin hooks
+			for f in self._hookreg.get_hook_funcs(HookTypes.ACCOUNTS_LOADED):
+				try_call( lambda: f(self._accounts) )
+			
 			# Immediate check, check *all* accounts
 			try:
 				self._mailchecker.check(self._accounts)
@@ -201,7 +208,7 @@ class MailnagDaemon:
 				self._fatal_error_handler(ex)
 	
 
-	def _load_plugins(self, memorizer, hookreg):
+	def _load_plugins(self, cfg, hookreg, memorizer):
 		class MailnagController_Impl(MailnagController):
 			def __init__(self, daemon, memorizer, hookreg, shutdown_request_hdlr):
 				self._daemon = daemon
@@ -229,9 +236,9 @@ class MailnagDaemon:
 		
 		controller = MailnagController_Impl(self, memorizer, hookreg, self._shutdown_request_handler)
 	
-		enabled_lst = self._cfg.get('core', 'enabled_plugins').split(',')
+		enabled_lst = cfg.get('core', 'enabled_plugins').split(',')
 		enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
-		self._plugins = Plugin.load_plugins(self._cfg, controller, enabled_lst)
+		self._plugins = Plugin.load_plugins(cfg, controller, enabled_lst)
 	
 		for p in self._plugins:
 			try:
