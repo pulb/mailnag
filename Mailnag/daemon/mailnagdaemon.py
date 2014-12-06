@@ -158,8 +158,10 @@ class MailnagDaemon:
 	def _start(self):
 		try:
 			# Call Accounts-Loaded plugin hooks
+			lst = self._accounts[:]
 			for f in self._hookreg.get_hook_funcs(HookTypes.ACCOUNTS_LOADED):
-				try_call( lambda: f(self._accounts) )
+				try_call( lambda: f(lst) )
+			self._accounts += [a for a in lst if a not in self._accounts]
 			
 			# Immediate check, check *all* accounts
 			try:
