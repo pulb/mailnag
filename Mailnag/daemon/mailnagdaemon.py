@@ -23,16 +23,24 @@
 
 import threading
 import logging
+import time
 
 from common.accounts import AccountList
 from daemon.mailchecker import MailChecker
 from daemon.mails import Memorizer
 from daemon.idlers import IdlerRunner
+from daemon.conntest import ConnectivityTest, TestModes
 from common.plugins import Plugin, HookRegistry, HookTypes, MailnagController
 from common.exceptions import InvalidOperationException
 from common.config import read_cfg
 from common.utils import try_call
 
+
+testmode_mapping = {
+	'auto'				: TestModes.AUTO,
+	'networkmanager'	: TestModes.NETWORKMANAGER,
+	'ping'				: TestModes.PING
+}
 
 class MailnagDaemon:
 	def __init__(self, fatal_error_handler = None, shutdown_request_handler = None):
@@ -41,6 +49,7 @@ class MailnagDaemon:
 		self._shutdown_request_handler = shutdown_request_handler
 		self._plugins = []
 		self._hookreg = None
+		self._conntest = None
 		self._accounts = None
 		self._mailchecker = None
 		self._start_thread = None
@@ -69,11 +78,12 @@ class MailnagDaemon:
 			self._accounts = AccountList()
 			self._accounts.load_from_cfg(self._cfg, enabled_only = True)
 			self._hookreg = HookRegistry()
-
+			self._conntest = ConnectivityTest(testmode_mapping[self._cfg.get('core', 'connectivity_test')])
+			
 			memorizer = Memorizer()
 			memorizer.load()
 
-			self._mailchecker = MailChecker(self._cfg, memorizer, self._hookreg)
+			self._mailchecker = MailChecker(self._cfg, memorizer, self._hookreg, self._conntest)
 
 			# Note: all code following _load_plugins() should be executed
 			# asynchronously because the dbus plugin requires an active mainloop
@@ -96,6 +106,7 @@ class MailnagDaemon:
 		# before cleaning up resources 
 		# (in case an exception occurs) 
 		# and before unloading plugins.
+		# Also required by _wait_for_inet_connection().
 		self._disposed = True
 		
 		# clean up resources
@@ -163,6 +174,9 @@ class MailnagDaemon:
 				try_call( lambda: f(lst) )
 			self._accounts[:] = lst
 			
+			if not self._wait_for_inet_connection():
+				return
+			
 			# Immediate check, check *all* accounts
 			try:
 				self._mailchecker.check(self._accounts)
@@ -210,6 +224,19 @@ class MailnagDaemon:
 				self._fatal_error_handler(ex)
 	
 
+	def _wait_for_inet_connection(self):
+		if self._conntest.is_offline():
+			logging.info('Waiting for internet connection...')
+		
+		while True:
+			if self._disposed:					return False
+			if not self._conntest.is_offline():	return True
+			# Note: don't sleep too long
+			# (see timeout in mailnag.cleanup())
+			# ..but also don't sleep to short in case of a ping connection test.
+			time.sleep(3)
+	
+	
 	def _load_plugins(self, cfg, hookreg, memorizer):
 		class MailnagController_Impl(MailnagController):
 			def __init__(self, daemon, memorizer, hookreg, shutdown_request_hdlr):

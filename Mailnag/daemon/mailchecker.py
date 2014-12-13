@@ -25,19 +25,20 @@
 import threading
 import logging
 
-from common.utils import is_online, try_call
+from common.utils import try_call
 from common.i18n import _
 from common.plugins import HookTypes
 from daemon.mails import MailSyncer
 
 
 class MailChecker:
-	def __init__(self, cfg, memorizer, hookreg):
+	def __init__(self, cfg, memorizer, hookreg, conntest):
 		self._firstcheck = True # first check after startup
 		self._mailcheck_lock = threading.Lock()
 		self._mailsyncer = MailSyncer(cfg)
 		self._memorizer = memorizer
 		self._hookreg = hookreg
+		self._conntest = conntest
 		self._zero_mails_on_last_check = True
 		
 	
@@ -50,8 +51,8 @@ class MailChecker:
 			for f in self._hookreg.get_hook_funcs(HookTypes.MAIL_CHECK):
 				try_call( f )
 				
-			if not is_online():
-				logging.error('No internet connection.')
+			if self._conntest.is_offline():
+				logging.warning('No internet connection.')
 				return
 			
 			all_mails = self._mailsyncer.sync(accounts)

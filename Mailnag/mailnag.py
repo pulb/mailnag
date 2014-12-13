@@ -30,11 +30,10 @@ import argparse
 import logging
 import logging.handlers
 import os
-import time
 import signal
 
 from common.config import cfg_exists
-from common.utils import set_procname, is_online, shutdown_existing_instance
+from common.utils import set_procname, shutdown_existing_instance
 from common.subproc import terminate_subprocesses
 from common.exceptions import InvalidOperationException
 from daemon.mailnagdaemon import MailnagDaemon
@@ -44,14 +43,6 @@ PROGNAME = 'mailnagd'
 LOG_LEVEL = logging.DEBUG
 LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-
-
-def wait_for_inet_connection():
-	if not is_online():
-		logging.info('Waiting for internet connection...')
-		while not is_online():
-			time.sleep(5)
-
 
 def cleanup(daemon):
 	event = threading.Event()
@@ -134,8 +125,6 @@ def main():
 				"Cannot find configuration file. " + \
 				"Please run mailnag-config first.")
 			exit(1)
-		
-		wait_for_inet_connection()
 		
 		def fatal_error_hdlr(ex):
 			# Note: don't raise an exception 

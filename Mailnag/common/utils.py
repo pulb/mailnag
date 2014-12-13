@@ -27,7 +27,6 @@ import os
 import sys
 import time
 import dbus
-import urllib2
 import logging
 
 from common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
@@ -62,15 +61,6 @@ def set_procname(newname):
 	buff = create_string_buffer(len(newname)+1)
 	buff.value = newname
 	libc.prctl(15, byref(buff), 0, 0, 0)
-
-
-# check for internet connection
-def is_online():
-	try:
-		urllib2.urlopen("http://www.google.com/")
-		return True
-	except:
-		return False
 
 
 def try_call(f, err_retval = None):
