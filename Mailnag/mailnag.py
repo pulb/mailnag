@@ -33,6 +33,7 @@ import os
 import signal
 
 from common.config import cfg_exists
+from common.dist_cfg import APP_VERSION
 from common.utils import set_procname, shutdown_existing_instance
 from common.subproc import terminate_subprocesses
 from common.exceptions import InvalidOperationException
@@ -67,8 +68,12 @@ def cleanup(daemon):
 
 def get_args():
 	parser = argparse.ArgumentParser(prog=PROGNAME)
-	parser.add_argument('--quiet', action = 'store_true', 
+	parser.add_argument('-q', '--quiet', action = 'store_true', 
 		help = "don't print log messages to stdout")
+	parser.add_argument('-v', '--version', action = 'version',
+		version = 'Mailnag %s' % APP_VERSION)
+	parser.add_argument('-f', '--foreground', action = 'store_true',
+		help = "don't run mailnagd in daemon mode")
 	
 	return parser.parse_args()
 
