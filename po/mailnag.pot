@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-19 21:59+0100\n"
+"POT-Creation-Date: 2014-12-19 22:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,18 @@ msgstr ""
 
 #: Mailnag/common/accounts.py:47
 msgid "Unnamed"
+msgstr ""
+
+#: Mailnag/plugins/unityplugin.py:98
+msgid "Ubuntu Unity"
+msgstr ""
+
+#: Mailnag/plugins/unityplugin.py:99
+msgid "Shows new mails in Ubuntu's Messaging menu."
+msgstr ""
+
+#: Mailnag/plugins/unityplugin.py:118 Mailnag/plugins/libnotifyplugin.py:159
+msgid "Maximum number of visible mails:"
 msgstr ""
 
 #: Mailnag/plugins/goaplugin.py:92
@@ -105,10 +117,6 @@ msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:150
 msgid "One notification per new mail"
-msgstr ""
-
-#: Mailnag/plugins/libnotifyplugin.py:159
-msgid "Maximum number of visible mails:"
 msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:248
