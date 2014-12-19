@@ -22,8 +22,8 @@
 #
 
 from gi.repository import Gtk
-from common.plugins import Plugin, HookTypes
-from common.i18n import _
+from Mailnag.common.plugins import Plugin, HookTypes
+from Mailnag.common.i18n import _
 
 plugin_defaults = { 'filter_text' : 'newsletter, viagra' }
 

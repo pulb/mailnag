@@ -25,10 +25,10 @@
 import threading
 import logging
 
-from common.utils import try_call
-from common.i18n import _
-from common.plugins import HookTypes
-from daemon.mails import MailSyncer
+from Mailnag.common.utils import try_call
+from Mailnag.common.i18n import _
+from Mailnag.common.plugins import HookTypes
+from Mailnag.daemon.mails import MailSyncer
 
 
 class MailChecker:

@@ -28,8 +28,9 @@ import sys
 import time
 import dbus
 import logging
+import inspect
 
-from common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
+from Mailnag.common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
 
 
 def get_data_paths():
@@ -53,6 +54,15 @@ def get_data_file(filename):
 		if os.path.exists(file_path):
 			return file_path
 	return None
+
+
+def fix_cwd():
+	# Change into local Mailnag source dir, where paths 
+	# in dist_cfg.py point to (e.g. "./locale").
+	# Only required when running Mailnag locally (wihout installation).
+	main_script_path = os.path.realpath(inspect.stack()[-1][1])
+	main_script_dir = os.path.dirname(main_script_path)
+	os.chdir(main_script_dir)
 
 
 def set_procname(newname):

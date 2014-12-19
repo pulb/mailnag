@@ -22,8 +22,8 @@
 #
 
 from gi.repository import GLib, Gtk
-from common.dist_cfg import PACKAGE_NAME
-from common.utils import get_data_file
+from Mailnag.common.dist_cfg import PACKAGE_NAME
+from Mailnag.common.utils import get_data_file
 
 class PluginDialog:
 	def __init__(self, parent, plugin):

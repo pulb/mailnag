@@ -23,7 +23,7 @@
 #
 
 from gi.repository import GnomeKeyring
-from common.i18n import _
+from Mailnag.common.i18n import _
 
 
 class KeyringUnlockException(Exception):

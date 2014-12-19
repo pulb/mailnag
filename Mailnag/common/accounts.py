@@ -24,9 +24,9 @@
 
 import poplib
 import logging
-import daemon.imaplib2 as imaplib
-from common.i18n import _
-from common.keyring import Keyring
+import Mailnag.daemon.imaplib2 as imaplib
+from Mailnag.common.i18n import _
+from Mailnag.common.keyring import Keyring
 
 account_defaults = {
 	'enabled'			: '0',

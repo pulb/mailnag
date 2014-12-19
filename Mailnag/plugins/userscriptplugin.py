@@ -23,9 +23,9 @@
 
 import os
 from gi.repository import Gtk
-from common.plugins import Plugin, HookTypes
-from common.i18n import _
-from common.subproc import start_subprocess
+from Mailnag.common.plugins import Plugin, HookTypes
+from Mailnag.common.i18n import _
+from Mailnag.common.subproc import start_subprocess
 
 plugin_defaults = { 'script_file' : '' }
 

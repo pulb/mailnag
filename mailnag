@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
-# mailnag.py
+# mailnag
 #
 # Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
@@ -32,14 +32,14 @@ import logging.handlers
 import os
 import signal
 
-from common.config import cfg_exists
-from common.dist_cfg import APP_VERSION
-from common.utils import set_procname, shutdown_existing_instance
-from common.subproc import terminate_subprocesses
-from common.exceptions import InvalidOperationException
-from daemon.mailnagdaemon import MailnagDaemon
+from Mailnag.common.config import cfg_exists
+from Mailnag.common.dist_cfg import APP_VERSION
+from Mailnag.common.utils import set_procname, shutdown_existing_instance, fix_cwd
+from Mailnag.common.subproc import terminate_subprocesses
+from Mailnag.common.exceptions import InvalidOperationException
+from Mailnag.daemon.mailnagdaemon import MailnagDaemon
 
-PROGNAME = 'mailnagd'
+PROGNAME = 'mailnag'
 
 LOG_LEVEL = logging.DEBUG
 LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
@@ -71,9 +71,7 @@ def get_args():
 	parser.add_argument('-q', '--quiet', action = 'store_true', 
 		help = "don't print log messages to stdout")
 	parser.add_argument('-v', '--version', action = 'version',
-		version = 'Mailnag %s' % APP_VERSION)
-	parser.add_argument('-f', '--foreground', action = 'store_true',
-		help = "don't run mailnagd in daemon mode")
+		version = '%s %s' % (PROGNAME, APP_VERSION))
 	
 	return parser.parse_args()
 
@@ -104,6 +102,8 @@ def sigterm_handler(mainloop):
 
 
 def main():
+	fix_cwd()
+	
 	mainloop = GLib.MainLoop()
 	daemon = None
 	

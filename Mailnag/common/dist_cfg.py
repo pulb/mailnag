@@ -3,7 +3,7 @@
 #
 # dist_cfg.py
 #
-# Copyright 2012, 2013 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2012 - 2014 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 
 # Application version displayed in the 
 # about dialog of the config window.
-APP_VERSION = "1.0.0"
+APP_VERSION = '1.0.0'
 
 # The PACKAGE_NAME variable is used to configure
 # 1) the path where all app data (glade files, images) is loaded from
@@ -37,7 +37,7 @@ APP_VERSION = "1.0.0"
 # 2) paths for localization files generated with gen_locales
 #    (usually /usr/share/locale/<LANG>/LC_MESSAGES/<PACKAGE_NAME>.mo).
 # Typically, there's no need to touch this variable.
-PACKAGE_NAME = "mailnag"
+PACKAGE_NAME = 'mailnag'
 
 # The LOCALE_DIR variable specifies the root path for localization files
 # (usually you have to make it point to '/usr/share/locale').
@@ -45,7 +45,7 @@ LOCALE_DIR = './locale'
 
 # The LIB_DIR variable specifies the root path for the Mailnag python files
 # (usually you have to make it point to <PYTHON_LIB_DIR>/Mailnag).
-LIB_DIR = "./Mailnag"
+LIB_DIR = './Mailnag'
 
 # The BIN_DIR variable specifies the path for the mailnag start scripts
 # (usually you have to make it point to '/usr/bin').

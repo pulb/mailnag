@@ -26,8 +26,8 @@ import imp
 import inspect
 import logging
 
-from common.config import cfg_folder
-from common.dist_cfg import LIB_DIR
+from Mailnag.common.config import cfg_folder
+from Mailnag.common.dist_cfg import LIB_DIR
 
 PLUGIN_LIB_PATH = os.path.join(LIB_DIR, 'plugins')
 PLUGIN_USER_PATH = os.path.join(cfg_folder, 'plugins')

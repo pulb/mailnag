@@ -29,9 +29,9 @@ import os
 import logging
 import hashlib
 
-from common.i18n import _
-from common.config import cfg_folder
 from email.header import decode_header
+from Mailnag.common.i18n import _
+from Mailnag.common.config import cfg_folder
 
 
 #

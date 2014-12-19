@@ -23,10 +23,10 @@
 
 import dbus
 import dbus.service
-from common.dist_cfg import DBUS_BUS_NAME, DBUS_OBJ_PATH
-from common.plugins import Plugin, HookTypes
-from common.exceptions import InvalidOperationException
-from common.i18n import _
+from Mailnag.common.dist_cfg import DBUS_BUS_NAME, DBUS_OBJ_PATH
+from Mailnag.common.plugins import Plugin, HookTypes
+from Mailnag.common.exceptions import InvalidOperationException
+from Mailnag.common.i18n import _
 
 plugin_defaults = {}
 

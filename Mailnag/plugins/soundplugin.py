@@ -23,10 +23,11 @@
 
 import os
 import threading
-from common.plugins import Plugin, HookTypes
-from common.utils import get_data_file
-from common.i18n import _
 from gi.repository import Gst
+from Mailnag.common.plugins import Plugin, HookTypes
+from Mailnag.common.utils import get_data_file
+from Mailnag.common.i18n import _
+
 
 plugin_defaults = { 'soundfile' : 'mailnag.ogg' }
 

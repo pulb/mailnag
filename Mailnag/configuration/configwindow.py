@@ -26,14 +26,14 @@ import os
 import xdg.BaseDirectory as bd
 from gi.repository import GLib, GdkPixbuf, Gdk, Gtk, GObject
 
-from common.dist_cfg import PACKAGE_NAME, APP_VERSION
-from common.i18n import _
-from common.utils import get_data_file, get_data_paths
-from common.config import read_cfg, write_cfg
-from common.accounts import Account, AccountList
-from common.plugins import Plugin
-from configuration.accountdialog import AccountDialog
-from configuration.plugindialog import PluginDialog
+from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR
+from Mailnag.common.i18n import _
+from Mailnag.common.utils import get_data_file, get_data_paths
+from Mailnag.common.config import read_cfg, write_cfg
+from Mailnag.common.accounts import Account, AccountList
+from Mailnag.common.plugins import Plugin
+from Mailnag.configuration.accountdialog import AccountDialog
+from Mailnag.configuration.plugindialog import PluginDialog
 
 
 class ConfigWindow:
@@ -269,10 +269,8 @@ class ConfigWindow:
 	
 	
 	def _create_autostart(self):
-		# get current working directory
-		curdir = os.getcwd()
 		# path to mailnag startscript
-		exec_file = os.path.join(curdir, "mailnagd")
+		exec_file = os.path.join(os.path.abspath(BIN_DIR), "mailnag")
 		
 		content = "\n" + \
 		"[Desktop Entry]\n" + \

@@ -25,11 +25,11 @@ import os
 import dbus
 import threading
 from gi.repository import Notify, Gio, Gtk
-from common.plugins import Plugin, HookTypes
-from common.i18n import _
-from common.subproc import start_subprocess
-from common.exceptions import InvalidOperationException
-from daemon.mails import sort_mails
+from Mailnag.common.plugins import Plugin, HookTypes
+from Mailnag.common.i18n import _
+from Mailnag.common.subproc import start_subprocess
+from Mailnag.common.exceptions import InvalidOperationException
+from Mailnag.daemon.mails import sort_mails
 
 
 MAX_VISIBLE_MAILS_LIMIT		= 20.0

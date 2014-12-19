@@ -25,8 +25,8 @@
 import threading
 import time
 import logging
-from daemon.imaplib2 import AUTH
-from common.exceptions import InvalidOperationException
+from Mailnag.daemon.imaplib2 import AUTH
+from Mailnag.common.exceptions import InvalidOperationException
 
 
 class ConnectionException(Exception):

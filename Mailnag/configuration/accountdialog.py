@@ -22,9 +22,9 @@
 #
 
 from gi.repository import GLib, Gtk
-from common.dist_cfg import PACKAGE_NAME
-from common.i18n import _
-from common.utils import get_data_file
+from Mailnag.common.dist_cfg import PACKAGE_NAME
+from Mailnag.common.i18n import _
+from Mailnag.common.utils import get_data_file
 
 IDX_GMAIL	= 0
 IDX_GMX		= 1

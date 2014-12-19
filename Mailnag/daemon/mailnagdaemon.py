@@ -25,15 +25,15 @@ import threading
 import logging
 import time
 
-from common.accounts import AccountList
-from daemon.mailchecker import MailChecker
-from daemon.mails import Memorizer
-from daemon.idlers import IdlerRunner
-from daemon.conntest import ConnectivityTest, TestModes
-from common.plugins import Plugin, HookRegistry, HookTypes, MailnagController
-from common.exceptions import InvalidOperationException
-from common.config import read_cfg
-from common.utils import try_call
+from Mailnag.common.accounts import AccountList
+from Mailnag.daemon.mailchecker import MailChecker
+from Mailnag.daemon.mails import Memorizer
+from Mailnag.daemon.idlers import IdlerRunner
+from Mailnag.daemon.conntest import ConnectivityTest, TestModes
+from Mailnag.common.plugins import Plugin, HookRegistry, HookTypes, MailnagController
+from Mailnag.common.exceptions import InvalidOperationException
+from Mailnag.common.config import read_cfg
+from Mailnag.common.utils import try_call
 
 
 testmode_mapping = {
