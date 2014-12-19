@@ -29,7 +29,7 @@
 
 # Application version displayed in the 
 # about dialog of the config window.
-APP_VERSION = '1.0.0'
+APP_VERSION = '1.1.0'
 
 # The PACKAGE_NAME variable is used to configure
 # 1) the path where all app data (glade files, images) is loaded from
