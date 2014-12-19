@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-30 21:32+0200\n"
+"POT-Creation-Date: 2014-12-19 21:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,35 +21,28 @@ msgstr ""
 msgid "Unnamed"
 msgstr ""
 
-#: Mailnag/daemon/mails.py:170
-msgid "No subject"
+#: Mailnag/plugins/goaplugin.py:92
+msgid "GNOME Online Accounts"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:75
-#: Mailnag/configuration/accountdialog.py:76
-msgid "optional"
+#: Mailnag/plugins/goaplugin.py:93
+msgid "GNOME Online Accounts Integration."
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:141
-msgid "Other (IMAP)"
+#: Mailnag/plugins/dbusplugin.py:83
+msgid "DBus Service"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:142
-msgid "Other (POP3)"
+#: Mailnag/plugins/dbusplugin.py:84
+msgid "Exposes Mailnag's functionality via a DBus service."
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:107
-#: Mailnag/configuration/configwindow.py:132
-msgid "Enabled"
+#: Mailnag/plugins/soundplugin.py:65
+msgid "Sound Notifications"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:113
-#: Mailnag/configuration/configwindow.py:139
-msgid "Name"
-msgstr ""
-
-#: Mailnag/configuration/configwindow.py:347
-msgid "Delete this account:"
+#: Mailnag/plugins/soundplugin.py:66
+msgid "Plays a sound when new mails arrive."
 msgstr ""
 
 #: Mailnag/plugins/userscriptplugin.py:62
@@ -76,12 +69,18 @@ msgid ""
 "followed by %s pairs."
 msgstr ""
 
-#: Mailnag/plugins/soundplugin.py:64
-msgid "Sound Notifications"
+#: Mailnag/plugins/spamfilterplugin.py:69
+msgid "Spam Filter"
 msgstr ""
 
-#: Mailnag/plugins/soundplugin.py:65
-msgid "Plays a sound when new mails arrive."
+#: Mailnag/plugins/spamfilterplugin.py:70
+msgid "Filters out unwanted mails."
+msgstr ""
+
+#: Mailnag/plugins/spamfilterplugin.py:90
+msgid ""
+"Mailnag will ignore mails containing at least one of \n"
+"the following words in subject or sender."
 msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:115
@@ -133,26 +132,35 @@ msgstr ""
 msgid "Mark as read"
 msgstr ""
 
-#: Mailnag/plugins/dbusplugin.py:83
-msgid "DBus Service"
+#: Mailnag/daemon/mails.py:170
+msgid "No subject"
 msgstr ""
 
-#: Mailnag/plugins/dbusplugin.py:84
-msgid "Exposes Mailnag's functionality via a DBus service."
+#: Mailnag/configuration/configwindow.py:107
+#: Mailnag/configuration/configwindow.py:132
+msgid "Enabled"
 msgstr ""
 
-#: Mailnag/plugins/spamfilterplugin.py:69
-msgid "Spam Filter"
+#: Mailnag/configuration/configwindow.py:113
+#: Mailnag/configuration/configwindow.py:139
+msgid "Name"
 msgstr ""
 
-#: Mailnag/plugins/spamfilterplugin.py:70
-msgid "Filters out unwanted mails."
+#: Mailnag/configuration/configwindow.py:345
+msgid "Delete this account:"
 msgstr ""
 
-#: Mailnag/plugins/spamfilterplugin.py:90
-msgid ""
-"Mailnag will ignore mails containing at least one of \n"
-"the following words in subject or sender."
+#: Mailnag/configuration/accountdialog.py:75
+#: Mailnag/configuration/accountdialog.py:76
+msgid "optional"
+msgstr ""
+
+#: Mailnag/configuration/accountdialog.py:141
+msgid "Other (IMAP)"
+msgstr ""
+
+#: Mailnag/configuration/accountdialog.py:142
+msgid "Other (POP3)"
 msgstr ""
 
 #: data/account_dialog.ui.h:1
