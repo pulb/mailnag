@@ -56,6 +56,7 @@ though make sure the requirements stated below are met.
 * python-dbus
 * pyxdg
 * gettext
+* networkmanager (optional)
 
 
 ## Configuration
