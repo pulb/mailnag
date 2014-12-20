@@ -66,7 +66,8 @@ class LibNotifyPlugin(Plugin):
 		# initialize Notification
 		if not self._initialized:
 			Notify.init("Mailnag")
-			self._is_gnome = (os.environ['GDMSESSION'] == 'gnome')
+			self._is_gnome = os.environ.has_key('GDMSESSION') and \
+				(os.environ['GDMSESSION'] == 'gnome')
 			self._initialized = True
 		
 		def mails_added_hook(new_mails, all_mails):
