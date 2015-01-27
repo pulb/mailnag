@@ -3,7 +3,7 @@
 #
 # config.py
 #
-# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
 import os
 import xdg.BaseDirectory as bd
 from ConfigParser import RawConfigParser
-from Mailnag.common.i18n import _
 
 mailnag_defaults = {
 	'core':
@@ -33,6 +32,7 @@ mailnag_defaults = {
 		'imap_idle_timeout'	: '10',
 		'autostart'			: '1',
 		'connectivity_test'	: 'auto',
+		'credentialstore'	: 'auto',
 		'enabled_plugins'	: 'dbusplugin, soundplugin, libnotifyplugin'
 	}
 }

@@ -3,7 +3,7 @@
 #
 # mailnagdaemon.py
 #
-# Copyright 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2014, 2015 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@ import threading
 import logging
 import time
 
-from Mailnag.common.accounts import AccountList
+from Mailnag.common.accounts import AccountManager
+from Mailnag.common.credentialstore import CredentialStore
 from Mailnag.daemon.mailchecker import MailChecker
 from Mailnag.daemon.mails import Memorizer
 from Mailnag.daemon.idlers import IdlerRunner
@@ -75,8 +76,11 @@ class MailnagDaemon:
 				raise InvalidOperationException("Daemon has already been initialized")
 			
 			self._cfg = read_cfg()
-			self._accounts = AccountList()
-			self._accounts.load_from_cfg(self._cfg, enabled_only = True)
+			
+			accountman = AccountManager(CredentialStore.from_string(self._cfg.get('core', 'credentialstore')))
+			accountman.load_from_cfg(self._cfg, enabled_only = True)
+			self._accounts = accountman.to_list()
+			
 			self._hookreg = HookRegistry()
 			self._conntest = ConnectivityTest(testmode_mapping[self._cfg.get('core', 'connectivity_test')])
 			
@@ -169,10 +173,8 @@ class MailnagDaemon:
 	def _start(self):
 		try:
 			# Call Accounts-Loaded plugin hooks
-			lst = self._accounts[:]
 			for f in self._hookreg.get_hook_funcs(HookTypes.ACCOUNTS_LOADED):
-				try_call( lambda: f(lst) )
-			self._accounts[:] = lst
+				try_call( lambda: f(self._accounts) )
 			
 			if not self._wait_for_inet_connection():
 				return

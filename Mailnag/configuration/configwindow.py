@@ -3,7 +3,7 @@
 #
 # configwindow.py
 #
-# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -30,7 +30,8 @@ from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR
 from Mailnag.common.i18n import _
 from Mailnag.common.utils import get_data_file, get_data_paths
 from Mailnag.common.config import read_cfg, write_cfg
-from Mailnag.common.accounts import Account, AccountList
+from Mailnag.common.accounts import Account, AccountManager
+from Mailnag.common.credentialstore import CredentialStore
 from Mailnag.common.plugins import Plugin
 from Mailnag.configuration.accountdialog import AccountDialog
 from Mailnag.configuration.plugindialog import PluginDialog
@@ -91,7 +92,7 @@ class ConfigWindow:
 		#
 		# accounts page
 		#
-		self._accounts = AccountList()
+		self._accountman = AccountManager(CredentialStore.from_string(self._cfg.get('core', 'credentialstore')))
 
 		self._treeview_accounts = builder.get_object("treeview_accounts")
 		self._liststore_accounts = builder.get_object("liststore_accounts")
@@ -155,10 +156,10 @@ class ConfigWindow:
 	def _load_config(self):
 		self._switch_daemon_enabled.set_active(bool(int(self._cfg.get('core', 'autostart'))))
 		
-		self._accounts.load_from_cfg(self._cfg)
+		self._accountman.load_from_cfg(self._cfg)
 		
 		# load accounts
-		for acc in self._accounts:
+		for acc in self._accountman:
 			row = [acc, acc.enabled, acc.name]
 			self._liststore_accounts.append(row)
 		self._select_account_path((0,))
@@ -183,7 +184,7 @@ class ConfigWindow:
 		autostart = self._switch_daemon_enabled.get_active()
 		self._cfg.set('core', 'autostart', int(autostart))
 
-		self._accounts.save_to_cfg(self._cfg)
+		self._accountman.save_to_cfg(self._cfg)
 		
 		enabled_plugins = ''
 		for row in self._liststore_plugins:
@@ -325,7 +326,7 @@ class ConfigWindow:
 		d = AccountDialog(self._window, acc)
 	
 		if d.run() == 1:
-			self._accounts.append(acc)
+			self._accountman.add(acc)
 			
 			row = [acc, acc.enabled, acc.name]
 			iter = self._liststore_accounts.append(row)
@@ -353,8 +354,8 @@ class ConfigWindow:
 				
 				# remove from treeview
 				model.remove(iter)
-				# remove from accounts list
-				self._accounts.remove(acc)
+				# remove from account manager
+				self._accountman.remove(acc)
 
 
 	def _on_treeview_accounts_row_activated(self, treeview, path, view_column):
