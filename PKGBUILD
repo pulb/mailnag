@@ -9,10 +9,11 @@ arch=('any')
 url="https://github.com/pulb/mailnag"
 license=('GPL')
 depends=('python2' 'python2-gobject' 'python2-httplib2'
-        'libgnome-keyring' 'gnome-keyring' 'python2-xdg'
-        'python2-dbus' 'libnotify' 'gst-plugins-base'
+        'python2-xdg' 'python2-dbus' 'libnotify' 'gst-plugins-base'
         'gtk3' 'gdk-pixbuf2')
-optdepends=('mailnag-gnome-shell: for a tighter GNOME 3 integration')
+optdepends=('libgnome-keyring: for save password storage on GNOME 3',
+        'gnome-keyring: for save password storage on GNOME 3',
+        'mailnag-gnome-shell: for a tighter GNOME 3 integration')
 makedepends=('gettext')
 source=('https://github.com/pulb/mailnag/archive/v1.0.0.tar.gz')
 md5sums=('f3c0df790a2f5e6b615ef804ee0e5a91')
