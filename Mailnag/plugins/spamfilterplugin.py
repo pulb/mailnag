@@ -3,7 +3,7 @@
 #
 # smamfilterplugin.py
 #
-# Copyright 2013, 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ class SpamfilterPlugin(Plugin):
 	def get_manifest(self):
 		return (_("Spam Filter"),
 				_("Filters out unwanted mails."),
-				"1.0",
+				"1.1",
 				"Patrick Ulbrich <zulu99@gmx.net>",
 				False)
 

@@ -3,7 +3,7 @@
 #
 # userscriptplugin.py
 #
-# Copyright 2013, 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ class UserscriptPlugin(Plugin):
 	def get_manifest(self):
 		return (_("User Script"),
 				_("Runs an user defined script on mail arrival."),
-				"1.0",
+				"1.1",
 				"Patrick Ulbrich <zulu99@gmx.net>",
 				False)
 

@@ -3,7 +3,7 @@
 #
 # libnotifyplugin.py
 #
-# Copyright 2013, 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -115,7 +115,7 @@ class LibNotifyPlugin(Plugin):
 	def get_manifest(self):
 		return (_("LibNotify Notifications"),
 				_("Shows a popup when new mails arrive."),
-				"1.0",
+				"1.1",
 				"Patrick Ulbrich <zulu99@gmx.net>",
 				False)
 
