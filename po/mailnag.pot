@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-19 22:51+0100\n"
+"POT-Creation-Date: 2015-01-31 14:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,28 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Mailnag/common/accounts.py:47
+#: Mailnag/common/accounts.py:49
 msgid "Unnamed"
-msgstr ""
-
-#: Mailnag/plugins/unityplugin.py:98
-msgid "Ubuntu Unity"
-msgstr ""
-
-#: Mailnag/plugins/unityplugin.py:99
-msgid "Shows new mails in Ubuntu's Messaging menu."
-msgstr ""
-
-#: Mailnag/plugins/unityplugin.py:118 Mailnag/plugins/libnotifyplugin.py:159
-msgid "Maximum number of visible mails:"
-msgstr ""
-
-#: Mailnag/plugins/goaplugin.py:92
-msgid "GNOME Online Accounts"
-msgstr ""
-
-#: Mailnag/plugins/goaplugin.py:93
-msgid "GNOME Online Accounts Integration."
 msgstr ""
 
 #: Mailnag/plugins/dbusplugin.py:83
@@ -95,48 +75,52 @@ msgid ""
 "the following words in subject or sender."
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:115
+#: Mailnag/plugins/libnotifyplugin.py:116
 msgid "LibNotify Notifications"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:116
+#: Mailnag/plugins/libnotifyplugin.py:117
 msgid "Shows a popup when new mails arrive."
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:136
+#: Mailnag/plugins/libnotifyplugin.py:137
 msgid "Notification mode:"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:144
+#: Mailnag/plugins/libnotifyplugin.py:145
 msgid "Count of new mails"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:147
+#: Mailnag/plugins/libnotifyplugin.py:148
 msgid "Summary of new mails"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:150
+#: Mailnag/plugins/libnotifyplugin.py:151
 msgid "One notification per new mail"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:248
-#: Mailnag/plugins/libnotifyplugin.py:250
+#: Mailnag/plugins/libnotifyplugin.py:160
+msgid "Maximum number of visible mails:"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:249
+#: Mailnag/plugins/libnotifyplugin.py:251
 #, python-brace-format
 msgid "(and {0} more)"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:253
-#: Mailnag/plugins/libnotifyplugin.py:281
+#: Mailnag/plugins/libnotifyplugin.py:254
+#: Mailnag/plugins/libnotifyplugin.py:282
 #, python-brace-format
 msgid "{0} new mails"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:255
-#: Mailnag/plugins/libnotifyplugin.py:283
+#: Mailnag/plugins/libnotifyplugin.py:256
+#: Mailnag/plugins/libnotifyplugin.py:284
 msgid "New mail"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:270
+#: Mailnag/plugins/libnotifyplugin.py:271
 msgid "Mark as read"
 msgstr ""
 
@@ -144,17 +128,17 @@ msgstr ""
 msgid "No subject"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:107
-#: Mailnag/configuration/configwindow.py:132
+#: Mailnag/configuration/configwindow.py:108
+#: Mailnag/configuration/configwindow.py:133
 msgid "Enabled"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:113
-#: Mailnag/configuration/configwindow.py:139
+#: Mailnag/configuration/configwindow.py:114
+#: Mailnag/configuration/configwindow.py:140
 msgid "Name"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:345
+#: Mailnag/configuration/configwindow.py:346
 msgid "Delete this account:"
 msgstr ""
 
@@ -231,7 +215,7 @@ msgstr ""
 msgid ""
 "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extensible mail "
 "notification daemon.\n"
-"Copyright (c) 2011 - 2014 Patrick Ulbrich\n"
+"Copyright (c) 2011 - 2015 Patrick Ulbrich\n"
 "and contributors."
 msgstr ""
 
