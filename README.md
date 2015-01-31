@@ -76,7 +76,7 @@ extension/plugin for your desktop shell. Currently the following desktop shells 
 * Ubuntu Unity ([MessagingMenu plugin](https://github.com/pulb/mailnag-unity-plugin))  
   
 Furthermore, I highly recommend GNOME users to install the [GOA plugin](https://github.com/pulb/mailnag-goa-plugin),  
-which makes Mailnag aware of email accounts specified in GNOME Online accounts.  
+which makes Mailnag aware of email accounts specified in GNOME Online Accounts.  
 
 ## Screenshots
 ![Screenshot](https://raw.githubusercontent.com/pulb/mailnag-design/master/Flyer/Mailnag_flyer2.png)
