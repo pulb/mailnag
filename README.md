@@ -74,6 +74,7 @@ but are visible for a few seconds only. If you like to have a tighter desktop in
 extension/plugin for your desktop shell. Currently the following desktop shells are supported:  
 * GNOME-Shell ([GNOME-Shell extension](https://github.com/pulb/mailnag-gnome-shell))  
 * Ubuntu Unity ([MessagingMenu plugin](https://github.com/pulb/mailnag-unity-plugin))  
+  
 Furthermore, I highly recommend GNOME users to install the [GOA plugin](https://github.com/pulb/mailnag-goa-plugin),  
 which makes Mailnag aware of email accounts specified in GNOME Online accounts.  
 
