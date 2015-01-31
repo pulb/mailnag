@@ -119,10 +119,8 @@ def gstplay(filename):
 		_gst_initialized = True
 		
 	try:
-		cwd = os.getcwd()
-		location = os.path.join(cwd, filename)
 		ply = Gst.ElementFactory.make("playbin", "player")
-		ply.set_property("uri", "file://" + location)
+		ply.set_property("uri", "file://" + os.path.abspath(filename))
 		pt = _GstPlayThread(ply)
 		pt.start()
 	except:
