@@ -21,6 +21,9 @@
 # MA 02110-1301, USA.
 #
 
+import hashlib
+
+
 # TODO: Make this class an enum 
 # when Mailnag is ported to python 3
 class CredentialStoreType:
@@ -90,10 +93,11 @@ class GnomeCredentialStore(CredentialStore):
 		if result != GnomeKeyring.Result.OK:
 			raise KeyringUnlockException('Failed to unlock default keyring')
 
+		self._migrate_keyring()
+
 
 	def get(self, key):
-		attrs = GnomeKeyring.Attribute.list_new()
-		GnomeKeyring.Attribute.list_append_string(attrs, 'key', key)
+		attrs = self._get_attrs(key)
 		result, items = GnomeKeyring.find_items_sync(GnomeKeyring.ItemType.GENERIC_SECRET, attrs)
 		
 		if result == GnomeKeyring.Result.OK:
@@ -106,9 +110,7 @@ class GnomeCredentialStore(CredentialStore):
 		if secret == '':
 			return
 		
-		attrs = GnomeKeyring.Attribute.list_new()
-		GnomeKeyring.Attribute.list_append_string(attrs, 'application', 'Mailnag')
-		GnomeKeyring.Attribute.list_append_string(attrs, 'key', key)
+		attrs = self._get_attrs(key)
 		
 		existing_secret = ''
 		result, items = GnomeKeyring.find_items_sync(GnomeKeyring.ItemType.GENERIC_SECRET, attrs)
@@ -123,13 +125,35 @@ class GnomeCredentialStore(CredentialStore):
 
 
 	def remove(self, key):
-		attrs = GnomeKeyring.Attribute.list_new()
-		GnomeKeyring.Attribute.list_append_string(attrs, 'key', key)
+		attrs = self._get_attrs(key)
 		result, items = GnomeKeyring.find_items_sync(GnomeKeyring.ItemType.GENERIC_SECRET, attrs)
 		
 		if result == GnomeKeyring.Result.OK:
 			GnomeKeyring.item_delete_sync(self._defaultKeyring, items[0].item_id)
+	
+	
+	def _get_attrs(self, key):
+		attrs = GnomeKeyring.Attribute.list_new()
+		keyid = hashlib.md5(key.encode('utf-8')).hexdigest()
+		GnomeKeyring.Attribute.list_append_string(attrs, 'source', 'Mailnag')
+		GnomeKeyring.Attribute.list_append_string(attrs, 'api-version', '1.1')
+		GnomeKeyring.Attribute.list_append_string(attrs, 'keyid', keyid)
 		
+		return attrs
+	
+	
+	# Migrates pre Mailnag 1.1 keyring items into the new format
+	def _migrate_keyring(self):
+		attrs = GnomeKeyring.Attribute.list_new()
+		GnomeKeyring.Attribute.list_append_string(attrs, 'application', 'Mailnag')
+		result, items = GnomeKeyring.find_items_sync(GnomeKeyring.ItemType.GENERIC_SECRET, attrs)
+		
+		if result == GnomeKeyring.Result.OK:
+			for i in items:
+				result, info = GnomeKeyring.item_get_info_sync(self._defaultKeyring, i.item_id)
+				self.set(info.get_display_name(), i.secret)
+				GnomeKeyring.item_delete_sync(self._defaultKeyring, i.item_id)
+
 
 #
 # Exception thrown if the GNOME keyring can't be unlocked
