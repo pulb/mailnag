@@ -24,7 +24,8 @@ Depends:
  ${misc:Depends},
  ${python:Depends}
 Recommends:
- gir1.2-gnomekeyring-1.0 (>= 3.2.2)
+ gir1.2-gnomekeyring-1.0 (>= 3.2.2),
+ network-manager (>= 0.9.4)
 Description: extensible mail notification daemon
  Mailnag is a daemon program that checks POP3 and IMAP servers for new mail.
  On mail arrival it performs various actions provided by plugins. Mailnag
