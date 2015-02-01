@@ -14,6 +14,7 @@ depends=('python2' 'python2-gobject' 'python2-httplib2'
 optdepends=('networkmanager: for connectivity detection',
         'libgnome-keyring: for save password storage on GNOME 3',
         'gnome-keyring: for save password storage on GNOME 3',
+        'mailnag-goa-plugin: for GNOME Online Accounts integration',
         'mailnag-gnome-shell: for a tighter GNOME 3 integration')
 makedepends=('gettext')
 source=('https://github.com/pulb/mailnag/archive/v1.1.0.tar.gz')
