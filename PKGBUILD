@@ -8,7 +8,7 @@ pkgdesc="An extensible mail notification daemon"
 arch=('any')
 url="https://github.com/pulb/mailnag"
 license=('GPL')
-depends=('python2-gobject' 'python2-httplib2' 'python2-xdg' 'python2-dbus' 
+depends=('python2-gobject' 'python2-xdg' 'python2-dbus' 
          'libnotify' 'gst-plugins-base' 'gtk3' 'gdk-pixbuf2')
 optdepends=('networkmanager: for connectivity detection',
         'libgnome-keyring: for save password storage in GNOME 3',
