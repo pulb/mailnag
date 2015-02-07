@@ -1,3 +1,26 @@
+Version 1.1.0 (2015-02-08):
+===========================
+* GNOME Online Accounts integration 
+  (via a plugin -> https://github.com/pulb/mailnag-goa-plugin)
+* Added support for platform-specific credential (login password) backends
+  (Configurable in the config file.
+  Supported options are currently "AUTO", "GNOME" and "NONE".)
+* The GNOME-Keyring dependency is optional now
+* Improved connectivity tests
+  (Configurable in the config file.
+  Supported options are "AUTO", "NETWORKMANAGER" and "PING".)
+* Shorter notification strings
+* Added appdata file for GNOME Software app
+* Removed bash wrapper scripts
+* Updated translations
+* Misc bugfixes
+
+IMPORTANT NOTES FOR PACKAGERS:
+Please note that GNOME-Keyring and Networkmanager 
+are now optional dependencies and the httplib2 dependency 
+is not required anymore.
+
+
 Version 1.0.0 (2014-06-28):
 ===========================
 * Mailnag is desktop-independent now (was GNOME3-only)
