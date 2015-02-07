@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-01-31 21:20+0100\n"
-"PO-Revision-Date: 2014-05-04 13:11+0000\n"
-"Last-Translator: Wolter Hellmund <wolterh6@gmail.com>\n"
+"PO-Revision-Date: 2015-02-02 13:24+0000\n"
+"Last-Translator: Adolfo Jayme <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-02-01 14:16+0000\n"
-"X-Generator: Launchpad (build 17306)\n"
+"X-Launchpad-Export-Date: 2015-02-07 18:24+0000\n"
+"X-Generator: Launchpad (build 17331)\n"
 
 #: Mailnag/common/accounts.py:49
 msgid "Unnamed"
@@ -23,27 +23,27 @@ msgstr "Sin nombre"
 
 #: Mailnag/plugins/unityplugin.py:98
 msgid "Ubuntu Unity"
-msgstr ""
+msgstr "Ubuntu Unity"
 
 #: Mailnag/plugins/unityplugin.py:99
 msgid "Shows new mails in Ubuntu's Messaging menu."
-msgstr ""
+msgstr "Muestra los mensajes nuevos en el menú de mensajería de Ubuntu."
 
 #: Mailnag/plugins/unityplugin.py:118 Mailnag/plugins/libnotifyplugin.py:160
 msgid "Maximum number of visible mails:"
-msgstr ""
+msgstr "Cantidad máxima de mensajes visibles:"
 
 #: Mailnag/plugins/goaplugin.py:92
 msgid "GNOME Online Accounts"
-msgstr ""
+msgstr "Cuentas en línea de GNOME"
 
 #: Mailnag/plugins/goaplugin.py:93
 msgid "GNOME Online Accounts Integration."
-msgstr ""
+msgstr "Integración con las cuentas en línea de GNOME."
 
 #: Mailnag/plugins/dbusplugin.py:83
 msgid "DBus Service"
-msgstr ""
+msgstr "Servicio DBus"
 
 #: Mailnag/plugins/dbusplugin.py:84
 msgid "Exposes Mailnag's functionality via a DBus service."
@@ -51,27 +51,27 @@ msgstr ""
 
 #: Mailnag/plugins/soundplugin.py:65
 msgid "Sound Notifications"
-msgstr ""
+msgstr "Notificaciones con sonido"
 
 #: Mailnag/plugins/soundplugin.py:66
 msgid "Plays a sound when new mails arrive."
-msgstr ""
+msgstr "Reproduce un sonido al llegar un mensaje nuevo."
 
 #: Mailnag/plugins/userscriptplugin.py:62
 msgid "User Script"
-msgstr ""
+msgstr "Secuencia de órdenes de usuario"
 
 #: Mailnag/plugins/userscriptplugin.py:63
 msgid "Runs an user defined script on mail arrival."
-msgstr ""
+msgstr "Ejecuta un «script» definido por el usuario al llegar un mensaje."
 
 #: Mailnag/plugins/userscriptplugin.py:83
 msgid "sender"
-msgstr ""
+msgstr "remitente"
 
 #: Mailnag/plugins/userscriptplugin.py:83
 msgid "subject"
-msgstr ""
+msgstr "asunto"
 
 #: Mailnag/plugins/userscriptplugin.py:84
 #, python-format
@@ -83,7 +83,7 @@ msgstr ""
 
 #: Mailnag/plugins/spamfilterplugin.py:69
 msgid "Spam Filter"
-msgstr ""
+msgstr "Filtro de correo no deseado"
 
 #: Mailnag/plugins/spamfilterplugin.py:70
 msgid "Filters out unwanted mails."
@@ -94,14 +94,16 @@ msgid ""
 "Mailnag will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
+"Mailnag ignorará los mensajes que contengan por lo menos\n"
+"una de las palabras siguientes en el asunto o remitente."
 
 #: Mailnag/plugins/libnotifyplugin.py:116
 msgid "LibNotify Notifications"
-msgstr ""
+msgstr "Notificaciones con LibNotify"
 
 #: Mailnag/plugins/libnotifyplugin.py:117
 msgid "Shows a popup when new mails arrive."
-msgstr ""
+msgstr "Muestra un cuadro emergente al llegar mensajes nuevos."
 
 #: Mailnag/plugins/libnotifyplugin.py:137
 msgid "Notification mode:"
@@ -109,15 +111,15 @@ msgstr "Modo de notificación:"
 
 #: Mailnag/plugins/libnotifyplugin.py:145
 msgid "Count of new mails"
-msgstr ""
+msgstr "Contador de mensajes nuevos"
 
 #: Mailnag/plugins/libnotifyplugin.py:148
 msgid "Summary of new mails"
-msgstr ""
+msgstr "Resumen de mensajes nuevos"
 
 #: Mailnag/plugins/libnotifyplugin.py:151
 msgid "One notification per new mail"
-msgstr ""
+msgstr "Una notificación por mensaje nuevo"
 
 #: Mailnag/plugins/libnotifyplugin.py:249
 #: Mailnag/plugins/libnotifyplugin.py:251
@@ -129,12 +131,12 @@ msgstr "(y {0} más)"
 #: Mailnag/plugins/libnotifyplugin.py:282
 #, python-brace-format
 msgid "{0} new mails"
-msgstr ""
+msgstr "{0} mensajes nuevos"
 
 #: Mailnag/plugins/libnotifyplugin.py:256
 #: Mailnag/plugins/libnotifyplugin.py:284
 msgid "New mail"
-msgstr ""
+msgstr "Mensaje nuevo"
 
 #: Mailnag/plugins/libnotifyplugin.py:271
 msgid "Mark as read"
@@ -165,11 +167,11 @@ msgstr "opcional"
 
 #: Mailnag/configuration/accountdialog.py:141
 msgid "Other (IMAP)"
-msgstr ""
+msgstr "Otro (IMAP)"
 
 #: Mailnag/configuration/accountdialog.py:142
 msgid "Other (POP3)"
-msgstr ""
+msgstr "Otro (POP3)"
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
@@ -225,7 +227,7 @@ msgstr "Cuentas"
 
 #: data/config_window.ui.h:4
 msgid "Plugins"
-msgstr ""
+msgstr "Complementos"
 
 #: data/config_window.ui.h:5
 msgid ""
@@ -234,23 +236,27 @@ msgid ""
 "Copyright (c) 2011 - 2015 Patrick Ulbrich\n"
 "and contributors."
 msgstr ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a>: un servicio de "
+"notificación de correo ampliable.\n"
+"© 2011–2015 de Patrick Ulbrich\n"
+"y colaboradores."
 
 #: data/config_window.ui.h:8
 msgid "Add Account"
-msgstr ""
+msgstr "Añadir una cuenta"
 
 #: data/config_window.ui.h:9
 msgid "Remove Account"
-msgstr ""
+msgstr "Eliminar la cuenta"
 
 #: data/config_window.ui.h:10
 msgid "Edit Account"
-msgstr ""
+msgstr "Editar la cuenta"
 
 #: data/config_window.ui.h:11
 msgid "Edit Plugin"
-msgstr ""
+msgstr "Editar el complemento"
 
 #: data/plugin_dialog.ui.h:1
 msgid "Plugin Configuration"
-msgstr ""
+msgstr "Configuración de complementos"
