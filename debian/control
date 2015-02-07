@@ -19,7 +19,6 @@ Depends:
  libgtk-3-bin (>= 3.6.4),
  python-dbus (>= 1.0.0),
  python-gobject (>= 3.2.0),
- python-httplib2 (>= 0.7.2),
  python-xdg,
  ${misc:Depends},
  ${python:Depends}
