@@ -51,7 +51,6 @@ though make sure the requirements stated below are met.
 * gir-gdkpixbuf-2.0
 * gir-glib-2.0
 * gir-gst-plugins-base-1.0
-* python-httplib2
 * python-dbus
 * pyxdg
 * gettext
