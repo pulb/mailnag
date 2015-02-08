@@ -17,7 +17,7 @@ optdepends=('networkmanager: for connectivity detection',
         'mailnag-gnome-shell: for a tighter GNOME 3 integration')
 makedepends=('gettext')
 source=('https://github.com/pulb/mailnag/archive/v1.1.0.tar.gz')
-md5sums=('f3c0df790a2f5e6b615ef804ee0e5a91')
+md5sums=('479bc76816797cf0578c5b92849d2012')
 install='mailnag.install'
 
 package() {
