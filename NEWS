@@ -12,8 +12,8 @@ Version 1.1.0 (2015-02-08):
 * Shorter notification strings
 * Added appdata file for GNOME Software app
 * Removed bash wrapper scripts
+* Misc other fixes and improvements
 * Updated translations
-* Misc bugfixes
 
 IMPORTANT NOTES FOR PACKAGERS:
 Please note that GNOME-Keyring and Networkmanager 
