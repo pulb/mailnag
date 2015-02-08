@@ -21,6 +21,6 @@ md5sums=('f3c0df790a2f5e6b615ef804ee0e5a91')
 install='mailnag.install'
 
 package() {
-  cd "${pkgname}-${pkgver}"
-  python2 setup.py install --root=${pkgdir}
+  cd $pkgname-$pkgver
+  python2 setup.py install --root="$pkgdir"
 }
