@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-01-31 21:20+0100\n"
-"PO-Revision-Date: 2014-08-03 13:52+0000\n"
+"PO-Revision-Date: 2015-02-13 16:25+0000\n"
 "Last-Translator: Pedro Beja <althaser@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-02-01 14:16+0000\n"
-"X-Generator: Launchpad (build 17306)\n"
+"X-Launchpad-Export-Date: 2015-02-15 17:44+0000\n"
+"X-Generator: Launchpad (build 17341)\n"
 "Language: Italian\n"
 "X-Loco-Source-Locale: it_IT\n"
 "X-Loco-Parser: loco_parse_po\n"
@@ -23,11 +23,11 @@ msgstr "Senza nome"
 
 #: Mailnag/plugins/unityplugin.py:98
 msgid "Ubuntu Unity"
-msgstr ""
+msgstr "Ubuntu Unity"
 
 #: Mailnag/plugins/unityplugin.py:99
 msgid "Shows new mails in Ubuntu's Messaging menu."
-msgstr ""
+msgstr "Mostra nuove mail nel menù Messaggistica di Ubuntu"
 
 #: Mailnag/plugins/unityplugin.py:118 Mailnag/plugins/libnotifyplugin.py:160
 msgid "Maximum number of visible mails:"
@@ -35,11 +35,11 @@ msgstr "Massimo numero di mail visibili:"
 
 #: Mailnag/plugins/goaplugin.py:92
 msgid "GNOME Online Accounts"
-msgstr ""
+msgstr "GNOME Online Accounts"
 
 #: Mailnag/plugins/goaplugin.py:93
 msgid "GNOME Online Accounts Integration."
-msgstr ""
+msgstr "Integrazione con GNOME Online Accounts"
 
 #: Mailnag/plugins/dbusplugin.py:83
 msgid "DBus Service"
@@ -135,12 +135,12 @@ msgstr "(e altri {0})"
 #: Mailnag/plugins/libnotifyplugin.py:282
 #, python-brace-format
 msgid "{0} new mails"
-msgstr ""
+msgstr "nuove mail"
 
 #: Mailnag/plugins/libnotifyplugin.py:256
 #: Mailnag/plugins/libnotifyplugin.py:284
 msgid "New mail"
-msgstr ""
+msgstr "Nuova mail"
 
 #: Mailnag/plugins/libnotifyplugin.py:271
 msgid "Mark as read"
