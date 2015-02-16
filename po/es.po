@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-01-31 21:20+0100\n"
-"PO-Revision-Date: 2015-02-02 13:24+0000\n"
-"Last-Translator: Adolfo Jayme <fitoschido@gmail.com>\n"
+"PO-Revision-Date: 2015-02-15 22:50+0000\n"
+"Last-Translator: dagavi <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-02-07 18:24+0000\n"
-"X-Generator: Launchpad (build 17331)\n"
+"X-Launchpad-Export-Date: 2015-02-16 17:32+0000\n"
+"X-Generator: Launchpad (build 17341)\n"
 
 #: Mailnag/common/accounts.py:49
 msgid "Unnamed"
@@ -47,7 +47,7 @@ msgstr "Servicio DBus"
 
 #: Mailnag/plugins/dbusplugin.py:84
 msgid "Exposes Mailnag's functionality via a DBus service."
-msgstr ""
+msgstr "Expone la funcionalidad de Mailnag a través de un servicio D-Bus."
 
 #: Mailnag/plugins/soundplugin.py:65
 msgid "Sound Notifications"
@@ -80,6 +80,9 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by %s pairs."
 msgstr ""
+"El siguiente script será ejecutado cuando llegue nuevo correo.\n"
+"Mailnag pasa el número total de nuevos correos al script,\n"
+"seguido por parejas de %s."
 
 #: Mailnag/plugins/spamfilterplugin.py:69
 msgid "Spam Filter"
@@ -87,7 +90,7 @@ msgstr "Filtro de correo no deseado"
 
 #: Mailnag/plugins/spamfilterplugin.py:70
 msgid "Filters out unwanted mails."
-msgstr ""
+msgstr "Filtra correos no deseados."
 
 #: Mailnag/plugins/spamfilterplugin.py:90
 msgid ""
