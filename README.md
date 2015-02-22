@@ -1,5 +1,5 @@
 # Mailnag
-An extensible mail notification daemon  
+An extensible mail notification daemon.  
 
 Mailnag is a daemon program that checks POP3 and IMAP servers for new mail.  
 On mail arrival it performs various actions provided by plugins.  
