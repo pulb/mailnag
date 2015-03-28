@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-01-31 21:20+0100\n"
-"PO-Revision-Date: 2014-10-04 09:04+0000\n"
+"PO-Revision-Date: 2015-03-23 09:08+0000\n"
 "Last-Translator: kristian <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-02-01 14:16+0000\n"
-"X-Generator: Launchpad (build 17306)\n"
+"X-Launchpad-Export-Date: 2015-03-28 12:32+0000\n"
+"X-Generator: Launchpad (build 17413)\n"
 
 #: Mailnag/common/accounts.py:49
 msgid "Unnamed"
@@ -23,11 +23,11 @@ msgstr "Namnlös"
 
 #: Mailnag/plugins/unityplugin.py:98
 msgid "Ubuntu Unity"
-msgstr ""
+msgstr "Ubuntu Unity"
 
 #: Mailnag/plugins/unityplugin.py:99
 msgid "Shows new mails in Ubuntu's Messaging menu."
-msgstr ""
+msgstr "Visar nya mail i Ubuntus Meddelandemeny"
 
 #: Mailnag/plugins/unityplugin.py:118 Mailnag/plugins/libnotifyplugin.py:160
 msgid "Maximum number of visible mails:"
@@ -35,11 +35,11 @@ msgstr "Maximalt antal av visade mail:"
 
 #: Mailnag/plugins/goaplugin.py:92
 msgid "GNOME Online Accounts"
-msgstr ""
+msgstr "Gnome's Nätkonton"
 
 #: Mailnag/plugins/goaplugin.py:93
 msgid "GNOME Online Accounts Integration."
-msgstr ""
+msgstr "Integrering med Gnome's Nätkonton."
 
 #: Mailnag/plugins/dbusplugin.py:83
 msgid "DBus Service"
@@ -51,7 +51,7 @@ msgstr "Visar Mailnag's funktioner via en DBus tjänst."
 
 #: Mailnag/plugins/soundplugin.py:65
 msgid "Sound Notifications"
-msgstr "Ljud Notifieringar"
+msgstr "Ljud Notiser"
 
 #: Mailnag/plugins/soundplugin.py:66
 msgid "Plays a sound when new mails arrive."
@@ -106,11 +106,11 @@ msgstr "LibNotify Notifieringar"
 
 #: Mailnag/plugins/libnotifyplugin.py:117
 msgid "Shows a popup when new mails arrive."
-msgstr "Visar en notifiering på skärmen när nya mail anländer."
+msgstr "Visar en notis på skärmen när nya mail anländer."
 
 #: Mailnag/plugins/libnotifyplugin.py:137
 msgid "Notification mode:"
-msgstr "Notifieringsläge:"
+msgstr "Notisläge:"
 
 #: Mailnag/plugins/libnotifyplugin.py:145
 msgid "Count of new mails"
@@ -122,7 +122,7 @@ msgstr "Summering av nya mail"
 
 #: Mailnag/plugins/libnotifyplugin.py:151
 msgid "One notification per new mail"
-msgstr "En notifiering per nytt mail"
+msgstr "En notis per nytt mail"
 
 #: Mailnag/plugins/libnotifyplugin.py:249
 #: Mailnag/plugins/libnotifyplugin.py:251
@@ -134,7 +134,7 @@ msgstr "(och {0} till)"
 #: Mailnag/plugins/libnotifyplugin.py:282
 #, python-brace-format
 msgid "{0} new mails"
-msgstr "{0} nytt/nya mail"
+msgstr "Du har fått {0} mail"
 
 #: Mailnag/plugins/libnotifyplugin.py:256
 #: Mailnag/plugins/libnotifyplugin.py:284
