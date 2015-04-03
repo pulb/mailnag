@@ -3,7 +3,7 @@
 #
 # mails.py
 #
-# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -65,16 +65,12 @@ class MailCollector:
 			if srv == None:
 				continue
 			elif acc.imap: # IMAP
-				if len(acc.folder.strip()) == 0:
-					folder_list = ["INBOX"]
+				if len(acc.folders) == 0:
+					folder_list = [ 'INBOX' ]
 				else:
-					folder_list = acc.folder.split(',')
+					folder_list = acc.folders
 					
 				for folder in folder_list:	
-					folder = folder.strip()
-					if len(folder) == 0:
-						continue
-					
 					# select IMAP folder
 					srv.select(folder, readonly = True)
 					try:

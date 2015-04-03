@@ -26,6 +26,7 @@ import poplib
 import logging
 import Mailnag.common.imaplib2 as imaplib
 from Mailnag.common.i18n import _
+from Mailnag.common.utils import splitstr
 
 account_defaults = {
 	'enabled'			: '0',
@@ -47,7 +48,7 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 #
 class Account:
 	def __init__(self, enabled = False, name = _('Unnamed'), user = '', \
-		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folder = '' ):
+		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = []):
 		
 		self.enabled = enabled # bool
 		self.name = name
@@ -59,7 +60,7 @@ class Account:
 		self.ssl = ssl # bool
 		self.imap = imap # bool		
 		self.idle = idle # bool
-		self.folder = folder
+		self.folders = folders
 		self._conn = None
 
 
@@ -87,7 +88,7 @@ class Account:
 	
 	def get_id(self):
 		# TODO : this id is not really unique...
-		return str(hash(self.user + self.server + self.folder))
+		return str(hash(self.user + self.server + ', '.join(self.folders)))
 	
 
 	def _has_IMAP_connection(self):
@@ -236,13 +237,13 @@ class AccountManager:
 				ssl			= bool(int(	self._get_account_cfg(cfg, section_name, 'ssl')		))
 				imap		= bool(int(	self._get_account_cfg(cfg, section_name, 'imap')	))
 				idle		= bool(int(	self._get_account_cfg(cfg, section_name, 'idle')	))
-				folder		= 			self._get_account_cfg(cfg, section_name, 'folder')
+				folders		= splitstr(self._get_account_cfg(cfg, section_name, 'folder'), ',')
 
 				if self._credentialstore != None:
 					protocol = 'imap' if imap else 'pop'
 					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
 				
-				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folder)
+				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folders)
 				self._accounts.append(acc)
 
 			i = i + 1
@@ -289,7 +290,7 @@ class AccountManager:
 			cfg.set(section_name, 'ssl', int(acc.ssl))
 			cfg.set(section_name, 'imap', int(acc.imap))
 			cfg.set(section_name, 'idle', int(acc.idle))
-			cfg.set(section_name, 'folder', acc.folder)
+			cfg.set(section_name, 'folder', ', '.join(acc.folders))
 			
 			if self._credentialstore != None:
 				protocol = 'imap' if acc.imap else 'pop'

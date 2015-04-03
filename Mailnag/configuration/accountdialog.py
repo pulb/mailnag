@@ -3,7 +3,7 @@
 #
 # accountdialog.py
 #
-# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 from gi.repository import GLib, Gtk
 from Mailnag.common.dist_cfg import PACKAGE_NAME
 from Mailnag.common.i18n import _
-from Mailnag.common.utils import get_data_file
+from Mailnag.common.utils import get_data_file, splitstr
 
 IDX_GMAIL	= 0
 IDX_GMX		= 1
@@ -66,14 +66,14 @@ class AccountDialog:
 		self._entry_account_server = builder.get_object("entry_account_server")		
 		self._label_account_port = builder.get_object("label_account_port")
 		self._entry_account_port = builder.get_object("entry_account_port")
-		self._label_account_folder = builder.get_object("label_account_folder")
-		self._entry_account_folder = builder.get_object("entry_account_folder")
+		self._label_account_folders = builder.get_object("label_account_folders")
+		self._entry_account_folders = builder.get_object("entry_account_folders")
 		self._chk_account_push = builder.get_object("chk_account_push")
 		self._chk_account_ssl = builder.get_object("chk_account_ssl")
 		self._button_save = builder.get_object("button_save")
 
 		self._entry_account_port.set_placeholder_text(_("optional"))
-		self._entry_account_folder.set_placeholder_text(_("optional"))
+		self._entry_account_folders.set_placeholder_text(_("optional"))
 		
 		
 	def run(self):
@@ -84,7 +84,7 @@ class AccountDialog:
 		self._entry_account_password.set_text(self._acc.password)
 		self._entry_account_server.set_text(self._acc.server)
 		self._entry_account_port.set_text(self._acc.port)
-		self._entry_account_folder.set_text(self._acc.folder)
+		self._entry_account_folders.set_text(', '.join(self._acc.folders))
 		self._chk_account_push.set_active(self._acc.idle)
 		self._chk_account_ssl.set_active(self._acc.ssl)
 			
@@ -102,11 +102,11 @@ class AccountDialog:
 			
 				if acctype == IDX_POP3:
 					self._acc.imap = False
-					self._acc.folder = ''
+					self._acc.folders = []
 					self._acc.idle = False
 				elif acctype == IDX_IMAP:
 					self._acc.imap = True
-					self._acc.folder = self._entry_account_folder.get_text()
+					self._acc.folders = splitstr(self._entry_account_folders.get_text(), ',')
 					self._acc.idle = self._chk_account_push.get_active()
 					
 			else: # known provider (imap only)
@@ -115,7 +115,7 @@ class AccountDialog:
 				self._acc.password = self._entry_account_password.get_text()
 				self._acc.ssl = True
 				self._acc.imap = True
-				self._acc.folder = self._entry_account_folder.get_text()
+				self._acc.folders = splitstr(self._entry_account_folders.get_text(), ',')
 				self._acc.idle = not self._has_multiple_folders()
 				
 				if acctype < len(PROVIDER_CONFIGS):
@@ -161,7 +161,7 @@ class AccountDialog:
 	
 	
 	def _has_multiple_folders(self):
-		return ("," in self._entry_account_folder.get_text())
+		return ("," in self._entry_account_folders.get_text())
 	
 	
 	def _on_btn_cancel_clicked(self, widget):
@@ -173,7 +173,7 @@ class AccountDialog:
 
 	
 	def _on_entry_changed(self, widget):		
-		if widget is self._entry_account_folder:
+		if widget is self._entry_account_folders:
 			# disable IMAP Push checkbox if multiple folders are specifed
 			if self._has_multiple_folders():
 				self._chk_account_push.set_active(False)
@@ -205,8 +205,8 @@ class AccountDialog:
 			self._entry_account_server.set_visible(True)
 			self._label_account_port.set_visible(True)
 			self._entry_account_port.set_visible(True)
-			self._label_account_folder.set_visible(False)
-			self._entry_account_folder.set_visible(False)
+			self._label_account_folders.set_visible(False)
+			self._entry_account_folders.set_visible(False)
 			self._chk_account_push.set_visible(False)
 			self._chk_account_ssl.set_visible(True)
 		elif acctype == IDX_IMAP:
@@ -216,8 +216,8 @@ class AccountDialog:
 			self._entry_account_server.set_visible(True)
 			self._label_account_port.set_visible(True)
 			self._entry_account_port.set_visible(True)
-			self._label_account_folder.set_visible(True)
-			self._entry_account_folder.set_visible(True)
+			self._label_account_folders.set_visible(True)
+			self._entry_account_folders.set_visible(True)
 			self._chk_account_push.set_visible(True)
 			self._chk_account_ssl.set_visible(True)
 		else: # known provider (imap only)
@@ -227,8 +227,8 @@ class AccountDialog:
 			self._entry_account_server.set_visible(False)
 			self._label_account_port.set_visible(False)
 			self._entry_account_port.set_visible(False)
-			self._label_account_folder.set_visible(True)
-			self._entry_account_folder.set_visible(True)
+			self._label_account_folders.set_visible(True)
+			self._entry_account_folders.set_visible(True)
 			self._chk_account_push.set_visible(False)
 			self._chk_account_ssl.set_visible(False)
 

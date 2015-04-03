@@ -55,7 +55,7 @@ class Idler(object):
 					
 		# Need to get out of AUTH mode of fresh connections.
 		if self._conn.state == AUTH:
-			self._select(self._conn, account.folder)
+			self._select(self._conn, account)
 
 
 	def start(self):
@@ -146,13 +146,12 @@ class Idler(object):
 				logging.info("Successfully reconnected Idler thread for account '%s'." % self._account.name)
 		
 		if self._conn != None:
-			self._select(self._conn, self._account.folder)
+			self._select(self._conn, self._account)
 	
 					
-	def _select(self, conn, folder):
-		folder = folder.strip()
-		if len(folder) > 0:
-			conn.select(folder)
+	def _select(self, conn, account):
+		if len(account.folders) == 1:
+			conn.select(acount.folders[0])
 		else:
 			conn.select("INBOX")
 	

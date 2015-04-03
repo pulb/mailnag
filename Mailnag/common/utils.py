@@ -3,7 +3,7 @@
 #
 # utils.py
 #
-# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2007 Marco Ferragina <marco.ferragina@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -56,6 +56,10 @@ def get_data_file(filename):
 	return None
 
 
+def splitstr(strn, delimeter):
+	return [s.strip() for s in strn.split(delimeter) if s.strip()]
+
+			
 def fix_cwd():
 	# Change into local Mailnag source dir, where paths 
 	# in dist_cfg.py point to (e.g. "./locale").
