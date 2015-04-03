@@ -3,7 +3,7 @@
 #
 # idlers.py
 #
-# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 import threading
 import time
 import logging
-from Mailnag.daemon.imaplib2 import AUTH
+from Mailnag.common.imaplib2 import AUTH
 from Mailnag.common.exceptions import InvalidOperationException
 
 

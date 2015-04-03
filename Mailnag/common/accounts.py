@@ -24,7 +24,7 @@
 
 import poplib
 import logging
-import Mailnag.daemon.imaplib2 as imaplib
+import Mailnag.common.imaplib2 as imaplib
 from Mailnag.common.i18n import _
 
 account_defaults = {
