@@ -1,0 +1,259 @@
+# Chinese (Traditional) translation for mailnag
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the mailnag package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mailnag\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-01-31 21:20+0100\n"
+"PO-Revision-Date: 2014-07-14 11:16+0000\n"
+"Last-Translator: Yan-ren Tsai <elleryq@gmail.com>\n"
+"Language-Team: Chinese (Traditional) <zh_TW@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-02-01 14:16+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
+
+#: Mailnag/common/accounts.py:49
+msgid "Unnamed"
+msgstr "未命名"
+
+#: Mailnag/plugins/unityplugin.py:98
+msgid "Ubuntu Unity"
+msgstr ""
+
+#: Mailnag/plugins/unityplugin.py:99
+msgid "Shows new mails in Ubuntu's Messaging menu."
+msgstr "在 Ubuntu 的訊息選單裡顯示新郵件"
+
+#: Mailnag/plugins/unityplugin.py:118 Mailnag/plugins/libnotifyplugin.py:160
+msgid "Maximum number of visible mails:"
+msgstr "可顯示郵件的最大數量"
+
+#: Mailnag/plugins/goaplugin.py:92
+msgid "GNOME Online Accounts"
+msgstr ""
+
+#: Mailnag/plugins/goaplugin.py:93
+msgid "GNOME Online Accounts Integration."
+msgstr ""
+
+#: Mailnag/plugins/dbusplugin.py:83
+msgid "DBus Service"
+msgstr "DBus服務"
+
+#: Mailnag/plugins/dbusplugin.py:84
+msgid "Exposes Mailnag's functionality via a DBus service."
+msgstr "允許透過DBus服務使用Mailnag的功能"
+
+#: Mailnag/plugins/soundplugin.py:65
+msgid "Sound Notifications"
+msgstr "聲音通知"
+
+#: Mailnag/plugins/soundplugin.py:66
+msgid "Plays a sound when new mails arrive."
+msgstr "當新郵件到達時播放聲音。"
+
+#: Mailnag/plugins/userscriptplugin.py:62
+msgid "User Script"
+msgstr "用戶腳本"
+
+#: Mailnag/plugins/userscriptplugin.py:63
+msgid "Runs an user defined script on mail arrival."
+msgstr "運行在郵件到達時的用戶自定義腳本。"
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "sender"
+msgstr "寄件人"
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "subject"
+msgstr "主題"
+
+#: Mailnag/plugins/userscriptplugin.py:84
+#, python-format
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by %s pairs."
+msgstr "當有新郵件時，將會執行下列的腳本(script)\n"
+"Mailnag 會將新郵件的總數傳給腳本(script)，\n"
+"格式是 %s 。"
+
+#: Mailnag/plugins/spamfilterplugin.py:69
+msgid "Spam Filter"
+msgstr "垃圾郵件過濾器"
+
+#: Mailnag/plugins/spamfilterplugin.py:70
+msgid "Filters out unwanted mails."
+msgstr "過濾掉不想要的郵件。"
+
+#: Mailnag/plugins/spamfilterplugin.py:90
+msgid ""
+"Mailnag will ignore mails containing at least one of \n"
+"the following words in subject or sender."
+msgstr ""
+"Mailnag 將會忽略主旨或寄件者裡帶有這些字詞的郵件。"
+
+#: Mailnag/plugins/libnotifyplugin.py:116
+msgid "LibNotify Notifications"
+msgstr "彈出視窗通知"
+
+#: Mailnag/plugins/libnotifyplugin.py:117
+msgid "Shows a popup when new mails arrive."
+msgstr "當新郵件到達時彈出訊息視窗。"
+
+#: Mailnag/plugins/libnotifyplugin.py:137
+msgid "Notification mode:"
+msgstr "通知模式"
+
+#: Mailnag/plugins/libnotifyplugin.py:145
+msgid "Count of new mails"
+msgstr "新郵件數量"
+
+#: Mailnag/plugins/libnotifyplugin.py:148
+msgid "Summary of new mails"
+msgstr "新郵件摘要"
+
+#: Mailnag/plugins/libnotifyplugin.py:151
+msgid "One notification per new mail"
+msgstr "每封新郵件通知一次"
+
+#: Mailnag/plugins/libnotifyplugin.py:249
+#: Mailnag/plugins/libnotifyplugin.py:251
+#, python-brace-format
+msgid "(and {0} more)"
+msgstr "（ 還有 {0} 條）"
+
+#: Mailnag/plugins/libnotifyplugin.py:254
+#: Mailnag/plugins/libnotifyplugin.py:282
+#, python-brace-format
+msgid "{0} new mails"
+msgstr "{0} 封新郵件"
+
+#: Mailnag/plugins/libnotifyplugin.py:256
+#: Mailnag/plugins/libnotifyplugin.py:284
+msgid "New mail"
+msgstr "新郵件"
+
+#: Mailnag/plugins/libnotifyplugin.py:271
+msgid "Mark as read"
+msgstr "標記爲已讀"
+
+#: Mailnag/daemon/mails.py:170
+msgid "No subject"
+msgstr "無主題"
+
+#: Mailnag/configuration/configwindow.py:108
+#: Mailnag/configuration/configwindow.py:133
+msgid "Enabled"
+msgstr "已啓用"
+
+#: Mailnag/configuration/configwindow.py:114
+#: Mailnag/configuration/configwindow.py:140
+msgid "Name"
+msgstr "名稱"
+
+#: Mailnag/configuration/configwindow.py:346
+msgid "Delete this account:"
+msgstr "刪除該帳戶："
+
+#: Mailnag/configuration/accountdialog.py:75
+#: Mailnag/configuration/accountdialog.py:76
+msgid "optional"
+msgstr "可選"
+
+#: Mailnag/configuration/accountdialog.py:141
+msgid "Other (IMAP)"
+msgstr "其他（IMAP）"
+
+#: Mailnag/configuration/accountdialog.py:142
+msgid "Other (POP3)"
+msgstr "其他（POP3）"
+
+#: data/account_dialog.ui.h:1
+msgid "Mail Account"
+msgstr "郵件賬戶"
+
+#: data/account_dialog.ui.h:2
+msgid "Enable Push-IMAP"
+msgstr "啓用 Push-IMAP"
+
+#: data/account_dialog.ui.h:3
+msgid "Enable SSL encryption"
+msgstr "啓用 SSL 加密"
+
+#: data/account_dialog.ui.h:4
+msgid "Accountname:"
+msgstr "賬戶名稱："
+
+#: data/account_dialog.ui.h:5
+msgid "Account type:"
+msgstr "賬戶類型："
+
+#: data/account_dialog.ui.h:6
+msgid "User:"
+msgstr "用戶名："
+
+#: data/account_dialog.ui.h:7
+msgid "Password:"
+msgstr "密碼:"
+
+#: data/account_dialog.ui.h:8
+msgid "Server:"
+msgstr "伺服器:"
+
+#: data/account_dialog.ui.h:9
+msgid "Port:"
+msgstr "通訊埠："
+
+#: data/account_dialog.ui.h:10
+msgid "Folders:"
+msgstr ""
+
+#: data/config_window.ui.h:1
+msgid "Mailnag Configuration"
+msgstr "Mailnag 配置"
+
+#: data/config_window.ui.h:2
+msgid "General"
+msgstr "基本設置"
+
+#: data/config_window.ui.h:3
+msgid "Accounts"
+msgstr "帳戶"
+
+#: data/config_window.ui.h:4
+msgid "Plugins"
+msgstr ""
+
+#: data/config_window.ui.h:5
+msgid ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extensible mail "
+"notification daemon.\n"
+"Copyright (c) 2011 - 2015 Patrick Ulbrich\n"
+"and contributors."
+msgstr ""
+
+#: data/config_window.ui.h:8
+msgid "Add Account"
+msgstr "增加帳戶"
+
+#: data/config_window.ui.h:9
+msgid "Remove Account"
+msgstr "刪除帳戶"
+
+#: data/config_window.ui.h:10
+msgid "Edit Account"
+msgstr "編輯帳戶"
+
+#: data/config_window.ui.h:11
+msgid "Edit Plugin"
+msgstr "編輯 Plugin"
+
+#: data/plugin_dialog.ui.h:1
+msgid "Plugin Configuration"
+msgstr "Plugin 配置"
