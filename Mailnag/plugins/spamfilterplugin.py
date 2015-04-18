@@ -97,6 +97,7 @@ class SpamfilterPlugin(Plugin):
 		scrollwin = Gtk.ScrolledWindow()
 		scrollwin.set_shadow_type(Gtk.ShadowType.IN)
 		scrollwin.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+		scrollwin.set_size_request(-1, 60)
 		
 		txtbuffer = Gtk.TextBuffer()
 		txtview = Gtk.TextView()
