@@ -61,10 +61,14 @@ class MailCollector:
 		
 		for acc in self._accounts:
 			# get server connection for this account
-			conn = acc.get_connection(use_existing = True)
-			if conn == None:
+			conn = None
+			try:
+				conn = acc.get_connection(use_existing = True)
+			except Exception as ex:
+				logging.error("Failed to connect to account '%s' (%s)." % (acc.name, ex))
 				continue
-			elif acc.imap: # IMAP
+
+			if acc.imap: # IMAP
 				if len(acc.folders) == 0:
 					folder_list = [ 'INBOX' ]
 				else:

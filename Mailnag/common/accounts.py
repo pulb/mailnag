@@ -123,13 +123,12 @@ class Account:
 			
 			self._conn = conn
 		except:
-			logging.error("Cannot connect to IMAP account '%s'." % self.server)
 			try:
 				if conn != None:
 					# conn.close() # allowed in SELECTED state only
 					conn.logout()
-			except:
-				pass		
+			except:	pass			
+			raise # re-throw exception
 		
 		return self._conn
 	
@@ -164,12 +163,11 @@ class Account:
 			
 			self._conn = conn
 		except:
-			logging.error("Cannot connect to POP account: '%s'." % self.server)
 			try:
 				if conn != None:
 					conn.quit()
-			except:
-				pass	
+			except:	pass
+			raise # re-throw exception
 		
 		return self._conn
 

@@ -29,9 +29,6 @@ from Mailnag.common.imaplib2 import AUTH
 from Mailnag.common.exceptions import InvalidOperationException
 
 
-class ConnectionException(Exception):
-	def __init__(self, message):
-		Exception.__init__(self, message)
 #
 # Idler class
 #
@@ -49,10 +46,6 @@ class Idler(object):
 		self._conn = account.get_connection(use_existing = True)
 		self._disposed = False
 				
-		if self._conn == None:
-			raise ConnectionException(
-				"Failed to establish a connection for account '%s'" % account.name)
-					
 		# Need to get out of AUTH mode of fresh connections.
 		if self._conn.state == AUTH:
 			self._select(self._conn, account)
@@ -136,15 +129,15 @@ class Idler(object):
 		
 		while (self._conn == None) and (not self._event.isSet()): 
 			logging.info("Trying to reconnect Idler thread for account '%s'." % self._account.name)
-			self._conn = self._account.get_connection(use_existing = False)
-			if self._conn == None:
-				logging.error("Failed to reconnect Idler thread for account '%s'." % self._account.name)
+			try:
+				self._conn = self._account.get_connection(use_existing = False)
+				logging.info("Successfully reconnected Idler thread for account '%s'." % self._account.name)
+			except Exception as ex:
+				logging.error("Failed to reconnect Idler thread for account '%s' (%s)." % (self._account.name, ex))
 				logging.info("Trying to reconnect Idler thread for account '%s' in %s minutes" % 
 					(self._account.name, str(self.RECONNECT_RETRY_INTERVAL)))
 				self._wait(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer the server
-			else:
-				logging.info("Successfully reconnected Idler thread for account '%s'." % self._account.name)
-		
+			
 		if self._conn != None:
 			self._select(self._conn, self._account)
 	
@@ -181,7 +174,7 @@ class IdlerRunner:
 					idler.start()
 					self._idlerlist.append(idler)
 				except Exception as ex:
-					logging.error("Error: Failed to create an idler thread for account '%s'" % acc.name)
+					logging.error("Error: Failed to create an idler thread for account '%s' (%s)" % (acc.name, ex))
 					
 	
 	def dispose(self):
