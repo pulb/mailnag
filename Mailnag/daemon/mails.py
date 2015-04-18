@@ -61,8 +61,8 @@ class MailCollector:
 		
 		for acc in self._accounts:
 			# get server connection for this account
-			srv = acc.get_connection(use_existing = True)
-			if srv == None:
+			conn = acc.get_connection(use_existing = True)
+			if conn == None:
 				continue
 			elif acc.imap: # IMAP
 				if len(acc.folders) == 0:
@@ -72,9 +72,9 @@ class MailCollector:
 					
 				for folder in folder_list:	
 					# select IMAP folder
-					srv.select(folder, readonly = True)
+					conn.select(folder, readonly = True)
 					try:
-						status, data = srv.search(None, 'UNSEEN') # ALL or UNSEEN
+						status, data = conn.search(None, 'UNSEEN') # ALL or UNSEEN
 					except:
 						logging.warning('Folder %s does not exist.', folder)
 						continue
@@ -83,7 +83,7 @@ class MailCollector:
 						logging.debug('Folder %s in status %s | Data: %s', (folder, status, data))
 						continue # Bugfix LP-735071
 					for num in data[0].split():
-						typ, msg_data = srv.fetch(num, '(BODY.PEEK[HEADER])') # header only (without setting READ flag)
+						typ, msg_data = conn.fetch(num, '(BODY.PEEK[HEADER])') # header only (without setting READ flag)
 						for response_part in msg_data:
 							if isinstance(response_part, tuple):
 								try:
@@ -108,15 +108,15 @@ class MailCollector:
 				
 				# don't close IMAP idle connections
 				if not acc.idle:
-					srv.close()
-					srv.logout()
+					conn.close()
+					conn.logout()
 			else: # POP
 				# number of mails on the server
-				mail_total = len(srv.list()[1])
+				mail_total = len(conn.list()[1])
 				for i in range(1, mail_total + 1): # for each mail
 					try:
 						# header plus first 0 lines from body
-						message = srv.top(i, 0)[1]
+						message = conn.top(i, 0)[1]
 					except:
 						logging.debug("Couldn't get POP message.")
 						continue
@@ -144,7 +144,7 @@ class MailCollector:
 						mail_ids[id] = None
 
 				# disconnect from Email-Server
-				srv.quit()
+				conn.quit()
 		
 		# sort mails
 		if sort:
