@@ -80,7 +80,6 @@ class MailnagDaemon:
 			accountman = AccountManager(CredentialStore.from_string(self._cfg.get('core', 'credentialstore')))
 			accountman.load_from_cfg(self._cfg, enabled_only = True)
 			self._accounts = accountman.to_list()
-			for a in self._accounts: a.get_imap_folders()
 			self._hookreg = HookRegistry()
 			self._conntest = ConnectivityTest(testmode_mapping[self._cfg.get('core', 'connectivity_test')])
 			
