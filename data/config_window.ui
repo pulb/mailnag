@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.19.0 -->
 <interface>
   <requires lib="gtk+" version="3.6"/>
   <object class="GtkListStore" id="liststore_accounts">
@@ -25,11 +25,8 @@
     </columns>
   </object>
   <object class="GtkWindow" id="config_window">
-    <property name="width_request">400</property>
-    <property name="height_request">380</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Mailnag Configuration</property>
-    <property name="resizable">False</property>
     <signal name="delete-event" handler="config_window_deleted" swapped="no"/>
     <child>
       <object class="GtkBox" id="box1">
@@ -111,6 +108,9 @@
                   <object class="GtkBox" id="box2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="margin_left">12</property>
+                    <property name="margin_right">12</property>
+                    <property name="margin_bottom">12</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">12</property>
                     <child>
