@@ -25,7 +25,6 @@
 import poplib
 import logging
 import Mailnag.common.imaplib2 as imaplib
-from Mailnag.common.i18n import _
 from Mailnag.common.utils import splitstr
 
 account_defaults = {
@@ -47,7 +46,7 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 # Account class
 #
 class Account:
-	def __init__(self, enabled = False, name = _('Unnamed'), user = '', \
+	def __init__(self, enabled = False, name = '', user = '', \
 		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = []):
 		
 		self.enabled = enabled # bool
@@ -86,6 +85,35 @@ class Account:
 			return self._has_POP3_connection()
 	
 	
+	# Requests folder names (list) from a server.
+	# Relevant for IMAP accounts only.
+	# Returns an empty list when used on POP3 accounts.
+	def request_server_folders(self):
+		lst = []
+		
+		if not self.imap:
+			return lst
+		
+		# Always create a new connection as an existing one may 
+		# be used for IMAP IDLE.
+		conn = self._get_IMAP_connection(use_existing = False)
+
+		try:
+			status, data = conn.list('', '*')
+		finally:
+			# conn.close() # allowed in SELECTED state only
+			conn.logout()
+			
+		for s in data:
+			folder = s.split(' "/" ')[-1]
+			if (folder[0] == '"') and (folder[-1] == '"'):
+				folder = folder[1:-1]
+			
+			lst.append(folder)
+		
+		return lst
+		
+		
 	def get_id(self):
 		# TODO : this id is not really unique...
 		return str(hash(self.user + self.server + ', '.join(self.folders)))

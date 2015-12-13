@@ -322,7 +322,7 @@ class ConfigWindow:
 		
 
 	def _on_btn_add_account_clicked(self, widget):
-		acc = Account(enabled = True, name = '')
+		acc = Account(enabled = True)
 		d = AccountDialog(self._window, acc)
 	
 		if d.run() == 1:
