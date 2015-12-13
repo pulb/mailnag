@@ -54,7 +54,6 @@ class LibNotifyPlugin(Plugin):
 		self._notification_server_ready = False
 		self._is_gnome = False
 		self._mails_added_hook = None
-		self._mails_removed_hook = None
 		
 	
 	def enable(self):
@@ -73,21 +72,13 @@ class LibNotifyPlugin(Plugin):
 		def mails_added_hook(new_mails, all_mails):
 			self._notify_async(new_mails, all_mails)
 		
-		def mails_removed_hook(remaining_mails):
-			if remaining_mails == 0:
-				# no mails (e.g. email client has been launched) -> close notifications
-				self._close_notifications()
-		
 		self._mails_added_hook = mails_added_hook
-		self._mails_removed_hook = mails_removed_hook
 		
 		controller = self.get_mailnag_controller()
 		hooks = controller.get_hooks()
 		
 		hooks.register_hook_func(HookTypes.MAILS_ADDED, 
 			self._mails_added_hook)
-		hooks.register_hook_func(HookTypes.MAILS_REMOVED, 
-			self._mails_removed_hook)
 		
 	
 	def disable(self):
@@ -98,11 +89,6 @@ class LibNotifyPlugin(Plugin):
 			hooks.unregister_hook_func(HookTypes.MAILS_ADDED,
 				self._mails_added_hook)
 			self._mails_added_hook = None
-		
-		if self._mails_removed_hook != None:
-			hooks.unregister_hook_func(HookTypes.MAILS_REMOVED,
-				self._mails_removed_hook)
-			self._mails_removed_hook = None
 		
 		# Abort possible notification server wait
 		self._notification_server_wait_event.set()
@@ -115,7 +101,7 @@ class LibNotifyPlugin(Plugin):
 	def get_manifest(self):
 		return (_("LibNotify Notifications"),
 				_("Shows a popup when new mails arrive."),
-				"1.1",
+				"1.1.1",
 				"Patrick Ulbrich <zulu99@gmx.net>",
 				False)
 
