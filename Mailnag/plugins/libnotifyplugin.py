@@ -31,15 +31,13 @@ from Mailnag.common.subproc import start_subprocess
 from Mailnag.common.exceptions import InvalidOperationException
 from Mailnag.daemon.mails import sort_mails
 
-
-MAX_VISIBLE_MAILS_LIMIT		= 20.0
-
-NOTIFICATION_MODE_COUNT		= '0'
-NOTIFICATION_MODE_SUMMARY	= '1'
-NOTIFICATION_MODE_SINGLE	= '2'
+NOTIFICATION_MODE_COUNT			= '0'
+NOTIFICATION_MODE_SHORT_SUMMARY	= '3'
+NOTIFICATION_MODE_SUMMARY		= '1'
+NOTIFICATION_MODE_SINGLE		= '2'
 
 plugin_defaults = { 
-	'notification_mode' : NOTIFICATION_MODE_SUMMARY,
+	'notification_mode' : NOTIFICATION_MODE_SHORT_SUMMARY,
 	'max_visible_mails' : '10'
 }
 
@@ -115,6 +113,13 @@ class LibNotifyPlugin(Plugin):
 	
 	
 	def get_config_ui(self):
+		radio_mapping = [
+			(NOTIFICATION_MODE_COUNT,				Gtk.RadioButton(label = _('Count of new mails'))),
+			(NOTIFICATION_MODE_SHORT_SUMMARY,		Gtk.RadioButton(label = _('Short summary of new mails'))),
+			(NOTIFICATION_MODE_SUMMARY,				Gtk.RadioButton(label = _('Detailed summary of new mails'))),
+			(NOTIFICATION_MODE_SINGLE,				Gtk.RadioButton(label = _('One notification per new mail')))
+		]
+
 		box = Gtk.Box()
 		box.set_spacing(12)
 		box.set_orientation(Gtk.Orientation.VERTICAL)
@@ -128,60 +133,33 @@ class LibNotifyPlugin(Plugin):
 		inner_box.set_spacing(6)
 		inner_box.set_orientation(Gtk.Orientation.VERTICAL)
 		
-		cb_count = Gtk.RadioButton(label = _('Count of new mails'))
-		inner_box.pack_start(cb_count, False, False, 0)
-		
-		cb_summary = Gtk.RadioButton(label = _('Summary of new mails'), group = cb_count)
-		inner_box.pack_start(cb_summary, False, False, 0)
-		
-		cb_single = Gtk.RadioButton(label = _('One notification per new mail'), group = cb_count)
-		inner_box.pack_start(cb_single, False, False, 0)
+		last_radio = None
+		for m, r in radio_mapping:
+			if last_radio != None:
+				r.join_group(last_radio)
+			inner_box.pack_start(r, False, False, 0)
+			last_radio = r
 		
 		alignment = Gtk.Alignment()
 		alignment.set_padding(0, 6, 18, 0)
 		alignment.add(inner_box)
 		box.pack_start(alignment, False, False, 0)
 		
-		label = Gtk.Label()
-		label.set_markup('<b>%s</b>' % _('Maximum number of visible mails:'))
-		label.set_alignment(0.0, 0.0)
-		box.pack_start(label, False, False, 0)
-		
-		spinner = Gtk.SpinButton.new_with_range(1.0, MAX_VISIBLE_MAILS_LIMIT, 1.0)
-		
-		alignment = Gtk.Alignment()
-		alignment.set_padding(0, 0, 18, 0)
-		alignment.add(spinner)
-		
-		box.pack_start(alignment, False, False, 0)
+		box._radio_mapping = radio_mapping
 		
 		return box
 	
 	
 	def load_ui_from_config(self, config_ui):
-		config = self.get_config()
-		inner_box = config_ui.get_children()[1].get_child()
-		cb = inner_box.get_children()[int(config['notification_mode'])]
-		cb.set_active(True)
-		
-		max_mails = float(config['max_visible_mails'])
-		spinner = config_ui.get_children()[3].get_child()
-		spinner.set_value(max_mails)
+		config = self.get_config()		
+		radio = [ r for m, r in config_ui._radio_mapping if m == config['notification_mode'] ][0]
+		radio.set_active(True)
 	
 	
 	def save_ui_to_config(self, config_ui):
 		config = self.get_config()
-		inner_box = config_ui.get_children()[1].get_child()
-		idx = 0
-		for cb in inner_box.get_children():
-			if cb.get_active():
-				config['notification_mode'] = str(idx)
-				break
-			idx += 1
-		
-		spinner = config_ui.get_children()[3].get_child()
-		max_mails = spinner.get_value()
-		config['max_visible_mails'] = str(int(max_mails))
+		mode = [ m for m, r in config_ui._radio_mapping if r.get_active() ] [0]
+		config['notification_mode'] = mode
 
 
 	def _notify_async(self, new_mails, all_mails):
@@ -197,6 +175,8 @@ class LibNotifyPlugin(Plugin):
 				config = self.get_config()
 				if config['notification_mode'] == NOTIFICATION_MODE_COUNT:
 					self._notify_count(len(all_mails))
+				elif config['notification_mode'] == NOTIFICATION_MODE_SHORT_SUMMARY:
+					self._notify_short_summary(new_mails, all_mails)
 				elif config['notification_mode'] == NOTIFICATION_MODE_SUMMARY:
 					self._notify_summary(new_mails, all_mails)
 				else:
@@ -207,17 +187,48 @@ class LibNotifyPlugin(Plugin):
 		t.start()
 	
 	
+	def _notify_short_summary(self, new_mails, all_mails):
+		summary = ""
+		body = ""
+		lst = []
+		mails = self._prepend_new_mails(new_mails, all_mails)
+		mail_count = len(mails)
+		
+		if len(self._notifications) == 0:
+			self._notifications['0'] = self._get_notification(" ", None, None) # empty string will emit a gtk warning
+		
+		i = 0
+		n = 0
+		while (n < 3) and (i < mail_count):
+			s = self._get_sender(mails[i])
+			if s not in lst:
+				lst.append(s)
+				n += 1
+			i += 1
+		
+		if self._is_gnome:
+			senders = "<i>%s</i>" % ", ".join(lst)
+		else:
+			senders = ", ".join(lst)
+		
+		if mail_count > 1:
+			summary = _("{0} new mails").format(str(mail_count))
+			if (mail_count - i) > 1:
+				body = _("From {0} and others.").format(senders)
+			else:
+				body = _("From {0}.").format(senders)
+		else:
+			summary = _("New mail")
+			body = _("From {0}.").format(senders)
+		
+		self._notifications['0'].update(summary, body, "mail-unread")
+		self._notifications['0'].show()
+		
+	
 	def _notify_summary(self, new_mails, all_mails):
 		summary = ""		
 		body = ""
-		
-		# The mail list (all_mails) is sorted by date (mails with most recent 
-		# date on top). New mails with no date or older mails that come in 
-		# delayed won't be listed on top. So if a mail with no or an older date 
-		# arrives, it gives the impression that the top most mail (i.e. the mail 
-		# with the most recent date) is re-notified.
-		# To fix that, simply put new mails on top explicitly.  
-		mails = new_mails + [m for m in all_mails if m not in new_mails]
+		mails = self._prepend_new_mails(new_mails, all_mails)
 		
 		if len(self._notifications) == 0:
 			self._notifications['0'] = self._get_notification(" ", None, None) # empty string will emit a gtk warning
@@ -324,6 +335,16 @@ class LibNotifyPlugin(Plugin):
 		name, addr = mail.sender
 		if len(name) > 0: return name
 		else: return addr
+	
+	
+	def _prepend_new_mails(self, new_mails, all_mails):
+		# The mail list (all_mails) is sorted by date (mails with most recent 
+		# date on top). New mails with no date or older mails that come in 
+		# delayed won't be listed on top. So if a mail with no or an older date 
+		# arrives, it gives the impression that the top most mail (i.e. the mail 
+		# with the most recent date) is re-notified.
+		# To fix that, simply put new mails on top explicitly.  
+		return new_mails + [m for m in all_mails if m not in new_mails]
 
 
 def get_default_mail_reader():
