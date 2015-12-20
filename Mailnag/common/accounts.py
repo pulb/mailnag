@@ -103,9 +103,19 @@ class Account:
 		finally:
 			# conn.close() # allowed in SELECTED state only
 			conn.logout()
+		
+		separators = [ ' "/" ', ' "." ' ]
+		for d in data:
+			folder = ''
+			for s in separators:
+				if s in d:
+					folder = d.split(s)[-1]
+					break
 			
-		for s in data:
-			folder = s.split(' "/" ')[-1]
+			if len(folder) == 0:
+				logging.warning("Folder format not supported.")
+				break
+			
 			if (folder[0] == '"') and (folder[-1] == '"'):
 				folder = folder[1:-1]
 			
