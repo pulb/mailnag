@@ -3,7 +3,7 @@
 #
 # plugindialog.py
 #
-# Copyright 2013, 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,49 +21,36 @@
 # MA 02110-1301, USA.
 #
 
-from gi.repository import GLib, Gtk
-from Mailnag.common.dist_cfg import PACKAGE_NAME
-from Mailnag.common.utils import get_data_file
+from gi.repository import Gtk
+from Mailnag.common.i18n import _
+
 
 class PluginDialog:
 	def __init__(self, parent, plugin):
 		self._plugin = plugin
 		
-		builder = Gtk.Builder()
-		builder.set_translation_domain(PACKAGE_NAME)
-		builder.add_from_file(get_data_file("plugin_dialog.ui"))
-		builder.connect_signals({ \
-			"btn_cancel_clicked" : self._on_btn_cancel_clicked, \
-			"btn_save_clicked" : self._on_btn_save_clicked \
-		})
-
-		self._window = builder.get_object("plugin_dialog")
-		self._window.set_transient_for(parent)
-
-		self._vbox = builder.get_object("vbox")
+		flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.USE_HEADER_BAR
+		self._window = Gtk.Dialog(_('Plugin Configuration'), parent, flags, \
+			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
 		
+		self._box = self._window.get_content_area()
+		self._box.set_border_width(6)
+		self._box.set_spacing(6)
+
 		
 	def run(self):
 		widget = self._plugin.get_config_ui()
 		
 		if widget != None:
-			self._vbox.pack_start(widget, True, True, 0)
+			self._box.add(widget)
 			widget.show_all()
 			self._plugin.load_ui_from_config(widget)
 		
 		res = self._window.run()
 		
-		if res == 1:
+		if res == Gtk.ResponseType.OK:
 			if widget != None:
 				self._plugin.save_ui_to_config(widget)
 		
 		self._window.destroy()
 		return res
-
-	
-	def _on_btn_cancel_clicked(self, widget):
-		pass
-
-
-	def _on_btn_save_clicked(self, widget):
-		pass
