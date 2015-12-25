@@ -3,7 +3,7 @@
 #
 # dist_cfg.py
 #
-# Copyright 2012 - 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2012 - 2015 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,11 +21,9 @@
 # MA 02110-1301, USA.
 #
 
-# This file contains variables that need to be adjusted for propper distro integration.
-# Additionally to those variables, packagers have to adjust the following paths:
-# * LOCALE_DIR in file gen_locales
-# * LIB_DIR in bash scripts mailnag and mailnag_cfg
-# * Exec and Icon paths in data/mailnag-config.desktop
+#
+# This file contains constants that need to be adjusted for propper distro integration.
+#
 
 # Application version displayed in the 
 # about dialog of the config window.
