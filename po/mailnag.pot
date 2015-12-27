@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-20 14:43+0100\n"
+"POT-Creation-Date: 2015-12-27 18:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,13 +104,13 @@ msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:217
 #, python-brace-format
-msgid "From {0} and others."
+msgid "from {0} and others."
 msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:219
 #: Mailnag/plugins/libnotifyplugin.py:222
 #, python-brace-format
-msgid "From {0}."
+msgid "from {0}."
 msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:221
@@ -157,19 +157,23 @@ msgstr ""
 msgid "No subject"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:108
-#: Mailnag/configuration/configwindow.py:133
+#: Mailnag/configuration/plugindialog.py:33
+msgid "Plugin Configuration"
+msgstr ""
+
+#: Mailnag/configuration/configwindow.py:109
+#: Mailnag/configuration/configwindow.py:134
 #: Mailnag/configuration/accountdialog.py:88
 msgid "Enabled"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:114
-#: Mailnag/configuration/configwindow.py:140
+#: Mailnag/configuration/configwindow.py:115
+#: Mailnag/configuration/configwindow.py:141
 #: Mailnag/configuration/accountdialog.py:94
 msgid "Name"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:346
+#: Mailnag/configuration/configwindow.py:344
 msgid "Delete this account:"
 msgstr ""
 
@@ -267,8 +271,4 @@ msgstr ""
 
 #: data/config_window.ui.h:11
 msgid "Edit Plugin"
-msgstr ""
-
-#: data/plugin_dialog.ui.h:1
-msgid "Plugin Configuration"
 msgstr ""
