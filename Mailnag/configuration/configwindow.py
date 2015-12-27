@@ -23,10 +23,11 @@
 #
 
 import os
+import shutil
 import xdg.BaseDirectory as bd
 from gi.repository import GLib, GdkPixbuf, Gdk, Gtk, GObject
 
-from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR
+from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR, DESKTOP_FILE_DIR
 from Mailnag.common.i18n import _
 from Mailnag.common.utils import get_data_file, get_data_paths
 from Mailnag.common.config import read_cfg, write_cfg
@@ -270,27 +271,24 @@ class ConfigWindow:
 	
 	
 	def _create_autostart(self):
-		# path to mailnag startscript
-		exec_file = os.path.join(os.path.abspath(BIN_DIR), "mailnag")
-		
-		content = "\n" + \
-		"[Desktop Entry]\n" + \
-		"Type=Application\n" + \
-		"Exec=%s --quiet\n" % exec_file + \
-		"Icon=mailnag\n" + \
-		"Hidden=false\n" + \
-		"NoDisplay=false\n" + \
-		"X-GNOME-Autostart-enabled=true\n" + \
-		"Name=Mailnag\n" + \
-		"Comment=An extensible mail notification daemon\n"
-
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
+		src = os.path.join(DESKTOP_FILE_DIR, "mailnag.desktop")
+		dst = os.path.join(autostart_folder, "mailnag.desktop")
+		
 		if not os.path.exists(autostart_folder):
 			os.makedirs(autostart_folder)
-		autostart_file = os.path.join(autostart_folder, "mailnag.desktop")
-		f = open(autostart_file, 'w') # create file
-		f.write(content)
-		f.close()
+
+		shutil.copyfile(src, dst)
+		
+		# If mailag-config was started from a local directory, 
+		# patch the exec path of the autostart .desktop file accordingly.
+		if not os.path.isabs(DESKTOP_FILE_DIR):
+			exec_file = os.path.join(os.path.abspath(BIN_DIR), "mailnag")
+			with open(dst, 'r') as f:
+				strn = f.read()
+				strn = strn.replace('/usr/bin/mailnag', exec_file)
+			with open(dst, 'w') as f:
+				f.write(strn)
 
 
 	def _delete_autostart(self):

@@ -56,9 +56,12 @@ class BuildData(build):
 		shutil.copytree('Mailnag/common', os.path.join(BUILD_PATCH_DIR, 'common'))
 		
 		# patch paths
+		self._patch_file('./data/mailnag.desktop', os.path.join(BUILD_PATCH_DIR, 'mailnag.desktop'), '/usr', PREFIX)
 		self._patch_file('./data/mailnag-config.desktop', os.path.join(BUILD_PATCH_DIR, 'mailnag-config.desktop'), '/usr', PREFIX)
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
 			'./locale', os.path.join(PREFIX, 'share/locale'))
+		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
+			'./data', os.path.join(PREFIX, 'share/applications'))
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
 			'./Mailnag', os.path.join(PREFIX, INSTALL_LIB_DIR))
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
@@ -116,7 +119,7 @@ setup(name=PACKAGE_NAME,
 		('share/mailnag', ['data/config_window.css']),
 		('share/mailnag', ['data/mailnag.ogg']),
 		('share/mailnag', ['data/mailnag.png']),
-		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnag-config.desktop')])],
+		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnag.desktop'), os.path.join(BUILD_PATCH_DIR, 'mailnag-config.desktop')])],
 	cmdclass={'build': BuildData, 
 			'install_data': InstallData,
 			'uninstall': Uninstall}

@@ -294,6 +294,8 @@ class LibNotifyPlugin(Plugin):
 	def _get_notification(self, summary, body, icon):
 		n = Notify.Notification.new(summary, body, icon)		
 		n.set_category("email")
+		n.set_hint_string("desktop-entry", "mailnag")
+		
 		if self._is_gnome:
 			n.add_action("default", "default", self._notification_action_handler, None)
 

@@ -29,23 +29,27 @@
 # about dialog of the config window.
 APP_VERSION = '1.1.0'
 
-# The PACKAGE_NAME variable is used to configure
+# The PACKAGE_NAME constant is used to configure
 # 1) the path where all app data (glade files, images) is loaded from
 #    (usually /usr/share/<PACKAGE_NAME>) via get_data_file() (see utils.py). 
 # 2) paths for localization files generated with gen_locales
 #    (usually /usr/share/locale/<LANG>/LC_MESSAGES/<PACKAGE_NAME>.mo).
-# Typically, there's no need to touch this variable.
+# Typically, there's no need to touch this constant.
 PACKAGE_NAME = 'mailnag'
 
-# The LOCALE_DIR variable specifies the root path for localization files
+# The LOCALE_DIR constant specifies the root path for localization files
 # (usually you have to make it point to '/usr/share/locale').
 LOCALE_DIR = './locale'
 
-# The LIB_DIR variable specifies the root path for the Mailnag python files
+# The DESKTOP_FILE_DIR constant specifies the root path for .desktop files
+# (usually you have to make it point to '/usr/share/applications').
+DESKTOP_FILE_DIR = './data'
+
+# The LIB_DIR constant specifies the root path for the Mailnag python files
 # (usually you have to make it point to <PYTHON_LIB_DIR>/Mailnag).
 LIB_DIR = './Mailnag'
 
-# The BIN_DIR variable specifies the path for the mailnag start scripts
+# The BIN_DIR constant specifies the path for the mailnag start scripts
 # (usually you have to make it point to '/usr/bin').
 BIN_DIR = '.'
 
