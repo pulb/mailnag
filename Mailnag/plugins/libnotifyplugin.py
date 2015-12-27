@@ -214,12 +214,12 @@ class LibNotifyPlugin(Plugin):
 		if mail_count > 1:
 			summary = _("{0} new mails").format(str(mail_count))
 			if (mail_count - i) > 1:
-				body = _("From {0} and others.").format(senders)
+				body = _("from {0} and others.").format(senders)
 			else:
-				body = _("From {0}.").format(senders)
+				body = _("from {0}.").format(senders)
 		else:
 			summary = _("New mail")
-			body = _("From {0}.").format(senders)
+			body = _("from {0}.").format(senders)
 		
 		self._notifications['0'].update(summary, body, "mail-unread")
 		self._notifications['0'].show()
