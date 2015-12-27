@@ -7,55 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-01-31 21:20+0100\n"
-"PO-Revision-Date: 2014-07-14 11:16+0000\n"
-"Last-Translator: Yan-ren Tsai <elleryq@gmail.com>\n"
+"POT-Creation-Date: 2015-12-20 14:43+0100\n"
+"PO-Revision-Date: 2015-04-23 16:45+0000\n"
+"Last-Translator: elleryq <elleryq@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh_TW@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-02-01 14:16+0000\n"
-"X-Generator: Launchpad (build 17306)\n"
-
-#: Mailnag/common/accounts.py:49
-msgid "Unnamed"
-msgstr "未命名"
-
-#: Mailnag/plugins/unityplugin.py:98
-msgid "Ubuntu Unity"
-msgstr ""
-
-#: Mailnag/plugins/unityplugin.py:99
-msgid "Shows new mails in Ubuntu's Messaging menu."
-msgstr "在 Ubuntu 的訊息選單裡顯示新郵件"
-
-#: Mailnag/plugins/unityplugin.py:118 Mailnag/plugins/libnotifyplugin.py:160
-msgid "Maximum number of visible mails:"
-msgstr "可顯示郵件的最大數量"
-
-#: Mailnag/plugins/goaplugin.py:92
-msgid "GNOME Online Accounts"
-msgstr ""
-
-#: Mailnag/plugins/goaplugin.py:93
-msgid "GNOME Online Accounts Integration."
-msgstr ""
-
-#: Mailnag/plugins/dbusplugin.py:83
-msgid "DBus Service"
-msgstr "DBus服務"
-
-#: Mailnag/plugins/dbusplugin.py:84
-msgid "Exposes Mailnag's functionality via a DBus service."
-msgstr "允許透過DBus服務使用Mailnag的功能"
-
-#: Mailnag/plugins/soundplugin.py:65
-msgid "Sound Notifications"
-msgstr "聲音通知"
-
-#: Mailnag/plugins/soundplugin.py:66
-msgid "Plays a sound when new mails arrive."
-msgstr "當新郵件到達時播放聲音。"
+"X-Launchpad-Export-Date: 2015-12-27 12:48+0000\n"
+"X-Generator: Launchpad (build 17865)\n"
 
 #: Mailnag/plugins/userscriptplugin.py:62
 msgid "User Script"
@@ -79,9 +39,22 @@ msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by %s pairs."
-msgstr "當有新郵件時，將會執行下列的腳本(script)\n"
+msgstr ""
+"當有新郵件時，將會執行下列的腳本(script)\n"
 "Mailnag 會將新郵件的總數傳給腳本(script)，\n"
 "格式是 %s 。"
+
+#: Mailnag/plugins/unityplugin.py:98
+msgid "Ubuntu Unity"
+msgstr ""
+
+#: Mailnag/plugins/unityplugin.py:99
+msgid "Shows new mails in Ubuntu's Messaging menu."
+msgstr "在 Ubuntu 的訊息選單裡顯示新郵件"
+
+#: Mailnag/plugins/unityplugin.py:118
+msgid "Maximum number of visible mails:"
+msgstr "可顯示郵件的最大數量"
 
 #: Mailnag/plugins/spamfilterplugin.py:69
 msgid "Spam Filter"
@@ -95,53 +68,93 @@ msgstr "過濾掉不想要的郵件。"
 msgid ""
 "Mailnag will ignore mails containing at least one of \n"
 "the following words in subject or sender."
-msgstr ""
-"Mailnag 將會忽略主旨或寄件者裡帶有這些字詞的郵件。"
+msgstr "Mailnag 將會忽略主旨或寄件者裡帶有這些字詞的郵件。"
 
-#: Mailnag/plugins/libnotifyplugin.py:116
+#: Mailnag/plugins/libnotifyplugin.py:100
 msgid "LibNotify Notifications"
 msgstr "彈出視窗通知"
 
-#: Mailnag/plugins/libnotifyplugin.py:117
+#: Mailnag/plugins/libnotifyplugin.py:101
 msgid "Shows a popup when new mails arrive."
 msgstr "當新郵件到達時彈出訊息視窗。"
 
-#: Mailnag/plugins/libnotifyplugin.py:137
-msgid "Notification mode:"
-msgstr "通知模式"
-
-#: Mailnag/plugins/libnotifyplugin.py:145
+#: Mailnag/plugins/libnotifyplugin.py:117
 msgid "Count of new mails"
 msgstr "新郵件數量"
 
-#: Mailnag/plugins/libnotifyplugin.py:148
-msgid "Summary of new mails"
-msgstr "新郵件摘要"
+#: Mailnag/plugins/libnotifyplugin.py:118
+msgid "Short summary of new mails"
+msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:151
+#: Mailnag/plugins/libnotifyplugin.py:119
+msgid "Detailed summary of new mails"
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:120
 msgid "One notification per new mail"
 msgstr "每封新郵件通知一次"
 
-#: Mailnag/plugins/libnotifyplugin.py:249
-#: Mailnag/plugins/libnotifyplugin.py:251
-#, python-brace-format
-msgid "(and {0} more)"
-msgstr "（ 還有 {0} 條）"
+#: Mailnag/plugins/libnotifyplugin.py:128
+msgid "Notification mode:"
+msgstr "通知模式"
 
-#: Mailnag/plugins/libnotifyplugin.py:254
-#: Mailnag/plugins/libnotifyplugin.py:282
+#: Mailnag/plugins/libnotifyplugin.py:215
+#: Mailnag/plugins/libnotifyplugin.py:251
+#: Mailnag/plugins/libnotifyplugin.py:279
 #, python-brace-format
 msgid "{0} new mails"
 msgstr "{0} 封新郵件"
 
-#: Mailnag/plugins/libnotifyplugin.py:256
-#: Mailnag/plugins/libnotifyplugin.py:284
+#: Mailnag/plugins/libnotifyplugin.py:217
+#, python-brace-format
+msgid "From {0} and others."
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:219
+#: Mailnag/plugins/libnotifyplugin.py:222
+#, python-brace-format
+msgid "From {0}."
+msgstr ""
+
+#: Mailnag/plugins/libnotifyplugin.py:221
+#: Mailnag/plugins/libnotifyplugin.py:253
+#: Mailnag/plugins/libnotifyplugin.py:281
 msgid "New mail"
 msgstr "新郵件"
 
-#: Mailnag/plugins/libnotifyplugin.py:271
+#: Mailnag/plugins/libnotifyplugin.py:246
+#: Mailnag/plugins/libnotifyplugin.py:248
+#, python-brace-format
+msgid "(and {0} more)"
+msgstr "（ 還有 {0} 條）"
+
+#: Mailnag/plugins/libnotifyplugin.py:268
 msgid "Mark as read"
 msgstr "標記爲已讀"
+
+#: Mailnag/plugins/soundplugin.py:65
+msgid "Sound Notifications"
+msgstr "聲音通知"
+
+#: Mailnag/plugins/soundplugin.py:66
+msgid "Plays a sound when new mails arrive."
+msgstr "當新郵件到達時播放聲音。"
+
+#: Mailnag/plugins/goaplugin.py:93
+msgid "GNOME Online Accounts"
+msgstr ""
+
+#: Mailnag/plugins/goaplugin.py:94
+msgid "GNOME Online Accounts Integration."
+msgstr ""
+
+#: Mailnag/plugins/dbusplugin.py:83
+msgid "DBus Service"
+msgstr "DBus服務"
+
+#: Mailnag/plugins/dbusplugin.py:84
+msgid "Exposes Mailnag's functionality via a DBus service."
+msgstr "允許透過DBus服務使用Mailnag的功能"
 
 #: Mailnag/daemon/mails.py:170
 msgid "No subject"
@@ -149,11 +162,13 @@ msgstr "無主題"
 
 #: Mailnag/configuration/configwindow.py:108
 #: Mailnag/configuration/configwindow.py:133
+#: Mailnag/configuration/accountdialog.py:88
 msgid "Enabled"
 msgstr "已啓用"
 
 #: Mailnag/configuration/configwindow.py:114
 #: Mailnag/configuration/configwindow.py:140
+#: Mailnag/configuration/accountdialog.py:94
 msgid "Name"
 msgstr "名稱"
 
@@ -161,18 +176,21 @@ msgstr "名稱"
 msgid "Delete this account:"
 msgstr "刪除該帳戶："
 
-#: Mailnag/configuration/accountdialog.py:75
-#: Mailnag/configuration/accountdialog.py:76
+#: Mailnag/configuration/accountdialog.py:84
 msgid "optional"
 msgstr "可選"
 
-#: Mailnag/configuration/accountdialog.py:141
+#: Mailnag/configuration/accountdialog.py:177
 msgid "Other (IMAP)"
 msgstr "其他（IMAP）"
 
-#: Mailnag/configuration/accountdialog.py:142
+#: Mailnag/configuration/accountdialog.py:178
 msgid "Other (POP3)"
 msgstr "其他（POP3）"
+
+#: Mailnag/configuration/accountdialog.py:271
+msgid "Connection failed."
+msgstr ""
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
@@ -211,7 +229,7 @@ msgid "Port:"
 msgstr "通訊埠："
 
 #: data/account_dialog.ui.h:10
-msgid "Folders:"
+msgid "Folders (optional)"
 msgstr ""
 
 #: data/config_window.ui.h:1
