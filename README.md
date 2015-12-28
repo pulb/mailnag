@@ -63,7 +63,7 @@ Run `mailnag-config` to setup Mailnag.
 Closing the configuration window will start Mailnag automatically.
 
 ### Default Mail Client
-Clicking a mail notification popup will open the default mail client specified in `System Settings -> System Info -> Default Applications`.  
+Clicking a mail notification popup will open the default mail client specified in `GNOME Control Center -> Details -> Default Applications`.  
 If you're a webmail (e.g. gmail) user and want your account to be launched in a browser, please install a tool like [gnome-gmail](http://gnome-gmail.sourceforge.net).
 
 ### Desktop integration
