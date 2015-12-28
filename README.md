@@ -7,11 +7,15 @@ Mailnag comes with a set of desktop-independent default plugins for
 visual/sound notifications, script execution etc. and can be extended  
 with additional plugins easily.
 
-__This project needs contributors!__  
+__This project needs your support!__  
+If you like Mailnag, please help to keep it going by contributing work or by making a donation.  
 [Code](https://github.com/pulb/mailnag)  
 [Bugtracker](https://github.com/pulb/mailnag/issues)  
 [Translations](https://translations.launchpad.net/mailnag)  
 [Wiki](https://github.com/pulb/mailnag/wiki) 
+
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8F5FNJ3U4N7AW" target="_blank">
+<img src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" alt="PayPal — The safer, easier way to pay online."/></a>
 
 ## Installation
 
