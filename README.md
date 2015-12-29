@@ -8,11 +8,9 @@ visual/sound notifications, script execution etc. and can be extended
 with additional plugins easily.
 
 __This project needs your support!__  
-If you like Mailnag, please help to keep it going by contributing work or by making a donation.  
-[Code](https://github.com/pulb/mailnag)  
-[Bugtracker](https://github.com/pulb/mailnag/issues)  
-[Translations](https://translations.launchpad.net/mailnag)  
-[Wiki](https://github.com/pulb/mailnag/wiki) 
+If you like Mailnag, please help to keep it going by [contributing code](https://github.com/pulb/mailnag),  
+[reporting/fixing bugs](https://github.com/pulb/mailnag/issues), [translating strings into your native language](https://translations.launchpad.net/mailnag),  
+[writing docs](https://github.com/pulb/mailnag/wiki) or by [making a donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8F5FNJ3U4N7AW).  
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8F5FNJ3U4N7AW" target="_blank">
 <img src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" alt="PayPal — The safer, easier way to pay online."/></a>
@@ -70,7 +68,7 @@ Closing the configuration window will start Mailnag automatically.
 Clicking a mail notification popup will open the default mail client specified in `GNOME Control Center -> Details -> Default Applications`.  
 If you're a webmail (e.g. gmail) user and want your account to be launched in a browser, please install a tool like [gnome-gmail](http://gnome-gmail.sourceforge.net).
 
-### Desktop integration
+### Desktop Integration
 By default, Mailnag emits libnotify notifications, which work fine on most desktop environments  
 but are visible for a few seconds only. If you like to have a tighter desktop integration  
 (e.g. a permanently visible indicator in your top panel) you have to install an appropriate  
