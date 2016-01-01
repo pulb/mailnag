@@ -3,7 +3,7 @@
 #
 # mailnag-config
 #
-# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -27,13 +27,16 @@ import subprocess
 from gi.repository import Gtk
 from dbus.mainloop.glib import DBusGMainLoop
 
-from Mailnag.common.utils import set_procname, shutdown_existing_instance, fix_cwd
+from Mailnag.common.utils import fix_cwd
+
+fix_cwd()
+
+from Mailnag.common.utils import set_procname, shutdown_existing_instance
 from Mailnag.common.dist_cfg import BIN_DIR
 from Mailnag.configuration.configwindow import ConfigWindow
 
 
 def main():
-	fix_cwd()
 	set_procname("mailnag-config")
 	confwin = ConfigWindow()
 	Gtk.main()

@@ -3,7 +3,7 @@
 #
 # mailnag
 #
-# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -32,9 +32,13 @@ import logging.handlers
 import os
 import signal
 
+from Mailnag.common.utils import fix_cwd
+
+fix_cwd()
+
 from Mailnag.common.config import cfg_exists
 from Mailnag.common.dist_cfg import APP_VERSION
-from Mailnag.common.utils import set_procname, shutdown_existing_instance, fix_cwd
+from Mailnag.common.utils import set_procname, shutdown_existing_instance
 from Mailnag.common.subproc import terminate_subprocesses
 from Mailnag.common.exceptions import InvalidOperationException
 from Mailnag.daemon.mailnagdaemon import MailnagDaemon
@@ -102,8 +106,6 @@ def sigterm_handler(mainloop):
 
 
 def main():
-	fix_cwd()
-	
 	mainloop = GLib.MainLoop()
 	daemon = None
 	
