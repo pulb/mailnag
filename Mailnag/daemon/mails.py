@@ -3,7 +3,7 @@
 #
 # mails.py
 #
-# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -38,12 +38,13 @@ from Mailnag.common.config import cfg_folder
 # Mail class
 #
 class Mail:
-	def __init__(self, datetime, subject, sender, id, account_id):
+	def __init__(self, datetime, subject, sender, id, account):
 		self.datetime = datetime
 		self.subject = subject
 		self.sender = sender
+		self.account_name = account.name
+		self.account_id = account.get_id()
 		self.id = id
-		self.account_id = account_id
 
 
 #
@@ -107,7 +108,7 @@ class MailCollector:
 						# Also filter duplicates caused by Gmail labels.
 						if id not in mail_ids:
 							mail_list.append(Mail(datetime, subject, \
-								sender, id, acc.get_id()))
+								sender, id, acc))
 							mail_ids[id] = None
 				
 				# don't close IMAP idle connections
@@ -144,7 +145,7 @@ class MailCollector:
 					# but *no datetime*, see _get_id()).
 					if id not in mail_ids:
 						mail_list.append(Mail(datetime, subject, sender, \
-							id, acc.get_id()))
+							id, acc))
 						mail_ids[id] = None
 
 				# disconnect from Email-Server
