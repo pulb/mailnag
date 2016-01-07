@@ -3,6 +3,7 @@
 Name=Mailnag
 Comment=An extensible mail notification daemon
 Comment[de]=Ein erweiterbarer Mail-Benachrichtigungs-Dämon
+Keywords=mail;notify;notification;
 Exec=/usr/bin/mailnag --quiet
 Icon=mailnag
 Type=Application
