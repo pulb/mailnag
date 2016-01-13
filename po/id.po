@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-12-20 14:43+0100\n"
-"PO-Revision-Date: 2015-05-28 19:12+0000\n"
+"POT-Creation-Date: 2016-01-01 18:20+0100\n"
+"PO-Revision-Date: 2016-01-12 16:32+0000\n"
 "Last-Translator: zmni <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-12-27 12:48+0000\n"
-"X-Generator: Launchpad (build 17865)\n"
+"X-Launchpad-Export-Date: 2016-01-13 17:12+0000\n"
+"X-Generator: Launchpad (build 17886)\n"
 "Language: id\n"
 
 #: Mailnag/plugins/userscriptplugin.py:62
@@ -87,11 +87,11 @@ msgstr "Jumlah surat baru"
 
 #: Mailnag/plugins/libnotifyplugin.py:118
 msgid "Short summary of new mails"
-msgstr ""
+msgstr "Ringkasan singkat surel baru"
 
 #: Mailnag/plugins/libnotifyplugin.py:119
 msgid "Detailed summary of new mails"
-msgstr ""
+msgstr "Ringkasan detail surel baru"
 
 #: Mailnag/plugins/libnotifyplugin.py:120
 msgid "One notification per new mail"
@@ -110,14 +110,14 @@ msgstr "{0} surat baru"
 
 #: Mailnag/plugins/libnotifyplugin.py:217
 #, python-brace-format
-msgid "From {0} and others."
-msgstr ""
+msgid "from {0} and others."
+msgstr "dari {0} dan lainnya."
 
 #: Mailnag/plugins/libnotifyplugin.py:219
 #: Mailnag/plugins/libnotifyplugin.py:222
 #, python-brace-format
-msgid "From {0}."
-msgstr ""
+msgid "from {0}."
+msgstr "dari {0}."
 
 #: Mailnag/plugins/libnotifyplugin.py:221
 #: Mailnag/plugins/libnotifyplugin.py:253
@@ -163,19 +163,23 @@ msgstr "Singkap fungsionalitas Mailnag melalui layanan DBus."
 msgid "No subject"
 msgstr "Tidak ada subyek"
 
-#: Mailnag/configuration/configwindow.py:108
-#: Mailnag/configuration/configwindow.py:133
+#: Mailnag/configuration/plugindialog.py:33
+msgid "Plugin Configuration"
+msgstr "Konfigurasi Plugin"
+
+#: Mailnag/configuration/configwindow.py:109
+#: Mailnag/configuration/configwindow.py:134
 #: Mailnag/configuration/accountdialog.py:88
 msgid "Enabled"
 msgstr "Aktifkan"
 
-#: Mailnag/configuration/configwindow.py:114
-#: Mailnag/configuration/configwindow.py:140
+#: Mailnag/configuration/configwindow.py:115
+#: Mailnag/configuration/configwindow.py:141
 #: Mailnag/configuration/accountdialog.py:94
 msgid "Name"
 msgstr "Nama"
 
-#: Mailnag/configuration/configwindow.py:346
+#: Mailnag/configuration/configwindow.py:344
 msgid "Delete this account:"
 msgstr "Hapus akun ini:"
 
@@ -193,7 +197,7 @@ msgstr "Lainnya (POP3)"
 
 #: Mailnag/configuration/accountdialog.py:271
 msgid "Connection failed."
-msgstr ""
+msgstr "Koneksi gagal."
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
@@ -233,7 +237,7 @@ msgstr "Port:"
 
 #: data/account_dialog.ui.h:10
 msgid "Folders (optional)"
-msgstr ""
+msgstr "Folder (opsional)"
 
 #: data/config_window.ui.h:1
 msgid "Mailnag Configuration"
@@ -255,12 +259,12 @@ msgstr "Plugin"
 msgid ""
 "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extensible mail "
 "notification daemon.\n"
-"Copyright (c) 2011 - 2015 Patrick Ulbrich\n"
+"Copyright (c) 2011 - 2016 Patrick Ulbrich\n"
 "and contributors."
 msgstr ""
-"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - daemon notifikasi "
-"surat diperluas.\n"
-"Hak Cipta (c) 2011 - 2015 Patrick Ulbrich\n"
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Sebuah daemon "
+"notifikasi surel yang dapat diperluas.\n"
+"Hak cipta (c) 2011 - 2016 Patrick Ulbrich\n"
 "dan kontributor."
 
 #: data/config_window.ui.h:8
@@ -278,7 +282,3 @@ msgstr "Sunting Akun"
 #: data/config_window.ui.h:11
 msgid "Edit Plugin"
 msgstr "Sunting Plugin"
-
-#: data/plugin_dialog.ui.h:1
-msgid "Plugin Configuration"
-msgstr "Konfigurasi Plugin"
