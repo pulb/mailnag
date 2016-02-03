@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-01 18:20+0100\n"
+"POT-Creation-Date: 2016-02-03 19:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,6 +26,10 @@ msgid "Runs an user defined script on mail arrival."
 msgstr ""
 
 #: Mailnag/plugins/userscriptplugin.py:83
+msgid "account"
+msgstr ""
+
+#: Mailnag/plugins/userscriptplugin.py:83
 msgid "sender"
 msgstr ""
 
@@ -38,7 +42,7 @@ msgstr ""
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
-"followed by %s pairs."
+"followed by %s sequences."
 msgstr ""
 
 #: Mailnag/plugins/unityplugin.py:98
@@ -153,7 +157,7 @@ msgstr ""
 msgid "Exposes Mailnag's functionality via a DBus service."
 msgstr ""
 
-#: Mailnag/daemon/mails.py:170
+#: Mailnag/daemon/mails.py:171
 msgid "No subject"
 msgstr ""
 
