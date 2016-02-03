@@ -3,7 +3,7 @@
 #
 # userscriptplugin.py
 #
-# Copyright 2013 - 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ class UserscriptPlugin(Plugin):
 	def get_manifest(self):
 		return (_("User Script"),
 				_("Runs an user defined script on mail arrival."),
-				"1.1",
+				"1.2",
 				"Patrick Ulbrich <zulu99@gmx.net>",
 				False)
 
@@ -80,10 +80,10 @@ class UserscriptPlugin(Plugin):
 		box.set_orientation(Gtk.Orientation.VERTICAL)
 		#box.set_size_request(100, -1)
 		
-		markup_str = "<i>&lt;%s&gt; &lt;%s&gt;</i>" % (_('sender'), _('subject'))
+		markup_str = "<i>&lt;%s&gt; &lt;%s&gt; &lt;%s&gt;</i>" % (_('account'), _('sender'), _('subject'))
 		desc =  _(	"The following script will be executed whenever new mails arrive.\n"
 					"Mailnag passes the total count of new mails to this script,\n"
-					"followed by %s pairs." % markup_str)
+					"followed by %s sequences." % markup_str)
 		
 		label = Gtk.Label()
 		label.set_line_wrap(True)
@@ -122,6 +122,8 @@ class UserscriptPlugin(Plugin):
 			for m in new_mails:
 				sender_name, sender_addr = m.sender
 				if len(sender_addr) == 0: sender_addr = 'UNKNOWN_SENDER'
+				
+				script_args.append(m.account_name)
 				script_args.append(sender_addr)
 				script_args.append(m.subject)
 			start_subprocess(script_args)
