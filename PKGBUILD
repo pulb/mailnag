@@ -12,7 +12,7 @@ depends=('python2-gobject' 'python2-xdg' 'python2-dbus'
          'libnotify' 'gst-plugins-base' 'gtk3' 'gdk-pixbuf2')
 optdepends=('networkmanager: for connectivity detection',
         'libgnome-keyring: for save password storage in GNOME 3',
-        'gnome-keyring: for save password storage in GNOME 3',
+        'gnome-keyring: for safe password storage in GNOME 3',
         'mailnag-goa-plugin: for GNOME Online Accounts integration',
         'mailnag-gnome-shell: for a tighter GNOME 3 integration')
 makedepends=('gettext')
