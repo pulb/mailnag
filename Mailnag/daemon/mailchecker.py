@@ -3,7 +3,7 @@
 #
 # mailchecker.py
 #
-# Copyright 2011 - 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -90,6 +90,6 @@ class MailChecker:
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_REMOVED):
 					try_call( lambda: f(filtered_unseen_mails) )
 			
-			self._zero_mails_on_last_check = (filtered_unseen_mails == 0)
+			self._zero_mails_on_last_check = (len(filtered_unseen_mails) == 0)
 		
 		return
