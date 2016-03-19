@@ -153,7 +153,8 @@ class Account:
 					conn = imaplib.IMAP4(self.server)
 				else:
 					conn = imaplib.IMAP4(self.server, int(self.port))
-			
+				if 'STARTTLS' in conn.capabilities:
+					conn.starttls()
 			if self.oauth2string != '':
 				conn.authenticate('XOAUTH2', lambda x: self.oauth2string)
 			else:
