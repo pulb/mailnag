@@ -156,6 +156,8 @@ class Account:
 				
 				if 'STARTTLS' in conn.capabilities:
 					conn.starttls()
+				else:
+					logging.warning("Using unencrypted connection for account '%s'" % self.name)
 				
 			if self.oauth2string != '':
 				conn.authenticate('XOAUTH2', lambda x: self.oauth2string)
@@ -200,7 +202,8 @@ class Account:
 				
 				# TODO : Use STARTTLS when Mailnag has been migrated to python 3 
 				# (analogous to get_IMAP_connection).
-		
+				logging.warning("Using unencrypted connection for account '%s'" % self.name)
+				
 			conn.getwelcome()
 			conn.user(self.user)
 			conn.pass_(self.password)
