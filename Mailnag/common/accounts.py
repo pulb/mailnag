@@ -3,7 +3,7 @@
 #
 # accounts.py
 #
-# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -153,8 +153,10 @@ class Account:
 					conn = imaplib.IMAP4(self.server)
 				else:
 					conn = imaplib.IMAP4(self.server, int(self.port))
+				
 				if 'STARTTLS' in conn.capabilities:
 					conn.starttls()
+				
 			if self.oauth2string != '':
 				conn.authenticate('XOAUTH2', lambda x: self.oauth2string)
 			else:
@@ -195,6 +197,9 @@ class Account:
 					conn = poplib.POP3(self.server)
 				else:
 					conn = poplib.POP3(self.server, int(self.port))
+				
+				# TODO : Use STARTTLS when Mailnag has been migrated to python 3 
+				# (analogous to get_IMAP_connection).
 		
 			conn.getwelcome()
 			conn.user(self.user)
