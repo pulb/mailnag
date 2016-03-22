@@ -4,6 +4,7 @@
 # accounts.py
 #
 # Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2016 Thomas Haider <t.haider@deprecate.de>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
