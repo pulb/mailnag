@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: Philippe Poumaroux <poum@cpan.org>\n"
-"POT-Creation-Date: 2015-12-20 14:43+0100\n"
+"POT-Creation-Date: 2016-02-03 19:08+0100\n"
 "PO-Revision-Date: 2015-11-19 18:40+0000\n"
 "Last-Translator: Jean-Marc <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-12-27 12:48+0000\n"
-"X-Generator: Launchpad (build 17865)\n"
+"X-Launchpad-Export-Date: 2016-03-23 13:56+0000\n"
+"X-Generator: Launchpad (build 17958)\n"
 "Language: \n"
 
 #: Mailnag/plugins/userscriptplugin.py:62
@@ -26,6 +26,10 @@ msgstr "Script utilisateur"
 msgid "Runs an user defined script on mail arrival."
 msgstr ""
 "Exécute un script défini par l'utilisateur lors d'un nouveau courriel."
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "account"
+msgstr ""
 
 #: Mailnag/plugins/userscriptplugin.py:83
 msgid "sender"
@@ -40,11 +44,8 @@ msgstr "objet"
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
 "Mailnag passes the total count of new mails to this script,\n"
-"followed by %s pairs."
+"followed by %s sequences."
 msgstr ""
-"Le script suivant sera exécuté à chaque nouveau courriel.\n"
-"Mailnag transmet le nombre total de nouveaux courriels à ce script,\n"
-"suivi par les couples %s."
 
 #: Mailnag/plugins/unityplugin.py:98
 msgid "Ubuntu Unity"
@@ -112,13 +113,13 @@ msgstr "{0} nouveaux courriels"
 
 #: Mailnag/plugins/libnotifyplugin.py:217
 #, python-brace-format
-msgid "From {0} and others."
+msgid "from {0} and others."
 msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:219
 #: Mailnag/plugins/libnotifyplugin.py:222
 #, python-brace-format
-msgid "From {0}."
+msgid "from {0}."
 msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:221
@@ -161,23 +162,27 @@ msgstr "Service DBus"
 msgid "Exposes Mailnag's functionality via a DBus service."
 msgstr "Rend disponible les fonctionnalités de Mailnag via un service DBus."
 
-#: Mailnag/daemon/mails.py:170
+#: Mailnag/daemon/mails.py:171
 msgid "No subject"
 msgstr "Sans objet"
 
-#: Mailnag/configuration/configwindow.py:108
-#: Mailnag/configuration/configwindow.py:133
+#: Mailnag/configuration/plugindialog.py:33
+msgid "Plugin Configuration"
+msgstr "Configuration du greffon"
+
+#: Mailnag/configuration/configwindow.py:109
+#: Mailnag/configuration/configwindow.py:134
 #: Mailnag/configuration/accountdialog.py:88
 msgid "Enabled"
 msgstr "Activé"
 
-#: Mailnag/configuration/configwindow.py:114
-#: Mailnag/configuration/configwindow.py:140
+#: Mailnag/configuration/configwindow.py:115
+#: Mailnag/configuration/configwindow.py:141
 #: Mailnag/configuration/accountdialog.py:94
 msgid "Name"
 msgstr "Nom"
 
-#: Mailnag/configuration/configwindow.py:346
+#: Mailnag/configuration/configwindow.py:344
 msgid "Delete this account:"
 msgstr "Supprimer ce compte :"
 
@@ -257,14 +262,9 @@ msgstr "Greffons"
 msgid ""
 "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extensible mail "
 "notification daemon.\n"
-"Copyright (c) 2011 - 2015 Patrick Ulbrich\n"
+"Copyright (c) 2011 - 2016 Patrick Ulbrich\n"
 "and contributors."
 msgstr ""
-"\"<a href=\\\"https://github.com/pulb/mailnag\\\">Mailnag</a> - An "
-"extensible mail \"\n"
-"\"notification daemon.\\n\"\n"
-"\"Copyright (c) 2011 - 2015 Patrick Ulbrich\\n\"\n"
-"\"and contributors.\""
 
 #: data/config_window.ui.h:8
 msgid "Add Account"
@@ -281,7 +281,3 @@ msgstr "Modifier le compte"
 #: data/config_window.ui.h:11
 msgid "Edit Plugin"
 msgstr "Modifier le plugin"
-
-#: data/plugin_dialog.ui.h:1
-msgid "Plugin Configuration"
-msgstr "Configuration du greffon"
