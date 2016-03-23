@@ -1,3 +1,23 @@
+Version 1.2.0 (2016-03-23):
+===========================
+* Added support for notification settings in GNOME-Control-Center
+* Improved account dialog featuring a new IMAP folder chooser
+* libnotify plugin: added new 'Short Summary' notification mode
+  (new default notification mode; recommended for GNOME 3)
+* userscript plugin: accountnames are now passed to the specified userscript
+* Non-SSL accounts are now utilizing STARTTLS if available (thanks todi!)
+* Mailnag now logs a warning if an unencrypted connection is detected
+* Acountnames are now exported via the DBUS-API
+* The config window is resizable now
+* Misc other fixes and improvements
+* Updated translations / removed badly maintained translations
+
+NOTES: 
+If you're using the userscript plugin, please note that Mailnag now passes 
+(accountname, sender, subject) sequences to the script as opposed to (sender, subject)
+sequences in previous releases.
+
+
 Version 1.1.0 (2015-02-08):
 ===========================
 * GNOME Online Accounts integration 
