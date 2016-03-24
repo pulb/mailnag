@@ -83,7 +83,7 @@ class UserscriptPlugin(Plugin):
 		markup_str = "<i>&lt;%s&gt; &lt;%s&gt; &lt;%s&gt;</i>" % (_('account'), _('sender'), _('subject'))
 		desc =  _(	"The following script will be executed whenever new mails arrive.\n"
 					"Mailnag passes the total count of new mails to this script,\n"
-					"followed by %s sequences." % markup_str)
+					"followed by %s sequences.") % markup_str
 		
 		label = Gtk.Label()
 		label.set_line_wrap(True)
