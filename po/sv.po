@@ -8,26 +8,26 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-02-03 19:08+0100\n"
-"PO-Revision-Date: 2016-01-02 07:53+0000\n"
-"Last-Translator: kristian <Unknown>\n"
+"PO-Revision-Date: 2016-03-25 21:04+0000\n"
+"Last-Translator: Anders Jonsson <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-03-23 13:56+0000\n"
-"X-Generator: Launchpad (build 17958)\n"
+"X-Launchpad-Export-Date: 2016-03-31 10:40+0000\n"
+"X-Generator: Launchpad (build 17967)\n"
 
 #: Mailnag/plugins/userscriptplugin.py:62
 msgid "User Script"
-msgstr "Användar Kommando"
+msgstr "Användarskript"
 
 #: Mailnag/plugins/userscriptplugin.py:63
 msgid "Runs an user defined script on mail arrival."
-msgstr "Kör ett användardefinerat kommando vid inkommande mail."
+msgstr "Kör ett användardefinerat skript vid inkommande meddelanden."
 
 #: Mailnag/plugins/userscriptplugin.py:83
 msgid "account"
-msgstr ""
+msgstr "konto"
 
 #: Mailnag/plugins/userscriptplugin.py:83
 msgid "sender"
@@ -44,6 +44,9 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by %s sequences."
 msgstr ""
+"Följande skript kommer köras när nya meddelanden anländer.\n"
+"Mailnag skickar det totala antalet nya meddelanden till detta skript,\n"
+"följt av sekvenser av %s."
 
 #: Mailnag/plugins/unityplugin.py:98
 msgid "Ubuntu Unity"
@@ -51,11 +54,11 @@ msgstr "Ubuntu Unity"
 
 #: Mailnag/plugins/unityplugin.py:99
 msgid "Shows new mails in Ubuntu's Messaging menu."
-msgstr "Visar nya mail i Ubuntus Meddelandemeny"
+msgstr "Visar nya meddelanden i Ubuntus Meddelandemeny"
 
 #: Mailnag/plugins/unityplugin.py:118
 msgid "Maximum number of visible mails:"
-msgstr "Maximalt antal av visade mail:"
+msgstr "Maximalt antal visade meddelanden:"
 
 #: Mailnag/plugins/spamfilterplugin.py:69
 msgid "Spam Filter"
@@ -70,43 +73,43 @@ msgid ""
 "Mailnag will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
-"Mailnag kommer att ignorera mail som innehåller minst ett av \n"
+"Mailnag kommer att ignorera meddelanden som innehåller minst ett av \n"
 "följande ord i ämne eller avsändare."
 
 #: Mailnag/plugins/libnotifyplugin.py:100
 msgid "LibNotify Notifications"
-msgstr "LibNotify Notifieringar"
+msgstr "LibNotify-aviseringar"
 
 #: Mailnag/plugins/libnotifyplugin.py:101
 msgid "Shows a popup when new mails arrive."
-msgstr "Visar en notis på skärmen när nya mail anländer."
+msgstr "Visar en notis på skärmen när nya meddelanden anländer."
 
 #: Mailnag/plugins/libnotifyplugin.py:117
 msgid "Count of new mails"
-msgstr "Antal nya mail"
+msgstr "Antal nya meddelanden"
 
 #: Mailnag/plugins/libnotifyplugin.py:118
 msgid "Short summary of new mails"
-msgstr "Kort summering av nya mail"
+msgstr "Kort summering av nya meddelanden"
 
 #: Mailnag/plugins/libnotifyplugin.py:119
 msgid "Detailed summary of new mails"
-msgstr "Detaljerad summering av nya mail"
+msgstr "Detaljerad summering av nya meddelanden"
 
 #: Mailnag/plugins/libnotifyplugin.py:120
 msgid "One notification per new mail"
-msgstr "En notis per nytt mail"
+msgstr "En avisering per nytt meddelande"
 
 #: Mailnag/plugins/libnotifyplugin.py:128
 msgid "Notification mode:"
-msgstr "Notisläge:"
+msgstr "Aviseringsläge"
 
 #: Mailnag/plugins/libnotifyplugin.py:215
 #: Mailnag/plugins/libnotifyplugin.py:251
 #: Mailnag/plugins/libnotifyplugin.py:279
 #, python-brace-format
 msgid "{0} new mails"
-msgstr "Du har fått {0} mail"
+msgstr "{0} nya meddelanden"
 
 #: Mailnag/plugins/libnotifyplugin.py:217
 #, python-brace-format
@@ -123,7 +126,7 @@ msgstr "från {0}."
 #: Mailnag/plugins/libnotifyplugin.py:253
 #: Mailnag/plugins/libnotifyplugin.py:281
 msgid "New mail"
-msgstr "Nya mail"
+msgstr "Nytt meddelande"
 
 #: Mailnag/plugins/libnotifyplugin.py:246
 #: Mailnag/plugins/libnotifyplugin.py:248
@@ -137,27 +140,27 @@ msgstr "Markera som läst"
 
 #: Mailnag/plugins/soundplugin.py:65
 msgid "Sound Notifications"
-msgstr "Ljud Notiser"
+msgstr "Ljudaviseringar"
 
 #: Mailnag/plugins/soundplugin.py:66
 msgid "Plays a sound when new mails arrive."
-msgstr "Spelar upp ett ljud när nya mail anländer."
+msgstr "Spelar upp ett ljud när nya meddelanden anländer."
 
 #: Mailnag/plugins/goaplugin.py:93
 msgid "GNOME Online Accounts"
-msgstr "Gnome's Nätkonton"
+msgstr "GNOME Nätkonton"
 
 #: Mailnag/plugins/goaplugin.py:94
 msgid "GNOME Online Accounts Integration."
-msgstr "Integrering med Gnome's Nätkonton."
+msgstr "Integrering med GNOME Nätkonton."
 
 #: Mailnag/plugins/dbusplugin.py:83
 msgid "DBus Service"
-msgstr "DBus Tjänst"
+msgstr "DBus-tjänst"
 
 #: Mailnag/plugins/dbusplugin.py:84
 msgid "Exposes Mailnag's functionality via a DBus service."
-msgstr "Visar Mailnag's funktioner via en DBus tjänst."
+msgstr "Visar Mailnags funktioner via en DBus-tjänst."
 
 #: Mailnag/daemon/mails.py:171
 msgid "No subject"
@@ -165,7 +168,7 @@ msgstr "Ämne saknas"
 
 #: Mailnag/configuration/plugindialog.py:33
 msgid "Plugin Configuration"
-msgstr "Inställning av Insticksprogram"
+msgstr "Inställning av insticksprogram"
 
 #: Mailnag/configuration/configwindow.py:109
 #: Mailnag/configuration/configwindow.py:134
@@ -197,11 +200,11 @@ msgstr "Annan (POP3)"
 
 #: Mailnag/configuration/accountdialog.py:271
 msgid "Connection failed."
-msgstr "Uppkoppling misslyckades."
+msgstr "Anslutning misslyckades."
 
 #: data/account_dialog.ui.h:1
 msgid "Mail Account"
-msgstr "Mail Konto"
+msgstr "E-postkonto"
 
 #: data/account_dialog.ui.h:2
 msgid "Enable Push-IMAP"
@@ -209,7 +212,7 @@ msgstr "Aktivera Push-IMAP"
 
 #: data/account_dialog.ui.h:3
 msgid "Enable SSL encryption"
-msgstr "Aktivera SSL kryptering"
+msgstr "Aktivera SSL-kryptering"
 
 #: data/account_dialog.ui.h:4
 msgid "Accountname:"
@@ -241,7 +244,7 @@ msgstr "Mappar (valfritt)"
 
 #: data/config_window.ui.h:1
 msgid "Mailnag Configuration"
-msgstr "Mailnag Inställningar"
+msgstr "Mailnag-inställningar"
 
 #: data/config_window.ui.h:2
 msgid "General"
@@ -262,6 +265,10 @@ msgid ""
 "Copyright (c) 2011 - 2016 Patrick Ulbrich\n"
 "and contributors."
 msgstr ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - En utökningsbar e-"
+"postaviseringsdemon.\n"
+"Copyright © 2011 - 2016 Patrick Ulbrich\n"
+"och bidragsgivare."
 
 #: data/config_window.ui.h:8
 msgid "Add Account"
@@ -269,12 +276,12 @@ msgstr "Lägg till Konto"
 
 #: data/config_window.ui.h:9
 msgid "Remove Account"
-msgstr "Ta bort Konto"
+msgstr "Ta bort konto"
 
 #: data/config_window.ui.h:10
 msgid "Edit Account"
-msgstr "Redigera Konto"
+msgstr "Redigera konto"
 
 #: data/config_window.ui.h:11
 msgid "Edit Plugin"
-msgstr "Redigera Instick"
+msgstr "Redigera instick"
