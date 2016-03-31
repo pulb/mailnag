@@ -3,7 +3,7 @@
 #
 # idlers.py
 #
-# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -144,7 +144,7 @@ class Idler(object):
 					
 	def _select(self, conn, account):
 		if len(account.folders) == 1:
-			conn.select(acount.folders[0])
+			conn.select(account.folders[0])
 		else:
 			conn.select("INBOX")
 	
