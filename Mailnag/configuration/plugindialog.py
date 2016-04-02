@@ -3,7 +3,7 @@
 #
 # plugindialog.py
 #
-# Copyright 2013 - 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ class PluginDialog:
 	def __init__(self, parent, plugin):
 		self._plugin = plugin
 		
-		flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.USE_HEADER_BAR
+		flags = Gtk.DialogFlags.MODAL # | Gtk.DialogFlags.USE_HEADER_BAR
 		self._window = Gtk.Dialog(_('Plugin Configuration'), parent, flags, \
 			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
 		
