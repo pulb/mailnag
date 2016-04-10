@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.19.0 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.6"/>
   <object class="GtkListStore" id="liststore_accounts">
@@ -178,6 +178,9 @@ and contributors.</property>
                     </child>
                   </object>
                 </child>
+                <style>
+                  <class name="bg-gradient"/>
+                </style>
               </object>
             </child>
             <child type="tab">
