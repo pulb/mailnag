@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-02-03 19:08+0100\n"
-"PO-Revision-Date: 2016-03-23 14:55+0000\n"
+"PO-Revision-Date: 2016-04-13 18:08+0000\n"
 "Last-Translator: Patrick Ulbrich <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-03-31 10:40+0000\n"
-"X-Generator: Launchpad (build 17967)\n"
+"X-Launchpad-Export-Date: 2016-04-14 17:20+0000\n"
+"X-Generator: Launchpad (build 17990)\n"
 
 #: Mailnag/plugins/userscriptplugin.py:62
 msgid "User Script"
@@ -46,7 +46,7 @@ msgid ""
 msgstr ""
 "Das folgende Skript wird immer dann ausgeführt, wenn neue E-Mails "
 "eintreffen.\n"
-"Mailnag überreicht die Anzahl der neuen Mails an dieses Script,\n"
+"Mailnag überreicht die Anzahl der neuen E-Mails an dieses Skript,\n"
 "gefolgt von %s Sequenzen."
 
 #: Mailnag/plugins/unityplugin.py:98
@@ -55,7 +55,7 @@ msgstr "Ubuntu Unity"
 
 #: Mailnag/plugins/unityplugin.py:99
 msgid "Shows new mails in Ubuntu's Messaging menu."
-msgstr "Zeigt neue Mails in Ubuntu's Messaging-Menu an."
+msgstr "Zeigt neue E-Mails in Ubuntus Benachrichtigungsmenü an."
 
 #: Mailnag/plugins/unityplugin.py:118
 msgid "Maximum number of visible mails:"
@@ -267,8 +267,8 @@ msgid ""
 "and contributors."
 msgstr ""
 "<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - Ein erweiterbarer "
-"Benachrichtigungs-Dämon.\n"
-"Copyright (c) 2011 - 2016 Patrick Ulbrich\n"
+"Benachrichtigungsdienst.\n"
+"Urheberrecht (c) 2011 - 2016 Patrick Ulbrich\n"
 "und Mitwirkende."
 
 #: data/config_window.ui.h:8
