@@ -4,8 +4,10 @@
   <id type="desktop">mailnag-config.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
+  <translation type="gettext">mailnag</translation>
   <name>Mailnag</name>
   <summary>An extensible mail notification daemon</summary>
+  <summary xml:lang="de">Ein erweiterbarer Benachrichtigungsdienst</summary>
   <description>
       Mailnag is a daemon program that checks POP3 and IMAP servers for new mail.
       On mail arrival it performs various actions provided by plugins.
