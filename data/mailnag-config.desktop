@@ -11,3 +11,4 @@ Terminal=false
 Type=Application
 Categories=Network;
 StartupNotify=false
+X-AppStream-Ignore=true
