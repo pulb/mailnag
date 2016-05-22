@@ -9,6 +9,6 @@ Exec=/usr/bin/mailnag-config
 Icon=mailnag
 Terminal=false
 Type=Application
-Categories=Network;
+Categories=Network;Email;
 StartupNotify=false
 X-AppStream-Ignore=true
