@@ -3,7 +3,7 @@
 #
 # configwindow.py
 #
-# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 #
+
+import gi
+gi.require_version('Gtk', '3.0')
+gi.require_version('GLib', '2.0')
 
 import os
 import shutil

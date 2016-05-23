@@ -3,7 +3,7 @@
 #
 # credentialstore.py
 #
-# Copyright 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2015, 2016 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,6 +35,8 @@ class CredentialStoreType:
 _credentialstoretype = CredentialStoreType.NONE
 
 try:
+	import gi
+	gi.require_version('GnomeKeyring', '1.0')
 	from gi.repository import GnomeKeyring
 	_credentialstoretype = CredentialStoreType.GNOME
 except: pass

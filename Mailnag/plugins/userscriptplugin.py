@@ -21,6 +21,9 @@
 # MA 02110-1301, USA.
 #
 
+import gi
+gi.require_version('Gtk', '3.0')
+
 import os
 from gi.repository import Gtk
 from Mailnag.common.plugins import Plugin, HookTypes

@@ -23,6 +23,9 @@
 # MA 02110-1301, USA.
 #
 
+import gi
+gi.require_version('GLib', '2.0')
+
 from gi.repository import GObject, GLib
 from dbus.mainloop.glib import DBusGMainLoop
 import threading
