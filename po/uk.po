@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-03-31 10:40+0000\n"
-"X-Generator: Launchpad (build 17967)\n"
+"X-Launchpad-Export-Date: 2016-05-26 15:48+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
 
 #: Mailnag/plugins/userscriptplugin.py:62
 msgid "User Script"
