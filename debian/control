@@ -16,7 +16,6 @@ Depends:
  gir1.2-gst-plugins-base-1.0 (>= 1.2.0),
  gir1.2-gtk-3.0 (>= 3.6.4),
  gir1.2-notify-0.7 (>= 0.7.6),
- libgtk-3-bin (>= 3.6.4),
  python-dbus (>= 1.0.0),
  python-gobject (>= 3.2.0),
  python-xdg,
