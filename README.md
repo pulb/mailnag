@@ -49,8 +49,7 @@ though make sure the requirements stated below are met.
 * python2 (python3 won't work!)
 * pygobject
 * gir-notify (>= 0.7.6)
-* gir-gtk-3.0
-* gir-gdkpixbuf-2.0
+* gir-gtk-3.0 (>= 3.10.8)
 * gir-glib-2.0
 * gir-gst-plugins-base-1.0
 * python-dbus

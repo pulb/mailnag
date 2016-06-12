@@ -24,12 +24,11 @@
 
 import gi
 gi.require_version('Gtk', '3.0')
-gi.require_version('GLib', '2.0')
 
 import os
 import shutil
 import xdg.BaseDirectory as bd
-from gi.repository import GLib, GdkPixbuf, Gdk, Gtk, GObject
+from gi.repository import Gtk
 
 from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR, DESKTOP_FILE_DIR
 from Mailnag.common.i18n import _
@@ -70,7 +69,6 @@ class ConfigWindow:
 
 		self._window = builder.get_object("config_window")
 		self._window.set_icon_name("mailnag")
-		self._load_stylesheet('config_window.css')
 		self._cfg = read_cfg()
 		
 		self.daemon_enabled = False
@@ -82,16 +80,6 @@ class ConfigWindow:
 		self._box_navigation = builder.get_object("box_navigation")
 		self._box_navigation.get_children()[0].set_active(True)
 		
-		#
-		# general page
-		#		
-		# The dimension of the png is expected to be 180x180 px
-		pb = GdkPixbuf.Pixbuf.new_from_file(get_data_file("mailnag.png"))
-		pb = pb.new_subpixbuf(0, 10, 180, 146) # crop whitespace at the bottom
-		self._image_logo = builder.get_object("image_logo")
-		self._image_logo.set_from_pixbuf(pb)
-		self._label_app_desc = builder.get_object("label_app_desc")
-		self._label_app_desc.set_markup("<span font=\"24\"><b>Mailnag</b></span>\nVersion %s" % str(APP_VERSION))
 		self._switch_daemon_enabled = builder.get_object("switch_daemon_enabled")
 		
 		#
@@ -148,14 +136,6 @@ class ConfigWindow:
 		# load config
 		self._load_config()
 		self._window.show()
-
-
-	def _load_stylesheet(self, stylesheet):
-		provider = Gtk.CssProvider()
-		provider.load_from_path(get_data_file(stylesheet))
-		Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(),
-												 provider,
-												 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 	
 	
 	def _load_config(self):
