@@ -32,7 +32,7 @@ class PluginDialog:
 	def __init__(self, parent, plugin):
 		self._plugin = plugin
 		
-		flags = Gtk.DialogFlags.MODAL # | Gtk.DialogFlags.USE_HEADER_BAR
+		flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.USE_HEADER_BAR
 		self._window = Gtk.Dialog(_('Plugin Configuration'), parent, flags, \
 			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
 		
