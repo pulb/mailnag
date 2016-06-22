@@ -32,7 +32,7 @@ from gi.repository import Gtk
 
 from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR, DESKTOP_FILE_DIR
 from Mailnag.common.i18n import _
-from Mailnag.common.utils import get_data_file, get_data_paths
+from Mailnag.common.utils import get_data_file
 from Mailnag.common.config import read_cfg, write_cfg
 from Mailnag.common.accounts import Account, AccountManager
 from Mailnag.common.credentialstore import CredentialStore
@@ -42,7 +42,7 @@ from Mailnag.configuration.plugindialog import PluginDialog
 
 
 class ConfigWindow:
-	def __init__(self):
+	def __init__(self, app):
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
 		builder.add_from_file(get_data_file("config_window.ui"))
@@ -59,18 +59,13 @@ class ConfigWindow:
 			"treeview_plugins_cursor_changed" : self._on_treeview_plugins_cursor_changed, \
 		})
 		
-		# Add icons in alternative data paths (e.g. ./data/icons) 
-		# to the icon search path in case Mailnag is launched 
-		# from a local directory (without installing).
-		icon_theme = Gtk.IconTheme.get_default()
-		for path in get_data_paths():
-			icon_theme.append_search_path(os.path.join(path, "icons"))
 
 		self._window = builder.get_object("config_window")
 		self._window.set_icon_name("mailnag")
+		self._window.set_application(app)
 		self._cfg = read_cfg()
 		
-		self.daemon_enabled = False
+		self._daemon_enabled = False
 		
 		self._switch_daemon_enabled = builder.get_object("switch_daemon_enabled")
 		
@@ -130,6 +125,14 @@ class ConfigWindow:
 		self._window.show()
 	
 	
+	def get_gtk_window(self):
+		return self._window
+	
+	
+	def get_daemon_enabled(self):
+		return self._daemon_enabled
+		
+		
 	def _load_config(self):
 		self._switch_daemon_enabled.set_active(bool(int(self._cfg.get('core', 'autostart'))))
 		
@@ -356,15 +359,8 @@ class ConfigWindow:
 		plugin, model, iter = self._get_selected_plugin()
 		if iter != None:
 			self._button_edit_plugin.set_sensitive(plugin.has_config_ui())
-	
-	
-	def _save_and_quit(self):
-		self._save_config()	
-		self.daemon_enabled = self._switch_daemon_enabled.get_active()
-		Gtk.main_quit()
 		
 
 	def _on_config_window_deleted(self, widget, event):
-		self._save_and_quit()
-
-
+		self._save_config()	
+		self._daemon_enabled = self._switch_daemon_enabled.get_active()

@@ -3,7 +3,7 @@
 #
 # utils.py
 #
-# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2007 Marco Ferragina <marco.ferragina@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -85,7 +85,7 @@ def try_call(f, err_retval = None):
 		return err_retval
 
 
-def shutdown_existing_instance():
+def shutdown_existing_instance(wait_for_completion = True):
 	bus = dbus.SessionBus()
 	
 	if bus.name_has_owner(DBUS_BUS_NAME):
@@ -98,8 +98,9 @@ def shutdown_existing_instance():
 			
 			shutdown()
 			
-			while bus.name_has_owner(DBUS_BUS_NAME):
-				time.sleep(2)
+			if wait_for_completion:
+				while bus.name_has_owner(DBUS_BUS_NAME):
+					time.sleep(2)
 			
 			print 'OK'
 		except:
