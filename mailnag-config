@@ -23,17 +23,19 @@
 
 import gi
 gi.require_version('Gtk', '3.0')
+gi.require_version('GLib', '2.0')
 
 import os
 import subprocess
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 
 from Mailnag.common.utils import fix_cwd
 
 fix_cwd()
 
-from Mailnag.common.utils import set_procname, shutdown_existing_instance, get_data_paths
-from Mailnag.common.dist_cfg import BIN_DIR
+from Mailnag.common.i18n import _
+from Mailnag.common.utils import set_procname, shutdown_existing_instance, get_data_file, get_data_paths
+from Mailnag.common.dist_cfg import BIN_DIR, PACKAGE_NAME
 from Mailnag.configuration.configwindow import ConfigWindow
 
 
@@ -52,6 +54,19 @@ class App(Gtk.Application):
 		icon_theme = Gtk.IconTheme.get_default()
 		for path in get_data_paths():
 			icon_theme.append_search_path(os.path.join(path, "icons"))
+
+		builder = Gtk.Builder()
+		builder.set_translation_domain(PACKAGE_NAME)
+		builder.add_from_file(get_data_file("appmenu.ui"))
+		self.set_app_menu(builder.get_object("appmenu"))
+		
+		about_action = Gio.SimpleAction.new("about", None)
+		about_action.connect("activate", self.about_cb)
+		self.add_action(about_action)
+		
+		quit_action = Gio.SimpleAction.new("quit", None)
+		quit_action.connect("activate", self.quit_cb)
+		self.add_action(quit_action)
 	
 	
 	def do_activate(self):
@@ -76,6 +91,25 @@ class App(Gtk.Application):
 		else:
 			# shutdown running Mailnag daemon
 			shutdown_existing_instance(wait_for_completion = False)
+	
+	
+	def about_cb(self, action, parameter):
+		aboutdialog = Gtk.AboutDialog()
+		aboutdialog.set_title(_("About %s") % PACKAGE_NAME.title())
+		aboutdialog.set_program_name(PACKAGE_NAME.title())
+		aboutdialog.set_copyright(_("Copyright (c) 2011 - 2016 Patrick Ulbrich and contributors."))
+		aboutdialog.set_logo_icon_name("mailnag")
+		aboutdialog.set_website("https://github.com/pulb/mailnag")
+		aboutdialog.set_website_label(_("Homepage"))
+		aboutdialog.set_license_type(Gtk.License.GPL_2_0)		
+		aboutdialog.set_authors([ "Patrick Ulbrich <zulu99@gmx.net>" ])
+		aboutdialog.connect("response", lambda w, r: aboutdialog.destroy())
+		aboutdialog.set_transient_for(self.win.get_gtk_window())
+		aboutdialog.show()
+
+	
+	def quit_cb(self, action, parameter):
+		self.win.get_gtk_window().close()
 
 	
 def main():
