@@ -97,6 +97,7 @@ class App(Gtk.Application):
 		aboutdialog = Gtk.AboutDialog()
 		aboutdialog.set_title(_("About %s") % PACKAGE_NAME.title())
 		aboutdialog.set_program_name(PACKAGE_NAME.title())
+		aboutdialog.set_comments(_("An extensible mail notification daemon."))
 		aboutdialog.set_copyright(_("Copyright (c) 2011 - 2016 Patrick Ulbrich and contributors."))
 		aboutdialog.set_logo_icon_name("mailnag")
 		aboutdialog.set_website("https://github.com/pulb/mailnag")
