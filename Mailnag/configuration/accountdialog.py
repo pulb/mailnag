@@ -69,7 +69,7 @@ class AccountDialog:
 		self._box.set_border_width(12)
 		self._box.set_spacing(12)
 		
-		self._box.add(builder.get_object("account_widget"))
+		self._box.pack_start(builder.get_object("account_widget"), True, True, 0)
 
 		self._cmb_account_type = builder.get_object("cmb_account_type")
 		self._label_account_name = builder.get_object("label_account_name")

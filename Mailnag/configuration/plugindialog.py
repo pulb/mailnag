@@ -47,7 +47,7 @@ class PluginDialog:
 		widget = self._plugin.get_config_ui()
 		
 		if widget != None:
-			self._box.add(widget)
+			self._box.pack_start(widget, True, True, 0)
 			widget.show_all()
 			self._plugin.load_ui_from_config(widget)
 		
