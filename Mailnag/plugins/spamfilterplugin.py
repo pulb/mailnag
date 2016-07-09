@@ -90,9 +90,10 @@ class SpamfilterPlugin(Plugin):
 		box.set_orientation(Gtk.Orientation.VERTICAL)
 		#box.set_size_request(100, -1)
 		
-		desc =  _('Mailnag will ignore mails containing at least one of \nthe following words in subject or sender.')
+		desc =  _('Mailnag will ignore mails containing at least one of the following words in sender or subject.')
 		
 		label = Gtk.Label(desc)
+		label.set_xalign(0.0)
 		label.set_line_wrap(True)
 		#label.set_size_request(100, -1);
 		box.pack_start(label, False, False, 0)
