@@ -2,6 +2,28 @@
 <!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
+  <object class="GtkListStore" id="liststore_accounts">
+    <columns>
+      <!-- column-name account_obj -->
+      <column type="PyObject"/>
+      <!-- column-name account_enabled -->
+      <column type="gboolean"/>
+      <!-- column-name account_name -->
+      <column type="gchararray"/>
+    </columns>
+    <signal name="row-deleted" handler="liststore_accounts_row_deleted" swapped="no"/>
+    <signal name="row-inserted" handler="liststore_accounts_row_inserted" swapped="no"/>
+  </object>
+  <object class="GtkListStore" id="liststore_plugins">
+    <columns>
+      <!-- column-name plugin_obj -->
+      <column type="PyObject"/>
+      <!-- column-name plugin_enabled -->
+      <column type="gboolean"/>
+      <!-- column-name plugin_name -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkApplicationWindow" id="config_window">
     <property name="can_focus">False</property>
     <property name="default_width">580</property>
@@ -177,11 +199,14 @@
       </object>
     </child>
     <child type="titlebar">
-      <object class="GtkHeaderBar">
+      <object class="GtkHeaderBar" id="headerbar">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="spacing">12</property>
         <property name="show_close_button">True</property>
+        <child>
+          <placeholder/>
+        </child>
         <child type="title">
           <object class="GtkStackSwitcher">
             <property name="visible">True</property>
@@ -189,40 +214,7 @@
             <property name="stack">stack1</property>
           </object>
         </child>
-        <child>
-          <object class="GtkSwitch" id="switch_daemon_enabled">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-          </object>
-          <packing>
-            <property name="pack_type">end</property>
-          </packing>
-        </child>
       </object>
     </child>
-  </object>
-  <object class="GtkListStore" id="liststore_accounts">
-    <columns>
-      <!-- column-name account_obj -->
-      <column type="PyObject"/>
-      <!-- column-name account_enabled -->
-      <column type="gboolean"/>
-      <!-- column-name account_name -->
-      <column type="gchararray"/>
-    </columns>
-    <signal name="row-deleted" handler="liststore_accounts_row_deleted" swapped="no"/>
-    <signal name="row-inserted" handler="liststore_accounts_row_inserted" swapped="no"/>
-  </object>
-  <object class="GtkListStore" id="liststore_plugins">
-    <columns>
-      <!-- column-name plugin_obj -->
-      <column type="PyObject"/>
-      <!-- column-name plugin_enabled -->
-      <column type="gboolean"/>
-      <!-- column-name plugin_name -->
-      <column type="gchararray"/>
-    </columns>
   </object>
 </interface>

@@ -67,7 +67,17 @@ class ConfigWindow:
 		
 		self._daemon_enabled = False
 		
-		self._switch_daemon_enabled = builder.get_object("switch_daemon_enabled")
+		settings = Gtk.Settings.get_default()
+		[left, right] = settings.get_property("gtk-decoration-layout").split(":")
+		
+		self._switch_daemon_enabled = Gtk.Switch()
+		
+		self._headerbar = builder.get_object("headerbar")
+		
+		if len(left) <= len(right):
+			self._headerbar.pack_start(self._switch_daemon_enabled)
+		else:
+			self._headerbar.pack_end(self._switch_daemon_enabled)
 		
 		#
 		# accounts page
@@ -122,7 +132,7 @@ class ConfigWindow:
 		
 		# load config
 		self._load_config()
-		self._window.show()
+		self._window.show_all()
 	
 	
 	def get_gtk_window(self):
