@@ -74,7 +74,7 @@ class ConfigWindow:
 		
 		self._headerbar = builder.get_object("headerbar")
 		
-		if len(left) <= len(right):
+		if left.count(",") <= right.count(","):
 			self._headerbar.pack_start(self._switch_daemon_enabled)
 		else:
 			self._headerbar.pack_end(self._switch_daemon_enabled)
