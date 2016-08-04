@@ -31,7 +31,6 @@ from dbus.mainloop.glib import DBusGMainLoop
 import threading
 import argparse
 import logging
-import logging.handlers
 import os
 import signal
 
@@ -41,16 +40,14 @@ fix_cwd()
 
 from Mailnag.common.config import cfg_exists
 from Mailnag.common.dist_cfg import APP_VERSION
-from Mailnag.common.utils import set_procname, shutdown_existing_instance
+from Mailnag.common.utils import set_procname, init_logging, shutdown_existing_instance
 from Mailnag.common.subproc import terminate_subprocesses
 from Mailnag.common.exceptions import InvalidOperationException
 from Mailnag.daemon.mailnagdaemon import MailnagDaemon
 
 PROGNAME = 'mailnag'
-
 LOG_LEVEL = logging.DEBUG
-LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
-LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+
 
 def cleanup(daemon):
 	event = threading.Event()
@@ -81,27 +78,7 @@ def get_args():
 		version = '%s %s' % (PROGNAME, APP_VERSION))
 	
 	return parser.parse_args()
-
-
-def init_logging(enable_stdout = True):
-	logging.basicConfig(
-		format = LOG_FORMAT,
-		datefmt = LOG_DATE_FORMAT,
-		level = LOG_LEVEL)
 	
-	logger = logging.getLogger('')
-	
-	syslog_handler = logging.handlers.SysLogHandler(address='/dev/log')
-	syslog_handler.setLevel(LOG_LEVEL)
-	syslog_handler.setFormatter(logging.Formatter(LOG_FORMAT, LOG_DATE_FORMAT))
-	
-	stdout_handler = logger.handlers[0]
-	
-	logger.addHandler(syslog_handler)
-	
-	if not enable_stdout:
-		logger.removeHandler(stdout_handler)	
-
 
 def sigterm_handler(mainloop):
 	if mainloop != None:
@@ -127,7 +104,8 @@ def main():
 	
 	# Note: don't start logging before an existing Mailnag 
 	# instance has been shut down completely (will corrupt logfile).
-	init_logging(not args.quiet)
+	init_logging(enable_stdout = (not args.quiet), \
+					enable_syslog = True, log_level = LOG_LEVEL)
 	
 	try:
 		if not cfg_exists():

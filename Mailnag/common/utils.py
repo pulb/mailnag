@@ -3,7 +3,7 @@
 #
 # utils.py
 #
-# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2007 Marco Ferragina <marco.ferragina@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -28,9 +28,33 @@ import sys
 import time
 import dbus
 import logging
+import logging.handlers
 import inspect
 
 from Mailnag.common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
+
+LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
+LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+
+
+def init_logging(enable_stdout = True, enable_syslog = True, log_level = logging.DEBUG):
+	logging.basicConfig(
+		format = LOG_FORMAT,
+		datefmt = LOG_DATE_FORMAT,
+		level = log_level)
+	
+	logger = logging.getLogger('')
+	
+	if not enable_stdout:
+		stdout_handler = logger.handlers[0]
+		logger.removeHandler(stdout_handler)
+	
+	if enable_syslog:
+		syslog_handler = logging.handlers.SysLogHandler(address='/dev/log')
+		syslog_handler.setLevel(log_level)
+		syslog_handler.setFormatter(logging.Formatter(LOG_FORMAT, LOG_DATE_FORMAT))
+	
+		logger.addHandler(syslog_handler)
 
 
 def get_data_paths():
