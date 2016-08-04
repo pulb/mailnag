@@ -27,10 +27,11 @@ gi.require_version('Gtk', '3.0')
 
 import os
 import subprocess
+import logging
 from gi.repository import Gtk
 from dbus.mainloop.glib import DBusGMainLoop
 
-from Mailnag.common.utils import fix_cwd
+from Mailnag.common.utils import fix_cwd, init_logging
 
 fix_cwd()
 
@@ -38,9 +39,12 @@ from Mailnag.common.utils import set_procname, shutdown_existing_instance
 from Mailnag.common.dist_cfg import BIN_DIR
 from Mailnag.configuration.configwindow import ConfigWindow
 
+LOG_LEVEL = logging.DEBUG
+
 
 def main():
 	set_procname("mailnag-config")
+	init_logging(enable_stdout = True, enable_syslog = False, log_level = LOG_LEVEL)
 	confwin = ConfigWindow()
 	Gtk.main()
 	
