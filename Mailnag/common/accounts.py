@@ -107,6 +107,7 @@ class Account:
 			conn.logout()
 		
 		for d in data:
+			logging.debug("Folder raw format: %s" % d)
 			match = re.match('.+\s+("."|"?NIL"?)\s+"?([^".]+)"?$', d)
 
 			if match == None:
