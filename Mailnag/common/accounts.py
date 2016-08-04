@@ -107,7 +107,7 @@ class Account:
 			conn.logout()
 		
 		for d in data:
-			match = re.match('.+\s+("."|"?NIL"?)\s+"?([^".]+)"?$', d)
+			match = re.match('.+\s+("."|"?NIL"?)\s+"?([^"]+)"?$', d)
 
 			if match == None:
 				logging.warning("Folder format not supported.")
