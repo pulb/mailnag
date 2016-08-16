@@ -28,6 +28,7 @@ import poplib
 import logging
 import json
 import Mailnag.common.imaplib2 as imaplib
+from Mailnag.common.utils import splitstr
 
 account_defaults = {
 	'enabled'			: '0',
@@ -276,7 +277,11 @@ class AccountManager:
 				ssl			= bool(int(	self._get_account_cfg(cfg, section_name, 'ssl')		))
 				imap		= bool(int(	self._get_account_cfg(cfg, section_name, 'imap')	))
 				idle		= bool(int(	self._get_account_cfg(cfg, section_name, 'idle')	))
-				folders		= json.loads(self._get_account_cfg(cfg, section_name, 'folder'))
+				folders_str	= self._get_account_cfg(cfg, section_name, 'folder')
+				if re.match(r'^\[.*\]$', folders_str):
+					folders	= json.loads(folders_str)
+				else:
+					folders	= splitstr(folders_str, ',')
 
 				if self._credentialstore != None:
 					protocol = 'imap' if imap else 'pop'
