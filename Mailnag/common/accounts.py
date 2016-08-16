@@ -26,8 +26,8 @@
 import re
 import poplib
 import logging
+import json
 import Mailnag.common.imaplib2 as imaplib
-from Mailnag.common.utils import splitstr
 
 account_defaults = {
 	'enabled'			: '0',
@@ -39,7 +39,7 @@ account_defaults = {
 	'ssl'				: '1',
 	'imap'				: '1',	
 	'idle'				: '1',
-	'folder'			: ''
+	'folder'			: '[]'
 }
 
 CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
@@ -276,7 +276,7 @@ class AccountManager:
 				ssl			= bool(int(	self._get_account_cfg(cfg, section_name, 'ssl')		))
 				imap		= bool(int(	self._get_account_cfg(cfg, section_name, 'imap')	))
 				idle		= bool(int(	self._get_account_cfg(cfg, section_name, 'idle')	))
-				folders		= splitstr(self._get_account_cfg(cfg, section_name, 'folder'), ',')
+				folders		= json.loads(self._get_account_cfg(cfg, section_name, 'folder'))
 
 				if self._credentialstore != None:
 					protocol = 'imap' if imap else 'pop'
@@ -329,7 +329,7 @@ class AccountManager:
 			cfg.set(section_name, 'ssl', int(acc.ssl))
 			cfg.set(section_name, 'imap', int(acc.imap))
 			cfg.set(section_name, 'idle', int(acc.idle))
-			cfg.set(section_name, 'folder', ', '.join(acc.folders))
+			cfg.set(section_name, 'folder', json.dumps(acc.folders))
 			
 			if self._credentialstore != None:
 				protocol = 'imap' if acc.imap else 'pop'
