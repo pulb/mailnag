@@ -15,7 +15,7 @@ __license__ = "WTFPL v. 2"
 import base64
 import re
 
-ascii_codes = set(range(0x20,0x7e))
+ascii_codes = set(range(0x20,0x7f))
 
 def __get_ascii(text):
     pos = 0
