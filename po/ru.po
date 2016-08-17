@@ -1,0 +1,284 @@
+# Mailnag russian tranlation
+# This file is distributed under the same license as the mailnag package.
+# Oleg <cheshile-mouse@github.com>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mailnag\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-03 19:08+0100\n"
+"PO-Revision-Date: 2016-08-17 2O:00+0300\n"
+"Last-Translator: Oleg <cheshile-mouse@github.com>\n"
+"Language: RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Mailnag/plugins/userscriptplugin.py:62
+msgid "User Script"
+msgstr "Пользовательский скрипт"
+
+#: Mailnag/plugins/userscriptplugin.py:63
+msgid "Runs an user defined script on mail arrival."
+msgstr "Запустить пользовательский скрипт при получении почты"
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "account"
+msgstr "учетная запись"
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "sender"
+msgstr "отправитель"
+
+#: Mailnag/plugins/userscriptplugin.py:83
+msgid "subject"
+msgstr "тема"
+
+#: Mailnag/plugins/userscriptplugin.py:84
+#, python-format
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by %s sequences."
+msgstr ""
+"Следующий скрипт будет выполнен при появлении новых сообщений.\n"
+"Скрипту передаётся количество сообщений,\n"
+"за которым следуют: %s"
+
+#: Mailnag/plugins/unityplugin.py:98
+msgid "Ubuntu Unity"
+msgstr ""
+
+#: Mailnag/plugins/unityplugin.py:99
+msgid "Shows new mails in Ubuntu's Messaging menu."
+msgstr "Отображает новые письма в меню сообщений Ubuntu."
+
+#: Mailnag/plugins/unityplugin.py:118
+msgid "Maximum number of visible mails:"
+msgstr "Максимальное количество отображаемых писем:"
+
+#: Mailnag/plugins/spamfilterplugin.py:69
+msgid "Spam Filter"
+msgstr "Спам фильтр"
+
+#: Mailnag/plugins/spamfilterplugin.py:70
+msgid "Filters out unwanted mails."
+msgstr "Фильтрует нежелательные сообщения."
+
+#: Mailnag/plugins/spamfilterplugin.py:90
+msgid ""
+"Mailnag will ignore mails containing at least one of \n"
+"the following words in subject or sender."
+msgstr ""
+"Mailnag проигнорирует письмо, если имя отправителя\n"
+"или тема содержит одно из следующих слов"
+
+#: Mailnag/plugins/libnotifyplugin.py:100
+msgid "LibNotify Notifications"
+msgstr "Уведомления LibNotify"
+
+#: Mailnag/plugins/libnotifyplugin.py:101
+msgid "Shows a popup when new mails arrive."
+msgstr "Отображение всплывающего уведомления при получении новых писем"
+
+#: Mailnag/plugins/libnotifyplugin.py:117
+msgid "Count of new mails"
+msgstr "Количество новых писем"
+
+#: Mailnag/plugins/libnotifyplugin.py:118
+msgid "Short summary of new mails"
+msgstr "Краткие сведения о письмах"
+
+#: Mailnag/plugins/libnotifyplugin.py:119
+msgid "Detailed summary of new mails"
+msgstr "Подробные сведения о письмах"
+
+#: Mailnag/plugins/libnotifyplugin.py:120
+msgid "One notification per new mail"
+msgstr "Одно уведомление на письмо"
+
+#: Mailnag/plugins/libnotifyplugin.py:128
+msgid "Notification mode:"
+msgstr "Тип уведомлений"
+
+#: Mailnag/plugins/libnotifyplugin.py:215
+#: Mailnag/plugins/libnotifyplugin.py:251
+#: Mailnag/plugins/libnotifyplugin.py:279
+#, python-brace-format
+msgid "{0} new mails"
+msgstr "сообщений: {0}"
+
+#: Mailnag/plugins/libnotifyplugin.py:217
+#, python-brace-format
+msgid "from {0} and others."
+msgstr "от {0} и других."
+
+#: Mailnag/plugins/libnotifyplugin.py:219
+#: Mailnag/plugins/libnotifyplugin.py:222
+#, python-brace-format
+msgid "from {0}."
+msgstr "от {0}."
+
+#: Mailnag/plugins/libnotifyplugin.py:221
+#: Mailnag/plugins/libnotifyplugin.py:253
+#: Mailnag/plugins/libnotifyplugin.py:281
+msgid "New mail"
+msgstr "Новое сообщение"
+
+#: Mailnag/plugins/libnotifyplugin.py:246
+#: Mailnag/plugins/libnotifyplugin.py:248
+#, python-brace-format
+msgid "(and {0} more)"
+msgstr "(и еще {0})"
+
+#: Mailnag/plugins/libnotifyplugin.py:268
+msgid "Mark as read"
+msgstr "Отметить как прочитанное"
+
+#: Mailnag/plugins/soundplugin.py:65
+msgid "Sound Notifications"
+msgstr "Звуковые уведомления"
+
+#: Mailnag/plugins/soundplugin.py:66
+msgid "Plays a sound when new mails arrive."
+msgstr "Проигрывает мелодию при появлении нового сообщения."
+
+#: Mailnag/plugins/goaplugin.py:93
+msgid "GNOME Online Accounts"
+msgstr ""
+
+#: Mailnag/plugins/goaplugin.py:94
+msgid "GNOME Online Accounts Integration."
+msgstr ""
+
+#: Mailnag/plugins/dbusplugin.py:83
+msgid "DBus Service"
+msgstr "Служба DBus"
+
+#: Mailnag/plugins/dbusplugin.py:84
+msgid "Exposes Mailnag's functionality via a DBus service."
+msgstr "Доступ к фунциям Mailnag через службу DBus."
+
+#: Mailnag/daemon/mails.py:171
+msgid "No subject"
+msgstr "Без темы"
+
+#: Mailnag/configuration/plugindialog.py:33
+msgid "Plugin Configuration"
+msgstr "Настройка плагина"
+
+#: Mailnag/configuration/configwindow.py:109
+#: Mailnag/configuration/configwindow.py:134
+#: Mailnag/configuration/accountdialog.py:88
+msgid "Enabled"
+msgstr "Включено"
+
+#: Mailnag/configuration/configwindow.py:115
+#: Mailnag/configuration/configwindow.py:141
+#: Mailnag/configuration/accountdialog.py:94
+msgid "Name"
+msgstr "Имя"
+
+#: Mailnag/configuration/configwindow.py:344
+msgid "Delete this account:"
+msgstr "Удалить учетную запись:"
+
+#: Mailnag/configuration/accountdialog.py:84
+msgid "optional"
+msgstr "необязательно"
+
+#: Mailnag/configuration/accountdialog.py:177
+msgid "Other (IMAP)"
+msgstr "Другое (IMAP)"
+
+#: Mailnag/configuration/accountdialog.py:178
+msgid "Other (POP3)"
+msgstr "Другое (POP3)"
+
+#: Mailnag/configuration/accountdialog.py:271
+msgid "Connection failed."
+msgstr "Ошибка соединения."
+
+#: data/account_dialog.ui.h:1
+msgid "Mail Account"
+msgstr "Учетная запись"
+
+#: data/account_dialog.ui.h:2
+msgid "Enable Push-IMAP"
+msgstr "Включить Push-IMAP"
+
+#: data/account_dialog.ui.h:3
+msgid "Enable SSL encryption"
+msgstr "Включить SSL шифрование"
+
+#: data/account_dialog.ui.h:4
+msgid "Accountname:"
+msgstr "Имя учетной записи:"
+
+#: data/account_dialog.ui.h:5
+msgid "Account type:"
+msgstr "Тип учетной записи:"
+
+#: data/account_dialog.ui.h:6
+msgid "User:"
+msgstr "Пользователь:"
+
+#: data/account_dialog.ui.h:7
+msgid "Password:"
+msgstr "Пароль:"
+
+#: data/account_dialog.ui.h:8
+msgid "Server:"
+msgstr "Сервер:"
+
+#: data/account_dialog.ui.h:9
+msgid "Port:"
+msgstr "Порт:"
+
+#: data/account_dialog.ui.h:10
+msgid "Folders (optional)"
+msgstr "Папки (необзязательно)"
+
+#: data/config_window.ui.h:1
+msgid "Mailnag Configuration"
+msgstr "Настройки Mailnag"
+
+#: data/config_window.ui.h:2
+msgid "General"
+msgstr "Общее"
+
+#: data/config_window.ui.h:3
+msgid "Accounts"
+msgstr "Учетные записи"
+
+#: data/config_window.ui.h:4
+msgid "Plugins"
+msgstr "Плагины"
+
+#: data/config_window.ui.h:5
+msgid ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - An extensible mail "
+"notification daemon.\n"
+"Copyright (c) 2011 - 2016 Patrick Ulbrich\n"
+"and contributors."
+msgstr ""
+"<a href=\"https://github.com/pulb/mailnag\">Mailnag</a> - служба уведомлений "
+"о входящей почте.\n"
+"Copyright (c) 2011 - 2016 Patrick Ulbrich\n"
+"and contributors."
+
+#: data/config_window.ui.h:8
+msgid "Add Account"
+msgstr "Добавить учетную запись"
+
+#: data/config_window.ui.h:9
+msgid "Remove Account"
+msgstr "Удалить учетную запись"
+
+#: data/config_window.ui.h:10
+msgid "Edit Account"
+msgstr "Редактировать учетную запись"
+
+#: data/config_window.ui.h:11
+msgid "Edit Plugin"
+msgstr "Редактировать плагин"
