@@ -99,7 +99,7 @@ msgstr "Одно уведомление на письмо"
 
 #: Mailnag/plugins/libnotifyplugin.py:128
 msgid "Notification mode:"
-msgstr "Тип уведомлений"
+msgstr "Тип уведомлений:"
 
 #: Mailnag/plugins/libnotifyplugin.py:215
 #: Mailnag/plugins/libnotifyplugin.py:251
