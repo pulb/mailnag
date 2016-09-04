@@ -28,6 +28,8 @@ import poplib
 import logging
 import json
 import Mailnag.common.imaplib2 as imaplib
+from Mailnag.backends.imap import ImapBackend
+from Mailnag.backends.pop3 import Pop3Backend
 from Mailnag.common.utils import splitstr
 
 account_defaults = {
@@ -50,7 +52,7 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 #
 class Account:
 	def __init__(self, enabled = False, name = '', user = '', \
-		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = []):
+		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = [], backend = None):
 		
 		self.enabled = enabled # bool
 		self.name = name
@@ -63,6 +65,7 @@ class Account:
 		self.imap = imap # bool		
 		self.idle = idle # bool
 		self.folders = folders
+		self.backend = backend
 		self._conn = None
 
 
@@ -287,7 +290,12 @@ class AccountManager:
 					protocol = 'imap' if imap else 'pop'
 					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
 				
-				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folders)
+				if imap:
+					backend = ImapBackend()
+				else:
+					bakcend = Pop3Backend()
+				
+				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folders, backend)
 				self._accounts.append(acc)
 
 			i = i + 1
