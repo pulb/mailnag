@@ -23,6 +23,94 @@
 # MA 02110-1301, USA.
 #
 
+import logging
+import re
+import Mailnag.common.imaplib2 as imaplib
+
 class ImapBackend:
-	pass
+	"""Implementation of IMAP mail boxes."""
+	
+	def __init__(self, name = '', user = '', password = '', oauth2string = '',
+				 server = '', port = '', ssl = True, folders = []):
+		self.name = name
+		self.user = user
+		self.password = password
+		self.oauth2string = oauth2string
+		self.server = server
+		self.port = port
+		self.ssl = ssl # bool
+		self.folders = folders
+		self._conn = None
+
+
+	def get_connection(self, use_existing):
+		# try to reuse existing connection
+		if use_existing and self.has_connection():
+			return self._conn
+		
+		self._conn = conn = None
+		
+		try:
+			if self.ssl:
+				if self.port == '':
+					conn = imaplib.IMAP4_SSL(self.server)
+				else:
+					conn = imaplib.IMAP4_SSL(self.server, int(self.port))
+			else:
+				if self.port == '':
+					conn = imaplib.IMAP4(self.server)
+				else:
+					conn = imaplib.IMAP4(self.server, int(self.port))
+				
+				if 'STARTTLS' in conn.capabilities:
+					conn.starttls()
+				else:
+					logging.warning("Using unencrypted connection for account '%s'" % self.name)
+				
+			if self.oauth2string != '':
+				conn.authenticate('XOAUTH2', lambda x: self.oauth2string)
+			else:
+				conn.login(self.user, self.password)
+			
+			self._conn = conn
+		except:
+			try:
+				if conn != None:
+					# conn.close() # allowed in SELECTED state only
+					conn.logout()
+			except:	pass
+			raise # re-throw exception
+		
+		return self._conn
+
+
+	def has_connection(self):
+		return (self._conn != None) and \
+				(self._conn.state != imaplib.LOGOUT) and \
+				(not self._conn.Terminate)
+
+
+	def request_folders(self):
+		lst = []
+		
+		# Always create a new connection as an existing one may
+		# be used for IMAP IDLE.
+		conn = self.get_connection(use_existing = False)
+
+		try:
+			status, data = conn.list('', '*')
+		finally:
+			# conn.close() # allowed in SELECTED state only
+			conn.logout()
+		
+		for d in data:
+			match = re.match('.+\s+("."|"?NIL"?)\s+"?([^"]+)"?$', d)
+
+			if match == None:
+				logging.warning("Folder format not supported.")
+			else:
+				folder = match.group(2)
+				lst.append(folder)
+		
+		return lst
 
