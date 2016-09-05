@@ -70,70 +70,25 @@ class MailCollector:
 				continue
 
 			if acc.imap: # IMAP
-				if len(acc.folders) == 0:
-					folder_list = [ 'INBOX' ]
-				else:
-					folder_list = acc.folders
-					
-				for folder in folder_list:	
-					# select IMAP folder
-					conn.select(folder, readonly = True)
-					try:
-						status, data = conn.search(None, 'UNSEEN') # ALL or UNSEEN
-					except:
-						logging.warning('Folder %s does not exist.', folder)
-						continue
-
-					if status != 'OK' or None in [d for d in data]:
-						logging.debug('Folder %s in status %s | Data: %s', (folder, status, data))
-						continue # Bugfix LP-735071
-					for num in data[0].split():
-						typ, msg_data = conn.fetch(num, '(BODY.PEEK[HEADER])') # header only (without setting READ flag)
-						for response_part in msg_data:
-							if isinstance(response_part, tuple):
-								try:
-									msg = email.message_from_string(response_part[1])
-								except:
-									logging.debug("Couldn't get IMAP message.")
-									continue
-								
-								sender, subject, datetime, msgid = self._get_header(msg)
-								id = self._get_id(msgid, acc, folder, sender, subject, datetime)
-						
-						# Discard mails with identical IDs (caused 
-						# by mails with a non-unique fallback ID, 
-						# i.e. mails received in the same folder with 
-						# identical sender and subject but *no datetime*, 
-						# see _get_id()).
-						# Also filter duplicates caused by Gmail labels.
-						if id not in mail_ids:
-							mail_list.append(Mail(datetime, subject, \
-								sender, id, acc))
-							mail_ids[id] = None
+				for folder, msg in acc.list_messages():
+					sender, subject, datetime, msgid = self._get_header(msg)
+					id = self._get_id(msgid, acc, folder, sender, subject, datetime)
+				
+					# Discard mails with identical IDs (caused 
+					# by mails with a non-unique fallback ID, 
+					# i.e. mails received in the same folder with 
+					# identical sender and subject but *no datetime*, 
+					# see _get_id()).
+					# Also filter duplicates caused by Gmail labels.
+					if id not in mail_ids:
+						mail_list.append(Mail(datetime, subject, \
+							sender, id, acc))
+						mail_ids[id] = None
 				
 			else: # POP
-				# number of mails on the server
-				mail_total = len(conn.list()[1])
-				for i in range(1, mail_total + 1): # for each mail
-					try:
-						# header plus first 0 lines from body
-						message = conn.top(i, 0)[1]
-					except:
-						logging.debug("Couldn't get POP message.")
-						continue
-					
-					# convert list to string
-					message_string = '\n'.join(message)
-					
-					try:
-						# put message into email object and make a dictionary
-						msg = dict(email.message_from_string(message_string))
-					except:
-						logging.debug("Couldn't get msg from POP message.")
-						continue
-					
+				for folder, msg in acc.list_messages():
 					sender, subject, datetime, msgid = self._get_header(msg)
-					id = self._get_id(msgid, acc, '', sender, subject, datetime)
+					id = self._get_id(msgid, acc, folder, sender, subject, datetime)
 					
 					# Discard mails with identical IDs (caused 
 					# by mails with a non-unique fallback ID, 

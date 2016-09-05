@@ -23,6 +23,7 @@
 # MA 02110-1301, USA.
 #
 
+import email
 import logging
 import poplib
 
@@ -82,10 +83,36 @@ class Pop3Backend:
 	def close(self):
 		self._conn.quit()
 
+
 	def has_connection(self):
 		return (self._conn != None) and \
 				('sock' in self._conn.__dict__)
-	
+
+
+	def list_messages(self):
+		conn = self._conn
+		folder = ''
+		# number of mails on the server
+		mail_total = len(conn.list()[1])
+		for i in range(1, mail_total + 1): # for each mail
+			try:
+				# header plus first 0 lines from body
+				message = conn.top(i, 0)[1]
+			except:
+				logging.debug("Couldn't get POP message.")
+				continue
+			
+			# convert list to string
+			message_string = '\n'.join(message)
+			
+			try:
+				# put message into email object and make a dictionary
+				msg = dict(email.message_from_string(message_string))
+			except:
+				logging.debug("Couldn't get msg from POP message.")
+				continue
+			yield (folder, msg)
+
 
 	def request_folders(self):
 		lst = []

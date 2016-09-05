@@ -91,8 +91,12 @@ class Account:
 			return self._has_IMAP_connection()
 		else:
 			return self._has_POP3_connection()
-	
-	
+
+
+	def list_messages(self):
+		return self.backend.list_messages()
+
+
 	# Requests folder names (list) from a server.
 	# Relevant for IMAP accounts only.
 	# Returns an empty list when used on POP3 accounts.

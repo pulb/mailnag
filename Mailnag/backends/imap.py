@@ -23,6 +23,7 @@
 # MA 02110-1301, USA.
 #
 
+import email
 import logging
 import re
 import Mailnag.common.imaplib2 as imaplib
@@ -93,6 +94,37 @@ class ImapBackend:
 		return (self._conn != None) and \
 				(self._conn.state != imaplib.LOGOUT) and \
 				(not self._conn.Terminate)
+
+
+	def list_messages(self):
+		conn = self._conn
+		if len(self.folders) == 0:
+			folder_list = [ 'INBOX' ]
+		else:
+			folder_list = self.folders
+
+		for folder in folder_list:
+			# select IMAP folder
+			conn.select(folder, readonly = True)
+			try:
+				status, data = conn.search(None, 'UNSEEN') # ALL or UNSEEN
+			except:
+				logging.warning('Folder %s does not exist.', folder)
+				continue
+
+			if status != 'OK' or None in [d for d in data]:
+				logging.debug('Folder %s in status %s | Data: %s', (folder, status, data))
+				continue # Bugfix LP-735071
+			for num in data[0].split():
+				typ, msg_data = conn.fetch(num, '(BODY.PEEK[HEADER])') # header only (without setting READ flag)
+				for response_part in msg_data:
+					if isinstance(response_part, tuple):
+						try:
+							msg = email.message_from_string(response_part[1])
+						except:
+							logging.debug("Couldn't get IMAP message.")
+							continue
+						yield (folder, msg)
 
 
 	def request_folders(self):
