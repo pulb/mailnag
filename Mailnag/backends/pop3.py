@@ -79,6 +79,9 @@ class Pop3Backend:
 		return self._conn
 
 
+	def close(self):
+		self._conn.quit()
+
 	def has_connection(self):
 		return (self._conn != None) and \
 				('sock' in self._conn.__dict__)

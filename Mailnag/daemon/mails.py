@@ -111,10 +111,6 @@ class MailCollector:
 								sender, id, acc))
 							mail_ids[id] = None
 				
-				# don't close IMAP idle connections
-				if not acc.idle:
-					conn.close()
-					conn.logout()
 			else: # POP
 				# number of mails on the server
 				mail_total = len(conn.list()[1])
@@ -148,8 +144,10 @@ class MailCollector:
 							id, acc))
 						mail_ids[id] = None
 
+			# don't close idle connections
+			if not acc.idle:
 				# disconnect from Email-Server
-				conn.quit()
+				acc.close()
 		
 		# sort mails
 		if sort:

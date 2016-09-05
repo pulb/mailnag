@@ -74,6 +74,10 @@ class Account:
 			return self._get_POP3_connection(use_existing)
 	
 	
+	def close(self):
+		self.backend.close()
+	
+	
 	# Indicates whether the account 
 	# holds an active existing connection.
 	# Note: this method only indicates if the 

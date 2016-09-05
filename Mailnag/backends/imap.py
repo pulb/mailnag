@@ -84,6 +84,11 @@ class ImapBackend:
 		return self._conn
 
 
+	def close(self):
+		self._conn.close()
+		self._conn.logout()
+
+
 	def has_connection(self):
 		return (self._conn != None) and \
 				(self._conn.state != imaplib.LOGOUT) and \
