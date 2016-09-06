@@ -68,10 +68,8 @@ class Account:
 
 
 	def get_connection(self, use_existing = False): # get email server connection
-		if self.imap:
-			return self._get_IMAP_connection(use_existing)
-		else:
-			return self._get_POP3_connection(use_existing)
+		self._conn = self.backend.get_connection(use_existing)
+		return self._conn
 	
 	
 	def close(self):
@@ -87,10 +85,7 @@ class Account:
 	# was called multiple times (with use_existing 
 	# set to False).
 	def has_connection(self):
-		if self.imap:
-			return self._has_IMAP_connection()
-		else:
-			return self._has_POP3_connection()
+		return self.backend.has_connection()
 
 
 	def list_messages(self):
@@ -108,24 +103,6 @@ class Account:
 		# TODO : this id is not really unique...
 		return str(hash(self.user + self.server + ', '.join(self.folders)))
 	
-
-	def _has_IMAP_connection(self):
-		return self.backend.has_connection()
-	
-	
-	def _get_IMAP_connection(self, use_existing):
-		self._conn = self.backend.get_connection(use_existing)
-		return self._conn
-	
-	
-	def _has_POP3_connection(self):
-		return self.backend.has_connection()
-	
-	
-	def _get_POP3_connection(self, use_existing):
-		self._conn = self.backend.get_connection(use_existing)
-		return self._conn
-
 
 #
 # AccountManager class
