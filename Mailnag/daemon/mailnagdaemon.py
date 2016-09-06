@@ -128,12 +128,7 @@ class MailnagDaemon:
 		if self._accounts != None:
 			for acc in self._accounts:
 				if acc.has_connection():
-					conn = acc.get_connection(use_existing = True)
-					if acc.imap:
-						conn.close()
-						conn.logout()
-					else:
-						conn.quit()
+					acc.close()
 
 		self._unload_plugins()
 	
