@@ -69,35 +69,20 @@ class MailCollector:
 				logging.error("Failed to connect to account '%s' (%s)." % (acc.name, ex))
 				continue
 
-			if acc.imap: # IMAP
-				for folder, msg in acc.list_messages():
-					sender, subject, datetime, msgid = self._get_header(msg)
-					id = self._get_id(msgid, acc, folder, sender, subject, datetime)
-				
-					# Discard mails with identical IDs (caused 
-					# by mails with a non-unique fallback ID, 
-					# i.e. mails received in the same folder with 
-					# identical sender and subject but *no datetime*, 
-					# see _get_id()).
-					# Also filter duplicates caused by Gmail labels.
-					if id not in mail_ids:
-						mail_list.append(Mail(datetime, subject, \
-							sender, id, acc))
-						mail_ids[id] = None
-				
-			else: # POP
-				for folder, msg in acc.list_messages():
-					sender, subject, datetime, msgid = self._get_header(msg)
-					id = self._get_id(msgid, acc, folder, sender, subject, datetime)
-					
-					# Discard mails with identical IDs (caused 
-					# by mails with a non-unique fallback ID, 
-					# i.e. mails with identical sender and subject 
-					# but *no datetime*, see _get_id()).
-					if id not in mail_ids:
-						mail_list.append(Mail(datetime, subject, sender, \
-							id, acc))
-						mail_ids[id] = None
+			for folder, msg in acc.list_messages():
+				sender, subject, datetime, msgid = self._get_header(msg)
+				id = self._get_id(msgid, acc, folder, sender, subject, datetime)
+			
+				# Discard mails with identical IDs (caused
+				# by mails with a non-unique fallback ID,
+				# i.e. mails received in the same folder with
+				# identical sender and subject but *no datetime*,
+				# see _get_id()).
+				# Also filter duplicates caused by Gmail labels.
+				if id not in mail_ids:
+					mail_list.append(Mail(datetime, subject, \
+						sender, id, acc))
+					mail_ids[id] = None
 
 			# don't close idle connections
 			if not acc.idle:
