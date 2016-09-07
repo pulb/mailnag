@@ -27,6 +27,7 @@ import email
 import logging
 import re
 import Mailnag.common.imaplib2 as imaplib
+from Mailnag.common.imaplib2 import AUTH
 
 class ImapBackend:
 	"""Implementation of IMAP mail boxes."""
@@ -42,6 +43,7 @@ class ImapBackend:
 		self.ssl = ssl # bool
 		self.folders = folders
 		self._conn = None
+		self._conn_closed = True
 
 
 	def get_connection(self, use_existing):
@@ -82,18 +84,29 @@ class ImapBackend:
 			except:	pass
 			raise # re-throw exception
 		
+		self._conn_closed = False
+		
+		# Need to get out of AUTH mode of fresh connections.
+		if self._conn.state == AUTH:
+			self.select()
+
 		return self._conn
 
 
 	def close(self):
-		self._conn.close()
+		# if conn has already been closed, don't try to close it again
+		if not self._conn_closed:
+			self._conn.close()
+			self._conn_closed = True
 		self._conn.logout()
+		self._conn = None
 
 
 	def has_connection(self):
 		return (self._conn != None) and \
 				(self._conn.state != imaplib.LOGOUT) and \
-				(not self._conn.Terminate)
+				(not self._conn.Terminate) and \
+				(not self._conn_closed)
 
 
 	def list_messages(self):
@@ -150,4 +163,39 @@ class ImapBackend:
 				lst.append(folder)
 		
 		return lst
+
+
+	# TODO: Temporarily public. Make private.
+	def select(self):
+		if len(self.folders) == 1:
+			self._conn.select(self.folders[0])
+		else:
+			self._conn.select("INBOX")
+
+
+	def notify_next_change(self, callback=None, timeout=None):
+		# register idle callback that is called whenever an idle event
+		# arrives (new mail / mail deleted).
+		# the callback is called after <idle_timeout> minutes at the latest.
+		# gmail sends keepalive events every 5 minutes.
+
+		# idle callback (runs on a further thread)
+		def _idle_callback(args):
+			# check if the connection has been reset by provider
+			self._conn_closed = (args[2] != None) and (args[2][0] is self._conn.abort)
+			
+			# call actual callback
+			callback(args)
+		
+		self._conn.idle(callback = _idle_callback, timeout = timeout)
+
+
+	def cancel_notifications(self):
+		try:
+			if self._conn != None:
+				# Exit possible active idle state.
+				# (also calls idle_callback)
+				self._conn.noop()
+		except:
+			pass
 

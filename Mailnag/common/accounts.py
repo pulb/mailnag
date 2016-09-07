@@ -92,6 +92,19 @@ class Account:
 		return self.backend.list_messages()
 
 
+	# TODO: Temporarily here. Remove when no needed.
+	def select(self):
+		self.backend.select()
+
+
+	def notify_next_change(self, callback=None, timeout=None):
+		self.backend.notify_next_change(callback, timeout)
+
+
+	def cancel_notifications(self):
+		self.backend.cancel_notifications()
+
+
 	# Requests folder names (list) from a server.
 	# Relevant for IMAP accounts only.
 	# Returns an empty list when used on POP3 accounts.
