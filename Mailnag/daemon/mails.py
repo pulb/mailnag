@@ -61,12 +61,11 @@ class MailCollector:
 		mail_ids = {}
 		
 		for acc in self._accounts:
-			# get server connection for this account
-			conn = None
+			# open mailbox for  this account
 			try:
-				conn = acc.get_connection(use_existing = True)
+				acc.open(reopen = False)
 			except Exception as ex:
-				logging.error("Failed to connect to account '%s' (%s)." % (acc.name, ex))
+				logging.error("Failed to open mailbox for account '%s' (%s)." % (acc.name, ex))
 				continue
 
 			for folder, msg in acc.list_messages():

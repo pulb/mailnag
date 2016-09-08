@@ -26,8 +26,8 @@
 import re
 import logging
 import json
-from Mailnag.backends.imap import ImapBackend
-from Mailnag.backends.pop3 import Pop3Backend
+from Mailnag.backends.imap import IMAPBackend
+from Mailnag.backends.pop3 import POP3Backend
 from Mailnag.common.utils import splitstr
 
 account_defaults = {
@@ -67,15 +67,16 @@ class Account:
 		self._conn = None
 
 
-	def get_connection(self, use_existing = False): # get email server connection
-		self._conn = self.backend.get_connection(use_existing)
-		return self._conn
-	
-	
+	def open(self, reopen = True):
+		"""Open mailbox for the account."""
+		self.backend.open(reopen = reopen)
+
+
 	def close(self):
+		"""Close mailbox for this account."""
 		self.backend.close()
-	
-	
+
+
 	# Indicates whether the account 
 	# holds an active existing connection.
 	# Note: this method only indicates if the 
@@ -84,31 +85,39 @@ class Account:
 	# associated connections if get_connection() 
 	# was called multiple times (with use_existing 
 	# set to False).
-	def has_connection(self):
-		return self.backend.has_connection()
+	def is_open(self):
+		"""Returns true if the mailbox is opened."""
+		return self.backend.is_open()
 
 
 	def list_messages(self):
+		"""Lists unseen messages from the mailbox for this account.
+		Yields a set of tuples (folder, message).
+		"""
 		return self.backend.list_messages()
 
 
-	# TODO: Temporarily here. Remove when no needed.
-	def select(self):
-		self.backend.select()
-
-
 	def notify_next_change(self, callback=None, timeout=None):
+		"""Asks mailbox to notify next change.
+		Callback is called when new mail arrives or removed.
+		This may raise an exception if mailbox does not support
+		notifications.
+		"""
 		self.backend.notify_next_change(callback, timeout)
 
 
 	def cancel_notifications(self):
+		"""Cancels notifications.
+		This may raise an exception if mailbox does not support
+		notifications.
+		"""
 		self.backend.cancel_notifications()
 
 
-	# Requests folder names (list) from a server.
-	# Relevant for IMAP accounts only.
-	# Returns an empty list when used on POP3 accounts.
 	def request_server_folders(self):
+		"""Requests folder names (list) from a server.
+		Returns an empty list if mailbox does not support folders.
+		"""
 		return self.backend.request_folders()
 		
 		
@@ -191,9 +200,9 @@ class AccountManager:
 					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
 				
 				if imap:
-					backend = ImapBackend(name, user, password, '', server, port, ssl, folders)
+					backend = IMAPBackend(name, user, password, '', server, port, ssl, folders)
 				else:
-					backend = Pop3Backend(name, user, password, '', server, port, ssl)
+					backend = POP3Backend(name, user, password, '', server, port, ssl)
 				
 				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folders, backend)
 				self._accounts.append(acc)

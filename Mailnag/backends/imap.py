@@ -29,7 +29,7 @@ import re
 import Mailnag.common.imaplib2 as imaplib
 from Mailnag.common.imaplib2 import AUTH
 
-class ImapBackend:
+class IMAPBackend:
 	"""Implementation of IMAP mail boxes."""
 	
 	def __init__(self, name = '', user = '', password = '', oauth2string = '',
@@ -46,10 +46,10 @@ class ImapBackend:
 		self._conn_closed = True
 
 
-	def get_connection(self, use_existing):
+	def open(self, reopen):
 		# try to reuse existing connection
-		if use_existing and self.has_connection():
-			return self._conn
+		if not reopen and self.is_open():
+			return
 		
 		self._conn = conn = None
 		
@@ -88,7 +88,7 @@ class ImapBackend:
 		
 		# Need to get out of AUTH mode of fresh connections.
 		if self._conn.state == AUTH:
-			self.select()
+			self._select()
 
 		return self._conn
 
@@ -102,7 +102,7 @@ class ImapBackend:
 		self._conn = None
 
 
-	def has_connection(self):
+	def is_open(self):
 		return (self._conn != None) and \
 				(self._conn.state != imaplib.LOGOUT) and \
 				(not self._conn.Terminate) and \
@@ -145,13 +145,13 @@ class ImapBackend:
 		
 		# Always create a new connection as an existing one may
 		# be used for IMAP IDLE.
-		conn = self.get_connection(use_existing = False)
+		self.open(reopen = True)
 
 		try:
-			status, data = conn.list('', '*')
+			status, data = self._conn.list('', '*')
 		finally:
-			# conn.close() # allowed in SELECTED state only
-			conn.logout()
+			# self._conn.close() # allowed in SELECTED state only
+			self._conn.logout()
 		
 		for d in data:
 			match = re.match('.+\s+("."|"?NIL"?)\s+"?([^"]+)"?$', d)
@@ -165,8 +165,7 @@ class ImapBackend:
 		return lst
 
 
-	# TODO: Temporarily public. Make private.
-	def select(self):
+	def _select(self):
 		if len(self.folders) == 1:
 			self._conn.select(self.folders[0])
 		else:

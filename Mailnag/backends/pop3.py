@@ -27,7 +27,7 @@ import email
 import logging
 import poplib
 
-class Pop3Backend:
+class POP3Backend:
 	"""Implementation of POP3 mail boxes."""
 	
 	def __init__(self, name = '', user = '', password = '', oauth2string = '',
@@ -42,10 +42,10 @@ class Pop3Backend:
 		self._conn = None
 
 
-	def get_connection(self, use_existing):
+	def open(self, reopen):
 		# try to reuse existing connection
-		if use_existing and self.has_connection():
-			return self._conn
+		if not reopen and self.is_open():
+			return
 		
 		self._conn = conn = None
 		
@@ -84,7 +84,7 @@ class Pop3Backend:
 		self._conn.quit()
 
 
-	def has_connection(self):
+	def is_open(self):
 		return (self._conn != None) and \
 				('sock' in self._conn.__dict__)
 
@@ -117,4 +117,12 @@ class Pop3Backend:
 	def request_folders(self):
 		lst = []
 		return lst
+
+
+	def notify_next_change(self, callback=None, timeout=None):
+		raise NotImplemented("POP3 does not support notifications")
+
+
+	def cancel_notifications(self):
+		raise NotImplemented("POP3 does not support notifications")
 

@@ -27,8 +27,8 @@ gi.require_version('GLib', '2.0')
 
 from gi.repository import GObject, GLib, Gtk
 from thread import start_new_thread
-from Mailnag.backends.imap import ImapBackend
-from Mailnag.backends.pop3 import Pop3Backend
+from Mailnag.backends.imap import IMAPBackend
+from Mailnag.backends.pop3 import POP3Backend
 from Mailnag.common.dist_cfg import PACKAGE_NAME
 from Mailnag.common.i18n import _
 from Mailnag.common.utils import get_data_file, splitstr
@@ -171,9 +171,9 @@ class AccountDialog:
 		# Create backend
 		# TODO: This is duplicate code with AccountManager.
 		if acc.imap:
-			acc.backend = ImapBackend(acc.name, acc.user, acc.password, '', acc.server, acc.port, acc.ssl, acc.folders)
+			acc.backend = IMAPBackend(acc.name, acc.user, acc.password, '', acc.server, acc.port, acc.ssl, acc.folders)
 		else:
-			acc.backend = Pop3Backend(acc.name, acc.user, acc.password, '', acc.server, acc.port, acc.ssl)
+			acc.backend = POP3Backend(acc.name, acc.user, acc.password, '', acc.server, acc.port, acc.ssl)
 	
 	
 	def _get_selected_folders(self):

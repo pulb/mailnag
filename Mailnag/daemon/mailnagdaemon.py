@@ -127,7 +127,7 @@ class MailnagDaemon:
 
 		if self._accounts != None:
 			for acc in self._accounts:
-				if acc.has_connection():
+				if acc.is_open():
 					acc.close()
 
 		self._unload_plugins()
