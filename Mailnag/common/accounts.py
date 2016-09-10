@@ -23,8 +23,10 @@
 # MA 02110-1301, USA.
 #
 
+import re
 import poplib
 import logging
+import json
 import Mailnag.common.imaplib2 as imaplib
 from Mailnag.common.utils import splitstr
 
@@ -38,7 +40,7 @@ account_defaults = {
 	'ssl'				: '1',
 	'imap'				: '1',	
 	'idle'				: '1',
-	'folder'			: ''
+	'folder'			: '[]'
 }
 
 CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
@@ -105,22 +107,14 @@ class Account:
 			# conn.close() # allowed in SELECTED state only
 			conn.logout()
 		
-		separators = [ ' "/" ', ' "." ' ]
 		for d in data:
-			folder = ''
-			for s in separators:
-				if s in d:
-					folder = d.split(s)[-1]
-					break
-			
-			if len(folder) == 0:
+			match = re.match('.+\s+("."|"?NIL"?)\s+"?([^"]+)"?$', d)
+
+			if match == None:
 				logging.warning("Folder format not supported.")
-				break
-			
-			if (folder[0] == '"') and (folder[-1] == '"'):
-				folder = folder[1:-1]
-			
-			lst.append(folder)
+			else:
+				folder = match.group(2)
+				lst.append(folder)
 		
 		return lst
 		
@@ -283,7 +277,11 @@ class AccountManager:
 				ssl			= bool(int(	self._get_account_cfg(cfg, section_name, 'ssl')		))
 				imap		= bool(int(	self._get_account_cfg(cfg, section_name, 'imap')	))
 				idle		= bool(int(	self._get_account_cfg(cfg, section_name, 'idle')	))
-				folders		= splitstr(self._get_account_cfg(cfg, section_name, 'folder'), ',')
+				folders_str	= self._get_account_cfg(cfg, section_name, 'folder')
+				if re.match(r'^\[.*\]$', folders_str):
+					folders	= json.loads(folders_str)
+				else:
+					folders	= splitstr(folders_str, ',')
 
 				if self._credentialstore != None:
 					protocol = 'imap' if imap else 'pop'
@@ -336,7 +334,7 @@ class AccountManager:
 			cfg.set(section_name, 'ssl', int(acc.ssl))
 			cfg.set(section_name, 'imap', int(acc.imap))
 			cfg.set(section_name, 'idle', int(acc.idle))
-			cfg.set(section_name, 'folder', ', '.join(acc.folders))
+			cfg.set(section_name, 'folder', json.dumps(acc.folders))
 			
 			if self._credentialstore != None:
 				protocol = 'imap' if acc.imap else 'pop'

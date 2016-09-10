@@ -3,7 +3,7 @@
 #
 # conntest.py
 #
-# Copyright 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2014, 2016 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 import os
 import dbus
 
-PING_TEST_HOST				= 'www.google.de'
+PING_TEST_HOST				= 'www.google.com'
 
 NM_STATE_CONNECTED_GLOBAL	= 70
 

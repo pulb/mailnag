@@ -29,7 +29,7 @@ As of Ubuntu 13.04 (Raring), Mailnag is also available in the official repos.
 Run `sudo apt-get install mailnag` in a terminal to install it.
 
 ### Debian
-Mailnag is currently available in Debian unstable.  
+Mailnag is available in Debian stable and unstable.  
 Run `sudo apt-get install mailnag` in a terminal to install it.
 
 ### Fedora

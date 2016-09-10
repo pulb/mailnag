@@ -27,9 +27,10 @@ gi.require_version('GLib', '2.0')
 
 import os
 import subprocess
+import logging
 from gi.repository import Gtk, Gio
 
-from Mailnag.common.utils import fix_cwd
+from Mailnag.common.utils import fix_cwd, init_logging
 
 fix_cwd()
 
@@ -37,6 +38,8 @@ from Mailnag.common.i18n import _
 from Mailnag.common.utils import set_procname, shutdown_existing_instance, get_data_file, get_data_paths
 from Mailnag.common.dist_cfg import BIN_DIR, PACKAGE_NAME
 from Mailnag.configuration.configwindow import ConfigWindow
+
+LOG_LEVEL = logging.DEBUG
 
 
 class App(Gtk.Application):
@@ -115,7 +118,8 @@ class App(Gtk.Application):
 	
 def main():
 	set_procname("mailnag-config")
-
+	init_logging(enable_stdout = True, enable_syslog = False, log_level = LOG_LEVEL)
+	
 	app = App()
 	app.run(None)
 
