@@ -27,12 +27,12 @@
 import re
 import logging
 import json
-from Mailnag.backends.imap import IMAPMailboxBackend
-from Mailnag.backends.pop3 import POP3MailboxBackend
+from Mailnag.backends import create_backend
 from Mailnag.common.utils import splitstr
 
 account_defaults = {
 	'enabled'			: '0',
+	'type'				: 'imap',
 	'name'				: '',	
 	'user'				: '',
 	'password'			: '',
@@ -51,9 +51,13 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 #
 class Account:
 	def __init__(self, enabled = False, name = '', user = '', \
-		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = [], backend = None):
+		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = [], backend = None, mailbox_type = None):
 		
 		self.enabled = enabled # bool
+		if mailbox_type:
+			self.mailbox_type = mailbox_type
+		else:
+			self.mailbox_type = 'imap' if imap else 'pop3'
 		self.name = name
 		self.user = user
 		self.password = password
@@ -175,13 +179,17 @@ class AccountManager:
 			enabled		= bool(int(	self._get_account_cfg(cfg, section_name, 'enabled')	))
 			
 			if (not enabled_only) or (enabled_only and enabled):
+				imap		= bool(int(	self._get_account_cfg(cfg, section_name, 'imap')))
+				if cfg.has_option(section_name, 'type'):
+					mailbox_type = self._get_account_cfg(cfg, section_name, 'type')
+				else:
+					mailbox_type = 'imap' if imap else 'pop3'
 				name		=			self._get_account_cfg(cfg, section_name, 'name')
 				user		=			self._get_account_cfg(cfg, section_name, 'user')
 				password	=			self._get_account_cfg(cfg, section_name, 'password')
 				server		=			self._get_account_cfg(cfg, section_name, 'server')
 				port		=			self._get_account_cfg(cfg, section_name, 'port')
 				ssl			= bool(int(	self._get_account_cfg(cfg, section_name, 'ssl')		))
-				imap		= bool(int(	self._get_account_cfg(cfg, section_name, 'imap')	))
 				idle		= bool(int(	self._get_account_cfg(cfg, section_name, 'idle')	))
 				folders_str	= self._get_account_cfg(cfg, section_name, 'folder')
 				if re.match(r'^\[.*\]$', folders_str):
@@ -192,12 +200,9 @@ class AccountManager:
 				if self._credentialstore != None:
 					protocol = 'imap' if imap else 'pop'
 					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
-				
-				if imap:
-					backend = IMAPMailboxBackend(name, user, password, '', server, port, ssl, folders)
-				else:
-					backend = POP3MailboxBackend(name, user, password, '', server, port, ssl)
-				
+
+				backend = create_backend(mailbox_type, name=name, user=user, password=password, server=server, port=port, ssl=ssl, folders=folders)
+					
 				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folders, backend)
 				self._accounts.append(acc)
 
@@ -237,6 +242,7 @@ class AccountManager:
 			cfg.add_section(section_name)
 			
 			cfg.set(section_name, 'enabled', int(acc.enabled))
+			cfg.set(section_name, 'type', acc.mailbox_type)
 			cfg.set(section_name, 'name', acc.name)
 			cfg.set(section_name, 'user', acc.user)
 			cfg.set(section_name, 'password', '')
