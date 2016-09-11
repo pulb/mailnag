@@ -2,3 +2,5 @@
 locale
 Mailnag/plugins/goaplugin.py
 Mailnag/plugins/messagingmenuplugin.py
+/.cache
+
