@@ -120,9 +120,9 @@ class POP3Backend:
 
 
 	def notify_next_change(self, callback=None, timeout=None):
-		raise NotImplemented("POP3 does not support notifications")
+		raise NotImplementedError("POP3 does not support notifications")
 
 
 	def cancel_notifications(self):
-		raise NotImplemented("POP3 does not support notifications")
+		raise NotImplementedError("POP3 does not support notifications")
 

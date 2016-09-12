@@ -64,7 +64,6 @@ class Account:
 		self.idle = idle # bool
 		self.folders = folders
 		self.backend = backend
-		self._conn = None
 
 
 	def open(self, reopen = True):
