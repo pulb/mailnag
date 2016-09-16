@@ -32,7 +32,7 @@ import poplib
 from Mailnag.backends.base import MailboxBackend
 
 
-class POP3Backend(MailboxBackend):
+class POP3MailboxBackend(MailboxBackend):
 	"""Implementation of POP3 mail boxes."""
 	
 	def __init__(self, name = '', user = '', password = '', oauth2string = '',

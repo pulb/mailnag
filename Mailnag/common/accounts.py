@@ -27,8 +27,8 @@
 import re
 import logging
 import json
-from Mailnag.backends.imap import IMAPBackend
-from Mailnag.backends.pop3 import POP3Backend
+from Mailnag.backends.imap import IMAPMailboxBackend
+from Mailnag.backends.pop3 import POP3MailboxBackend
 from Mailnag.common.utils import splitstr
 
 account_defaults = {
@@ -200,9 +200,9 @@ class AccountManager:
 					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
 				
 				if imap:
-					backend = IMAPBackend(name, user, password, '', server, port, ssl, folders)
+					backend = IMAPMailboxBackend(name, user, password, '', server, port, ssl, folders)
 				else:
-					backend = POP3Backend(name, user, password, '', server, port, ssl)
+					backend = POP3MailboxBackend(name, user, password, '', server, port, ssl)
 				
 				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folders, backend)
 				self._accounts.append(acc)

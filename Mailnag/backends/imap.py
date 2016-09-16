@@ -34,7 +34,7 @@ import Mailnag.common.imaplib2 as imaplib
 from Mailnag.common.imaplib2 import AUTH
 
 
-class IMAPBackend(MailboxBackend):
+class IMAPMailboxBackend(MailboxBackend):
 	"""Implementation of IMAP mail boxes."""
 
 	def __init__(self, name = '', user = '', password = '', oauth2string = '',
