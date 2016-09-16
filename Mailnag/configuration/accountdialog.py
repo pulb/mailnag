@@ -4,6 +4,7 @@
 # accountdialog.py
 #
 # Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

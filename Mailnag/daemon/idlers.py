@@ -4,6 +4,7 @@
 # idlers.py
 #
 # Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 #
 # This program is free software; you can redistribute it and/or modify
