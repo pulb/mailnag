@@ -20,15 +20,20 @@
 # MA 02110-1301, USA.
 #
 
+"""Implementation for IMAP mailbox connection."""
+
 import email
 import logging
 import re
+
+from Mailnag.backends.base import MailboxBackend
 import Mailnag.common.imaplib2 as imaplib
 from Mailnag.common.imaplib2 import AUTH
 
-class IMAPBackend:
+
+class IMAPBackend(MailboxBackend):
 	"""Implementation of IMAP mail boxes."""
-	
+
 	def __init__(self, name = '', user = '', password = '', oauth2string = '',
 				 server = '', port = '', ssl = True, folders = []):
 		self.name = name

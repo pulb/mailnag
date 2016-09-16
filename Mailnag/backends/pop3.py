@@ -20,11 +20,16 @@
 # MA 02110-1301, USA.
 #
 
+"""Implementation for POP3 mailbox connection."""
+
 import email
 import logging
 import poplib
 
-class POP3Backend:
+from Mailnag.backends.base import MailboxBackend
+
+
+class POP3Backend(MailboxBackend):
 	"""Implementation of POP3 mail boxes."""
 	
 	def __init__(self, name = '', user = '', password = '', oauth2string = '',
