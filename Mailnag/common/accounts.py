@@ -5,6 +5,7 @@
 #
 # Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
+# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -24,10 +25,10 @@
 #
 
 import re
-import poplib
 import logging
 import json
-import Mailnag.common.imaplib2 as imaplib
+from Mailnag.backends.imap import IMAPMailboxBackend
+from Mailnag.backends.pop3 import POP3MailboxBackend
 from Mailnag.common.utils import splitstr
 
 account_defaults = {
@@ -50,7 +51,7 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 #
 class Account:
 	def __init__(self, enabled = False, name = '', user = '', \
-		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = []):
+		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = [], backend = None):
 		
 		self.enabled = enabled # bool
 		self.name = name
@@ -63,16 +64,19 @@ class Account:
 		self.imap = imap # bool		
 		self.idle = idle # bool
 		self.folders = folders
-		self._conn = None
+		self.backend = backend
 
 
-	def get_connection(self, use_existing = False): # get email server connection
-		if self.imap:
-			return self._get_IMAP_connection(use_existing)
-		else:
-			return self._get_POP3_connection(use_existing)
-	
-	
+	def open(self, reopen = True):
+		"""Open mailbox for the account."""
+		self.backend.open(reopen = reopen)
+
+
+	def close(self):
+		"""Close mailbox for this account."""
+		self.backend.close()
+
+
 	# Indicates whether the account 
 	# holds an active existing connection.
 	# Note: this method only indicates if the 
@@ -81,138 +85,46 @@ class Account:
 	# associated connections if get_connection() 
 	# was called multiple times (with use_existing 
 	# set to False).
-	def has_connection(self):
-		if self.imap:
-			return self._has_IMAP_connection()
-		else:
-			return self._has_POP3_connection()
-	
-	
-	# Requests folder names (list) from a server.
-	# Relevant for IMAP accounts only.
-	# Returns an empty list when used on POP3 accounts.
+	def is_open(self):
+		"""Returns true if the mailbox is opened."""
+		return self.backend.is_open()
+
+
+	def list_messages(self):
+		"""Lists unseen messages from the mailbox for this account.
+		Yields a set of tuples (folder, message).
+		"""
+		return self.backend.list_messages()
+
+
+	def notify_next_change(self, callback=None, timeout=None):
+		"""Asks mailbox to notify next change.
+		Callback is called when new mail arrives or removed.
+		This may raise an exception if mailbox does not support
+		notifications.
+		"""
+		self.backend.notify_next_change(callback, timeout)
+
+
+	def cancel_notifications(self):
+		"""Cancels notifications.
+		This may raise an exception if mailbox does not support
+		notifications.
+		"""
+		self.backend.cancel_notifications()
+
+
 	def request_server_folders(self):
-		lst = []
-		
-		if not self.imap:
-			return lst
-		
-		# Always create a new connection as an existing one may 
-		# be used for IMAP IDLE.
-		conn = self._get_IMAP_connection(use_existing = False)
-
-		try:
-			status, data = conn.list('', '*')
-		finally:
-			# conn.close() # allowed in SELECTED state only
-			conn.logout()
-		
-		for d in data:
-			match = re.match('.+\s+("."|"?NIL"?)\s+"?([^"]+)"?$', d)
-
-			if match == None:
-				logging.warning("Folder format not supported.")
-			else:
-				folder = match.group(2)
-				lst.append(folder)
-		
-		return lst
+		"""Requests folder names (list) from a server.
+		Returns an empty list if mailbox does not support folders.
+		"""
+		return self.backend.request_folders()
 		
 		
 	def get_id(self):
 		# TODO : this id is not really unique...
 		return str(hash(self.user + self.server + ', '.join(self.folders)))
 	
-
-	def _has_IMAP_connection(self):
-		return (self._conn != None) and \
-				(self._conn.state != imaplib.LOGOUT) and \
-				(not self._conn.Terminate)
-	
-	
-	def _get_IMAP_connection(self, use_existing):
-		# try to reuse existing connection
-		if use_existing and self._has_IMAP_connection():
-			return self._conn
-		
-		self._conn = conn = None
-		
-		try:
-			if self.ssl:
-				if self.port == '':
-					conn = imaplib.IMAP4_SSL(self.server)
-				else:
-					conn = imaplib.IMAP4_SSL(self.server, int(self.port))
-			else:
-				if self.port == '':
-					conn = imaplib.IMAP4(self.server)
-				else:
-					conn = imaplib.IMAP4(self.server, int(self.port))
-				
-				if 'STARTTLS' in conn.capabilities:
-					conn.starttls()
-				else:
-					logging.warning("Using unencrypted connection for account '%s'" % self.name)
-				
-			if self.oauth2string != '':
-				conn.authenticate('XOAUTH2', lambda x: self.oauth2string)
-			else:
-				conn.login(self.user, self.password)
-			
-			self._conn = conn
-		except:
-			try:
-				if conn != None:
-					# conn.close() # allowed in SELECTED state only
-					conn.logout()
-			except:	pass			
-			raise # re-throw exception
-		
-		return self._conn
-	
-	
-	def _has_POP3_connection(self):
-		return (self._conn != None) and \
-				('sock' in self._conn.__dict__)
-	
-	
-	def _get_POP3_connection(self, use_existing):
-		# try to reuse existing connection
-		if use_existing and self._has_POP3_connection():
-			return self._conn
-		
-		self._conn = conn = None
-		
-		try:
-			if self.ssl:
-				if self.port == '':
-					conn = poplib.POP3_SSL(self.server)
-				else:
-					conn = poplib.POP3_SSL(self.server, int(self.port))
-			else:
-				if self.port == '':
-					conn = poplib.POP3(self.server)
-				else:
-					conn = poplib.POP3(self.server, int(self.port))
-				
-				# TODO : Use STARTTLS when Mailnag has been migrated to python 3 
-				# (analogous to get_IMAP_connection).
-				logging.warning("Using unencrypted connection for account '%s'" % self.name)
-				
-			conn.getwelcome()
-			conn.user(self.user)
-			conn.pass_(self.password)
-			
-			self._conn = conn
-		except:
-			try:
-				if conn != None:
-					conn.quit()
-			except:	pass
-			raise # re-throw exception
-		
-		return self._conn
-
 
 #
 # AccountManager class
@@ -287,7 +199,12 @@ class AccountManager:
 					protocol = 'imap' if imap else 'pop'
 					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
 				
-				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folders)
+				if imap:
+					backend = IMAPMailboxBackend(name, user, password, '', server, port, ssl, folders)
+				else:
+					backend = POP3MailboxBackend(name, user, password, '', server, port, ssl)
+				
+				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folders, backend)
 				self._accounts.append(acc)
 
 			i = i + 1

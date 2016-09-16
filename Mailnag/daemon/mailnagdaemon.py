@@ -3,6 +3,7 @@
 #
 # mailnagdaemon.py
 #
+# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2014, 2015 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -127,13 +128,8 @@ class MailnagDaemon:
 
 		if self._accounts != None:
 			for acc in self._accounts:
-				if acc.has_connection():
-					conn = acc.get_connection(use_existing = True)
-					if acc.imap:
-						conn.close()
-						conn.logout()
-					else:
-						conn.quit()
+				if acc.is_open():
+					acc.close()
 
 		self._unload_plugins()
 	
