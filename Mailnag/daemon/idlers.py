@@ -74,7 +74,6 @@ class Idler(object):
 				break
 			
 			self._needsync = False
-			self._conn_closed = False
 
 			self._account.notify_next_change(callback = self._idle_callback, timeout = 60 * self._idle_timeout)
 			
