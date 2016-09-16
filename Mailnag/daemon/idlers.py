@@ -62,7 +62,7 @@ class Idler(object):
 		
 	# idle thread
 	def _idle(self):
-		# use_existing = True:
+		# reopen = False:
 		# mailbox has been opened in mailnagdaemon.py already (immediate check)
 		self._account.open(reopen = False)
 

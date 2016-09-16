@@ -82,9 +82,8 @@ class Account:
 	# Note: this method only indicates if the 
 	# account *holds* (caches) an existing connection. 
 	# There may be further, but no longer
-	# associated connections if get_connection() 
-	# was called multiple times (with use_existing 
-	# set to False).
+	# associated connections if open() 
+	# was called multiple times (with reopen set to False).
 	def is_open(self):
 		"""Returns true if the mailbox is opened."""
 		return self.backend.is_open()

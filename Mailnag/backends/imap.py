@@ -91,7 +91,7 @@ class IMAPMailboxBackend(MailboxBackend):
 		
 		self._conn_closed = False
 		
-		# Need to get out of AUTH mode of fresh connections.
+		# notify_next_change() (IMAP IDLE) requires a selected folder
 		if self._conn.state == AUTH:
 			self._select()
 
