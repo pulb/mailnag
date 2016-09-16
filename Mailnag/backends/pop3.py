@@ -81,8 +81,6 @@ class POP3MailboxBackend(MailboxBackend):
 					conn.quit()
 			except:	pass
 			raise # re-throw exception
-		
-		return self._conn
 
 
 	def close(self):

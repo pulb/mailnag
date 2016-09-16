@@ -95,8 +95,6 @@ class IMAPMailboxBackend(MailboxBackend):
 		if self._conn.state == AUTH:
 			self._select()
 
-		return self._conn
-
 
 	def close(self):
 		# if conn has already been closed, don't try to close it again
