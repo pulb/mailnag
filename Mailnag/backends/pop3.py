@@ -84,7 +84,9 @@ class POP3MailboxBackend(MailboxBackend):
 
 
 	def close(self):
-		self._conn.quit()
+		if self._conn != None:
+			self._conn.quit()
+			self._conn = None
 
 
 	def is_open(self):

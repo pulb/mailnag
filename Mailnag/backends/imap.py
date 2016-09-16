@@ -98,11 +98,12 @@ class IMAPMailboxBackend(MailboxBackend):
 
 	def close(self):
 		# if conn has already been closed, don't try to close it again
-		if not self._conn_closed:
-			self._conn.close()
-			self._conn_closed = True
-		self._conn.logout()
-		self._conn = None
+		if self._conn != None:
+			if not self._conn_closed:
+				self._conn.close()
+				self._conn_closed = True
+			self._conn.logout()
+			self._conn = None
 
 
 	def is_open(self):
