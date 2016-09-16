@@ -22,12 +22,12 @@
 
 """Backends to implement mail box specific functionality, like IMAP and POP3."""
 
-from Mailnag.backends.imap import IMAPBackend
-from Mailnag.backends.pop3 import POP3Backend
+from Mailnag.backends.imap import IMAPMailboxBackend
+from Mailnag.backends.pop3 import POP3MailboxBackend
 
 _backends = {
-	'imap' : IMAPBackend,
-	'pop3' : POP3Backend,
+	'imap' : IMAPMailboxBackend,
+	'pop3' : POP3MailboxBackend,
 }
 
 def create_backend(mailbox_type, name, **kw):
