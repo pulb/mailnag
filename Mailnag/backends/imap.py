@@ -32,6 +32,7 @@ import re
 from Mailnag.backends.base import MailboxBackend
 import Mailnag.common.imaplib2 as imaplib
 from Mailnag.common.imaplib2 import AUTH
+from Mailnag.common.exceptions import InvalidOperationException
 
 
 class IMAPMailboxBackend(MailboxBackend):
@@ -51,12 +52,11 @@ class IMAPMailboxBackend(MailboxBackend):
 		self._conn_closed = True
 
 
-	def open(self, reopen):
-		# try to reuse existing connection
-		if not reopen and self.is_open():
-			return
+	def open(self):
+		if self._conn != None:
+			raise InvalidOperationException("Account is aready open")
 		
-		self._conn = conn = None
+		conn = None
 		
 		try:
 			if self.ssl:
@@ -149,7 +149,7 @@ class IMAPMailboxBackend(MailboxBackend):
 		
 		# Always create a new connection as an existing one may
 		# be used for IMAP IDLE.
-		self.open(reopen = True)
+		self.open()
 
 		try:
 			status, data = self._conn.list('', '*')

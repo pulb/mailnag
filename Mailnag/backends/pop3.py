@@ -30,6 +30,7 @@ import logging
 import poplib
 
 from Mailnag.backends.base import MailboxBackend
+from Mailnag.common.exceptions import InvalidOperationException
 
 
 class POP3MailboxBackend(MailboxBackend):
@@ -47,12 +48,11 @@ class POP3MailboxBackend(MailboxBackend):
 		self._conn = None
 
 
-	def open(self, reopen):
-		# try to reuse existing connection
-		if not reopen and self.is_open():
-			return
-		
-		self._conn = conn = None
+	def open(self):
+		if self._conn != None:
+			raise InvalidOperationException("Account is aready open")
+				
+		conn = None
 		
 		try:
 			if self.ssl:

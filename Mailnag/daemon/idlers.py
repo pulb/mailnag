@@ -62,9 +62,9 @@ class Idler(object):
 		
 	# idle thread
 	def _idle(self):
-		# reopen = False:
 		# mailbox has been opened in mailnagdaemon.py already (immediate check)
-		self._account.open(reopen = False)
+		if not self._account.is_open():
+			self._account.open()
 
 		while True:
 			# if the event is set here, 
@@ -110,7 +110,7 @@ class Idler(object):
 		while (not self._account.is_open()) and (not self._event.isSet()):
 			logging.info("Trying to reconnect Idler thread for account '%s'." % self._account.name)
 			try:
-				self._account.open(reopen = True)
+				self._account.open()
 				logging.info("Successfully reconnected Idler thread for account '%s'." % self._account.name)
 			except Exception as ex:
 				logging.error("Failed to reconnect Idler thread for account '%s' (%s)." % (self._account.name, ex))

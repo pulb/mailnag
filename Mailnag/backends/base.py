@@ -39,10 +39,8 @@ class MailboxBackend(object):
 		"""
 
 	@abstractmethod
-	def open(self, reopen):
-		"""Opens the mailbox.
-		If reopen is true, mailbox should first be closed and then opened.
-		"""
+	def open(self):
+		"""Opens the mailbox."""
 		raise NotImplementedError
 
 	@abstractmethod

@@ -67,9 +67,9 @@ class Account:
 		self.backend = backend
 
 
-	def open(self, reopen = True):
+	def open(self):
 		"""Open mailbox for the account."""
-		self.backend.open(reopen = reopen)
+		self.backend.open()
 
 
 	def close(self):
@@ -79,11 +79,6 @@ class Account:
 
 	# Indicates whether the account 
 	# holds an active existing connection.
-	# Note: this method only indicates if the 
-	# account *holds* (caches) an existing connection. 
-	# There may be further, but no longer
-	# associated connections if open() 
-	# was called multiple times (with reopen set to False).
 	def is_open(self):
 		"""Returns true if the mailbox is opened."""
 		return self.backend.is_open()

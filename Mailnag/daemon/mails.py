@@ -62,9 +62,10 @@ class MailCollector:
 		mail_ids = {}
 		
 		for acc in self._accounts:
-			# open mailbox for  this account
+			# open mailbox for this account
 			try:
-				acc.open(reopen = False)
+				if not acc.is_open():
+					acc.open()
 			except Exception as ex:
 				logging.error("Failed to open mailbox for account '%s' (%s)." % (acc.name, ex))
 				continue
