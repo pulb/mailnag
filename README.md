@@ -74,7 +74,9 @@ but are visible for a few seconds only. If you like to have a tighter desktop in
 (e.g. a permanently visible indicator in your top panel) you have to install an appropriate  
 extension/plugin for your desktop shell. Currently the following desktop shells are supported:  
 * GNOME-Shell ([GNOME-Shell extension](https://github.com/pulb/mailnag-gnome-shell))  
-* Ubuntu Unity ([MessagingMenu plugin](https://github.com/pulb/mailnag-unity-plugin))  
+* Ubuntu Unity ([MessagingMenu plugin](https://github.com/pulb/mailnag-messagingmenu-plugin))  
+* Elementary Pantheon ([MessagingMenu plugin](https://github.com/pulb/mailnag-messagingmenu-plugin))  
+* XFCE ([MessagingMenu plugin](https://github.com/pulb/mailnag-messagingmenu-plugin))  
 * Cinnamon ([Applet by hyOzd](https://bitbucket.org/hyOzd/mailnagapplet))  
   
 Furthermore, I highly recommend GNOME users to install the [GOA plugin](https://github.com/pulb/mailnag-goa-plugin),  
