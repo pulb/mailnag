@@ -55,49 +55,13 @@ class IMAPMailboxBackend(MailboxBackend):
 		if self._conn != None:
 			raise InvalidOperationException("Account is aready open")
 		
-		conn = None
-		
-		try:
-			if self.ssl:
-				if self.port == '':
-					conn = imaplib.IMAP4_SSL(self.server)
-				else:
-					conn = imaplib.IMAP4_SSL(self.server, int(self.port))
-			else:
-				if self.port == '':
-					conn = imaplib.IMAP4(self.server)
-				else:
-					conn = imaplib.IMAP4(self.server, int(self.port))
-				
-				if 'STARTTLS' in conn.capabilities:
-					conn.starttls()
-				else:
-					logging.warning("Using unencrypted connection for account '%s'" % self.name)
-				
-			if self.oauth2string != '':
-				conn.authenticate('XOAUTH2', lambda x: self.oauth2string)
-			else:
-				conn.login(self.user, self.password)
-			
-			self._conn = conn
-		except:
-			try:
-				if conn != None:
-					# conn.close() # allowed in SELECTED state only
-					conn.logout()
-			except:	pass
-			raise # re-throw exception
-		
-		# notify_next_change() (IMAP IDLE) requires a selected folder
-		if self._conn.state == AUTH:
-			self._select()
+		self._conn = self._connect()
 
-
+		
 	def close(self):
 		# if conn has already been closed, don't try to close it again
 		if self._conn != None:
-			self._conn.close()
-			self._conn.logout()
+			self._disconnect(self._conn)
 			self._conn = None
 
 
@@ -143,13 +107,12 @@ class IMAPMailboxBackend(MailboxBackend):
 		
 		# Always create a new connection as an existing one may
 		# be used for IMAP IDLE.
-		self.open()
+		conn = self._connect()
 
 		try:
-			status, data = self._conn.list('', '*')
+			status, data = conn.list('', '*')
 		finally:
-			# self._conn.close() # allowed in SELECTED state only
-			self._conn.logout()
+			self._disconnect(conn)
 		
 		for d in data:
 			match = re.match('.+\s+("."|"?NIL"?)\s+"?([^"]+)"?$', d)
@@ -161,13 +124,6 @@ class IMAPMailboxBackend(MailboxBackend):
 				lst.append(folder)
 		
 		return lst
-
-
-	def _select(self):
-		if len(self.folders) == 1:
-			self._conn.select(self.folders[0])
-		else:
-			self._conn.select("INBOX")
 
 
 	def notify_next_change(self, callback=None, timeout=None):
@@ -201,4 +157,55 @@ class IMAPMailboxBackend(MailboxBackend):
 				self._conn.noop()
 		except:
 			pass
+	
+	
+	def _connect(self):
+		conn = None
+		
+		try:
+			if self.ssl:
+				if self.port == '':
+					conn = imaplib.IMAP4_SSL(self.server)
+				else:
+					conn = imaplib.IMAP4_SSL(self.server, int(self.port))
+			else:
+				if self.port == '':
+					conn = imaplib.IMAP4(self.server)
+				else:
+					conn = imaplib.IMAP4(self.server, int(self.port))
+				
+				if 'STARTTLS' in conn.capabilities:
+					conn.starttls()
+				else:
+					logging.warning("Using unencrypted connection for account '%s'" % self.name)
+				
+			if self.oauth2string != '':
+				conn.authenticate('XOAUTH2', lambda x: self.oauth2string)
+			else:
+				conn.login(self.user, self.password)
+		except:
+			try:
+				if conn != None:
+					# conn.close() # allowed in SELECTED state only
+					conn.logout()
+			except:	pass
+			raise # re-throw exception
+		
+		# notify_next_change() (IMAP IDLE) requires a selected folder
+		if conn.state == AUTH:
+			self._select(conn)
+		
+		return conn
+
+
+	def _disconnect(self, conn):
+		conn.close()
+		conn.logout()
+	
+	
+	def _select(self, conn):
+		if len(self.folders) == 1:
+			conn.select(self.folders[0])
+		else:
+			conn.select("INBOX")
 
