@@ -193,7 +193,7 @@ class IMAPMailboxBackend(MailboxBackend):
 		
 		# notify_next_change() (IMAP IDLE) requires a selected folder
 		if conn.state == AUTH:
-			self._select(conn)
+			self._select_single_folder(conn)
 		
 		return conn
 
@@ -203,9 +203,10 @@ class IMAPMailboxBackend(MailboxBackend):
 		conn.logout()
 	
 	
-	def _select(self, conn):
+	def _select_single_folder(self, conn):
 		if len(self.folders) == 1:
-			conn.select(self.folders[0])
+			folder = self.folders[0]
 		else:
-			conn.select("INBOX")
-
+			folder = "INBOX"
+		
+		conn.select(folder, readonly = True)
