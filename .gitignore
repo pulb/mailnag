@@ -1,4 +1,4 @@
 *.pyc
 locale
 Mailnag/plugins/goaplugin.py
-Mailnag/plugins/unityplugin.py
+Mailnag/plugins/messagingmenuplugin.py
