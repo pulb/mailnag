@@ -72,7 +72,10 @@ class IMAPMailboxBackend(MailboxBackend):
 
 
 	def list_messages(self):
+		self._ensure_open()
+		
 		conn = self._conn
+		
 		if len(self.folders) == 0:
 			folder_list = [ 'INBOX' ]
 		else:
@@ -127,6 +130,8 @@ class IMAPMailboxBackend(MailboxBackend):
 
 
 	def notify_next_change(self, callback=None, timeout=None):
+		self._ensure_open()
+		
 		# register idle callback that is called whenever an idle event
 		# arrives (new mail / mail deleted).
 		# the callback is called after <idle_timeout> minutes at the latest.
@@ -150,6 +155,11 @@ class IMAPMailboxBackend(MailboxBackend):
 
 
 	def cancel_notifications(self):
+		# NOTE: Don't throw if the connection is closed.
+		# Analogous to close().
+		# (Otherwise cleanup code like in Idler._idle() will fail)
+		# self._ensure_open()
+		
 		try:
 			if self._conn != None:
 				# Exit possible active idle state.
@@ -210,3 +220,8 @@ class IMAPMailboxBackend(MailboxBackend):
 			folder = "INBOX"
 		
 		conn.select(folder, readonly = True)
+	
+	def _ensure_open(self):
+		if not self.is_open():
+			raise InvalidOperationException("Account is not open")
+

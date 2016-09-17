@@ -67,20 +67,20 @@ class POP3MailboxBackend(MailboxBackend):
 					conn = poplib.POP3(self.server, int(self.port))
 				
 				# TODO : Use STARTTLS when Mailnag has been migrated to python 3
-				# (analogous to get_connection in imap backend).
+				# (analogous to open() in imap backend).
 				logging.warning("Using unencrypted connection for account '%s'" % self.name)
 				
 			conn.getwelcome()
 			conn.user(self.user)
 			conn.pass_(self.password)
-			
-			self._conn = conn
 		except:
 			try:
 				if conn != None:
 					conn.quit()
 			except:	pass
 			raise # re-throw exception
+		
+		self._conn = conn
 
 
 	def close(self):
@@ -95,8 +95,11 @@ class POP3MailboxBackend(MailboxBackend):
 
 
 	def list_messages(self):
+		self._ensure_open()
+		
 		conn = self._conn
 		folder = ''
+		
 		# number of mails on the server
 		mail_total = len(conn.list()[1])
 		for i in range(1, mail_total + 1): # for each mail
@@ -130,3 +133,7 @@ class POP3MailboxBackend(MailboxBackend):
 	def cancel_notifications(self):
 		raise NotImplementedError("POP3 does not support notifications")
 
+
+	def _ensure_open(self):
+		if not self.is_open():
+			raise InvalidOperationException("Account is not open")
