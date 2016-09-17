@@ -120,8 +120,7 @@ class POP3MailboxBackend(MailboxBackend):
 
 
 	def request_folders(self):
-		lst = []
-		return lst
+		raise NotImplementedError("POP3 does not support notifications")
 
 
 	def notify_next_change(self, callback=None, timeout=None):
