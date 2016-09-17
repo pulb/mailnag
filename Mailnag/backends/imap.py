@@ -49,7 +49,6 @@ class IMAPMailboxBackend(MailboxBackend):
 		self.ssl = ssl # bool
 		self.folders = folders
 		self._conn = None
-		self._conn_closed = True
 
 
 	def open(self):
@@ -89,8 +88,6 @@ class IMAPMailboxBackend(MailboxBackend):
 			except:	pass
 			raise # re-throw exception
 		
-		self._conn_closed = False
-		
 		# notify_next_change() (IMAP IDLE) requires a selected folder
 		if self._conn.state == AUTH:
 			self._select()
@@ -99,9 +96,7 @@ class IMAPMailboxBackend(MailboxBackend):
 	def close(self):
 		# if conn has already been closed, don't try to close it again
 		if self._conn != None:
-			if not self._conn_closed:
-				self._conn.close()
-				self._conn_closed = True
+			self._conn.close()
 			self._conn.logout()
 			self._conn = None
 
@@ -109,8 +104,7 @@ class IMAPMailboxBackend(MailboxBackend):
 	def is_open(self):
 		return (self._conn != None) and \
 				(self._conn.state != imaplib.LOGOUT) and \
-				(not self._conn.Terminate) and \
-				(not self._conn_closed)
+				(not self._conn.Terminate)
 
 
 	def list_messages(self):
@@ -185,7 +179,13 @@ class IMAPMailboxBackend(MailboxBackend):
 		# idle callback (runs on a further thread)
 		def _idle_callback(args):
 			# check if the connection has been reset by provider
-			self._conn_closed = (args[2] != None) and (args[2][0] is self._conn.abort)
+			if (args[2] != None) and (args[2][0] is self._conn.abort):
+				# conn has already been closed, don't try to close it again
+				# self._conn.close() # (calls idle_callback)
+				
+				# shutdown existing callback thread
+				self._conn.logout()
+				self._conn = None
 			
 			# call actual callback
 			callback(args)

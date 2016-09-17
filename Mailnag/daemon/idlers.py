@@ -104,8 +104,6 @@ class Idler(object):
 	def _reconnect(self):
 		# connection has been reset by provider -> try to reconnect
 		logging.info("Idler thread for account '%s' has been disconnected" % self._account.name)
-		
-		self._account.close()
 
 		while (not self._account.is_open()) and (not self._event.isSet()):
 			logging.info("Trying to reconnect Idler thread for account '%s'." % self._account.name)
