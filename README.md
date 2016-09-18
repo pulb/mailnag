@@ -1,5 +1,7 @@
 # Mailnag
-An extensible mail notification daemon.  
+![Screenshot](https://raw.githubusercontent.com/pulb/mailnag-design/master/Flyer/Mailnag_flyer2.png)
+
+## An extensible mail notification daemon
 
 Mailnag is a daemon program that checks POP3 and IMAP servers for new mail.  
 On mail arrival it performs various actions provided by plugins.  
@@ -85,6 +87,3 @@ which makes Mailnag aware of email accounts specified in GNOME Online Accounts.
 ### Troubleshooting
 If Mailnag doesn't work properly for you, either examine the system log for errors (`journalctl -b _COMM=mailnag`)  
 or run `mailnag` in a terminal and observe the output.
-
-## Screenshots
-![Screenshot](https://raw.githubusercontent.com/pulb/mailnag-design/master/Flyer/Mailnag_flyer2.png)
