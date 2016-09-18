@@ -24,11 +24,9 @@
 # MA 02110-1301, USA.
 #
 
-import re
 import logging
 import json
-from Mailnag.backends import create_backend
-from Mailnag.common.utils import splitstr
+from Mailnag.backends import create_backend, get_mailbox_parameter_specs
 
 account_defaults = {
 	'enabled'			: '0',
@@ -179,31 +177,29 @@ class AccountManager:
 			enabled		= bool(int(	self._get_account_cfg(cfg, section_name, 'enabled')	))
 			
 			if (not enabled_only) or (enabled_only and enabled):
-				imap		= bool(int(	self._get_account_cfg(cfg, section_name, 'imap')))
 				if cfg.has_option(section_name, 'type'):
 					mailbox_type = self._get_account_cfg(cfg, section_name, 'type')
+					imap = (mailbox_type == 'imap')
 				else:
+					imap = bool(int(self._get_account_cfg(cfg, section_name, 'imap')))
 					mailbox_type = 'imap' if imap else 'pop3'
-				name		=			self._get_account_cfg(cfg, section_name, 'name')
-				user		=			self._get_account_cfg(cfg, section_name, 'user')
-				password	=			self._get_account_cfg(cfg, section_name, 'password')
-				server		=			self._get_account_cfg(cfg, section_name, 'server')
-				port		=			self._get_account_cfg(cfg, section_name, 'port')
-				ssl			= bool(int(	self._get_account_cfg(cfg, section_name, 'ssl')		))
-				idle		= bool(int(	self._get_account_cfg(cfg, section_name, 'idle')	))
-				folders_str	= self._get_account_cfg(cfg, section_name, 'folder')
-				if re.match(r'^\[.*\]$', folders_str):
-					folders	= json.loads(folders_str)
-				else:
-					folders	= splitstr(folders_str, ',')
+				name = self._get_account_cfg(cfg, section_name, 'name')
 
-				if self._credentialstore != None:
+				option_spec = get_mailbox_parameter_specs(mailbox_type)
+				options = self._get_cfg_options(cfg, section_name, option_spec)
+
+				# TODO: Getting password from credentials is mailbox specific.
+				#       Every backend do not have or need password.
+				user = options.get('user')
+				server = options.get('server')
+				if self._credentialstore != None and user and server:
 					protocol = 'imap' if imap else 'pop'
 					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
+					options['password'] = password
 
-				backend = create_backend(mailbox_type, name=name, user=user, password=password, server=server, port=port, ssl=ssl, folders=folders)
+				backend = create_backend(mailbox_type, name=name, **options)
 					
-				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folders, backend)
+				acc = Account(enabled, name, backend=backend, **options)
 				self._accounts.append(acc)
 
 			i = i + 1
@@ -267,4 +263,23 @@ class AccountManager:
 			return cfg.get(section_name, option_name)
 		else:
 			return account_defaults[option_name]
+
+
+	def _get_cfg_options(self, cfg, section_name, option_spec):
+		options = {}
+		for s in option_spec:
+			options[s.param_name] = self._get_cfg_option(cfg,
+														 section_name,
+														 s.option_name,
+														 s.from_str,
+														 s.default_value)
+		return options
+
+
+	def _get_cfg_option(self, cfg, section_name, option_name, convert, default_value):
+		if convert and cfg.has_option(section_name, option_name):
+			value = convert(cfg.get(section_name, option_name))
+		else:
+			value = default_value
+		return value
 
