@@ -82,5 +82,9 @@ extension/plugin for your desktop shell. Currently the following desktop shells 
 Furthermore, I highly recommend GNOME users to install the [GOA plugin](https://github.com/pulb/mailnag-goa-plugin),  
 which makes Mailnag aware of email accounts specified in GNOME Online Accounts.  
 
+### Troubleshooting
+If Mailnag doesn't work properly for you, either examine the system log for errors (`journalctl -b _COMM=mailnag`)  
+or run `mailnag` in a terminal and observe the output.
+
 ## Screenshots
 ![Screenshot](https://raw.githubusercontent.com/pulb/mailnag-design/master/Flyer/Mailnag_flyer2.png)
