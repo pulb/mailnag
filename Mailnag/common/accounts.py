@@ -25,7 +25,6 @@
 #
 
 import logging
-import json
 from Mailnag.backends import create_backend, get_mailbox_parameter_specs
 
 account_defaults = {
@@ -49,7 +48,7 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 #
 class Account:
 	def __init__(self, enabled = False, name = '', user = '', \
-		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = [], backend = None, mailbox_type = None):
+		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = [], backend = None, mailbox_type = None, **kw):
 		
 		self.enabled = enabled # bool
 		if mailbox_type:
@@ -67,6 +66,27 @@ class Account:
 		self.idle = idle # bool
 		self.folders = folders
 		self.backend = backend
+		self._rest_of_config = kw
+
+
+	def get_config(self):
+		"""Return account's configuration as a dict."""
+		config = {
+			'enabled': self.enabled,
+			'mailbox_type': self.mailbox_type,
+			'name': self.name,
+			'user': self.user,
+			'password': self.password,
+			'oauth2string': self.oauth2string,
+			'server': self.server,
+			'port': self.port,
+			'ssl': self.ssl,
+			'imap': self.imap,
+			'idle': self.idle,
+			'folders': self.folders,
+		}
+		config.update(self._rest_of_config)
+		return config
 
 
 	def open(self):
@@ -240,20 +260,18 @@ class AccountManager:
 			cfg.set(section_name, 'enabled', int(acc.enabled))
 			cfg.set(section_name, 'type', acc.mailbox_type)
 			cfg.set(section_name, 'name', acc.name)
-			cfg.set(section_name, 'user', acc.user)
-			cfg.set(section_name, 'password', '')
-			cfg.set(section_name, 'server', acc.server)
-			cfg.set(section_name, 'port', acc.port)
-			cfg.set(section_name, 'ssl', int(acc.ssl))
-			cfg.set(section_name, 'imap', int(acc.imap))
-			cfg.set(section_name, 'idle', int(acc.idle))
-			cfg.set(section_name, 'folder', json.dumps(acc.folders))
-			
+
+			config = acc.get_config()
+			option_spec = get_mailbox_parameter_specs(acc.mailbox_type)
+
+			# TODO: Setting password to credentials is mailbox specific.
+			#       Every backend do not have or need password.
 			if self._credentialstore != None:
 				protocol = 'imap' if acc.imap else 'pop'
 				self._credentialstore.set(CREDENTIAL_KEY % (protocol, acc.user, acc.server), acc.password)
-			else:
-				cfg.set(section_name, 'password', acc.password)
+				config['password'] = ''
+
+			self._set_cfg_options(cfg, section_name, config, option_spec)
 
 			i = i + 1
 	
@@ -282,4 +300,13 @@ class AccountManager:
 		else:
 			value = default_value
 		return value
+
+
+	def _set_cfg_options(self, cfg, section_name, options, option_spec):
+		for s in option_spec:
+			if s.to_str and s.param_name in options:
+				value = s.to_str(options[s.param_name])
+			else:
+				value = s.default_value
+			cfg.set(section_name, s.option_name, value)
 

@@ -39,32 +39,42 @@ def _str_to_folders(folders_str):
 	return folders
 
 
+def _folders_to_str(folders):
+	return json.dumps(folders)
+
+
 def _str_to_bool(string):
 	return bool(int(string))
 
 
-Param = namedtuple('Param', ['param_name', 'option_name', 'from_str', 'default_value'])
+def _bool_to_str(b):
+	return str(int(b))
+
+
+Param = namedtuple('Param',
+    ['param_name', 'option_name', 'from_str', 'to_str', 'default_value']
+)
 Backend = namedtuple('Backend', ['backend_class', 'params'])
 
 _backends = {
 	'imap' : Backend(IMAPMailboxBackend, [
-				Param('user', 'user', str, ''),
-				Param('password', 'password', str, ''),
-				Param('server', 'server', str, ''),
-				Param('port', 'port', str, ''),
-				Param('ssl', 'ssl', _str_to_bool, True),
-				Param('imap', 'imap', _str_to_bool, True),
-				Param('idle', 'idle', _str_to_bool, True),
-				Param('folders', 'folder', _str_to_folders, []),
+				Param('user', 'user', str, str, ''),
+				Param('password', 'password', str, str, ''),
+				Param('server', 'server', str, str, ''),
+				Param('port', 'port', str, str, ''),
+				Param('ssl', 'ssl', _str_to_bool, _bool_to_str, True),
+				Param('imap', 'imap', _str_to_bool, _bool_to_str, True),
+				Param('idle', 'idle', _str_to_bool, _bool_to_str, True),
+				Param('folders', 'folder', _str_to_folders, _folders_to_str, []),
 			 ]),
 	'pop3' : Backend(POP3MailboxBackend, [
-				Param('user', 'user', str, ''),
-				Param('password', 'password', str, ''),
-				Param('server', 'server', str, ''),
-				Param('port', 'port', str, ''),
-				Param('ssl', 'ssl', _str_to_bool, True),
-				Param('imap', 'imap', _str_to_bool, False),
-				Param('idle', 'idle', _str_to_bool, False),
+				Param('user', 'user', str, str, ''),
+				Param('password', 'password', str, str, ''),
+				Param('server', 'server', str, str, ''),
+				Param('port', 'port', str, str, ''),
+				Param('ssl', 'ssl', _str_to_bool, _bool_to_str, True),
+				Param('imap', 'imap', _str_to_bool, _bool_to_str, False),
+				Param('idle', 'idle', _str_to_bool, _bool_to_str, False),
 			 ]),
 }
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# test_backends.py
+# test_accountmanager.py
 #
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 #
@@ -167,4 +167,33 @@ def test_pop3_config_defaults(config):
 		'idle': False,
 	}
 	assert expected_options == options
+
+
+def test_imap_config_values_should_be_stored():
+	am = AccountManager()
+	option_spec = get_mailbox_parameter_specs('imap')
+	options = {
+		'user': 'you',
+		'password': '',
+		'server': 'imap.example.org',
+		'port': '',
+		'ssl': True,
+		'imap': True,
+		'idle': True,
+		'folders': ['a', 'b'],
+	}
+	config = RawConfigParser()
+	config.add_section('account1')
+	am._set_cfg_options(config, 'account1', options, option_spec)
+	expected_config_items = [
+		('user', 'you'),
+		('password', ''),
+		('server', 'imap.example.org'),
+		('port', ''),
+		('ssl', '1'),
+		('imap', '1'),
+		('idle', '1'),
+		('folder', '["a", "b"]'),
+	]
+	assert set(expected_config_items) == set(config.items('account1'))
 
