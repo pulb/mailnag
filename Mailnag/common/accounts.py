@@ -48,7 +48,7 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 #
 class Account:
 	def __init__(self, enabled = False, name = '', user = '', \
-		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = [], backend = None, mailbox_type = None, **kw):
+		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = [], mailbox_type = None, **kw):
 		
 		self.enabled = enabled # bool
 		if mailbox_type:
@@ -65,8 +65,8 @@ class Account:
 		self.imap = imap # bool		
 		self.idle = idle # bool
 		self.folders = folders
-		self.backend = backend
 		self._rest_of_config = kw
+		self._backend = None
 
 
 	def get_config(self):
@@ -75,6 +75,76 @@ class Account:
 			'enabled': self.enabled,
 			'mailbox_type': self.mailbox_type,
 			'name': self.name,
+		}
+		config.update(self._get_backend_config())
+		return config
+
+
+	def open(self):
+		"""Open mailbox for the account."""
+		self._get_backend().open()
+
+
+	def close(self):
+		"""Close mailbox for this account."""
+		self._get_backend().close()
+
+
+	# Indicates whether the account 
+	# holds an active existing connection.
+	def is_open(self):
+		"""Returns true if the mailbox is opened."""
+		return self._get_backend().is_open()
+
+
+	def list_messages(self):
+		"""Lists unseen messages from the mailbox for this account.
+		Yields a set of tuples (folder, message).
+		"""
+		return self._get_backend().list_messages()
+
+
+	def notify_next_change(self, callback=None, timeout=None):
+		"""Asks mailbox to notify next change.
+		Callback is called when new mail arrives or removed.
+		This may raise an exception if mailbox does not support
+		notifications.
+		"""
+		self._get_backend().notify_next_change(callback, timeout)
+
+
+	def cancel_notifications(self):
+		"""Cancels notifications.
+		This may raise an exception if mailbox does not support
+		notifications.
+		"""
+		self._get_backend().cancel_notifications()
+
+
+	def request_server_folders(self):
+		"""Requests folder names (list) from a server.
+		Returns an empty list if mailbox does not support folders.
+		"""
+		return self._get_backend().request_folders()
+		
+		
+	def get_id(self):
+		# TODO : this id is not really unique...
+		return str(hash(self.user + self.server + ', '.join(self.folders)))
+
+
+	def _get_backend(self):
+		if not self._backend:
+			backend_config = self._get_backend_config()
+			self._backend = create_backend(self.mailbox_type,
+										   name=self.name,
+										   **backend_config)
+		return self._backend
+
+
+	def _get_backend_config(self):
+		config = {}
+		imap_pop_config = {
 			'user': self.user,
 			'password': self.password,
 			'oauth2string': self.oauth2string,
@@ -85,62 +155,10 @@ class Account:
 			'idle': self.idle,
 			'folders': self.folders,
 		}
+		config.update(imap_pop_config)
 		config.update(self._rest_of_config)
 		return config
 
-
-	def open(self):
-		"""Open mailbox for the account."""
-		self.backend.open()
-
-
-	def close(self):
-		"""Close mailbox for this account."""
-		self.backend.close()
-
-
-	# Indicates whether the account 
-	# holds an active existing connection.
-	def is_open(self):
-		"""Returns true if the mailbox is opened."""
-		return self.backend.is_open()
-
-
-	def list_messages(self):
-		"""Lists unseen messages from the mailbox for this account.
-		Yields a set of tuples (folder, message).
-		"""
-		return self.backend.list_messages()
-
-
-	def notify_next_change(self, callback=None, timeout=None):
-		"""Asks mailbox to notify next change.
-		Callback is called when new mail arrives or removed.
-		This may raise an exception if mailbox does not support
-		notifications.
-		"""
-		self.backend.notify_next_change(callback, timeout)
-
-
-	def cancel_notifications(self):
-		"""Cancels notifications.
-		This may raise an exception if mailbox does not support
-		notifications.
-		"""
-		self.backend.cancel_notifications()
-
-
-	def request_server_folders(self):
-		"""Requests folder names (list) from a server.
-		Returns an empty list if mailbox does not support folders.
-		"""
-		return self.backend.request_folders()
-		
-		
-	def get_id(self):
-		# TODO : this id is not really unique...
-		return str(hash(self.user + self.server + ', '.join(self.folders)))
-	
 
 #
 # AccountManager class
@@ -217,9 +235,10 @@ class AccountManager:
 					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
 					options['password'] = password
 
-				backend = create_backend(mailbox_type, name=name, **options)
-					
-				acc = Account(enabled, name, backend=backend, **options)
+				acc = Account(enabled=enabled,
+							  name=name,
+							  mailbox_type=mailbox_type,
+							  **options)
 				self._accounts.append(acc)
 
 			i = i + 1

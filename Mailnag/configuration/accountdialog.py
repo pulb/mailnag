@@ -28,7 +28,6 @@ gi.require_version('GLib', '2.0')
 
 from gi.repository import GObject, GLib, Gtk
 from thread import start_new_thread
-from Mailnag.backends import create_backend
 from Mailnag.common.dist_cfg import PACKAGE_NAME
 from Mailnag.common.i18n import _
 from Mailnag.common.utils import get_data_file, splitstr
@@ -167,10 +166,6 @@ class AccountDialog:
 				acc.port = p[2]
 			else:
 				raise Exception('Unknown account type')
-		
-		# Create backend
-		# TODO: This is duplicate code with AccountManager.
-		acc.backend = create_backend(acc.mailbox_type, name=acc.name, user=acc.user, password=acc.password, server=acc.server, port=acc.port, ssl=acc.ssl, folders=acc.folders)
 	
 	
 	def _get_selected_folders(self):
