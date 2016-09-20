@@ -48,7 +48,7 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 #
 class Account:
 	def __init__(self, enabled = False, name = '', user = '', \
-		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = [], mailbox_type = None, **kw):
+		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = False, folders = [], mailbox_type = None, **kw):
 		
 		self.enabled = enabled # bool
 		if mailbox_type:

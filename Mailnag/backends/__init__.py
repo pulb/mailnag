@@ -28,6 +28,7 @@ import re
 
 from Mailnag.backends.imap import IMAPMailboxBackend
 from Mailnag.backends.pop3 import POP3MailboxBackend
+from Mailnag.backends.local import MBoxBackend
 from Mailnag.common.utils import splitstr
 
 
@@ -76,12 +77,15 @@ _backends = {
 				Param('imap', 'imap', _str_to_bool, _bool_to_str, False),
 				Param('idle', 'idle', _str_to_bool, _bool_to_str, False),
 			 ]),
+	'mbox' : Backend(MBoxBackend, [
+				Param('path', 'path', str, str, ''),
+			 ]),
 }
 
 
-def create_backend(mailbox_type, name, **kw):
-	"""Create mailbox backend of specified type, name and other parameters."""
-	return _backends[mailbox_type].backend_class(name, **kw)
+def create_backend(mailbox_type, **kw):
+	"""Create mailbox backend of specified type and parameters."""
+	return _backends[mailbox_type].backend_class(**kw)
 
 
 def get_mailbox_parameter_specs(mailbox_type):

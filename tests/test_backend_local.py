@@ -25,23 +25,23 @@
 import mailbox
 import pytest
 
-from Mailnag.backends.local import MBoxBackend
+from Mailnag.backends import create_backend
 
 
 def test_create_mbox_backend():
-	be = MBoxBackend()
+	be = create_backend('mbox')
 	assert be is not None
 
 
 def test_initially_mailbox_should_be_closed():
-	be = MBoxBackend()
+	be = create_backend('mbox')
 	assert not be.is_open()
 
 
 def test_when_opened_mailbox_should_be_open(tmpdir):
 	tmpdir.join('sample').write('')
 	path = str(tmpdir.join('sample'))
-	be = MBoxBackend(path=path)
+	be = create_backend('mbox', path=path)
 	be.open()
 	assert be.is_open()
 
@@ -49,7 +49,7 @@ def test_when_opened_mailbox_should_be_open(tmpdir):
 def test_closed_mailbox_should_be_closed(tmpdir):
 	tmpdir.join('sample').write('')
 	path = str(tmpdir.join('sample'))
-	be = MBoxBackend(path=path)
+	be = create_backend('mbox', path=path)
 	be.open()
 	be.close()
 	assert not be.is_open()
@@ -59,7 +59,7 @@ def test_mbox_lists_no_messages_from_empty_mailbox(tmpdir):
 	path = str(tmpdir.join('sample'))
 	sample_mbox = mailbox.mbox(path, create=True)
 
-	be = MBoxBackend(name='sample', path=path)
+	be = create_backend('mbox', name='sample', path=path)
 	be.open()
 	try:
 		msgs = list(be.list_messages())
@@ -76,7 +76,7 @@ def test_mbox_lists_two_messages_from_mailbox(tmpdir):
 	add_mbox_message(sample_mbox, 'blaa-blaa-3', 'RO')
 	sample_mbox.close()
 
-	be = MBoxBackend(name='sample', path=path)
+	be = create_backend('mbox', name='sample', path=path)
 	be.open()
 	try:
 		msgs = list(be.list_messages())
@@ -92,7 +92,7 @@ def test_mbox_lists_two_messages_from_mailbox(tmpdir):
 def test_mbox_should_not_have_folders(tmpdir):
 	tmpdir.join('sample').write('')
 	path = str(tmpdir.join('sample'))
-	be = MBoxBackend(path=path)
+	be = create_backend('mbox', path=path)
 	be.open()
 	assert be.request_folders() == []
 
@@ -100,7 +100,7 @@ def test_mbox_should_not_have_folders(tmpdir):
 def test_mbox_does_not_support_notifications(tmpdir): # for now
 	tmpdir.join('sample').write('')
 	path = str(tmpdir.join('sample'))
-	be = MBoxBackend(path=path)
+	be = create_backend('mbox', path=path)
 	be.open()
 	with pytest.raises(NotImplementedError):
 		be.notify_next_change()
@@ -111,7 +111,7 @@ def test_mbox_does_not_support_notifications(tmpdir): # for now
 def test_mbox_open_should_fail_if_mailbox_does_not_exist(tmpdir):
 	path = str(tmpdir.join('not-exist'))
 
-	be = MBoxBackend(path=path)
+	be = create_backend('mbox', path=path)
 	with pytest.raises(IOError):
 		be.open()
 

@@ -27,10 +27,12 @@ import mailbox
 import logging
 import os.path
 
-class MBoxBackend:
+from Mailnag.backends.base import MailboxBackend
+
+class MBoxBackend(MailboxBackend):
 	"""Implementation of mbox mail boxes."""
 	
-	def __init__(self, name = '', path=None):
+	def __init__(self, name = '', path=None, **kw):
 		"""Initialize mbox mailbox backens with a name and path."""
 		self.name = name
 		self.path = path
