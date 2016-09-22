@@ -94,7 +94,8 @@ def test_mbox_should_not_have_folders(tmpdir):
 	path = str(tmpdir.join('sample'))
 	be = create_backend('mbox', path=path)
 	be.open()
-	assert be.request_folders() == []
+	with pytest.raises(NotImplementedError):
+		be.request_folders()
 
 
 def test_mbox_does_not_support_notifications(tmpdir): # for now

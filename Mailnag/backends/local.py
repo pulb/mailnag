@@ -71,11 +71,8 @@ class MBoxBackend(MailboxBackend):
 
 
 	def request_folders(self):
-		"""List folders in mailbox.
-		This returns always empty list, because mbox does not support folders.
-		"""
-		lst = []
-		return lst
+		"""mbox does not suppoert folders."""
+		raise NotImplementedError("mbox does not support folders")
 
 
 	def notify_next_change(self, callback=None, timeout=None):
