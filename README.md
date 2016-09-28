@@ -42,6 +42,10 @@ Just run `yum install mailnag` (as root) in a terminal to install the package.
 Mailnag is available in the [AUR](https://aur.archlinux.org/packages/mailnag/) repository.  
 Please either run `yaourt -S mailnag` or `packer -S mailnag` (as root) to install the package.
 
+### openSUSE
+Mailnag is available in openSUSE Tumbleweed.  
+Run `sudo zypper install mailnag` in a terminal to install it.
+
 ### Generic Tarballs
 Distribution independent tarball releases are available [here](https://launchpad.net/mailnag/trunk/mailnag-master).  
 Just run `./setup.py install` (as root) to install Mailnag,  
