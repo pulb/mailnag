@@ -37,7 +37,7 @@ class POP3MailboxBackend(MailboxBackend):
 	"""Implementation of POP3 mail boxes."""
 	
 	def __init__(self, name = '', user = '', password = '', oauth2string = '',
-				 server = '', port = '', ssl = True):
+				 server = '', port = '', ssl = True, **kw):
 		self.name = name
 		self.user = user
 		self.password = password

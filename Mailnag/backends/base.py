@@ -63,7 +63,7 @@ class MailboxBackend(object):
 	@abstractmethod
 	def request_folders(self):
 		"""Returns list of folder names available in the mailbox.
-		Returns an empty list if mailbox does not support folders.
+		Raises an exceptions if mailbox does not support folders.
 		"""
 		raise NotImplementedError
 

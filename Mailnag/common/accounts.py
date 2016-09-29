@@ -24,15 +24,12 @@
 # MA 02110-1301, USA.
 #
 
-import re
 import logging
-import json
-from Mailnag.backends.imap import IMAPMailboxBackend
-from Mailnag.backends.pop3 import POP3MailboxBackend
-from Mailnag.common.utils import splitstr
+from Mailnag.backends import create_backend, get_mailbox_parameter_specs
 
 account_defaults = {
 	'enabled'			: '0',
+	'type'				: 'imap',
 	'name'				: '',	
 	'user'				: '',
 	'password'			: '',
@@ -51,9 +48,13 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 #
 class Account:
 	def __init__(self, enabled = False, name = '', user = '', \
-		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = True, folders = [], backend = None):
+		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = False, folders = [], mailbox_type = None, **kw):
 		
 		self.enabled = enabled # bool
+		if mailbox_type:
+			self.mailbox_type = mailbox_type
+		else:
+			self.mailbox_type = 'imap' if imap else 'pop3'
 		self.name = name
 		self.user = user
 		self.password = password
@@ -64,31 +65,43 @@ class Account:
 		self.imap = imap # bool		
 		self.idle = idle # bool
 		self.folders = folders
-		self.backend = backend
+		self._rest_of_config = kw
+		self._backend = None
+
+
+	def get_config(self):
+		"""Return account's configuration as a dict."""
+		config = {
+			'enabled': self.enabled,
+			'mailbox_type': self.mailbox_type,
+			'name': self.name,
+		}
+		config.update(self._get_backend_config())
+		return config
 
 
 	def open(self):
 		"""Open mailbox for the account."""
-		self.backend.open()
+		self._get_backend().open()
 
 
 	def close(self):
 		"""Close mailbox for this account."""
-		self.backend.close()
+		self._get_backend().close()
 
 
 	# Indicates whether the account 
 	# holds an active existing connection.
 	def is_open(self):
 		"""Returns true if the mailbox is opened."""
-		return self.backend.is_open()
+		return self._get_backend().is_open()
 
 
 	def list_messages(self):
 		"""Lists unseen messages from the mailbox for this account.
 		Yields a set of tuples (folder, message).
 		"""
-		return self.backend.list_messages()
+		return self._get_backend().list_messages()
 
 
 	def notify_next_change(self, callback=None, timeout=None):
@@ -97,7 +110,7 @@ class Account:
 		This may raise an exception if mailbox does not support
 		notifications.
 		"""
-		self.backend.notify_next_change(callback, timeout)
+		self._get_backend().notify_next_change(callback, timeout)
 
 
 	def cancel_notifications(self):
@@ -105,20 +118,47 @@ class Account:
 		This may raise an exception if mailbox does not support
 		notifications.
 		"""
-		self.backend.cancel_notifications()
+		self._get_backend().cancel_notifications()
 
 
 	def request_server_folders(self):
 		"""Requests folder names (list) from a server.
 		Returns an empty list if mailbox does not support folders.
 		"""
-		return self.backend.request_folders()
+		return self._get_backend().request_folders()
 		
 		
 	def get_id(self):
 		# TODO : this id is not really unique...
 		return str(hash(self.user + self.server + ', '.join(self.folders)))
-	
+
+
+	def _get_backend(self):
+		if not self._backend:
+			backend_config = self._get_backend_config()
+			self._backend = create_backend(self.mailbox_type,
+										   name=self.name,
+										   **backend_config)
+		return self._backend
+
+
+	def _get_backend_config(self):
+		config = {}
+		imap_pop_config = {
+			'user': self.user,
+			'password': self.password,
+			'oauth2string': self.oauth2string,
+			'server': self.server,
+			'port': self.port,
+			'ssl': self.ssl,
+			'imap': self.imap,
+			'idle': self.idle,
+			'folders': self.folders,
+		}
+		config.update(imap_pop_config)
+		config.update(self._rest_of_config)
+		return config
+
 
 #
 # AccountManager class
@@ -175,30 +215,30 @@ class AccountManager:
 			enabled		= bool(int(	self._get_account_cfg(cfg, section_name, 'enabled')	))
 			
 			if (not enabled_only) or (enabled_only and enabled):
-				name		=			self._get_account_cfg(cfg, section_name, 'name')
-				user		=			self._get_account_cfg(cfg, section_name, 'user')
-				password	=			self._get_account_cfg(cfg, section_name, 'password')
-				server		=			self._get_account_cfg(cfg, section_name, 'server')
-				port		=			self._get_account_cfg(cfg, section_name, 'port')
-				ssl			= bool(int(	self._get_account_cfg(cfg, section_name, 'ssl')		))
-				imap		= bool(int(	self._get_account_cfg(cfg, section_name, 'imap')	))
-				idle		= bool(int(	self._get_account_cfg(cfg, section_name, 'idle')	))
-				folders_str	= self._get_account_cfg(cfg, section_name, 'folder')
-				if re.match(r'^\[.*\]$', folders_str):
-					folders	= json.loads(folders_str)
+				if cfg.has_option(section_name, 'type'):
+					mailbox_type = self._get_account_cfg(cfg, section_name, 'type')
+					imap = (mailbox_type == 'imap')
 				else:
-					folders	= splitstr(folders_str, ',')
+					imap = bool(int(self._get_account_cfg(cfg, section_name, 'imap')))
+					mailbox_type = 'imap' if imap else 'pop3'
+				name = self._get_account_cfg(cfg, section_name, 'name')
 
-				if self._credentialstore != None:
+				option_spec = get_mailbox_parameter_specs(mailbox_type)
+				options = self._get_cfg_options(cfg, section_name, option_spec)
+
+				# TODO: Getting password from credentials is mailbox specific.
+				#       Every backend do not have or need password.
+				user = options.get('user')
+				server = options.get('server')
+				if self._credentialstore != None and user and server:
 					protocol = 'imap' if imap else 'pop'
 					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
-				
-				if imap:
-					backend = IMAPMailboxBackend(name, user, password, '', server, port, ssl, folders)
-				else:
-					backend = POP3MailboxBackend(name, user, password, '', server, port, ssl)
-				
-				acc = Account(enabled, name, user, password, '', server, port, ssl, imap, idle, folders, backend)
+					options['password'] = password
+
+				acc = Account(enabled=enabled,
+							  name=name,
+							  mailbox_type=mailbox_type,
+							  **options)
 				self._accounts.append(acc)
 
 			i = i + 1
@@ -237,21 +277,20 @@ class AccountManager:
 			cfg.add_section(section_name)
 			
 			cfg.set(section_name, 'enabled', int(acc.enabled))
+			cfg.set(section_name, 'type', acc.mailbox_type)
 			cfg.set(section_name, 'name', acc.name)
-			cfg.set(section_name, 'user', acc.user)
-			cfg.set(section_name, 'password', '')
-			cfg.set(section_name, 'server', acc.server)
-			cfg.set(section_name, 'port', acc.port)
-			cfg.set(section_name, 'ssl', int(acc.ssl))
-			cfg.set(section_name, 'imap', int(acc.imap))
-			cfg.set(section_name, 'idle', int(acc.idle))
-			cfg.set(section_name, 'folder', json.dumps(acc.folders))
-			
+
+			config = acc.get_config()
+			option_spec = get_mailbox_parameter_specs(acc.mailbox_type)
+
+			# TODO: Setting password to credentials is mailbox specific.
+			#       Every backend do not have or need password.
 			if self._credentialstore != None:
 				protocol = 'imap' if acc.imap else 'pop'
 				self._credentialstore.set(CREDENTIAL_KEY % (protocol, acc.user, acc.server), acc.password)
-			else:
-				cfg.set(section_name, 'password', acc.password)
+				config['password'] = ''
+
+			self._set_cfg_options(cfg, section_name, config, option_spec)
 
 			i = i + 1
 	
@@ -261,4 +300,32 @@ class AccountManager:
 			return cfg.get(section_name, option_name)
 		else:
 			return account_defaults[option_name]
+
+
+	def _get_cfg_options(self, cfg, section_name, option_spec):
+		options = {}
+		for s in option_spec:
+			options[s.param_name] = self._get_cfg_option(cfg,
+														 section_name,
+														 s.option_name,
+														 s.from_str,
+														 s.default_value)
+		return options
+
+
+	def _get_cfg_option(self, cfg, section_name, option_name, convert, default_value):
+		if convert and cfg.has_option(section_name, option_name):
+			value = convert(cfg.get(section_name, option_name))
+		else:
+			value = default_value
+		return value
+
+
+	def _set_cfg_options(self, cfg, section_name, options, option_spec):
+		for s in option_spec:
+			if s.to_str and s.param_name in options:
+				value = s.to_str(options[s.param_name])
+			else:
+				value = s.default_value
+			cfg.set(section_name, s.option_name, value)
 
