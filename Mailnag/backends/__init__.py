@@ -28,7 +28,7 @@ import re
 
 from Mailnag.backends.imap import IMAPMailboxBackend
 from Mailnag.backends.pop3 import POP3MailboxBackend
-from Mailnag.backends.local import MBoxBackend
+from Mailnag.backends.local import MBoxBackend, MaildirBackend
 from Mailnag.common.utils import splitstr
 
 
@@ -80,6 +80,8 @@ _backends = {
 	'mbox' : Backend(MBoxBackend, [
 				Param('path', 'path', str, str, ''),
 			 ]),
+	'maildir' : Backend(MaildirBackend, [
+			]),
 }
 
 

@@ -28,6 +28,8 @@ import pytest
 from Mailnag.backends import create_backend
 
 
+# mbox tests
+
 def test_create_mbox_backend():
 	be = create_backend('mbox')
 	assert be is not None
@@ -117,6 +119,103 @@ def test_mbox_open_should_fail_if_mailbox_does_not_exist(tmpdir):
 		be.open()
 
 
+# maildir tests
+
+
+def test_create_maildir_backend():
+	be = create_backend('maildir')
+	assert be is not None
+
+
+def test_initially_maildir_should_be_closed():
+	be = create_backend('maildir')
+	assert not be.is_open()
+
+
+def test_when_opened_maildir_should_be_open(tmpdir):
+	path = str(tmpdir.join('sample'))
+	sample_maildir = mailbox.Maildir(path, create=True)
+	be = create_backend('maildir', path=path)
+	be.open()
+	assert be.is_open()
+
+
+def test_closed_maildir_should_be_closed(tmpdir):
+	path = str(tmpdir.join('sample'))
+	sample_maildir = mailbox.Maildir(path, create=True)
+	be = create_backend('maildir', path=path)
+	be.open()
+	be.close()
+	assert not be.is_open()
+
+
+def test_maildir_lists_no_messages_from_empty_mailbox(tmpdir):
+	path = str(tmpdir.join('sample'))
+	sample_maildir = mailbox.Maildir(path, create=True)
+
+	be = create_backend('maildir', name='sample', path=path)
+	be.open()
+	try:
+		msgs = list(be.list_messages())
+		assert len(msgs) == 0
+	finally:
+		be.close()
+
+
+def test_maildir_lists_two_messages_from_mailbox(tmpdir):
+	path = str(tmpdir.join('sample'))
+	sample_maildir = mailbox.Maildir(path, create=True)
+	add_maildir_message(sample_maildir, 'blaa-blaa-1', '', 'new')
+	add_maildir_message(sample_maildir, 'blaa-blaa-2', '', 'cur')
+	add_maildir_message(sample_maildir, 'blaa-blaa-3', 'S', 'cur')
+	sample_maildir.close()
+
+	be = create_backend('maildir', name='sample', path=path)
+	be.open()
+	try:
+		msgs = list(be.list_messages())
+		folders = [folder for folder, msg in msgs]
+		msg_ids = set(msg.get('message-id') for folder, msg in msgs)
+	finally:
+		be.close()
+	assert len(msgs) == 2
+	assert all(folder == '' for folder in folders)
+	assert msg_ids == set(['blaa-blaa-1', 'blaa-blaa-2'])
+
+
+def test_maildir_should_have_folders(tmpdir):
+	path = str(tmpdir.join('sample'))
+	sample_maildir = mailbox.Maildir(path, create=True)
+	f = sample_maildir.add_folder('folder1')
+	sample_maildir.add_folder('folder2')
+	f.add_folder('subfolder')
+
+	be = create_backend('maildir', path=path)
+	be.open()
+	folders = be.request_folders()
+	assert set(['', 'folder1', 'folder2', 'folder1/subfolder']) == set(folders)
+
+
+def test_maildir_does_not_support_notifications(tmpdir): # for now
+	path = str(tmpdir.join('sample'))
+	sample_maildir = mailbox.Maildir(path, create=True)
+	be = create_backend('maildir', path=path)
+	be.open()
+	with pytest.raises(NotImplementedError):
+		be.notify_next_change()
+	with pytest.raises(NotImplementedError):
+		be.cancel_notifications()
+
+
+def test_maildir_open_should_fail_if_mailbox_does_not_exist(tmpdir):
+	path = str(tmpdir.join('not-exist'))
+
+	be = create_backend('maildir', path=path)
+	with pytest.raises(IOError):
+		be.open()
+
+
+
 # Helper fuctions
 
 def add_mbox_message(mbox, msg_id, flags):
@@ -132,4 +231,19 @@ def add_mbox_message(mbox, msg_id, flags):
 		mbox.add(m)
 	finally:
 		mbox.unlock()
+
+def add_maildir_message(maildir, msg_id, flags, subdir):
+	m = mailbox.MaildirMessage()
+	m.set_payload('Hello world!', 'ascii')
+	m.add_header('from', 'me@example.org')
+	m.add_header('to', 'you@example.org')
+	m.add_header('subject', 'Hi!')
+	m.add_header('message-id', msg_id)
+	m.set_flags(flags)
+	m.set_subdir(subdir)
+	maildir.lock()
+	try:
+		maildir.add(m)
+	finally:
+		maildir.unlock()
 
