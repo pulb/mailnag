@@ -199,6 +199,24 @@ class TestMaildir:
 		assert set(['', 'folder1/subfolder']) == set(folders)
 		assert msg_ids == set(['blaa-blaa-1', 'blaa-blaa-3'])
 
+	def test_should_support_unicode_folder_names(self, sample_path, sample_maildir):
+		"""Python2 maildir folders must be str, not unicode.
+		However folder in Mailnag configuration is represented as a json
+		list, and json.loads converts strings to unicode. This test is here
+		to ensure that unicode folder names work.
+		Note: This is probably not needed with Python3.
+		"""
+		f = sample_maildir.add_folder('folder1')
+		self._add_message(f, 'blaa-blaa-2', 'S', 'cur')
+		sample_maildir.close()
+
+		be = create_backend('maildir', name='sample', path=sample_path, folders=[u'', u'folder1'])
+		be.open()
+		try:
+			msgs = list(be.list_messages())
+		finally:
+			be.close()
+
 	def test_folders_should_be_listed(self, sample_path, sample_maildir):
 		f = sample_maildir.add_folder('folder1')
 		sample_maildir.add_folder('folder2')
