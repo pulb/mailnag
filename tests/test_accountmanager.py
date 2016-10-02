@@ -72,7 +72,7 @@ folder = folderA, folderB, folderC
 [account6]
 enabled = 1
 name = Imap config with json folder option
-folder = folderA, folderB, folderC
+folder = ["folderA", "folderB", "folderC"]
 """
 
 @pytest.fixture
