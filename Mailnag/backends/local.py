@@ -86,10 +86,11 @@ class MBoxBackend(MailboxBackend):
 class MaildirBackend(MailboxBackend):
 	"""Implementation of maildir mail boxes."""
 
-	def __init__(self, name = '', path=None, **kw):
-		"""Initialize maildir mailbox backend with a name and path."""
+	def __init__(self, name = '', path=None, folders=[], **kw):
+		"""Initialize maildir mailbox backend with a name, path and folders."""
 		self.name = name
 		self.path = path
+		self.folders = folders
 		self.opened = False
 
 
@@ -112,16 +113,18 @@ class MaildirBackend(MailboxBackend):
 
 	def list_messages(self):
 		"""List unread messages from the mailbox.
-		Yields pairs (folder, message) where folder is always ''.
+		Yields pairs (folder, message).
 		"""
-		maildir = mailbox.Maildir(self.path, factory=None, create=False)
-		folder = ''
+		folders = self.folders if len(self.folders) != 0 else ['']
+		root_maildir = mailbox.Maildir(self.path, factory=None, create=False)
 		try:
-			for msg in maildir:
-				if 'S' not in msg.get_flags():
-					yield folder, msg
+			for folder in folders:
+				maildir = self._get_folder(root_maildir, folder)
+				for msg in maildir:
+					if 'S' not in msg.get_flags():
+						yield folder, msg
 		finally:
-			maildir.close()
+			root_maildir.close()
 
 
 	def request_folders(self):
@@ -144,4 +147,13 @@ class MaildirBackend(MailboxBackend):
 
 	def cancel_notifications(self):
 		raise NotImplementedError("mbox does not support notifications")
+
+
+	def _get_folder(self, maildir, folder):
+		"""Returns folder instance of the given maildir."""
+		f = maildir
+		for subfolder in folder.split('/'):
+			if subfolder != '':
+				f = f.get_folder(subfolder)
+		return f
 

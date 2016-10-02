@@ -178,6 +178,27 @@ class TestMaildir:
 		assert all(folder == '' for folder in folders)
 		assert msg_ids == set(['blaa-blaa-1', 'blaa-blaa-2'])
 
+	def test_lists_unread_messages_from_selected_folders(self, sample_path, sample_maildir):
+		f = sample_maildir.add_folder('folder1')
+		sample_maildir.add_folder('folder2')
+		s = f.add_folder('subfolder')
+		self._add_message(sample_maildir, 'blaa-blaa-1', None, 'new')
+		self._add_message(f, 'blaa-blaa-2', None, 'cur')
+		self._add_message(s, 'blaa-blaa-3', None, 'cur')
+		sample_maildir.close()
+
+		be = create_backend('maildir', name='sample', path=sample_path, folders=['', 'folder1/subfolder'])
+		be.open()
+		try:
+			msgs = list(be.list_messages())
+			folders = [folder for folder, msg in msgs]
+			msg_ids = set(msg.get('message-id') for folder, msg in msgs)
+		finally:
+			be.close()
+		assert len(msgs) == 2
+		assert set(['', 'folder1/subfolder']) == set(folders)
+		assert msg_ids == set(['blaa-blaa-1', 'blaa-blaa-3'])
+
 	def test_folders_should_be_listed(self, sample_path, sample_maildir):
 		f = sample_maildir.add_folder('folder1')
 		sample_maildir.add_folder('folder2')
