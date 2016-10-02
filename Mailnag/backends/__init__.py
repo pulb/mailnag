@@ -81,6 +81,8 @@ _backends = {
 				Param('path', 'path', str, str, ''),
 			 ]),
 	'maildir' : Backend(MaildirBackend, [
+				Param('path', 'path', str, str, ''),
+				Param('folders', 'folder', _str_to_folders, _folders_to_str, []),
 			]),
 }
 
