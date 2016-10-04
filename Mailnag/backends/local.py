@@ -132,18 +132,10 @@ class MaildirBackend(MailboxBackend):
 
 
 	def request_folders(self):
-		"""Lists folder from maildir recursively."""
-
-		def list_folders(maildir, parent):
-			for folder in maildir.list_folders():
-				this_folder = parent + folder
-				yield this_folder
-				for subfolder in list_folders(maildir.get_folder(folder), this_folder + '/'):
-					yield subfolder
-
+		"""Lists folders from maildir."""
 		maildir = mailbox.Maildir(self._path, factory=None, create=False)
 		try:
-			return [''] + list(list_folders(maildir, ''))
+			return [''] + maildir.list_folders()
 		finally:
 			maildir.close()
 
@@ -158,9 +150,8 @@ class MaildirBackend(MailboxBackend):
 
 	def _get_folder(self, maildir, folder):
 		"""Returns folder instance of the given maildir."""
-		f = maildir
-		for subfolder in folder.split('/'):
-			if subfolder != '':
-				f = f.get_folder(subfolder)
-		return f
+		if folder == '':
+			return maildir
+		else:
+			return maildir.get_folder(folder)
 

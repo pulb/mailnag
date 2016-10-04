@@ -181,13 +181,13 @@ class TestMaildir:
 	def test_lists_unread_messages_from_selected_folders(self, sample_path, sample_maildir):
 		f = sample_maildir.add_folder('folder1')
 		sample_maildir.add_folder('folder2')
-		s = f.add_folder('subfolder')
+		s = sample_maildir.add_folder('folder1.subfolder')
 		self._add_message(sample_maildir, 'blaa-blaa-1', None, 'new')
 		self._add_message(f, 'blaa-blaa-2', None, 'cur')
 		self._add_message(s, 'blaa-blaa-3', None, 'cur')
 		sample_maildir.close()
 
-		be = create_backend('maildir', name='sample', path=sample_path, folders=['', 'folder1/subfolder'])
+		be = create_backend('maildir', name='sample', path=sample_path, folders=['', 'folder1.subfolder'])
 		be.open()
 		try:
 			msgs = list(be.list_messages())
@@ -196,7 +196,7 @@ class TestMaildir:
 		finally:
 			be.close()
 		assert len(msgs) == 2
-		assert set(['', 'folder1/subfolder']) == set(folders)
+		assert set(['', 'folder1.subfolder']) == set(folders)
 		assert msg_ids == set(['blaa-blaa-1', 'blaa-blaa-3'])
 
 	def test_should_support_unicode_folder_names(self, sample_path, sample_maildir):
@@ -218,15 +218,15 @@ class TestMaildir:
 			be.close()
 
 	def test_folders_should_be_listed(self, sample_path, sample_maildir):
-		f = sample_maildir.add_folder('folder1')
+		sample_maildir.add_folder('folder1')
 		sample_maildir.add_folder('folder2')
-		f.add_folder('subfolder')
+		sample_maildir.add_folder('folder1.subfolder')
 		sample_maildir.close()
 
 		be = create_backend('maildir', path=sample_path)
 		be.open()
 		folders = be.request_folders()
-		assert set(['', 'folder1', 'folder2', 'folder1/subfolder']) == set(folders)
+		assert set(['', 'folder1', 'folder2', 'folder1.subfolder']) == set(folders)
 
 	def test_maildir_does_not_support_notifications(self, sample_path):
 		be = create_backend('maildir', path=sample_path)
