@@ -34,33 +34,33 @@ class MBoxBackend(MailboxBackend):
 	
 	def __init__(self, name = '', path=None, **kw):
 		"""Initialize mbox mailbox backend with a name and path."""
-		self.name = name
-		self.path = path
-		self.opened = False
+		self._name = name
+		self._path = path
+		self._opened = False
 
 
-	def open(self, reopen=False):
+	def open(self):
 		"""'Open' mbox. (Actually just checks that mailbox file exists.)"""
-		if not os.path.isfile(self.path):
-			raise IOError('Mailbox {} does not exist.'.format(self.path))
-		self.opened = True
+		if not os.path.isfile(self._path):
+			raise IOError('Mailbox {} does not exist.'.format(self._path))
+		self._opened = True
 
 
 	def close(self):
 		"""Close mbox."""
-		self.opened = False
+		self._opened = False
 
 
 	def is_open(self):
 		"""Return True if mailbox is opened."""
-		return self.opened
+		return self._opened
 
 
 	def list_messages(self):
 		"""List unread messages from the mailbox.
 		Yields pairs (folder, message) where folder is always ''.
 		"""
-		mbox = mailbox.mbox(self.path, create=False)
+		mbox = mailbox.mbox(self._path, create=False)
 		folder = ''
 		try:
 			for msg in mbox:
@@ -88,35 +88,35 @@ class MaildirBackend(MailboxBackend):
 
 	def __init__(self, name = '', path=None, folders=[], **kw):
 		"""Initialize maildir mailbox backend with a name, path and folders."""
-		self.name = name
-		self.path = path
-		self.folders = folders
-		self.opened = False
+		self._name = name
+		self._path = path
+		self._folders = folders
+		self._opened = False
 
 
-	def open(self, reopen=False):
+	def open(self):
 		"""'Open' mailbox. (Actually just checks that maildir directory exists.)"""
-		if not os.path.isdir(self.path):
-			raise IOError('Mailbox {} does not exist.'.format(self.path))
-		self.opened = True
+		if not os.path.isdir(self._path):
+			raise IOError('Mailbox {} does not exist.'.format(self._path))
+		self._opened = True
 
 
 	def close(self):
 		"""Close mailbox."""
-		self.opened = False
+		self._opened = False
 
 
 	def is_open(self):
 		"""Return True if mailbox is opened."""
-		return self.opened
+		return self._opened
 
 
 	def list_messages(self):
 		"""List unread messages from the mailbox.
 		Yields pairs (folder, message).
 		"""
-		folders = self.folders if len(self.folders) != 0 else ['']
-		root_maildir = mailbox.Maildir(self.path, factory=None, create=False)
+		folders = self._folders if len(self._folders) != 0 else ['']
+		root_maildir = mailbox.Maildir(self._path, factory=None, create=False)
 		try:
 			for folder in folders:
 				if isinstance(folder, unicode):
@@ -135,22 +135,25 @@ class MaildirBackend(MailboxBackend):
 		"""Lists folder from maildir recursively."""
 
 		def list_folders(maildir, parent):
-			for folder in  maildir.list_folders():
+			for folder in maildir.list_folders():
 				this_folder = parent + folder
 				yield this_folder
 				for subfolder in list_folders(maildir.get_folder(folder), this_folder + '/'):
 					yield subfolder
 
-		maildir = mailbox.Maildir(self.path, factory=None, create=False)
-		return [''] + list(list_folders(maildir, ''))
+		maildir = mailbox.Maildir(self._path, factory=None, create=False)
+		try:
+			return [''] + list(list_folders(maildir, ''))
+		finally:
+			maildir.close()
 
 
 	def notify_next_change(self, callback=None, timeout=None):
-		raise NotImplementedError("mbox does not support notifications")
+		raise NotImplementedError("maildir does not support notifications")
 
 
 	def cancel_notifications(self):
-		raise NotImplementedError("mbox does not support notifications")
+		raise NotImplementedError("maildir does not support notifications")
 
 
 	def _get_folder(self, maildir, folder):

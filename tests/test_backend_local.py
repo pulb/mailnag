@@ -221,6 +221,7 @@ class TestMaildir:
 		f = sample_maildir.add_folder('folder1')
 		sample_maildir.add_folder('folder2')
 		f.add_folder('subfolder')
+		sample_maildir.close()
 
 		be = create_backend('maildir', path=sample_path)
 		be.open()
