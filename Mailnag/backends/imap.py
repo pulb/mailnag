@@ -33,6 +33,7 @@ from Mailnag.backends.base import MailboxBackend
 import Mailnag.common.imaplib2 as imaplib
 from Mailnag.common.imaplib2 import AUTH
 from Mailnag.common.exceptions import InvalidOperationException
+from Mailnag.common.mutf7 import encode_mutf7, decode_mutf7
 
 
 class IMAPMailboxBackend(MailboxBackend):
@@ -47,7 +48,7 @@ class IMAPMailboxBackend(MailboxBackend):
 		self.server = server
 		self.port = port
 		self.ssl = ssl # bool
-		self.folders = folders
+		self.folders = [encode_mutf7(folder) for folder in folders]
 		self._conn = None
 
 
@@ -126,7 +127,7 @@ class IMAPMailboxBackend(MailboxBackend):
 				folder = match.group(2)
 				lst.append(folder)
 		
-		return lst
+		return [decode_mutf7(folder) for folder in lst]
 
 
 	def notify_next_change(self, callback=None, timeout=None):

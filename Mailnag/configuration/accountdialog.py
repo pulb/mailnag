@@ -32,7 +32,6 @@ from Mailnag.common.dist_cfg import PACKAGE_NAME
 from Mailnag.common.i18n import _
 from Mailnag.common.utils import get_data_file, splitstr
 from Mailnag.common.accounts import Account
-from Mailnag.common import mutf7
 
 IDX_GMAIL	= 0
 IDX_GMX		= 1
@@ -172,7 +171,7 @@ class AccountDialog:
 		folders = []
 		for row in self._liststore_folders:
 			if row[0]:
-				folders.append(mutf7.encode_mutf7(row[1].decode('utf-8')))
+				folders.append(row[1].decode('utf-8'))
 		return folders
 	
 	
@@ -284,7 +283,7 @@ class AccountDialog:
 						if f in self._acc.folders:
 							enabled = True
 							self._selected_folder_count += 1
-						row = [enabled, mutf7.decode_mutf7(f)]
+						row = [enabled, f]
 						self._liststore_folders.append(row)
 					
 					# Enable the push checkbox in case a remote folder wasn't found 
