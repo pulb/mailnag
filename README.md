@@ -1,4 +1,3 @@
-# Mailnag
 ![Screenshot](https://raw.githubusercontent.com/pulb/mailnag-design/master/Flyer/Mailnag_flyer2.png)
 
 ## An extensible mail notification daemon
