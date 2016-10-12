@@ -77,17 +77,22 @@ class HookRegistry:
 			HookTypes.FILTER_MAILS 		: []
 		}
 	
-	
-	def register_hook_func(self, hooktype, func):
-		self._hooks[hooktype].append(func)
+	# Priority should be an integer value fom 0 (very high) to 100 (very low)
+	# Plugin hooks will be called in order from high to low priority.
+	def register_hook_func(self, hooktype, func, priority = 100):
+		self._hooks[hooktype].append( (priority, func) )
 	
 	
 	def unregister_hook_func(self, hooktype, func):
-		self._hooks[hooktype].remove(func)
+		pairs = self._hooks[hooktype]
+		pair = next(pa for pa in pairs if (pa[1] == func))
+		pairs.remove(pair)
 	
 	
 	def get_hook_funcs(self, hooktype):
-		return self._hooks[hooktype]
+		pairs_by_prio = sorted(self._hooks[hooktype], key = lambda p: p[0])
+		funcs = [ f for p, f in pairs_by_prio ]
+		return funcs
 
 
 # Abstract base class for a MailnagController instance 
