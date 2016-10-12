@@ -22,15 +22,22 @@
 
 """Test cases for mutf7."""
 
+import pytest
+
 from Mailnag.common.mutf7 import encode_mutf7, decode_mutf7
 
-def test_encode():
+def test_encode_mutf7():
 	expected = 'Die Katzen &- die M&AOQ-use'
 	result = encode_mutf7(u'Die Katzen & die Mäuse')
 	assert expected == result
 
-def test_decode():
+def test_decode_mutf7():
 	expected = u'Die Katzen & die Mäuse'
 	result = decode_mutf7('Die Katzen &- die M&AOQ-use')
 	assert expected == result
+
+def test_encode_mutf7_with_str_fails():
+	"""Test to document current behaviour: encode_mutf7 requires unicode."""
+	with pytest.raises(Exception):
+		encode_mutf7('Die Katzen & die Mäuse')
 
