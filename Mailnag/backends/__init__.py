@@ -41,7 +41,7 @@ def _str_to_folders(folders_str):
 
 
 def _folders_to_str(folders):
-	return json.dumps(folders)
+	return json.dumps(folders, ensure_ascii=False).encode('utf-8')
 
 
 def _str_to_bool(string):
