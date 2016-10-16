@@ -125,9 +125,9 @@ class IMAPMailboxBackend(MailboxBackend):
 				logging.warning("Folder format not supported.")
 			else:
 				folder = match.group(2)
-				lst.append(folder)
+				lst.append(decode_mutf7(folder))
 		
-		return [decode_mutf7(folder) for folder in lst]
+		return lst
 
 
 	def notify_next_change(self, callback=None, timeout=None):
