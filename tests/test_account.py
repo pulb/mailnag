@@ -45,12 +45,44 @@ def test_account_should_keep_configuration():
 		'user': 'who',
 		'password': 'secret',
 		'oauth2string': 'who knows',
-		'server': 'example.org', 
+		'server': 'example.org',
 		'port': '1234',
 		'ssl': True,
-		'imap': True, 
-		'idle': True, 
-		'folders': ['a', 'b'], 
+		'imap': True,
+		'idle': True,
+		'folders': ['a', 'b'],
+		'mailbox_type': 'mybox',
+	}
+	assert expected_config == config
+
+
+def test_account_should_store_configuration():
+	new_config = {
+		'user': 'who',
+		'password': 'secret',
+		'oauth2string': 'who knows',
+		'server': 'example.org',
+		'port': '1234',
+		'ssl': True,
+		'imap': True,
+		'idle': True,
+		'folders': ['a', 'b'],
+	}
+	account = Account()
+	account.set_config(mailbox_type='mybox', name='my name', enabled=True, config=new_config)
+	config = account.get_config()
+	expected_config = {
+		'enabled': True,
+		'name': 'my name',
+		'user': 'who',
+		'password': 'secret',
+		'oauth2string': 'who knows',
+		'server': 'example.org',
+		'port': '1234',
+		'ssl': True,
+		'imap': True,
+		'idle': True,
+		'folders': ['a', 'b'],
 		'mailbox_type': 'mybox',
 	}
 	assert expected_config == config
