@@ -39,6 +39,9 @@ IDX_WEB_DE	= 2
 IDX_YAHOO	= 3
 IDX_IMAP	= 4
 IDX_POP3	= 5
+IDX_MBOX	= 6
+IDX_MAILDIR	= 7
+
 
 PROVIDER_CONFIGS = [
 	[ 'Gmail', 'imap.gmail.com', '993'],
@@ -68,12 +71,18 @@ class AccountDialog:
 		self._cmb_account_type = builder.get_object("cmb_account_type")
 		self._label_account_name = builder.get_object("label_account_name")
 		self._entry_account_name = builder.get_object("entry_account_name")
+		self._label_account_user = builder.get_object("label_account_user")
 		self._entry_account_user = builder.get_object("entry_account_user")
+		self._label_account_password = builder.get_object("label_account_password")
 		self._entry_account_password = builder.get_object("entry_account_password")
 		self._label_account_server = builder.get_object("label_account_server")
 		self._entry_account_server = builder.get_object("entry_account_server")		
 		self._label_account_port = builder.get_object("label_account_port")
 		self._entry_account_port = builder.get_object("entry_account_port")
+		self._label_account_file_path = builder.get_object("label_account_file_path")
+		self._chooser_account_file_path = builder.get_object("chooser_file_path")
+		self._label_account_directory_path = builder.get_object("label_account_directory_path")
+		self._chooser_account_directory_path = builder.get_object("chooser_directory_path")
 		self._expander_folders = builder.get_object("expander_folders")
 		self._overlay = builder.get_object("overlay")
 		self._treeview_folders = builder.get_object("treeview_folders")
@@ -118,6 +127,7 @@ class AccountDialog:
 	
 	
 	def _load_account(self, acc):
+		config = acc.get_config()
 		self._entry_account_name.set_text(acc.name)
 		self._entry_account_user.set_text(acc.user)
 		self._entry_account_password.set_text(acc.password)
@@ -126,6 +136,10 @@ class AccountDialog:
 		self._chk_account_push.set_active(acc.idle)
 		self._chk_account_push.set_sensitive(len(acc.folders) < 2)
 		self._chk_account_ssl.set_active(acc.ssl)
+		if 'path' in config:
+			self._chooser_account_file_path.set_filename(config.get('path'))
+		if 'path' in config:
+			self._chooser_account_directory_path.set_current_folder(config.get('path'))
 	
 	
 	def _configure_account(self, acc):
@@ -147,7 +161,21 @@ class AccountDialog:
 				if self._folders_received:
 					acc.folders = self._get_selected_folders()
 				acc.idle = self._chk_account_push.get_active()
-				
+		elif acctype == IDX_MBOX:
+			name = self._entry_account_name.get_text()
+			config = {}
+			config['path'] = self._chooser_account_directory_path.get_current_folder()
+			acc.set_config(mailbox_type='mbox', name=name, enabled=True, config=config)
+		elif acctype == IDX_MAILDIR:
+			if self._folders_received:
+				folders = self._get_selected_folders()
+			else:
+				folders = []
+			name = self._entry_account_name.get_text()
+			config = {}
+			config['path'] = self._chooser_account_directory_path.get_current_folder()
+			config['folders'] = folders
+			acc.set_config(mailbox_type='maildir', name=name, enabled=True, config=config)
 		else: # known provider (imap only)
 			acc.name = self._entry_account_user.get_text()
 			acc.user = self._entry_account_user.get_text()
@@ -181,9 +209,11 @@ class AccountDialog:
 			self._cmb_account_type.append_text(p[0])
 		self._cmb_account_type.append_text(_("Other (IMAP)"))
 		self._cmb_account_type.append_text(_("Other (POP3)"))
+		self._cmb_account_type.append_text(_("MBox"))
+		self._cmb_account_type.append_text(_("Maildir"))
 		
 		# select account type
-		if len(self._acc.server) == 0:
+		if self._acc.mailbox_type == 'imap' and len(self._acc.server) == 0:
 			# default to Gmail when creating new accounts
 			self._cmb_account_type.set_active(IDX_GMAIL) # triggers _on_cmb_account_type_changed()
 		else:
@@ -200,7 +230,18 @@ class AccountDialog:
 			if idx >= 0:
 				self._cmb_account_type.set_active(idx) # triggers _on_cmb_account_type_changed()
 			else:
-				self._cmb_account_type.set_active(IDX_IMAP if self._acc.imap else IDX_POP3) # triggers _on_cmb_account_type_changed()
+				if self._acc.mailbox_type == 'imap':
+					idx = IDX_IMAP
+				elif self._acc.mailbox_type == 'pop3':
+					idx = IDX_POP3
+				elif self._acc.mailbox_type == 'mbox':
+					idx = IDX_MBOX
+				elif self._acc.mailbox_type == 'maildir':
+					idx = IDX_MAILDIR
+				else:
+					# This is actually error case, but recovering to IMAP
+					idx = IDX_IMAP
+				self._cmb_account_type.set_active(idx) # triggers _on_cmb_account_type_changed()
 			
 			# Don't allow changing the account type if the loaded account has folders.
 			self._cmb_account_type.set_sensitive(len(self._acc.folders) == 0)
@@ -224,6 +265,12 @@ class AccountDialog:
 				 len(self._entry_account_user.get_text()) > 0 and \
 				 len(self._entry_account_password.get_text()) > 0 and \
 				 len(self._entry_account_server.get_text()) > 0
+		elif acctype == IDX_MBOX:
+			ok = len(self._entry_account_name.get_text()) > 0 and \
+				 (self._chooser_account_file_path.get_filename() is not None)
+		elif acctype == IDX_MAILDIR:
+			ok = len(self._entry_account_name.get_text()) > 0 and \
+				 (self._chooser_account_directory_path.get_current_folder() is not None)
 		else: # known provider
 			ok = len(self._entry_account_user.get_text()) > 0 and \
 				 len(self._entry_account_password.get_text()) > 0
@@ -326,6 +373,10 @@ class AccountDialog:
 		if acctype == IDX_POP3:
 			self._label_account_name.set_visible(True)
 			self._entry_account_name.set_visible(True)
+			self._label_account_user.set_visible(True)
+			self._entry_account_user.set_visible(True)
+			self._label_account_password.set_visible(True)
+			self._entry_account_password.set_visible(True)
 			self._label_account_server.set_visible(True)
 			self._entry_account_server.set_visible(True)
 			self._label_account_port.set_visible(True)
@@ -333,9 +384,17 @@ class AccountDialog:
 			self._expander_folders.set_visible(False)
 			self._chk_account_push.set_visible(False)
 			self._chk_account_ssl.set_visible(True)
+			self._label_account_file_path.set_visible(False)
+			self._chooser_account_file_path.set_visible(False)
+			self._label_account_directory_path.set_visible(False)
+			self._chooser_account_directory_path.set_visible(False)
 		elif acctype == IDX_IMAP:
 			self._label_account_name.set_visible(True)
 			self._entry_account_name.set_visible(True)
+			self._label_account_user.set_visible(True)
+			self._entry_account_user.set_visible(True)
+			self._label_account_password.set_visible(True)
+			self._entry_account_password.set_visible(True)
 			self._label_account_server.set_visible(True)
 			self._entry_account_server.set_visible(True)
 			self._label_account_port.set_visible(True)
@@ -343,9 +402,35 @@ class AccountDialog:
 			self._expander_folders.set_visible(True)
 			self._chk_account_push.set_visible(True)
 			self._chk_account_ssl.set_visible(True)
-		else: # known provider (imap only)
-			self._label_account_name.set_visible(False)
-			self._entry_account_name.set_visible(False)
+			self._label_account_file_path.set_visible(False)
+			self._chooser_account_file_path.set_visible(False)
+			self._label_account_directory_path.set_visible(False)
+			self._chooser_account_directory_path.set_visible(False)
+		elif acctype == IDX_MBOX:
+			self._label_account_name.set_visible(True)
+			self._entry_account_name.set_visible(True)
+			self._label_account_user.set_visible(False)
+			self._entry_account_user.set_visible(False)
+			self._label_account_password.set_visible(False)
+			self._entry_account_password.set_visible(False)
+			self._label_account_server.set_visible(False)
+			self._entry_account_server.set_visible(False)
+			self._label_account_port.set_visible(False)
+			self._entry_account_port.set_visible(False)
+			self._expander_folders.set_visible(False)
+			self._chk_account_push.set_visible(False)
+			self._chk_account_ssl.set_visible(False)
+			self._label_account_file_path.set_visible(True)
+			self._chooser_account_file_path.set_visible(True)
+			self._label_account_directory_path.set_visible(False)
+			self._chooser_account_directory_path.set_visible(False)
+		elif acctype == IDX_MAILDIR:
+			self._label_account_name.set_visible(True)
+			self._entry_account_name.set_visible(True)
+			self._label_account_user.set_visible(False)
+			self._entry_account_user.set_visible(False)
+			self._label_account_password.set_visible(False)
+			self._entry_account_password.set_visible(False)
 			self._label_account_server.set_visible(False)
 			self._entry_account_server.set_visible(False)
 			self._label_account_port.set_visible(False)
@@ -353,6 +438,28 @@ class AccountDialog:
 			self._expander_folders.set_visible(True)
 			self._chk_account_push.set_visible(False)
 			self._chk_account_ssl.set_visible(False)
+			self._label_account_file_path.set_visible(False)
+			self._chooser_account_file_path.set_visible(False)
+			self._label_account_directory_path.set_visible(True)
+			self._chooser_account_directory_path.set_visible(True)
+		else: # known provider (imap only)
+			self._label_account_name.set_visible(False)
+			self._entry_account_name.set_visible(False)
+			self._label_account_user.set_visible(True)
+			self._entry_account_user.set_visible(True)
+			self._label_account_password.set_visible(True)
+			self._entry_account_password.set_visible(True)
+			self._label_account_server.set_visible(False)
+			self._entry_account_server.set_visible(False)
+			self._label_account_port.set_visible(False)
+			self._entry_account_port.set_visible(False)
+			self._expander_folders.set_visible(True)
+			self._chk_account_push.set_visible(False)
+			self._chk_account_ssl.set_visible(False)
+			self._label_account_file_path.set_visible(False)
+			self._chooser_account_file_path.set_visible(False)
+			self._label_account_directory_path.set_visible(False)
+			self._chooser_account_directory_path.set_visible(False)
 		
 		self._folders_received = False
 		self._selected_folder_count = 0
