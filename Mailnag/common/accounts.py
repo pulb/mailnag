@@ -60,8 +60,10 @@ class Account:
 		self.enabled = enabled
 		if mailbox_type:
 			self.mailbox_type = mailbox_type
-		else:
+		elif 'imap' in config:
 			self.mailbox_type = 'imap' if config.get('imap', True) else 'pop3'
+		else:
+		    self.mailbox_type = ''
 		self.name = name
 		self.user = config.get('user', '')
 		self.password = config.get('password', '')

@@ -96,6 +96,13 @@ def test_account_config_should_always_contain_certain_values():
 	assert 'mailbox_type' in config
 
 
+def test_type_should_be_empty_by_default():
+	account = Account()
+	config = account.get_config()
+	assert account.mailbox_type == ''
+	assert config['mailbox_type'] == ''
+
+
 def test_account_should_configurable_with_any_parameters():
 	account = Account(weird='odd', odd='weird')
 	config = account.get_config()
