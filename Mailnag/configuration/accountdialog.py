@@ -129,72 +129,86 @@ class AccountDialog:
 	def _load_account(self, acc):
 		config = acc.get_config()
 		self._entry_account_name.set_text(acc.name)
-		self._entry_account_user.set_text(acc.user)
-		self._entry_account_password.set_text(acc.password)
-		self._entry_account_server.set_text(acc.server)
-		self._entry_account_port.set_text(acc.port)
-		self._chk_account_push.set_active(acc.idle)
-		self._chk_account_push.set_sensitive(len(acc.folders) < 2)
-		self._chk_account_ssl.set_active(acc.ssl)
+		if 'user' in config:
+			self._entry_account_user.set_text(config['user'])
+		if 'password' in config:
+			self._entry_account_password.set_text(config['password'])
+		if 'server' in config:
+			self._entry_account_server.set_text(config['server'])
+		if 'port' in config:
+			self._entry_account_port.set_text(config['port'])
+		if 'idle' in config:
+			self._chk_account_push.set_active(config['idle'])
+		if 'folders' in config:
+			self._chk_account_push.set_sensitive(len(config['folders']) < 2)
+		if 'ssl' in config:
+			self._chk_account_ssl.set_active(config['ssl'])
 		if 'path' in config:
 			self._chooser_account_file_path.set_filename(config.get('path'))
 		if 'path' in config:
-			self._chooser_account_directory_path.set_current_folder(config.get('path'))
+			self._chooser_account_directory_path.set_filename(config.get('path'))
 	
 	
 	def _configure_account(self, acc):
+		config = {}
 		acctype = self._cmb_account_type.get_active()
 		if (acctype == IDX_POP3) or (acctype == IDX_IMAP):
-			acc.name = self._entry_account_name.get_text()
-			acc.user = self._entry_account_user.get_text()
-			acc.password = self._entry_account_password.get_text()
-			acc.server = self._entry_account_server.get_text()
-			acc.port = self._entry_account_port.get_text()
-			acc.ssl = self._chk_account_ssl.get_active()
+			name = self._entry_account_name.get_text()
+			config['user'] = self._entry_account_user.get_text()
+			config['password'] = self._entry_account_password.get_text()
+			config['server'] = self._entry_account_server.get_text()
+			config['port'] = self._entry_account_port.get_text()
+			config['ssl'] = self._chk_account_ssl.get_active()
 		
 			if acctype == IDX_POP3:
-				acc.imap = False
-				acc.folders = []
-				acc.idle = False
+				mailbox_type = 'pop3'
+				config['imap'] = False
+				config['folders'] = []
+				config['idle'] = False
 			elif acctype == IDX_IMAP:
-				acc.imap = True
+				mailbox_type = 'imap'
+				config['imap'] = True
 				if self._folders_received:
-					acc.folders = self._get_selected_folders()
-				acc.idle = self._chk_account_push.get_active()
+					config['folders'] = self._get_selected_folders()
+				config['idle'] = self._chk_account_push.get_active()
 		elif acctype == IDX_MBOX:
+			mailbox_type = 'mbox'
 			name = self._entry_account_name.get_text()
-			config = {}
-			config['path'] = self._chooser_account_directory_path.get_current_folder()
-			acc.set_config(mailbox_type='mbox', name=name, enabled=True, config=config)
+			config['path'] = self._chooser_account_file_path.get_filename()
 		elif acctype == IDX_MAILDIR:
-			if self._folders_received:
-				folders = self._get_selected_folders()
-			else:
-				folders = []
+			mailbox_type = 'maildir'
 			name = self._entry_account_name.get_text()
-			config = {}
-			config['path'] = self._chooser_account_directory_path.get_current_folder()
-			config['folders'] = folders
-			acc.set_config(mailbox_type='maildir', name=name, enabled=True, config=config)
-		else: # known provider (imap only)
-			acc.name = self._entry_account_user.get_text()
-			acc.user = self._entry_account_user.get_text()
-			acc.password = self._entry_account_password.get_text()
-			acc.ssl = True
-			acc.imap = True
+			config['path'] = self._chooser_account_directory_path.get_filename()
 			if self._folders_received:
-				acc.folders = self._get_selected_folders()
-			acc.idle = (len(acc.folders) < 2)
+				config['folders'] = self._get_selected_folders()
+			else:
+				config['folders'] = []
+		else: # known provider (imap only)
+			mailbox_type = 'imap'
+			name = self._entry_account_user.get_text()
+			config['user'] = self._entry_account_user.get_text()
+			config['password'] = self._entry_account_password.get_text()
+			config['ssl'] = True
+			config['imap'] = True
+			config['folders'] = []
+			if self._folders_received:
+				config['folders'] = self._get_selected_folders()
+			config['idle'] = (len(config['folders']) < 2)
 			
 			if acctype < len(PROVIDER_CONFIGS):
 				p = PROVIDER_CONFIGS[acctype]
-				acc.name += (' (%s)' % p[0])
-				acc.server = p[1]
-				acc.port = p[2]
+				name += (' (%s)' % p[0])
+				config['server'] = p[1]
+				config['port'] = p[2]
 			else:
 				raise Exception('Unknown account type')
-	
-	
+		acc.set_config(
+			mailbox_type=mailbox_type,
+			name=name,
+			enabled=acc.enabled,
+			config=config)
+
+
 	def _get_selected_folders(self):
 		folders = []
 		for row in self._liststore_folders:
@@ -211,25 +225,26 @@ class AccountDialog:
 		self._cmb_account_type.append_text(_("Other (POP3)"))
 		self._cmb_account_type.append_text(_("MBox"))
 		self._cmb_account_type.append_text(_("Maildir"))
-		
+
+		config = self._acc.get_config()
+
 		# select account type
-		if self._acc.mailbox_type == 'imap' and len(self._acc.server) == 0:
+		if self._acc.mailbox_type == '':
 			# default to Gmail when creating new accounts
-			self._cmb_account_type.set_active(IDX_GMAIL) # triggers _on_cmb_account_type_changed()
+			idx = IDX_GMAIL
 		else:
-			i = 0
 			idx = -1
-			for p in PROVIDER_CONFIGS:
-				if (('%s (%s)' % (self._acc.user, p[0])) == self._acc.name) and \
-						p[1] == self._acc.server and \
-						p[2] == self._acc.port:
-					idx = i
-					break
-				i+=1
-			
-			if idx >= 0:
-				self._cmb_account_type.set_active(idx) # triggers _on_cmb_account_type_changed()
-			else:
+			if 'user' in config and 'server' in config and 'port' in config:
+				user = config['user']
+				server = config['server']
+				port = config['port']
+				for i, p in enumerate(PROVIDER_CONFIGS):
+					if (('%s (%s)' % (user, p[0])) == self._acc.name) and \
+							p[1] == server and p[2] == port:
+						idx = i
+						break
+
+			if idx < 0:
 				if self._acc.mailbox_type == 'imap':
 					idx = IDX_IMAP
 				elif self._acc.mailbox_type == 'pop3':
@@ -241,10 +256,13 @@ class AccountDialog:
 				else:
 					# This is actually error case, but recovering to IMAP
 					idx = IDX_IMAP
-				self._cmb_account_type.set_active(idx) # triggers _on_cmb_account_type_changed()
-			
-			# Don't allow changing the account type if the loaded account has folders.
-			self._cmb_account_type.set_sensitive(len(self._acc.folders) == 0)
+		self._cmb_account_type.set_active(idx) # triggers _on_cmb_account_type_changed()
+		# Don't allow changing the account type if the loaded account has folders.
+		if 'folders' in config:
+			is_type_change_allowed = len(config['folders']) == 0
+		else:
+			is_type_change_allowed = True
+		self._cmb_account_type.set_sensitive(is_type_change_allowed)
 	
 	
 	def _on_btn_cancel_clicked(self, widget):
@@ -270,7 +288,7 @@ class AccountDialog:
 				 (self._chooser_account_file_path.get_filename() is not None)
 		elif acctype == IDX_MAILDIR:
 			ok = len(self._entry_account_name.get_text()) > 0 and \
-				 (self._chooser_account_directory_path.get_current_folder() is not None)
+				 (self._chooser_account_directory_path.get_filename() is not None)
 		else: # known provider
 			ok = len(self._entry_account_user.get_text()) > 0 and \
 				 len(self._entry_account_password.get_text()) > 0
