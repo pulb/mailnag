@@ -48,6 +48,7 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 #
 class Account:
 	def __init__(self, mailbox_type=None, enabled = False, name = '', **kw):
+		self._backend = None
 		self.set_config(
 			mailbox_type=mailbox_type,
 			name=name,
@@ -75,6 +76,8 @@ class Account:
 		self.idle = config.get('idle', False)
 		self.folders = config.get('folders', [])
 		self._rest_of_config = config
+		if self._backend and self._backend.is_open():
+			self._backend.close()
 		self._backend = None
 
 
