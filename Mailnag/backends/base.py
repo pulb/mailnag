@@ -67,6 +67,11 @@ class MailboxBackend(object):
 		"""
 		raise NotImplementedError
 
+	def supports_notifications(self):
+		"""Returns True if mailbox supports notifications."""
+		# Default implementation
+		return False
+
 	@abstractmethod
 	def notify_next_change(self, callback=None, timeout=None):
 		"""Asks mailbox to notify next change.

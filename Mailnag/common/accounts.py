@@ -116,6 +116,11 @@ class Account:
 		return self._get_backend().list_messages()
 
 
+	def supports_notifications(self):
+		"""Returns True if account supports notifications."""
+		return self._get_backend().supports_notifications()
+
+
 	def notify_next_change(self, callback=None, timeout=None):
 		"""Asks mailbox to notify next change.
 		Callback is called when new mail arrives or removed.
