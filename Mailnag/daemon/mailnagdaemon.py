@@ -150,8 +150,7 @@ class MailnagDaemon:
 		# have been closed already.
 		self._ensure_valid_state()
 		
-		non_idle_accounts = filter(lambda acc: (not acc.imap) or 
-			(acc.imap and not acc.idle), self._accounts)
+		non_idle_accounts = self._get_non_idle_accounts(self._accounts)
 		self._mailchecker.check(non_idle_accounts)
 	
 	
@@ -180,9 +179,8 @@ class MailnagDaemon:
 			except:
 				logging.exception('Caught an exception.')
 
-			idle_accounts = filter(lambda acc: acc.imap and acc.idle, self._accounts)
-			non_idle_accounts = filter(lambda acc: (not acc.imap) or 
-				(acc.imap and not acc.idle), self._accounts)
+			idle_accounts = self._get_idle_accounts(self._accounts)
+			non_idle_accounts = self._get_non_idle_accounts(self._accounts)
 
 			# start polling thread for POP3 accounts and
 			# IMAP accounts without idle support
@@ -232,8 +230,16 @@ class MailnagDaemon:
 			# (see timeout in mailnag.cleanup())
 			# ..but also don't sleep to short in case of a ping connection test.
 			time.sleep(3)
-	
-	
+
+
+	def _get_idle_accounts(self, accounts):
+		return [acc for acc in self._accounts if acc.supports_notifications()]
+
+
+	def _get_non_idle_accounts(self, accounts):
+		return [acc for acc in self._accounts if not acc.supports_notifications()]
+
+
 	def _load_plugins(self, cfg, hookreg, memorizer):
 		class MailnagController_Impl(MailnagController):
 			def __init__(self, daemon, memorizer, hookreg, shutdown_request_hdlr):
