@@ -85,8 +85,9 @@ class MailCollector:
 						sender, id, acc))
 					mail_ids[id] = None
 
-			# don't close idle connections
-			if not acc.idle:
+			# leave account with notifications open, so that it can
+			# send notifications about new mails
+			if not acc.supports_notifications():
 				# disconnect from Email-Server
 				acc.close()
 		
