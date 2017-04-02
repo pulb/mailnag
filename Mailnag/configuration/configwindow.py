@@ -297,7 +297,7 @@ class ConfigWindow:
 
 	def _delete_autostart(self):
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
-		autostart_file = autostart_folder + "mailnag.desktop"
+		autostart_file = os.path.join(autostart_folder, "mailnag.desktop")
 		if os.path.exists(autostart_file):
 			os.remove(autostart_file)
 
