@@ -3,7 +3,7 @@
 #
 # accountdialog.py
 #
-# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2017 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -152,18 +152,19 @@ class AccountDialog:
 	def _configure_account(self, acc):
 		config = {}
 		acctype = self._cmb_account_type.get_active()
+		
 		if (acctype == IDX_POP3) or (acctype == IDX_IMAP):
 			name = self._entry_account_name.get_text()
 			config['user'] = self._entry_account_user.get_text()
 			config['password'] = self._entry_account_password.get_text()
 			config['server'] = self._entry_account_server.get_text()
+			config['folders'] = []
 			config['port'] = self._entry_account_port.get_text()
 			config['ssl'] = self._chk_account_ssl.get_active()
 		
 			if acctype == IDX_POP3:
 				mailbox_type = 'pop3'
 				config['imap'] = False
-				config['folders'] = []
 				config['idle'] = False
 			elif acctype == IDX_IMAP:
 				mailbox_type = 'imap'
@@ -174,15 +175,15 @@ class AccountDialog:
 		elif acctype == IDX_MBOX:
 			mailbox_type = 'mbox'
 			name = self._entry_account_name.get_text()
+			config['folders'] = []
 			config['path'] = self._chooser_account_file_path.get_filename()
 		elif acctype == IDX_MAILDIR:
 			mailbox_type = 'maildir'
 			name = self._entry_account_name.get_text()
 			config['path'] = self._chooser_account_directory_path.get_filename()
+			config['folders'] = []
 			if self._folders_received:
 				config['folders'] = self._get_selected_folders()
-			else:
-				config['folders'] = []
 		else: # known provider (imap only)
 			mailbox_type = 'imap'
 			name = self._entry_account_user.get_text()
@@ -202,10 +203,11 @@ class AccountDialog:
 				config['port'] = p[2]
 			else:
 				raise Exception('Unknown account type')
+		
 		acc.set_config(
 			mailbox_type=mailbox_type,
-			name=name,
 			enabled=acc.enabled,
+			name=name,
 			config=config)
 
 

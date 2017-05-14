@@ -3,7 +3,7 @@
 #
 # accounts.py
 #
-# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2017 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
@@ -47,7 +47,7 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 # Account class
 #
 class Account:
-	def __init__(self, mailbox_type=None, enabled = False, name = '', **kw):
+	def __init__(self, mailbox_type = None, enabled = False, name = '', **kw):
 		self._backend = None
 		self.set_config(
 			mailbox_type=mailbox_type,
@@ -56,7 +56,7 @@ class Account:
 			config=kw)
 
 
-	def set_config(self, mailbox_type, name, enabled, config):
+	def set_config(self, mailbox_type, enabled, name, config):
 		"""Set accounts configuration."""
 		self.enabled = enabled
 		if mailbox_type:
