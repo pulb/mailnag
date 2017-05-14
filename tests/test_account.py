@@ -45,12 +45,44 @@ def test_account_should_keep_configuration():
 		'user': 'who',
 		'password': 'secret',
 		'oauth2string': 'who knows',
-		'server': 'example.org', 
+		'server': 'example.org',
 		'port': '1234',
 		'ssl': True,
-		'imap': True, 
-		'idle': True, 
-		'folders': ['a', 'b'], 
+		'imap': True,
+		'idle': True,
+		'folders': ['a', 'b'],
+		'mailbox_type': 'mybox',
+	}
+	assert expected_config == config
+
+
+def test_account_should_store_configuration():
+	new_config = {
+		'user': 'who',
+		'password': 'secret',
+		'oauth2string': 'who knows',
+		'server': 'example.org',
+		'port': '1234',
+		'ssl': True,
+		'imap': True,
+		'idle': True,
+		'folders': ['a', 'b'],
+	}
+	account = Account()
+	account.set_config(mailbox_type='mybox', name='my name', enabled=True, config=new_config)
+	config = account.get_config()
+	expected_config = {
+		'enabled': True,
+		'name': 'my name',
+		'user': 'who',
+		'password': 'secret',
+		'oauth2string': 'who knows',
+		'server': 'example.org',
+		'port': '1234',
+		'ssl': True,
+		'imap': True,
+		'idle': True,
+		'folders': ['a', 'b'],
 		'mailbox_type': 'mybox',
 	}
 	assert expected_config == config
@@ -62,6 +94,13 @@ def test_account_config_should_always_contain_certain_values():
 	assert 'enabled' in config
 	assert 'name' in config
 	assert 'mailbox_type' in config
+
+
+def test_type_should_be_empty_by_default():
+	account = Account()
+	config = account.get_config()
+	assert account.mailbox_type == ''
+	assert config['mailbox_type'] == ''
 
 
 def test_account_should_configurable_with_any_parameters():

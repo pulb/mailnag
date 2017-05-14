@@ -47,25 +47,37 @@ CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 # Account class
 #
 class Account:
-	def __init__(self, enabled = False, name = '', user = '', \
-		password = '', oauth2string = '', server = '', port = '', ssl = True, imap = True, idle = False, folders = [], mailbox_type = None, **kw):
-		
-		self.enabled = enabled # bool
+	def __init__(self, mailbox_type=None, enabled = False, name = '', **kw):
+		self._backend = None
+		self.set_config(
+			mailbox_type=mailbox_type,
+			name=name,
+			enabled=enabled,
+			config=kw)
+
+
+	def set_config(self, mailbox_type, name, enabled, config):
+		"""Set accounts configuration."""
+		self.enabled = enabled
 		if mailbox_type:
 			self.mailbox_type = mailbox_type
+		elif 'imap' in config:
+			self.mailbox_type = 'imap' if config.get('imap', True) else 'pop3'
 		else:
-			self.mailbox_type = 'imap' if imap else 'pop3'
+		    self.mailbox_type = ''
 		self.name = name
-		self.user = user
-		self.password = password
-		self.oauth2string = oauth2string
-		self.server = server
-		self.port = port
-		self.ssl = ssl # bool
-		self.imap = imap # bool		
-		self.idle = idle # bool
-		self.folders = folders
-		self._rest_of_config = kw
+		self.user = config.get('user', '')
+		self.password = config.get('password', '')
+		self.oauth2string = config.get('oauth2string', '')
+		self.server = config.get('server', '')
+		self.port = config.get('port', '')
+		self.ssl = config.get('ssl', True)
+		self.imap = config.get('imap', True)
+		self.idle = config.get('idle', False)
+		self.folders = config.get('folders', [])
+		self._rest_of_config = config
+		if self._backend and self._backend.is_open():
+			self._backend.close()
 		self._backend = None
 
 
