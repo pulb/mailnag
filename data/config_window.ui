@@ -154,7 +154,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="label" translatable="yes">&lt;a href="https://github.com/pulb/mailnag"&gt;Mailnag&lt;/a&gt; - An extensible mail notification daemon.
-Copyright (c) 2011 - 2016 Patrick Ulbrich
+Copyright (c) 2011 - 2017 Patrick Ulbrich
 and contributors.</property>
                         <property name="use_markup">True</property>
                       </object>
