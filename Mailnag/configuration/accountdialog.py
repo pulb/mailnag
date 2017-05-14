@@ -223,10 +223,10 @@ class AccountDialog:
 		# fill acount type cmb
 		for p in PROVIDER_CONFIGS:
 			self._cmb_account_type.append_text(p[0])
-		self._cmb_account_type.append_text(_("Other (IMAP)"))
-		self._cmb_account_type.append_text(_("Other (POP3)"))
-		self._cmb_account_type.append_text(_("MBox"))
-		self._cmb_account_type.append_text(_("Maildir"))
+		self._cmb_account_type.append_text(_("IMAP (Custom)"))
+		self._cmb_account_type.append_text(_("POP3 (Custom)"))
+		self._cmb_account_type.append_text(_("MBox (Custom)"))
+		self._cmb_account_type.append_text(_("Maildir (Custom)"))
 
 		config = self._acc.get_config()
 
