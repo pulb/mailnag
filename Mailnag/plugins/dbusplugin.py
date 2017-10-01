@@ -23,10 +23,13 @@
 
 import dbus
 import dbus.service
+import logging
 from Mailnag.common.dist_cfg import DBUS_BUS_NAME, DBUS_OBJ_PATH
 from Mailnag.common.plugins import Plugin, HookTypes
 from Mailnag.common.exceptions import InvalidOperationException
 from Mailnag.common.i18n import _
+
+MAX_INT32 = ((0xFFFFFFFF / 2) - 1)
 
 plugin_defaults = {}
 
@@ -113,7 +116,13 @@ class DBusPlugin(Plugin):
 			d = {}
 			name, addr = m.sender
 			
-			d['datetime'] = m.datetime			# int32 (i)
+			if m.datetime > MAX_INT32:
+				logging.warning('dbusplugin: datetime out of range (mailnag dbus api uses int32 timestamps).')
+				datetime = 0
+			else:
+				datetime = m.datetime
+			
+			d['datetime'] = datetime			# int32 (i)
 			d['subject'] = m.subject			# string (s)
 			d['sender_name'] = name				# string (s)
 			d['sender_addr'] = addr				# string (s)
