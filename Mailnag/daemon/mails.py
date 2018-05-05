@@ -4,7 +4,7 @@
 # mails.py
 #
 # Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -194,7 +194,7 @@ class MailCollector:
 			# subject but *no datetime* will have the same hash id, 
 			# i.e. only the first mail is notified. 
 			# (Should happen very rarely).
-			id = hashlib.md5((acc.server + folder + acc.user + 
+			id = hashlib.md5((acc.get_id() + folder +
 				sender[1] + subject + str(datetime))
 				.encode('utf-8')).hexdigest()
 		
