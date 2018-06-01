@@ -22,6 +22,8 @@
 
 """Test cases for Account."""
 
+import pytest
+
 from Mailnag.common.accounts import Account
 
 
@@ -127,4 +129,19 @@ def test_account_should_configurable_with_any_parameters():
 	config = account.get_config()
 	assert config['weird'] == 'odd'
 	assert config['odd'] == 'weird'
+
+
+@pytest.mark.parametrize("config,should_support", [
+	({'mailbox_type': 'imap', 'idle': True}, True),
+	({'mailbox_type': 'imap', 'idle': False}, False),
+	({'mailbox_type': 'pop3'}, False),
+	({'mailbox_type': 'mbox'}, False),
+	({'mailbox_type': 'maildir'}, False),
+])
+def test_account_supports_notifications(config, should_support):
+	account = Account(**config)
+	if should_support:
+		assert account.supports_notifications()
+	else:
+		assert not account.supports_notifications()
 

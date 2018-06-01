@@ -40,7 +40,7 @@ class IMAPMailboxBackend(MailboxBackend):
 	"""Implementation of IMAP mail boxes."""
 
 	def __init__(self, name = '', user = '', password = '', oauth2string = '',
-				 server = '', port = '', ssl = True, folders = [], **kw):
+				 server = '', port = '', ssl = True, folders = [], idle=True, **kw):
 		self.name = name
 		self.user = user
 		self.password = password
@@ -49,6 +49,7 @@ class IMAPMailboxBackend(MailboxBackend):
 		self.port = port
 		self.ssl = ssl # bool
 		self.folders = [encode_mutf7(folder) for folder in folders]
+		self.idle = idle
 		self._conn = None
 
 
@@ -129,6 +130,11 @@ class IMAPMailboxBackend(MailboxBackend):
 		
 		return lst
 
+
+	def supports_notifications(self):
+		"""Returns True if mailbox supports notifications.
+		IMAP mailbox supports notifications if idle parameter is True"""
+		return self.idle
 
 	def notify_next_change(self, callback=None, timeout=None):
 		self._ensure_open()
