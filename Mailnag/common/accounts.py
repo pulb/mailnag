@@ -5,7 +5,7 @@
 #
 # Copyright 2011 - 2017 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -138,11 +138,12 @@ class Account:
 		Returns an empty list if mailbox does not support folders.
 		"""
 		return self._get_backend().request_folders()
-		
-		
+
+
 	def get_id(self):
-		# TODO : this id is not really unique...
-		return str(hash(self.user + self.server + ', '.join(self.folders)))
+		"""Returns unique id for the account."""
+		# Assumption: The name of the account is unique.
+		return str(hash(self.name))
 
 
 	def _get_backend(self):

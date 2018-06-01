@@ -2,7 +2,7 @@
 #
 # test_account.py
 #
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,25 @@
 """Test cases for Account."""
 
 from Mailnag.common.accounts import Account
+
+
+def test_account_get_id_should_be_unique():
+	accounts = [
+		Account(name='a', mailbox_type='imap', enabled=True, user='x', server='xx'),
+		Account(name='b', mailbox_type='pop3', enabled=True, user='y', server='yy'),
+		Account(name='c', mailbox_type='mbox', enabled=True),
+		Account(name='d', mailbox_type='maildir', enabled=True),
+	]
+	ids = set(acc.get_id() for acc in accounts)
+
+	assert len(ids) == len(accounts)
+
+
+def test_account_get_id_should_be_consistent():
+	account = Account(name='a', mailbox_type='imap', enabled=True, user='x', server='xx')
+	expected_id = account.get_id()
+	for i in range(20):
+		assert account.get_id() == expected_id
 
 
 def test_account_should_keep_configuration():
