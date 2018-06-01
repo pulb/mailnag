@@ -2,7 +2,7 @@
 #
 # test_accountmanager.py
 #
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,6 +28,24 @@ import pytest
 
 from Mailnag.backends import get_mailbox_parameter_specs
 from Mailnag.common.accounts import AccountManager
+from Mailnag.common.credentialstore import CredentialStore
+
+
+class FakeCredentialStore(CredentialStore):
+	"""Helper class to be used in tests."""
+
+	def __init__(self):
+		self.secrets = {}
+
+	def get(self, key):
+		return self.secrets[key]
+
+	def set(self, key, secret):
+		self.secrets[key] = secret
+
+	def remove(self, key):
+		if key in self.secrets:
+			del self.secrets[key]
 
 
 sample_config_file = u"""
@@ -35,7 +53,7 @@ sample_config_file = u"""
 enabled = 1
 name = IMAP mailbox config
 user = you
-password =
+password = drowssap
 server = imap.example.org
 port =
 ssl = 1
@@ -47,7 +65,7 @@ folder = []
 enabled = 1
 name = POP3 mailbox config
 user = me
-password =
+password = poppoppop
 server = pop.example.org
 port =
 ssl = 1
@@ -88,7 +106,7 @@ def test_imap_config_options(config):
 	options = am._get_cfg_options(config, 'account1', option_spec)
 	expected_options = {
 		'user': 'you',
-		'password': '',
+		'password': 'drowssap',
 		'server': 'imap.example.org',
 		'port': '',
 		'ssl': True,
@@ -143,7 +161,7 @@ def test_pop3_config_options(config):
 	options = am._get_cfg_options(config, 'account2', option_spec)
 	expected_options = {
 		'user': 'me',
-		'password': '',
+		'password': 'poppoppop',
 		'server': 'pop.example.org',
 		'port': '',
 		'ssl': True,
@@ -196,4 +214,86 @@ def test_imap_config_values_should_be_stored():
 		('folder', '["a", "b"]'),
 	]
 	assert set(expected_config_items) == set(config.items('account1'))
+
+
+# Load from config
+
+def get_account(accounts, name):
+	"""Finds and returns account which has given name."""
+	return next(account for account in accounts if account.name == name)
+
+
+def test_load_from_config(config):
+	am = AccountManager()
+	am.load_from_cfg(config, enabled_only=False)
+	accounts = am.to_list()
+	assert len(accounts) == 6
+	imap_account = get_account(am.to_list(), 'IMAP mailbox config')
+	pop3_account = get_account(am.to_list(), 'POP3 mailbox config')
+	assert imap_account.get_config()['password'] == 'drowssap'
+	assert pop3_account.get_config()['password'] == 'poppoppop'
+
+
+def test_load_from_config_with_credential_store(config):
+	cs = FakeCredentialStore()
+	cs.set('Mailnag password for imap://you@imap.example.org', 'verry seecret')
+	cs.set('Mailnag password for pop://me@pop.example.org', 'seecret too')
+	am = AccountManager(cs)
+	am.load_from_cfg(config, enabled_only=False)
+	accounts = am.to_list()
+	assert len(accounts) == 6
+	imap_account = get_account(am.to_list(), 'IMAP mailbox config')
+	pop3_account = get_account(am.to_list(), 'POP3 mailbox config')
+	assert imap_account.get_config()['password'] == 'verry seecret'
+	assert pop3_account.get_config()['password'] == 'seecret too'
+
+
+# Save to config
+
+def test_save_zero_accounts_to_config(config):
+	am = AccountManager()
+	am.save_to_cfg(config)
+	assert len(config.sections()) == 0
+
+
+def test_save_all_accounts_to_config(config):
+	am = AccountManager()
+	am.load_from_cfg(config, enabled_only=False)
+	am.save_to_cfg(config)
+	assert len(config.sections()) == 6
+
+
+def test_save_zero_accounts_to_config_with_credential_store(config):
+	cs = FakeCredentialStore()
+	am = AccountManager(cs)
+	am.save_to_cfg(config)
+	assert len(config.sections()) == 0
+	assert cs.secrets == {}
+
+
+def test_save_all_accounts_to_config_with_credential_store(config):
+	cs = FakeCredentialStore()
+	cs.set('Mailnag password for imap://you@imap.example.org', 'verry seecret')
+	cs.set('Mailnag password for pop://me@pop.example.org', 'seecret too')
+	am = AccountManager(cs)
+	am.load_from_cfg(config, enabled_only=False)
+	am.save_to_cfg(config)
+	assert len(config.sections()) == 6
+	assert cs.secrets == {
+	    'Mailnag password for imap://@': '',
+	    'Mailnag password for imap://you@imap.example.org': 'verry seecret',
+	    'Mailnag password for pop://me@pop.example.org': 'seecret too'
+	}
+
+
+def test_save_removed_accounts_to_config_with_credential_store(config):
+	cs = FakeCredentialStore()
+	cs.set('Mailnag password for imap://you@imap.example.org', 'verry seecret')
+	cs.set('Mailnag password for pop://me@pop.example.org', 'seecret too')
+	am = AccountManager(cs)
+	am.load_from_cfg(config, enabled_only=False)
+	am.clear()
+	am.save_to_cfg(config)
+	assert len(config.sections()) == 0
+	assert cs.secrets == {}
 
