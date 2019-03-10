@@ -3,7 +3,7 @@
 #
 # plugindialog.py
 #
-# Copyright 2013 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,20 +32,22 @@ class PluginDialog:
 	def __init__(self, parent, plugin):
 		self._plugin = plugin
 		
-		flags = Gtk.DialogFlags.MODAL # | Gtk.DialogFlags.USE_HEADER_BAR
-		self._window = Gtk.Dialog(_('Plugin Configuration'), parent, flags, \
-			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
+		self._window = Gtk.Dialog(title = _('Plugin Configuration'), parent = parent, use_header_bar = True, \
+			buttons = (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
+		
+		self._window.set_default_response(Gtk.ResponseType.OK)
+		self._window.set_default_size(480, 0)
 		
 		self._box = self._window.get_content_area()
-		self._box.set_border_width(6)
-		self._box.set_spacing(6)
+		self._box.set_border_width(12)
+		self._box.set_spacing(12)
 
 		
 	def run(self):
 		widget = self._plugin.get_config_ui()
 		
 		if widget != None:
-			self._box.add(widget)
+			self._box.pack_start(widget, True, True, 0)
 			widget.show_all()
 			self._plugin.load_ui_from_config(widget)
 		

@@ -3,7 +3,7 @@
 #
 # accountdialog.py
 #
-# Copyright 2011 - 2017 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016, 2019 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 # MA 02110-1301, USA.
 #
 
+import os
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('GLib', '2.0')
@@ -64,17 +65,24 @@ class AccountDialog:
 		
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
-		builder.add_from_file(get_data_file("account_dialog.ui"))
+		builder.add_from_file(get_data_file("account_widget.ui"))
 		builder.connect_signals({ \
 			"account_type_changed" : self._on_cmb_account_type_changed, \
 			"entry_changed" : self._on_entry_changed, \
-			"expander_folders_activate" : self._on_expander_folders_activate, \
-			"btn_cancel_clicked" : self._on_btn_cancel_clicked, \
-			"btn_save_clicked" : self._on_btn_save_clicked \
+			"expander_folders_activate" : self._on_expander_folders_activate \
 		})
 
-		self._window = builder.get_object("account_dialog")
-		self._window.set_transient_for(parent)
+		self._window = Gtk.Dialog(title = _('Mail Account'), parent = parent, use_header_bar = True, \
+			buttons = (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
+		
+		self._window.set_default_response(Gtk.ResponseType.OK)
+		self._window.set_default_size(400, 0)
+		
+		self._box = self._window.get_content_area()
+		self._box.set_border_width(12)
+		self._box.set_spacing(12)
+		
+		self._box.pack_start(builder.get_object("account_widget"), True, True, 0)
 
 		self._cmb_account_type = builder.get_object("cmb_account_type")
 		self._label_account_name = builder.get_object("label_account_name")
@@ -97,7 +105,9 @@ class AccountDialog:
 		self._liststore_folders = builder.get_object("liststore_folders")
 		self._chk_account_push = builder.get_object("chk_account_push")
 		self._chk_account_ssl = builder.get_object("chk_account_ssl")
-		self._button_save = builder.get_object("button_save")
+		
+		self._button_ok = self._window.get_widget_for_response(Gtk.ResponseType.OK)
+		self._button_ok.set_sensitive(False)
 		
 		self._error_label = None
 		self._folders_received = False
@@ -124,7 +134,7 @@ class AccountDialog:
 		
 		res = self._window.run()
 		
-		if res == 1:
+		if res == Gtk.ResponseType.OK:
 			self._configure_account(self._acc)
 				
 		self._window.destroy()
@@ -152,9 +162,8 @@ class AccountDialog:
 			self._chk_account_push.set_sensitive(len(config['folders']) < 2)
 		if 'ssl' in config:
 			self._chk_account_ssl.set_active(config['ssl'])
-		if 'path' in config:
+		if ('path' in config) and os.path.exists(config.get('path')):
 			self._chooser_account_file_path.set_filename(config.get('path'))
-		if 'path' in config:
 			self._chooser_account_directory_path.set_filename(config.get('path'))
 	
 	
@@ -274,14 +283,6 @@ class AccountDialog:
 		else:
 			is_type_change_allowed = True
 		self._cmb_account_type.set_sensitive(is_type_change_allowed)
-	
-	
-	def _on_btn_cancel_clicked(self, widget):
-		pass
-
-
-	def _on_btn_save_clicked(self, widget):
-		pass
 
 	
 	def _on_entry_changed(self, widget):
@@ -305,7 +306,7 @@ class AccountDialog:
 				 len(self._entry_account_password.get_text()) > 0
 	
 		self._expander_folders.set_sensitive(self._folders_received or ok)
-		self._button_save.set_sensitive(ok)
+		self._button_ok.set_sensitive(ok)
 		
 		
 	def _on_expander_folders_activate(self, widget):
