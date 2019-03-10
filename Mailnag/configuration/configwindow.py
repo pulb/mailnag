@@ -3,7 +3,7 @@
 #
 # configwindow.py
 #
-# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -24,16 +24,15 @@
 
 import gi
 gi.require_version('Gtk', '3.0')
-gi.require_version('GLib', '2.0')
 
 import os
 import shutil
 import xdg.BaseDirectory as bd
-from gi.repository import GLib, GdkPixbuf, Gdk, Gtk, GObject
+from gi.repository import Gtk
 
 from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR, DESKTOP_FILE_DIR
 from Mailnag.common.i18n import _
-from Mailnag.common.utils import get_data_file, get_data_paths
+from Mailnag.common.utils import get_data_file
 from Mailnag.common.config import read_cfg, write_cfg
 from Mailnag.common.accounts import Account, AccountManager
 from Mailnag.common.credentialstore import CredentialStore
@@ -43,13 +42,13 @@ from Mailnag.configuration.plugindialog import PluginDialog
 
 
 class ConfigWindow:
-	def __init__(self):
+	def __init__(self, app):
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
 		builder.add_from_file(get_data_file("config_window.ui"))
 		builder.connect_signals({ \
 			"config_window_deleted" : self._on_config_window_deleted, \
-			"btn_page_toggled" : self._on_btn_page_toggled, \
+			"btn_info_clicked" : self._on_btn_info_clicked, \
 			"btn_add_account_clicked" : self._on_btn_add_account_clicked, \
 			"btn_edit_account_clicked" : self._on_btn_edit_account_clicked, \
 			"btn_remove_account_clicked" : self._on_btn_remove_account_clicked, \
@@ -61,37 +60,13 @@ class ConfigWindow:
 			"treeview_plugins_cursor_changed" : self._on_treeview_plugins_cursor_changed, \
 		})
 		
-		# Add icons in alternative data paths (e.g. ./data/icons) 
-		# to the icon search path in case Mailnag is launched 
-		# from a local directory (without installing).
-		icon_theme = Gtk.IconTheme.get_default()
-		for path in get_data_paths():
-			icon_theme.append_search_path(os.path.join(path, "icons"))
-
 		self._window = builder.get_object("config_window")
 		self._window.set_icon_name("mailnag")
-		self._load_stylesheet('config_window.css')
+		self._window.set_application(app)
 		self._cfg = read_cfg()
 		
-		self.daemon_enabled = False
+		self._daemon_enabled = False
 		
-		#
-		# toggle buttons / notebook
-		#
-		self._notebook = builder.get_object("notebook")
-		self._box_navigation = builder.get_object("box_navigation")
-		self._box_navigation.get_children()[0].set_active(True)
-		
-		#
-		# general page
-		#		
-		# The dimension of the png is expected to be 180x180 px
-		pb = GdkPixbuf.Pixbuf.new_from_file(get_data_file("mailnag.png"))
-		pb = pb.new_subpixbuf(0, 10, 180, 146) # crop whitespace at the bottom
-		self._image_logo = builder.get_object("image_logo")
-		self._image_logo.set_from_pixbuf(pb)
-		self._label_app_desc = builder.get_object("label_app_desc")
-		self._label_app_desc.set_markup("<span font=\"24\"><b>Mailnag</b></span>\nVersion %s" % str(APP_VERSION))
 		self._switch_daemon_enabled = builder.get_object("switch_daemon_enabled")
 		
 		#
@@ -147,17 +122,17 @@ class ConfigWindow:
 		
 		# load config
 		self._load_config()
-		self._window.show()
+		self._window.show_all()
+
+	
+	def get_gtk_window(self):
+		return self._window
 
 
-	def _load_stylesheet(self, stylesheet):
-		provider = Gtk.CssProvider()
-		provider.load_from_path(get_data_file(stylesheet))
-		Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(),
-												 provider,
-												 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-	
-	
+	def get_daemon_enabled(self):
+		return self._daemon_enabled
+
+
 	def _load_config(self):
 		self._switch_daemon_enabled.set_active(bool(int(self._cfg.get('core', 'autostart'))))
 		
@@ -246,7 +221,7 @@ class ConfigWindow:
 		if iter != None:
 			d = AccountDialog(self._window, acc)
 			
-			if d.run() == 1:
+			if d.run() == Gtk.ResponseType.OK:
 				model.set_value(iter, 2, acc.name)
 
 
@@ -301,19 +276,40 @@ class ConfigWindow:
 		if os.path.exists(autostart_file):
 			os.remove(autostart_file)
 
-
-	def _on_btn_page_toggled(self, button):
-		if not button.get_active():	return
+	
+	def _on_btn_info_clicked(self, widget):
+		aboutdialog = Gtk.AboutDialog()
+		aboutdialog.set_title(_("About %s") % PACKAGE_NAME.title())
+		aboutdialog.set_version(APP_VERSION)
+		aboutdialog.set_program_name(PACKAGE_NAME.title())
+		aboutdialog.set_comments(_("An extensible mail notification daemon."))
+		aboutdialog.set_copyright(_("Copyright (c) 2011 - 2019 Patrick Ulbrich and contributors."))
+		aboutdialog.set_logo_icon_name("mailnag")
+		aboutdialog.set_website("https://github.com/pulb/mailnag")
+		aboutdialog.set_website_label(_("Homepage"))
+		aboutdialog.set_license_type(Gtk.License.GPL_2_0)		
+		aboutdialog.set_authors([
+			"Patrick Ulbrich (maintainer)",
+			"Edwin Smulders",
+			"Freeroot",
+			"Leighton Earl",
+			"Matthias Mailänder",
+			"Oleg",
+			"Ralf Hersel",
+			"Taylor Braun-Jones",
+			"Thomas Haider",
+			"Timo Kankare",
+			"Vincent Cheng"
+		])
+		aboutdialog.set_translator_credits(_("translator-credits"))
+		aboutdialog.set_artists([ "Reda Lazri" ])
+		aboutdialog.connect("response", lambda w, r: aboutdialog.destroy())
 		
-		page = 0
-		for btn in self._box_navigation.get_children():
-			if btn == button:
-				self._notebook.set_current_page(page)
-			else:
-				btn.set_active(False)
-			page += 1
-	
-	
+		aboutdialog.set_modal(True)
+		aboutdialog.set_transient_for(self._window)		
+		aboutdialog.show()
+
+
 	def _on_account_toggled(self, cell, path):
 		model = self._liststore_accounts
 		iter = model.get_iter(path)
@@ -327,7 +323,7 @@ class ConfigWindow:
 		acc = Account(enabled = True)
 		d = AccountDialog(self._window, acc)
 	
-		if d.run() == 1:
+		if d.run() == Gtk.ResponseType.OK:
 			self._accountman.add(acc)
 			
 			row = [acc, acc.enabled, acc.name]
@@ -397,14 +393,9 @@ class ConfigWindow:
 		if iter != None:
 			self._button_edit_plugin.set_sensitive(plugin.has_config_ui())
 	
-	
-	def _save_and_quit(self):
-		self._save_config()	
-		self.daemon_enabled = self._switch_daemon_enabled.get_active()
-		Gtk.main_quit()
-		
 
 	def _on_config_window_deleted(self, widget, event):
-		self._save_and_quit()
+		self._save_config()	
+		self._daemon_enabled = self._switch_daemon_enabled.get_active()
 
 
