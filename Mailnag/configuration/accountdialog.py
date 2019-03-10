@@ -4,7 +4,7 @@
 # accountdialog.py
 #
 # Copyright 2011 - 2017 Patrick Ulbrich <zulu99@gmx.net>
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2019 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,6 +49,14 @@ PROVIDER_CONFIGS = [
 	[ 'Web.de', 'imap.web.de', '993'],
 	[ 'Yahoo', 'imap.mail.yahoo.com', '993']
 ]
+
+
+def folder_cell_data(tree_column, cell, model, iter, *data):
+	value = model[iter][1]
+	if value == '':
+		value = '[root folder]'
+	cell.set_property('text', value)
+
 
 class AccountDialog:
 	def __init__(self, parent, acc):
@@ -106,6 +114,7 @@ class AccountDialog:
 
 		renderer_folders_name = Gtk.CellRendererText()
 		column_folders_name = Gtk.TreeViewColumn(_('Name'), renderer_folders_name, text = 1)
+		column_folders_name.set_cell_data_func(renderer_folders_name, folder_cell_data)
 		self._treeview_folders.append_column(column_folders_name)
 	
 	
