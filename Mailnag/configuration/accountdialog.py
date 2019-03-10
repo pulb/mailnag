@@ -164,7 +164,12 @@ class AccountDialog:
 			self._chk_account_ssl.set_active(config['ssl'])
 		if ('path' in config) and os.path.exists(config.get('path')):
 			self._chooser_account_file_path.set_filename(config.get('path'))
+			# Workaround: fire the on-entry-changed signal manually as it is only called
+			# when the user changes the file by mouse or keyboard.
+			# See https://developer.gnome.org/gtk3/stable/GtkFileChooserButton.html#GtkFileChooserButton-file-set
+			self._on_entry_changed(self._chooser_account_file_path)
 			self._chooser_account_directory_path.set_filename(config.get('path'))
+			self._on_entry_changed(self._chooser_account_directory_path)
 	
 	
 	def _configure_account(self, acc):
