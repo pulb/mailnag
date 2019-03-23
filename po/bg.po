@@ -1,7 +1,7 @@
-# Czech translation for mailnag
-# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# Bulgarian translation for mailnag
+# Copyright (c) 2017 Rosetta Contributors and Canonical Ltd 2017
 # This file is distributed under the same license as the mailnag package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 #
 msgid ""
 msgstr ""
@@ -10,33 +10,32 @@ msgstr ""
 "POT-Creation-Date: 2019-03-16 14:03+0100\n"
 "PO-Revision-Date: 2019-03-16 14:48+0000\n"
 "Last-Translator: Launchpad Translations Administrators <Unknown>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2019-03-23 16:20+0000\n"
 "X-Generator: Launchpad (build 18910)\n"
-"Language: cs\n"
 
 #: Mailnag/plugins/userscriptplugin.py:65
 msgid "User Script"
-msgstr "Uživatelský skript"
+msgstr "Потребителски скрипт"
 
 #: Mailnag/plugins/userscriptplugin.py:66
 msgid "Runs an user defined script on mail arrival."
-msgstr "Spuštění uživatelem definovaného skriptu při přijetí e-mailu."
+msgstr "При пристигане на имейл стартира скрипт дефиниран от потребителя"
 
 #: Mailnag/plugins/userscriptplugin.py:86
 msgid "account"
-msgstr "účet"
+msgstr "акаунт"
 
 #: Mailnag/plugins/userscriptplugin.py:86
 msgid "sender"
-msgstr "odesílatel"
+msgstr "изпращач"
 
 #: Mailnag/plugins/userscriptplugin.py:86
 msgid "subject"
-msgstr "předmět"
+msgstr "тема"
 
 #: Mailnag/plugins/userscriptplugin.py:87
 #, python-format
@@ -45,9 +44,9 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by %s sequences."
 msgstr ""
-"Následující skript bude spuštěn při novém e-mailu.\n"
-"Mailnag předá celkové počet nových e-mailů tomuto skriptu,\n"
-"následovaný %s sekvencemi."
+"Следния скрипт ще бъде изпълнен при пристигането на нов имейл.\n"
+"Mailnag ще предава общия брой имейли на този скрипт,\n"
+"последвано от %s поредици."
 
 #: Mailnag/plugins/messagingmenuplugin.py:104
 msgid "MessagingMenu"
@@ -59,129 +58,129 @@ msgstr ""
 
 #: Mailnag/plugins/messagingmenuplugin.py:124
 msgid "Maximum number of visible mails:"
-msgstr "Maximální počet viditelných e-mailů:"
+msgstr "Максимален брой видими имейли."
 
 #: Mailnag/plugins/spamfilterplugin.py:72
 msgid "Spam Filter"
-msgstr "Spam filtr"
+msgstr "Спам филтър"
 
 #: Mailnag/plugins/spamfilterplugin.py:73
 msgid "Filters out unwanted mails."
-msgstr "Filtruje nevyžádané e-maily."
+msgstr "Филтър за нежелана поща."
 
 #: Mailnag/plugins/spamfilterplugin.py:93
 msgid ""
 "Mailnag will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
-"Mailnag bude ignorovat e-maily obsahující aspoň jedno z \n"
-"následujících slov v poli předmět nebo odesílatel."
+"Mailnag ще игнорира писма съдържащи поне една от \n"
+"следните думи в темата или изпращача."
 
 #: Mailnag/plugins/libnotifyplugin.py:106
 msgid "LibNotify Notifications"
-msgstr "LibNotify notifikace"
+msgstr "LibNotify известия"
 
 #: Mailnag/plugins/libnotifyplugin.py:107
 msgid "Shows a popup when new mails arrive."
-msgstr "Zobrazí popup okno při novém e-mailu."
+msgstr "Показва изкачащ прозорец при пристигане на имейл."
 
 #: Mailnag/plugins/libnotifyplugin.py:123
 msgid "Count of new mails"
-msgstr "Počet nových e-mailů"
+msgstr "Брой на нови писма"
 
 #: Mailnag/plugins/libnotifyplugin.py:124
 msgid "Short summary of new mails"
-msgstr "Krátký přehled nových e-mailů"
+msgstr "Кратка извадка от новите писма"
 
 #: Mailnag/plugins/libnotifyplugin.py:125
 msgid "Detailed summary of new mails"
-msgstr "Detailní přehled nových e-mailů"
+msgstr "Подробна извадка от новите писма"
 
 #: Mailnag/plugins/libnotifyplugin.py:126
 msgid "One notification per new mail"
-msgstr "Jedna notifikace pro nový e-mail"
+msgstr "Едно известие за имейл"
 
 #: Mailnag/plugins/libnotifyplugin.py:134
 msgid "Notification mode:"
-msgstr "Notifikační mód:"
+msgstr "Режим на известяване:"
 
 #: Mailnag/plugins/libnotifyplugin.py:221
 #: Mailnag/plugins/libnotifyplugin.py:257
 #: Mailnag/plugins/libnotifyplugin.py:285
 #, python-brace-format
 msgid "{0} new mails"
-msgstr "{0} nových e-mailů"
+msgstr "{0} нови писма"
 
 #: Mailnag/plugins/libnotifyplugin.py:223
 #, python-brace-format
 msgid "from {0} and others."
-msgstr "z {0} a další."
+msgstr "от {0} и други."
 
 #: Mailnag/plugins/libnotifyplugin.py:225
 #: Mailnag/plugins/libnotifyplugin.py:228
 #, python-brace-format
 msgid "from {0}."
-msgstr "z {0}."
+msgstr "от  {0}."
 
 #: Mailnag/plugins/libnotifyplugin.py:227
 #: Mailnag/plugins/libnotifyplugin.py:259
 #: Mailnag/plugins/libnotifyplugin.py:287
 msgid "New mail"
-msgstr "Nový mail"
+msgstr "Ново писмо"
 
 #: Mailnag/plugins/libnotifyplugin.py:252
 #: Mailnag/plugins/libnotifyplugin.py:254
 #, python-brace-format
 msgid "(and {0} more)"
-msgstr "(a {0} dalších)"
+msgstr "( и  {0} други)"
 
 #: Mailnag/plugins/libnotifyplugin.py:274
 msgid "Mark as read"
-msgstr "Označit jako přečtený"
+msgstr "Отбележи като прочетено"
 
 #: Mailnag/plugins/soundplugin.py:68
 msgid "Sound Notifications"
-msgstr "Zvukové notifikace"
+msgstr "Звукови известия"
 
 #: Mailnag/plugins/soundplugin.py:69
 msgid "Plays a sound when new mails arrive."
-msgstr "Přehraje zvuk při novém e-mailu."
+msgstr "Изпълнява звук при пристигане на имейл."
 
 #: Mailnag/plugins/goaplugin.py:96
 msgid "GNOME Online Accounts"
-msgstr "GNOME Online účty"
+msgstr "GNOME онлайн акаунти"
 
 #: Mailnag/plugins/goaplugin.py:97
 msgid "GNOME Online Accounts Integration."
-msgstr "Integrace GNOME Online účtů."
+msgstr "Интеграция с GNOME онлайн акаунти."
 
 #: Mailnag/plugins/dbusplugin.py:86
 msgid "DBus Service"
-msgstr "DBus Service"
+msgstr "Услуга DBus"
 
 #: Mailnag/plugins/dbusplugin.py:87
 msgid "Exposes Mailnag's functionality via a DBus service."
-msgstr "Vystaví Mailnag funkcionality prostřednictvím DBus služby."
+msgstr "Предоставя Mailnag функционалноста на DBus услугата."
 
 #: Mailnag/daemon/mails.py:111
 msgid "No subject"
-msgstr "Žádný předmět"
+msgstr "Без тема"
 
 #: Mailnag/configuration/plugindialog.py:35
 msgid "Plugin Configuration"
-msgstr "Konfigurace pluginu"
+msgstr "Настройки на приставките"
 
 #: Mailnag/configuration/configwindow.py:88
 #: Mailnag/configuration/configwindow.py:113
 #: Mailnag/configuration/accountdialog.py:120
 msgid "Enabled"
-msgstr "Povoleno"
+msgstr "Включено"
 
 #: Mailnag/configuration/configwindow.py:94
 #: Mailnag/configuration/configwindow.py:120
 #: Mailnag/configuration/accountdialog.py:126
 msgid "Name"
-msgstr "Název"
+msgstr "Име"
 
 #: Mailnag/configuration/configwindow.py:282
 #, python-format
@@ -204,21 +203,19 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
-"  Jirka Dutka https://launchpad.net/~jirka-x\n"
-"  Patrick Ulbrich https://launchpad.net/~pulb\n"
-"  Radek Otáhal https://launchpad.net/~radek-otahal"
+"  spacy01 https://launchpad.net/~spacy00001"
 
 #: Mailnag/configuration/configwindow.py:344
 msgid "Delete this account:"
-msgstr "Odstranit tento účet:"
+msgstr "Изтриване на акаунта:"
 
 #: Mailnag/configuration/accountdialog.py:75
 msgid "Mail Account"
-msgstr "Poštovní účet"
+msgstr "Пощенски акаунт"
 
 #: Mailnag/configuration/accountdialog.py:116
 msgid "optional"
-msgstr "volitelně"
+msgstr "незадължително"
 
 #: Mailnag/configuration/accountdialog.py:249
 msgid "IMAP (Custom)"
@@ -238,43 +235,43 @@ msgstr ""
 
 #: Mailnag/configuration/accountdialog.py:358
 msgid "Connection failed."
-msgstr "Spojení selhalo."
+msgstr "Връзката се разпадна."
 
 #: data/account_widget.ui.h:1
 msgid "Enable Push-IMAP"
-msgstr "Povolit Push-IMAP"
+msgstr "Включи Push-IMAP"
 
 #: data/account_widget.ui.h:2
 msgid "Enable SSL encryption"
-msgstr "Povolit SSL encryption"
+msgstr "Включи SSL кодиране"
 
 #: data/account_widget.ui.h:3
 msgid "Accountname:"
-msgstr "Název účtu:"
+msgstr "Име на акаунт:"
 
 #: data/account_widget.ui.h:4
 msgid "Account type:"
-msgstr "Typ účtu:"
+msgstr "Вид акаунт:"
 
 #: data/account_widget.ui.h:5
 msgid "User:"
-msgstr "Uživatel:"
+msgstr "Потребител:"
 
 #: data/account_widget.ui.h:6
 msgid "Password:"
-msgstr "Heslo:"
+msgstr "Парола:"
 
 #: data/account_widget.ui.h:7
 msgid "Server:"
-msgstr "Server:"
+msgstr "Сървър:"
 
 #: data/account_widget.ui.h:8
 msgid "Port:"
-msgstr "Port:"
+msgstr "Порт:"
 
 #: data/account_widget.ui.h:9
 msgid "Folders (optional)"
-msgstr "Složky (volitelně)"
+msgstr "Папки (не задължително)"
 
 #: data/account_widget.ui.h:10
 msgid "File path:"
@@ -290,27 +287,27 @@ msgstr ""
 
 #: data/config_window.ui.h:2
 msgid "Add Account"
-msgstr "Přidat účet"
+msgstr "Добави акаунт"
 
 #: data/config_window.ui.h:3
 msgid "Remove Account"
-msgstr "Odebrat účet"
+msgstr "Премахни акаунт"
 
 #: data/config_window.ui.h:4
 msgid "Edit Account"
-msgstr "Upravit účet"
+msgstr "Редактирай акаунт"
 
 #: data/config_window.ui.h:5
 msgid "Accounts"
-msgstr "Účty"
+msgstr "Акаунти"
 
 #: data/config_window.ui.h:6
 msgid "Edit Plugin"
-msgstr "Upravit plugin"
+msgstr "Редактирай плъгин"
 
 #: data/config_window.ui.h:7
 msgid "Plugins"
-msgstr "Pluginy"
+msgstr "Плъгини"
 
 #: data/config_window.ui.h:8
 msgid "Donate"
