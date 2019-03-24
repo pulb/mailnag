@@ -46,7 +46,7 @@ Mailnag is available in openSUSE Tumbleweed.
 Run `sudo zypper install mailnag` in a terminal to install it.
 
 ### Generic Tarballs
-Distribution independent tarball releases are available [here](https://launchpad.net/mailnag/trunk/mailnag-master).  
+Distribution independent tarball releases are available [here](https://github.com/pulb/mailnag/releases).  
 Just run `./setup.py install` (as root) to install Mailnag,  
 though make sure the requirements stated below are met.
 
