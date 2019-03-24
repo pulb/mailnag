@@ -63,7 +63,7 @@ class BuildData(build):
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
 			'./data', os.path.join(PREFIX, 'share/applications'))
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
-			'./Mailnag', os.path.join(PREFIX, INSTALL_LIB_DIR))
+			'./Mailnag', INSTALL_LIB_DIR)
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
 			"'.'", "'%s'" % os.path.join(PREFIX, 'bin'))
 		build.run (self)
