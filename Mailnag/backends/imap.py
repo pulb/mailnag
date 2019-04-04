@@ -198,6 +198,9 @@ class IMAPMailboxBackend(MailboxBackend):
 				
 			if self.oauth2string != '':
 				conn.authenticate('XOAUTH2', lambda x: self.oauth2string)
+			elif 'AUTH=CRAM-MD5' in conn.capabilities:
+				# use CRAM-MD5 auth if available
+				conn.login_cram_md5(self.user, self.password)
 			else:
 				conn.login(self.user, self.password)
 		except:
