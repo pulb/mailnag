@@ -3,7 +3,7 @@
 #
 # dist_cfg.py
 #
-# Copyright 2012 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2012 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 # Application version displayed in the 
 # about dialog of the config window.
-APP_VERSION = '1.3.0'
+APP_VERSION = '1.3.1'
 
 # The PACKAGE_NAME constant is used to configure
 # 1) the path where all app data (glade files, images) is loaded from
