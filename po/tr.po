@@ -28,7 +28,7 @@ msgstr "Mail geldiğinde kullanıcı tanımlı scripti çalıştır."
 
 #: Mailnag/plugins/userscriptplugin.py:86
 msgid "account"
-msgstr ""
+msgstr "hesap"
 
 #: Mailnag/plugins/userscriptplugin.py:86
 msgid "sender"
@@ -45,14 +45,17 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by %s sequences."
 msgstr ""
+"Aşağıdaki script yeni mailler geldiğinde çalıştırılacaktır.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by %s sequences."
 
 #: Mailnag/plugins/messagingmenuplugin.py:104
 msgid "MessagingMenu"
-msgstr ""
+msgstr "MesajMenüsü"
 
 #: Mailnag/plugins/messagingmenuplugin.py:105
 msgid "Shows new mails in the MessagingMenu indicator."
-msgstr ""
+msgstr "Yeni mailleri MesajMenü göstergesinde görüntüler."
 
 #: Mailnag/plugins/messagingmenuplugin.py:124
 msgid "Maximum number of visible mails:"
@@ -88,11 +91,11 @@ msgstr "Yeni mail sayısı"
 
 #: Mailnag/plugins/libnotifyplugin.py:124
 msgid "Short summary of new mails"
-msgstr ""
+msgstr "Yeni maillerin kısa özeti"
 
 #: Mailnag/plugins/libnotifyplugin.py:125
 msgid "Detailed summary of new mails"
-msgstr ""
+msgstr "Yeni maillerin detaylı özeti"
 
 #: Mailnag/plugins/libnotifyplugin.py:126
 msgid "One notification per new mail"
@@ -107,24 +110,24 @@ msgstr "Uyarı kipi:"
 #: Mailnag/plugins/libnotifyplugin.py:285
 #, python-brace-format
 msgid "{0} new mails"
-msgstr ""
+msgstr "{0} yeni mail"
 
 #: Mailnag/plugins/libnotifyplugin.py:223
 #, python-brace-format
 msgid "from {0} and others."
-msgstr ""
+msgstr "{0} ve diğerleri"
 
 #: Mailnag/plugins/libnotifyplugin.py:225
 #: Mailnag/plugins/libnotifyplugin.py:228
 #, python-brace-format
 msgid "from {0}."
-msgstr ""
+msgstr "{0}."
 
 #: Mailnag/plugins/libnotifyplugin.py:227
 #: Mailnag/plugins/libnotifyplugin.py:259
 #: Mailnag/plugins/libnotifyplugin.py:287
 msgid "New mail"
-msgstr ""
+msgstr "Yeni mail"
 
 #: Mailnag/plugins/libnotifyplugin.py:252
 #: Mailnag/plugins/libnotifyplugin.py:254
@@ -146,11 +149,11 @@ msgstr "Yeni mail geldiğinde ses çal."
 
 #: Mailnag/plugins/goaplugin.py:96
 msgid "GNOME Online Accounts"
-msgstr ""
+msgstr "GNOME Online Hesaplar"
 
 #: Mailnag/plugins/goaplugin.py:97
 msgid "GNOME Online Accounts Integration."
-msgstr ""
+msgstr "GNOME Online Hesap Entegrasyonu."
 
 #: Mailnag/plugins/dbusplugin.py:86
 msgid "DBus Service"
@@ -183,19 +186,19 @@ msgstr "Adı"
 #: Mailnag/configuration/configwindow.py:282
 #, python-format
 msgid "About %s"
-msgstr ""
+msgstr "%s hakkında"
 
 #: Mailnag/configuration/configwindow.py:285
 msgid "An extensible mail notification daemon."
-msgstr ""
+msgstr "Genişletilebilir mail bilgirim servisidir."
 
 #: Mailnag/configuration/configwindow.py:286
 msgid "Copyright (c) 2011 - 2019 Patrick Ulbrich and contributors."
-msgstr ""
+msgstr "Tüm hakları saklıdır (c) 2011 - 2019 Patrick Ulbrich ve katkıda bulunanlar."
 
 #: Mailnag/configuration/configwindow.py:289
 msgid "Homepage"
-msgstr ""
+msgstr "Anasayda"
 
 #: Mailnag/configuration/configwindow.py:304
 msgid "translator-credits"
@@ -217,23 +220,23 @@ msgstr "opsiyonel"
 
 #: Mailnag/configuration/accountdialog.py:249
 msgid "IMAP (Custom)"
-msgstr ""
+msgstr "IMAP (Özel)"
 
 #: Mailnag/configuration/accountdialog.py:250
 msgid "POP3 (Custom)"
-msgstr ""
+msgstr "POP3 (Özel)"
 
 #: Mailnag/configuration/accountdialog.py:251
 msgid "MBox (Custom)"
-msgstr ""
+msgstr "MBox (Özel)"
 
 #: Mailnag/configuration/accountdialog.py:252
 msgid "Maildir (Custom)"
-msgstr ""
+msgstr "Maildir (Özel)"
 
 #: Mailnag/configuration/accountdialog.py:358
 msgid "Connection failed."
-msgstr ""
+msgstr "Bağlantı kurulamadı."
 
 #: data/account_widget.ui.h:1
 msgid "Enable Push-IMAP"
@@ -269,19 +272,19 @@ msgstr "Port:"
 
 #: data/account_widget.ui.h:9
 msgid "Folders (optional)"
-msgstr ""
+msgstr "Dizinler (opsiyonel)"
 
 #: data/account_widget.ui.h:10
 msgid "File path:"
-msgstr ""
+msgstr "Dosya yolu:"
 
 #: data/account_widget.ui.h:11
 msgid "Directory:"
-msgstr ""
+msgstr "Dizin:"
 
 #: data/config_window.ui.h:1
 msgid "Enable/disable Mailnag daemon"
-msgstr ""
+msgstr "Mailnag servisi Aktif/Pasif"
 
 #: data/config_window.ui.h:2
 msgid "Add Account"
@@ -309,8 +312,8 @@ msgstr "Eklentiler"
 
 #: data/config_window.ui.h:8
 msgid "Donate"
-msgstr ""
+msgstr "Bağış"
 
 #: data/config_window.ui.h:9
 msgid "Info"
-msgstr ""
+msgstr "Bilgi"
