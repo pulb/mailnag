@@ -29,4 +29,4 @@ from Mailnag.common.dist_cfg import PACKAGE_NAME, LOCALE_DIR
 locale.bindtextdomain(PACKAGE_NAME, LOCALE_DIR)
 
 # add gettext shortcut "_" for string translations
-_ = gettext.translation(domain = PACKAGE_NAME, localedir = LOCALE_DIR, fallback = True).ugettext
+_ = gettext.translation(domain = PACKAGE_NAME, localedir = LOCALE_DIR, fallback = True).gettext
