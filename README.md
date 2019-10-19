@@ -51,7 +51,7 @@ Just run `./setup.py install` (as root) to install Mailnag,
 though make sure the requirements stated below are met.
 
 ###### Requirements
-* python2 (python3 won't work!)
+* python3
 * pygobject
 * gir-notify (>= 0.7.6)
 * gir-gtk-3.0
