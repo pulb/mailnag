@@ -44,8 +44,8 @@ class BuildData(build):
 				if (rc == 1): err = "MKDIR_ERR"
 				elif (rc == 2): err = "MSGFMT_ERR"
 				else: err = "UNKNOWN_ERR"
-				raise Warning, "gen_locales returned %d (%s)" % (rc, err)
-		except Exception, e:
+				raise Warning("gen_locales returned %d (%s)" % (rc, err))
+		except Exception as e:
 			error("Building locales failed.")
 			error("Error: %s" % str(e))
 			sys.exit(1)

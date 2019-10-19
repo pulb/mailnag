@@ -69,7 +69,7 @@ class LibNotifyPlugin(Plugin):
 		# initialize Notification
 		if not self._initialized:
 			Notify.init("Mailnag")
-			self._is_gnome = os.environ.has_key('GDMSESSION') and \
+			self._is_gnome = 'GDMSESSION' in os.environ and \
 				(os.environ['GDMSESSION'] == 'gnome')
 			self._initialized = True
 		
@@ -292,7 +292,7 @@ class LibNotifyPlugin(Plugin):
 	
 	def _close_notifications(self):
 		with self._lock:
-			for n in self._notifications.itervalues():
+			for n in self._notifications.values():
 				n.close()
 			self._notifications = {}
 	

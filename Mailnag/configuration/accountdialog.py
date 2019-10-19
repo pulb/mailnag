@@ -28,7 +28,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('GLib', '2.0')
 
 from gi.repository import GObject, GLib, Gtk
-from thread import start_new_thread
+from _thread import start_new_thread
 from Mailnag.common.dist_cfg import PACKAGE_NAME
 from Mailnag.common.i18n import _
 from Mailnag.common.utils import get_data_file, splitstr

@@ -25,13 +25,11 @@
 from abc import ABCMeta, abstractmethod
 
 
-class MailboxBackend(object):
+class MailboxBackend(object, metaclass=ABCMeta):
 	"""Interface for mailbox backends.
 
 	Mailbox backend implements access to the specific type of mailbox.
 	"""
-
-	__metaclass__ = ABCMeta
 
 	def __init__(self, **kw):
 		"""Constructor should accept any kind of backend specific

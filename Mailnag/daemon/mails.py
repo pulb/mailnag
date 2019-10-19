@@ -178,7 +178,7 @@ class MailCollector:
 			content_list.append(text.decode(charset, 'ignore'))
 		
 		# insert blanks between parts
-		decoded_content = u' '.join(content_list)
+		decoded_content = ' '.join(content_list)
 		# get rid of whitespace
 		decoded_content = decoded_content.strip()
 
@@ -227,10 +227,10 @@ class MailSyncer:
 	
 		# compare current mails against received mails
 		# and remove those that are gone (probably opened in mail client).
-		for acc_id in self._mails_by_account.iterkeys():
+		for acc_id in self._mails_by_account.keys():
 			if acc_id in tmp:
 				del_ids = []
-				for mail_id in self._mails_by_account[acc_id].iterkeys():
+				for mail_id in self._mails_by_account[acc_id].keys():
 					if not (mail_id in tmp[acc_id]):
 						del_ids.append(mail_id)
 						needs_rebuild = True
@@ -315,7 +315,7 @@ class Memorizer(dict):
 		
 		dat_file = os.path.join(cfg_folder, 'mailnag.dat')
 		with open(dat_file, 'w') as f:
-			for id, seen_flag in self.items():
+			for id, seen_flag in list(self.items()):
 				line = id + ',' + seen_flag + '\n'
 				f.write(line)
 
@@ -329,7 +329,7 @@ class Memorizer(dict):
 				self[m.id] = '0'
 				self._changed = True
 		
-		for id in self.keys():
+		for id in list(self.keys()):
 			found = False
 			for m in mail_list:			
 				if id == m.id:

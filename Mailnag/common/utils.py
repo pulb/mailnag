@@ -126,6 +126,6 @@ def shutdown_existing_instance(wait_for_completion = True):
 				while bus.name_has_owner(DBUS_BUS_NAME):
 					time.sleep(2)
 			
-			print 'OK'
+			print('OK')
 		except:
-			print 'FAILED'
+			print('FAILED')

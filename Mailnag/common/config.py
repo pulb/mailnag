@@ -23,7 +23,7 @@
 
 import os
 import xdg.BaseDirectory as bd
-from ConfigParser import RawConfigParser
+from configparser import RawConfigParser
 
 mailnag_defaults = {
 	'core':

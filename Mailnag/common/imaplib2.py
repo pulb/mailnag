@@ -44,7 +44,7 @@ __author__ = "Piers Lauder <piers@janeelix.com>"
 __URL__ = "http://imaplib2.sourceforge.net"
 __license__ = "Python License"
 
-import binascii, errno, os, Queue, random, re, select, socket, sys, time, threading, zlib
+import binascii, errno, os, queue, random, re, select, socket, sys, time, threading, zlib
 
 select_module = select
 
@@ -348,8 +348,8 @@ class IMAP4(object):
         self.commands_lock = threading.Lock()
         self.idle_lock = threading.Lock()
 
-        self.ouq = Queue.Queue(10)
-        self.inq = Queue.Queue()
+        self.ouq = queue.Queue(10)
+        self.inq = queue.Queue()
 
         self.wrth = threading.Thread(target=self._writer)
         self.wrth.setDaemon(True)
@@ -373,7 +373,7 @@ class IMAP4(object):
             elif self._get_untagged_response('OK'):
                 if __debug__: self._log(1, 'state => NONAUTH')
             else:
-                raise self.error('unrecognised server welcome message: %s' % `self.welcome`)
+                raise self.error('unrecognised server welcome message: %s' % repr(self.welcome))
 
             typ, dat = self.capability()
             if dat == [None]:
@@ -426,19 +426,19 @@ class IMAP4(object):
             af, socktype, proto, canonname, sa = res
             try:
                 s = socket.socket(af, socktype, proto)
-            except socket.error, msg:
+            except socket.error as msg:
                 continue
             try:
                 for i in (0, 1):
                     try:
                         s.connect(sa)
                         break
-                    except socket.error, msg:
+                    except socket.error as msg:
                         if len(msg.args) < 2 or msg.args[0] != errno.EINTR:
                             raise
                 else:
                     raise socket.error(msg)
-            except socket.error, msg:
+            except socket.error as msg:
                 s.close()
                 continue
             break
@@ -1211,7 +1211,7 @@ class IMAP4(object):
         # Must quote command args if "atom-specials" present,
         # and not already quoted. NB: single quotes are removed.
 
-        if not isinstance(arg, basestring):
+        if not isinstance(arg, str):
             return arg
         if len(arg) >= 2 and (arg[0],arg[-1]) in (('(',')'),('"','"')):
             return arg
@@ -1291,7 +1291,7 @@ class IMAP4(object):
         literal = self.literal
         if literal is not None:
             self.literal = None
-            if isinstance(literal, basestring):
+            if isinstance(literal, str):
                 literator = None
                 data = '%s {%s}' % (data, len(literal))
             else:
@@ -1357,9 +1357,10 @@ class IMAP4(object):
         return typ, dat
 
 
-    def _command_completer(self, (response, cb_arg, error)):
+    def _command_completer(self, xxx_todo_changeme):
 
         # Called for callback commands
+        (response, cb_arg, error) = xxx_todo_changeme
         rqb, kw = cb_arg
         rqb.callback = kw['callback']
         rqb.callback_arg = kw.get('cb_arg')
@@ -1572,7 +1573,7 @@ class IMAP4(object):
             tag = rqb.tag
         self.tagged_commands[tag] = rqb
         self.commands_lock.release()
-        if __debug__: self._log(4, '_request_push(%s, %s, %s) = %s' % (tag, name, `kw`, rqb.tag))
+        if __debug__: self._log(4, '_request_push(%s, %s, %s) = %s' % (tag, name, repr(kw), rqb.tag))
         return rqb
 
 
@@ -1643,7 +1644,7 @@ class IMAP4(object):
                 else:
                     timeout = resp_timeout
                 line = self.inq.get(True, timeout)
-            except Queue.Empty:
+            except queue.Empty:
                 if self.idle_rqb is None:
                     if resp_timeout is not None and self.tagged_commands:
                         if __debug__: self._log(1, 'response timeout')
@@ -1659,7 +1660,7 @@ class IMAP4(object):
                 if __debug__: self._log(1, 'inq None - terminating')
                 break
 
-            if not isinstance(line, basestring):
+            if not isinstance(line, str):
                 typ, val = line
                 break
 
@@ -1671,17 +1672,17 @@ class IMAP4(object):
 
         self.Terminate = True
 
-        if __debug__: self._log(1, 'terminating: %s' % `val`)
+        if __debug__: self._log(1, 'terminating: %s' % repr(val))
 
         while not self.ouq.empty():
             try:
                 self.ouq.get_nowait().abort(typ, val)
-            except Queue.Empty:
+            except queue.Empty:
                 break
         self.ouq.put(None)
 
         self.commands_lock.acquire()
-        for name in self.tagged_commands.keys():
+        for name in list(self.tagged_commands.keys()):
             rqb = self.tagged_commands.pop(name)
             rqb.abort(typ, val)
         self.state_change_free.set()
@@ -1705,7 +1706,7 @@ class IMAP4(object):
                 select.POLLHUP:     'Hang up',
                 select.POLLNVAL:    'Invalid request: descriptor not open',
             }
-            return ' '.join([PollErrors[s] for s in PollErrors.keys() if (s & state)])
+            return ' '.join([PollErrors[s] for s in list(PollErrors.keys()) if (s & state)])
 
         line_part = ''
 
@@ -1724,7 +1725,7 @@ class IMAP4(object):
                 timeout = read_poll_timeout
             try:
                 r = poll.poll(timeout)
-                if __debug__: self._log(5, 'poll => %s' % `r`)
+                if __debug__: self._log(5, 'poll => %s' % repr(r))
                 if not r:
                     continue                                    # Timeout
 
@@ -1893,7 +1894,7 @@ class IMAP4(object):
                 return
 
             t = '\n\t\t'
-            l = map(lambda x:'%s: "%s"' % (x[0], x[1][0] and '" "'.join(x[1]) or ''), l)
+            l = ['%s: "%s"' % (x[0], x[1][0] and '" "'.join(x[1]) or '') for x in l]
             self.debug_lock.acquire()
             self._mesg('untagged responses dump:%s%s' % (t, t.join(l)))
             self.debug_lock.release()
@@ -2181,7 +2182,7 @@ class _IdleCont(object):
 MonthNames = [None, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-Mon2num = dict(zip((x.encode() for x in MonthNames[1:]), range(1, 13)))
+Mon2num = dict(list(zip((x.encode() for x in MonthNames[1:]), list(range(1, 13)))))
 
 InternalDate = re.compile(r'.*INTERNALDATE "'
     r'(?P<day>[ 0123][0-9])-(?P<mon>[A-Z][a-z][a-z])-(?P<year>[0-9][0-9][0-9][0-9])'
@@ -2284,7 +2285,7 @@ if __name__ == '__main__':
 
     try:
         optlist, args = getopt.getopt(sys.argv[1:], 'd:l:s:p:')
-    except getopt.error, val:
+    except getopt.error as val:
         optlist, args = (), ()
 
     debug, debug_buf_lvl, port, stream_command, keyfile, certfile = (None,)*6
@@ -2343,7 +2344,8 @@ if __name__ == '__main__':
 
     AsyncError = None
 
-    def responder((response, cb_arg, error)):
+    def responder(xxx_todo_changeme1):
+        (response, cb_arg, error) = xxx_todo_changeme1
         global AsyncError
         cmd, args = cb_arg
         if error is not None:
@@ -2434,15 +2436,15 @@ if __name__ == '__main__':
             M._mesg('unused untagged responses in order, most recent last:')
             for typ,dat in M.pop_untagged_responses(): M._mesg('\t%s %s' % (typ, dat))
 
-        print 'All tests OK.'
+        print('All tests OK.')
 
     except:
-        print 'Tests failed.'
+        print('Tests failed.')
 
         if not debug:
-            print '''
+            print('''
 If you would like to see debugging output,
 try: %s -d5
-''' % sys.argv[0]
+''' % sys.argv[0])
 
         raise

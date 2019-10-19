@@ -73,10 +73,10 @@ class App(Gtk.Application):
 			try:
 				# the launched daemon shuts down 
 				# an already running daemon
-				print "Launching Mailnag daemon."
+				print("Launching Mailnag daemon.")
 				subprocess.Popen(os.path.join(BIN_DIR, "mailnag"))
 			except:
-				print "ERROR: Failed to launch Mailnag daemon."
+				print("ERROR: Failed to launch Mailnag daemon.")
 		else:
 			# shutdown running Mailnag daemon
 			shutdown_existing_instance(wait_for_completion = False)

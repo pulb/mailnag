@@ -146,7 +146,7 @@ class ConfigWindow:
 		
 		# load plugins
 		enabled_lst = self._cfg.get('core', 'enabled_plugins').split(',')
-		enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
+		enabled_lst = [s for s in [s.strip() for s in enabled_lst] if s != '']
 		
 		plugins = Plugin.load_plugins(self._cfg)
 		plugins.sort(key = lambda p : (not p.get_manifest()[4], p.get_manifest()[0]))
@@ -180,7 +180,7 @@ class ConfigWindow:
 			if len(config) > 0:
 				if not self._cfg.has_section(modname):
 					self._cfg.add_section(modname)
-				for k, v in config.iteritems():
+				for k, v in config.items():
 					self._cfg.set(modname, k, v)
 		
 		self._cfg.set('core', 'enabled_plugins', enabled_plugins)
@@ -349,7 +349,7 @@ class ConfigWindow:
 				# select prev/next account
 				p = model.get_path(iter)
 				if not p.prev():
-					p.next()
+					next(p)
 				self._select_account_path(p)
 				
 				# remove from treeview

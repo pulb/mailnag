@@ -269,7 +269,7 @@ class MailnagDaemon:
 		controller = MailnagController_Impl(self, memorizer, hookreg, self._shutdown_request_handler)
 	
 		enabled_lst = cfg.get('core', 'enabled_plugins').split(',')
-		enabled_lst = filter(lambda s: s != '', map(lambda s: s.strip(), enabled_lst))
+		enabled_lst = [s for s in [s.strip() for s in enabled_lst] if s != '']
 		self._plugins = Plugin.load_plugins(cfg, controller, enabled_lst)
 	
 		for p in self._plugins:

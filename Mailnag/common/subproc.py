@@ -87,7 +87,7 @@ def terminate_subprocesses(timeout = 3.0):
 			if len(_procs) == 0:
 				return
 		
-			for t, p in _procs.iteritems():
+			for t, p in _procs.items():
 				threads.append(t)
 			
 				# Ask all runnig processes to terminate.
@@ -127,7 +127,7 @@ class _Watchdog(threading.Thread):
 			logging.warning('Process termination took too long - watchdog starts killing...')
 			self.triggered = True
 			with _proc_lock:
-				for t, p in _procs.iteritems():
+				for t, p in _procs.items():
 					try:
 						# Kill process p and quit the thread 
 						# waiting for p to terminate (p.wait()).

@@ -197,8 +197,8 @@ class Plugin:
 		
 		# sync with default config
 		default_config = self.get_default_config()
-		for k, v in default_config.iteritems():
-			if not config.has_key(k):
+		for k, v in default_config.items():
+			if k not in config:
 				config[k] = v
 		
 		self._modname = modname
