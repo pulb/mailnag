@@ -46,7 +46,7 @@ def cfg_exists():
 
 def read_cfg():
 	cfg = RawConfigParser()
-	cfg._sections = mailnag_defaults # HACK : use cfg.read_dict(mailnag_defaults) in python 3
+	cfg.read_dict(mailnag_defaults)
 
 	if os.path.exists(cfg_file):
 		cfg.read(cfg_file)
