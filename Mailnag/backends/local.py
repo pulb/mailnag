@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-# local.py
-#
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify

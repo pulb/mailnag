@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-# pop3.py
-#
 # Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>

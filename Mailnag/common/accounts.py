@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#
-# accounts.py
-#
 # Copyright 2011 - 2017 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
 # Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>

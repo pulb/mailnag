@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#
-# mailnagdaemon.py
-#
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2014, 2015 Patrick Ulbrich <zulu99@gmx.net>
 #
