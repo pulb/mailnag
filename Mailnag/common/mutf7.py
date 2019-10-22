@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 '''
 This awesome piece of code is intented to encode and decode modified UTF-7 
 (the one that is used for IMAP folder names)
