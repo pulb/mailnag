@@ -95,7 +95,7 @@ class UserscriptPlugin(Plugin):
 		box.pack_start(label, False, False, 0)
 		
 		filechooser = Gtk.FileChooserButton()
-		box.pack_start(filechooser, True, True, 0)
+		box.pack_start(filechooser, False, False, 0)
 		
 		return box
 	
