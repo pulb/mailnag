@@ -344,7 +344,7 @@ class ConfigWindow:
 				# select prev/next account
 				p = model.get_path(iter)
 				if not p.prev():
-					next(p)
+					p.next()
 				self._select_account_path(p)
 				
 				# remove from treeview
