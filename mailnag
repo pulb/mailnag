@@ -87,7 +87,7 @@ def main():
 	daemon = None
 	
 	set_procname(PROGNAME)
-	GObject.threads_init()
+
 	DBusGMainLoop(set_as_default = True)
 	GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGTERM, 
 		sigterm_handler, mainloop)
