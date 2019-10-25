@@ -115,10 +115,6 @@ class MaildirBackend(MailboxBackend):
 		root_maildir = mailbox.Maildir(self._path, factory=None, create=False)
 		try:
 			for folder in folders:
-				if isinstance(folder, str):
-					# Python2 maildir folders must be str not unicode.
-					# TODO: Python3 probably does not need this.
-					folder = folder.encode('utf-8')
 				maildir = self._get_folder(root_maildir, folder)
 				for msg in maildir:
 					if 'S' not in msg.get_flags():
