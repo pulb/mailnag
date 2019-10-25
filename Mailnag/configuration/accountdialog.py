@@ -233,7 +233,7 @@ class AccountDialog:
 		folders = []
 		for row in self._liststore_folders:
 			if row[0]:
-				folders.append(row[1].decode('utf-8'))
+				folders.append(row[1])
 		return folders
 	
 	
