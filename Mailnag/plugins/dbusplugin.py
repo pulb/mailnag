@@ -24,7 +24,7 @@ from Mailnag.common.plugins import Plugin, HookTypes
 from Mailnag.common.exceptions import InvalidOperationException
 from Mailnag.common.i18n import _
 
-MAX_INT32 = ((0xFFFFFFFF / 2) - 1)
+MAX_INT32 = ((0xFFFFFFFF // 2) - 1)
 
 plugin_defaults = {}
 
