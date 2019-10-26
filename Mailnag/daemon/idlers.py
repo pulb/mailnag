@@ -57,14 +57,22 @@ class Idler(object):
 		
 	# idle thread
 	def _idle(self):
-		# mailbox has been opened in mailnagdaemon.py already (immediate check)
-		if not self._account.is_open():
-			self._account.open()
+		# mailbox may have been opened in mailnagdaemon.py already (immediate check)
+		while not self._account.is_open():
+			# if the event is set here, disposed() must have been called so stop the idle thread.
+			if self._event.isSet():
+				return
+				
+			try:
+				self._account.open()
+			except Exception as ex:
+				logging.error("Failed to open mailbox for account '%s' (%s)." % (self._account.name, ex))
+				logging.info("Trying to reconnect Idler thread for account '%s' in %s minutes" % 
+					(self._account.name, str(self.RECONNECT_RETRY_INTERVAL)))
+				self._wait(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer the server
 
 		while True:
-			# if the event is set here, 
-			# disposed() must have been called
-			# so stop the idle thread.
+			# if the event is set here, disposed() must have been called so stop the idle thread.
 			if self._event.isSet():
 				break
 			
