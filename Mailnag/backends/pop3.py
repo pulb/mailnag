@@ -1,7 +1,8 @@
-# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
-# Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>#
+# Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
+# Copyright 2019 razer <razerraz@free.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -106,12 +107,12 @@ class POP3MailboxBackend(MailboxBackend):
 				logging.debug("Couldn't get POP message.")
 				continue
 			
-			# convert list to string
-			message_string = '\n'.join(message)
+			# convert list to byte sequence
+			message_bytes = b'\n'.join(message)
 			
 			try:
 				# put message into email object and make a dictionary
-				msg = dict(email.message_from_string(message_string))
+				msg = dict(email.message_from_bytes(message_bytes))
 			except:
 				logging.debug("Couldn't get msg from POP message.")
 				continue

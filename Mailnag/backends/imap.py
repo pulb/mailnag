@@ -1,7 +1,8 @@
-# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
-# Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>#
+# Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
+# Copyright 2019 razer <razerraz@free.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -96,7 +97,7 @@ class IMAPMailboxBackend(MailboxBackend):
 				for response_part in msg_data:
 					if isinstance(response_part, tuple):
 						try:
-							msg = email.message_from_string(response_part[1])
+							msg = email.message_from_bytes(response_part[1])
 						except:
 							logging.debug("Couldn't get IMAP message.")
 							continue
@@ -111,12 +112,12 @@ class IMAPMailboxBackend(MailboxBackend):
 		conn = self._connect()
 
 		try:
-			status, data = conn.list('', '*')
+			status, data = conn.list()
 		finally:
 			self._disconnect(conn)
 		
 		for d in data:
-			match = re.match('.+\s+("."|"?NIL"?)\s+"?([^"]+)"?$', d)
+			match = re.match(r'.+\s+("."|"?NIL"?)\s+"?([^"]+)"?$', d.decode('utf-8'))
 
 			if match == None:
 				logging.warning("Folder format not supported.")
