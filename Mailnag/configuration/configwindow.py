@@ -293,6 +293,7 @@ class ConfigWindow:
 			"Matthias Mailänder",
 			"Oleg",
 			"Ralf Hersel",
+			"razer",
 			"Taylor Braun-Jones",
 			"Thomas Haider",
 			"Timo Kankare",
