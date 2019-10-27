@@ -95,28 +95,44 @@ class MailCollector:
 
 
 	def _get_header(self, msg_dict):
-		try:
-			content = self._get_header_field(msg_dict, 'From')
-			sender = self._format_header_field('sender', content)
-		except:
-			sender = ('', '')
-
-		try:
-			content = self._get_header_field(msg_dict, 'Subject')
-		except:
-			content = _('No subject')
-		try:
-			subject = self._format_header_field('subject', content)
-		except:
-			subject = ''
+		# Get sender
+		sender = ('', '')
 		
 		try:
+			content = self._get_header_field(msg_dict, 'From')
+			# get the two parts of the sender
+			addr = email.utils.parseaddr(content)
+			
+			if len(addr) != 2:
+				logging.warning('Malformed sender field in message.')
+			else:
+				sender_real = self._convert(addr[0])
+				sender_addr = self._convert(addr[1])
+			
+				sender = (sender_real, sender_addr)
+		except:
+			pass
+
+		# Get subject
+		try:
+			content = self._get_header_field(msg_dict, 'Subject')
+			subject = self._convert(content)
+		except:
+			content = _('No subject')
+		
+		# Get date
+		try:
 			content = self._get_header_field(msg_dict, 'Date')
-			datetime = self._format_header_field('date', content)
+			
+			# make a 10-tupel (UTC)
+			parsed_date = email.utils.parsedate_tz(content)
+			# convert 10-tupel to seconds incl. timezone shift
+			datetime = email.utils.mktime_tz(parsed_date)
 		except:
 			logging.warning('Email date set to zero.')
 			datetime = 0
-			
+		
+		# Get message id
 		try:
 			msgid = self._get_header_field(msg_dict, 'Message-ID')
 		except:
@@ -135,26 +151,6 @@ class MailCollector:
 			raise KeyError
 		
 		return value
-
-	
-	# format sender, date, subject etc.
-	def _format_header_field(self, field_name, content):
-		if field_name == 'sender':
-			# get the two parts of the sender
-			sender_real, sender_addr = email.utils.parseaddr(content)
-			sender_real = self._convert(sender_real)
-			sender_addr = self._convert(sender_addr)
-			# create decoded tupel
-			return (sender_real, sender_addr)
-
-		if field_name == 'date':
-			# make a 10-tupel (UTC)
-			parsed_date = email.utils.parsedate_tz(content)
-			# convert 10-tupel to seconds incl. timezone shift
-			return email.utils.mktime_tz(parsed_date)
-
-		if field_name == 'subject':
-			return self._convert(content)
 
 
 	# return utf-8 decoded string from multi-part/multi-charset header text
