@@ -1,7 +1,8 @@
-# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
+# Copyright 2019 razer <razerraz@free.fr>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +26,7 @@ import os
 import logging
 import hashlib
 
-from email.header import decode_header
+from email.header import decode_header, make_header
 from Mailnag.common.i18n import _
 from Mailnag.common.config import cfg_folder
 
@@ -156,28 +157,12 @@ class MailCollector:
 			return self._convert(content)
 
 
-	# decode and concatenate multi-coded header parts
-	def _convert(self, raw_content):
-		# replace newline by space
-		content = raw_content.replace('\n',' ')
-		# workaround a bug in email.header.decode_header()
-		content = content.replace('?==?','?= =?')
-		# list of (text_part, charset) tupels
-		tupels = decode_header(content)
-		content_list = []
-		# iterate trough parts
-		for text, charset in tupels:
-			# set default charset for decoding
-			if charset == None: charset = 'latin-1'
-			# replace non-decodable chars with 'nothing'
-			content_list.append(text.decode(charset, 'ignore'))
-		
-		# insert blanks between parts
-		decoded_content = ' '.join(content_list)
-		# get rid of whitespace
-		decoded_content = decoded_content.strip()
-
-		return decoded_content
+	# return utf-8 decoded string from multi-part/multi-charset header text
+	def _convert(self, text):
+		decoded = decode_header(text)
+		if not decoded[0][1] or 'unknown' in decoded[0][1]:
+			decoded = [(decoded[0][0], 'latin-1')]
+		return str(make_header(decoded))
 
 
 	def _get_id(self, msgid, acc, folder, sender, subject, datetime):
