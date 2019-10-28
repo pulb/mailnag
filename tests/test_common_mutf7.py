@@ -36,8 +36,8 @@ def test_decode_mutf7():
 	result = decode_mutf7('Die Katzen &- die M&AOQ-use')
 	assert expected == result
 
-def test_encode_mutf7_with_str_fails():
+def test_encode_mutf7_with_bytes_fails():
 	"""Test to document current behaviour: encode_mutf7 requires unicode."""
 	with pytest.raises(Exception):
-		encode_mutf7('Die Katzen & die Mäuse')
+		encode_mutf7('Die Katzen & die Mäuse'.encode('utf-8'))
 
