@@ -22,7 +22,7 @@
 
 """Test cases for account manager."""
 
-from ConfigParser import RawConfigParser
+from configparser import RawConfigParser
 from io import StringIO
 import pytest
 
@@ -48,7 +48,7 @@ class FakeCredentialStore(CredentialStore):
 			del self.secrets[key]
 
 
-sample_config_file = u"""
+sample_config_file = """
 [account1]
 enabled = 1
 name = IMAP mailbox config

@@ -210,7 +210,7 @@ class TestMaildir:
 		self._add_message(f, 'blaa-blaa-2', 'S', 'cur')
 		sample_maildir.close()
 
-		be = create_backend('maildir', name='sample', path=sample_path, folders=[u'', u'folder1'])
+		be = create_backend('maildir', name='sample', path=sample_path, folders=['', 'folder1'])
 		be.open()
 		try:
 			msgs = list(be.list_messages())
