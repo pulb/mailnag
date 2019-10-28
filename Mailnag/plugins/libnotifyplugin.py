@@ -1,4 +1,4 @@
-# Copyright 2013 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@ from Mailnag.common.plugins import Plugin, HookTypes
 from Mailnag.common.i18n import _
 from Mailnag.common.subproc import start_subprocess
 from Mailnag.common.exceptions import InvalidOperationException
-from Mailnag.daemon.mails import sort_mails
 
 NOTIFICATION_MODE_COUNT			= '0'
 NOTIFICATION_MODE_SHORT_SUMMARY	= '3'
@@ -260,7 +259,7 @@ class LibNotifyPlugin(Plugin):
 	def _notify_single(self, mails):
 		# In single notification mode new mails are
 		# added to the *bottom* of the notification list.
-		mails = sort_mails(mails, sort_desc = False)
+		mails = mails.sort(key = lambda(m): m.datetime, reverse = False)
 		
 		for mail in mails:
 			n = self._get_notification(self._get_sender(mail), mail.subject, "mail-unread")

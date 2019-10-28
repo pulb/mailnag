@@ -89,7 +89,7 @@ class MailCollector:
 		
 		# sort mails
 		if sort:
-			mail_list = sort_mails(mail_list, sort_desc = True)
+			mail_list = mail_list.sort(key = lambda(m): m.datetime, reverse = True)
 		
 		return mail_list
 
@@ -229,29 +229,9 @@ class MailSyncer:
 			for acc_id in self._mails_by_account:
 				for mail_id in self._mails_by_account[acc_id]:
 					self._mail_list.append(self._mails_by_account[acc_id][mail_id])
-			self._mail_list = sort_mails(self._mail_list, sort_desc = True)
+			self._mail_list = self._mail_list.sort(key = lambda(m): m.datetime, reverse = True)
 		
 		return self._mail_list
-
-
-#
-# sort_mails function
-#
-def sort_mails(mail_list, sort_desc = False):
-	sort_list = []
-	for mail in mail_list:
-		sort_list.append([mail.datetime, mail])
-	
-	# sort asc
-	sort_list.sort()
-	if sort_desc:
-		sort_list.reverse()
-
-	# recreate mail_list
-	mail_list = []
-	for mail in sort_list:
-		mail_list.append(mail[1])
-	return mail_list
 
 
 #
