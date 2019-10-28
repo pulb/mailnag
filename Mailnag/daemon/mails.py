@@ -118,7 +118,7 @@ class MailCollector:
 			content = self._get_header_field(msg_dict, 'Subject')
 			subject = self._convert(content)
 		except:
-			content = _('No subject')
+			subject = _('No subject')
 		
 		# Get date
 		try:
