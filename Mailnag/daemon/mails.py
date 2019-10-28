@@ -89,7 +89,7 @@ class MailCollector:
 		
 		# sort mails
 		if sort:
-			mail_list = mail_list.sort(key = lambda m: m.datetime, reverse = True)
+			mail_list.sort(key = lambda m: m.datetime, reverse = True)
 		
 		return mail_list
 
@@ -229,7 +229,7 @@ class MailSyncer:
 			for acc_id in self._mails_by_account:
 				for mail_id in self._mails_by_account[acc_id]:
 					self._mail_list.append(self._mails_by_account[acc_id][mail_id])
-			self._mail_list = self._mail_list.sort(key = lambda m: m.datetime, reverse = True)
+			self._mail_list.sort(key = lambda m: m.datetime, reverse = True)
 		
 		return self._mail_list
 

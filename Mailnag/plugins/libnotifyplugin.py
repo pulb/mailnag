@@ -259,7 +259,7 @@ class LibNotifyPlugin(Plugin):
 	def _notify_single(self, mails):
 		# In single notification mode new mails are
 		# added to the *bottom* of the notification list.
-		mails = mails.sort(key = lambda m: m.datetime, reverse = False)
+		mails.sort(key = lambda m: m.datetime, reverse = False)
 		
 		for mail in mails:
 			n = self._get_notification(self._get_sender(mail), mail.subject, "mail-unread")
