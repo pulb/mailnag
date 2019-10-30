@@ -22,7 +22,7 @@
 
 # Application version displayed in the 
 # about dialog of the config window.
-APP_VERSION = '1.3.1'
+APP_VERSION = '2.0.0'
 
 # The PACKAGE_NAME constant is used to configure
 # 1) the path where all app data (glade files, images) is loaded from
