@@ -63,9 +63,10 @@ class POP3MailboxBackend(MailboxBackend):
 				else:
 					conn = poplib.POP3(self.server, int(self.port))
 				
-				# TODO : Use STARTTLS when Mailnag has been migrated to python 3
-				# (analogous to open() in imap backend).
-				logging.warning("Using unencrypted connection for account '%s'" % self.name)
+				try:
+					conn.stls()
+				except:
+					logging.warning("Using unencrypted connection for account '%s'" % self.name)
 				
 			conn.getwelcome()
 			conn.user(self.user)
