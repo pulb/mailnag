@@ -1,4 +1,4 @@
-# Copyright 2013, 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ import os
 import imp
 import inspect
 import logging
+from enum import Enum
 
 from Mailnag.common.config import cfg_folder
 from Mailnag.common.dist_cfg import LIB_DIR
@@ -31,9 +32,7 @@ PLUGIN_PATHS = [ PLUGIN_LIB_PATH, PLUGIN_USER_PATH ]
 #
 # All known hook types.
 #
-# TODO : make this class an enum 
-# when Mailnag is ported to python3
-class HookTypes:
+class HookTypes(Enum):
 	# func signature: 
 	# IN:	List of loaded accounts
 	# OUT:	None

@@ -1,4 +1,4 @@
-# Copyright 2015, 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2015 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,11 +17,10 @@
 #
 
 import hashlib
+from enum import Enum
 
 
-# TODO: Make this class an enum 
-# when Mailnag is ported to python 3
-class CredentialStoreType:
+class CredentialStoreType(Enum):
 	NONE	= 'none'
 	GNOME	= 'gnome'
 	# KDE	= 'kde'

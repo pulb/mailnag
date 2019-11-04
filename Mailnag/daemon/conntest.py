@@ -1,4 +1,4 @@
-# Copyright 2014, 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2014 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 import os
 import dbus
+from enum import Enum
 
 PING_TEST_HOST				= 'www.google.com'
 
@@ -31,9 +32,8 @@ DBUS_PROPS_NAME				= 'org.freedesktop.DBus.Properties'
 # TODO: Add GLib connection mode if GLib > 2.42 is available 
 # (wrap GNetworkmonitor.get_connectivity() into a try/except block)
 
-# TODO: Make this class an enum
-# when Mailnag is ported to python3
-class TestModes:
+
+class TestModes(Enum):
 	AUTO			= 0
 	NETWORKMANAGER	= 1
 	PING			= 2
