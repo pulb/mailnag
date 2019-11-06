@@ -1,0 +1,12 @@
+
+[Desktop Entry]
+Name=Mailnag Daemon
+Comment=An extensible mail notification daemon
+Comment[de]=Ein erweiterbarer Mail-Benachrichtigungs-Dämon
+Keywords=mail;notify;notification;
+Exec=/usr/bin/mailnagd --quiet
+Icon=mailnag
+Type=Application
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+X-GNOME-UsesNotifications=true

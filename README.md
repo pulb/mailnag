@@ -66,8 +66,8 @@ though make sure the requirements stated below are met.
 
 
 ## Configuration
-Run `mailnag-config` to setup Mailnag.  
-Closing the configuration window will start Mailnag automatically.
+Run the `mailnag` command to setup Mailnag.  
+Closing the configuration window will start the mailnagd daemon automatically.
 
 ### Default Mail Client
 Clicking a mail notification popup will open the default mail client specified in `GNOME Control Center -> Details -> Default Applications`.  
@@ -88,5 +88,5 @@ Furthermore, I highly recommend GNOME users to install the [GOA plugin](https://
 which makes Mailnag aware of email accounts specified in GNOME Online Accounts.  
 
 ### Troubleshooting
-If Mailnag doesn't work properly for you, either examine the system log for errors (`journalctl -b _COMM=mailnag`)  
-or run `mailnag` in a terminal and observe the output.
+If Mailnag doesn't work properly for you, either examine the system log for errors (`journalctl -b _COMM=mailnagd`)  
+or run `mailnagd` in a terminal and observe the output.

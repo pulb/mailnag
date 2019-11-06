@@ -246,28 +246,28 @@ class ConfigWindow:
 	
 	def _create_autostart(self):
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
-		src = os.path.join(DESKTOP_FILE_DIR, "mailnag.desktop")
-		dst = os.path.join(autostart_folder, "mailnag.desktop")
+		src = os.path.join(DESKTOP_FILE_DIR, "mailnagd.desktop")
+		dst = os.path.join(autostart_folder, "mailnagd.desktop")
 		
 		if not os.path.exists(autostart_folder):
 			os.makedirs(autostart_folder)
 
 		shutil.copyfile(src, dst)
 		
-		# If mailag-config was started from a local directory, 
+		# If the mailag setup tool was started from a local directory, 
 		# patch the exec path of the autostart .desktop file accordingly.
 		if not os.path.isabs(DESKTOP_FILE_DIR):
-			exec_file = os.path.join(os.path.abspath(BIN_DIR), "mailnag")
+			exec_file = os.path.join(os.path.abspath(BIN_DIR), "mailnagd")
 			with open(dst, 'r') as f:
 				strn = f.read()
-				strn = strn.replace('/usr/bin/mailnag', exec_file)
+				strn = strn.replace('/usr/bin/mailnagd', exec_file)
 			with open(dst, 'w') as f:
 				f.write(strn)
 
 
 	def _delete_autostart(self):
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
-		autostart_file = os.path.join(autostart_folder, "mailnag.desktop")
+		autostart_file = os.path.join(autostart_folder, "mailnagd.desktop")
 		if os.path.exists(autostart_file):
 			os.remove(autostart_file)
 

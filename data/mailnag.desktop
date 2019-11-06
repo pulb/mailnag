@@ -1,12 +1,14 @@
 
 [Desktop Entry]
-Name=Mailnag
+Name=Mailnag Configuration
+Name[de]=Mailnag-Konfiguration
 Comment=An extensible mail notification daemon
 Comment[de]=Ein erweiterbarer Mail-Benachrichtigungs-Dämon
-Keywords=mail;notify;notification;
-Exec=/usr/bin/mailnag --quiet
+Keywords=mail;notify;notification;config;settings;preferences;
+Exec=/usr/bin/mailnag
 Icon=mailnag
+Terminal=false
 Type=Application
-NoDisplay=true
-X-GNOME-Autostart-enabled=true
-X-GNOME-UsesNotifications=true
+Categories=Network;Email;
+StartupNotify=false
+X-AppStream-Ignore=true
