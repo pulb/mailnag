@@ -30,7 +30,6 @@ from Mailnag.common.i18n import _
 from Mailnag.common.utils import get_data_file
 from Mailnag.common.config import read_cfg, write_cfg
 from Mailnag.common.accounts import Account, AccountManager
-from Mailnag.common.credentialstore import CredentialStore
 from Mailnag.common.plugins import Plugin
 from Mailnag.configuration.accountdialog import AccountDialog
 from Mailnag.configuration.plugindialog import PluginDialog
@@ -67,7 +66,7 @@ class ConfigWindow:
 		#
 		# accounts page
 		#
-		self._accountman = AccountManager(CredentialStore.from_string(self._cfg.get('core', 'credentialstore')))
+		self._accountman = AccountManager()
 
 		self._treeview_accounts = builder.get_object("treeview_accounts")
 		self._liststore_accounts = builder.get_object("liststore_accounts")

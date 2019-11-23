@@ -1,5 +1,5 @@
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
-# Copyright 2014, 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2014 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ import logging
 import time
 
 from Mailnag.common.accounts import AccountManager
-from Mailnag.common.credentialstore import CredentialStore
 from Mailnag.daemon.mailchecker import MailChecker
 from Mailnag.daemon.mails import Memorizer
 from Mailnag.daemon.idlers import IdlerRunner
@@ -73,7 +72,7 @@ class MailnagDaemon:
 			
 			self._cfg = read_cfg()
 			
-			accountman = AccountManager(CredentialStore.from_string(self._cfg.get('core', 'credentialstore')))
+			accountman = AccountManager()
 			accountman.load_from_cfg(self._cfg, enabled_only = True)
 			self._accounts = accountman.to_list()
 			self._hookreg = HookRegistry()

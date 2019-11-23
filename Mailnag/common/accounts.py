@@ -1,4 +1,4 @@
-# Copyright 2011 - 2017 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
 # Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
@@ -20,7 +20,10 @@
 #
 
 import logging
+import hashlib
 from Mailnag.backends import create_backend, get_mailbox_parameter_specs
+from Mailnag.common.secretstore import SecretStore
+from Mailnag.common.dist_cfg import PACKAGE_NAME
 
 account_defaults = {
 	'enabled'			: '0',
@@ -35,8 +38,6 @@ account_defaults = {
 	'idle'				: '1',
 	'folder'			: '[]'
 }
-
-CREDENTIAL_KEY = 'Mailnag password for %s://%s@%s'
 
 #
 # Account class
@@ -177,10 +178,13 @@ class Account:
 # AccountManager class
 #
 class AccountManager:
-	def __init__(self, credentialstore = None):
+	def __init__(self):
 		self._accounts = []
 		self._removed = []
-		self._credentialstore = credentialstore
+		self._secretstore = SecretStore.get_default()
+		
+		if self._secretstore == None:
+			logging.warning("Failed to create secretstore - account passwords will be stored in plaintext config file.")
 
 	
 	def __len__(self):
@@ -239,13 +243,13 @@ class AccountManager:
 				option_spec = get_mailbox_parameter_specs(mailbox_type)
 				options = self._get_cfg_options(cfg, section_name, option_spec)
 
-				# TODO: Getting password from credentials is mailbox specific.
-				#       Every backend do not have or need password.
+				# TODO: Getting a password from the secretstore is mailbox specific.
+				#       Not every backend requires a password.
 				user = options.get('user')
 				server = options.get('server')
-				if self._credentialstore != None and user and server:
-					protocol = 'imap' if imap else 'pop'
-					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
+				if self._secretstore != None and user and server:
+					password = self._secretstore.get(self._get_account_id(user, server, imap))
+					if not password: password = ''
 					options['password'] = password
 
 				acc = Account(enabled=enabled,
@@ -267,14 +271,12 @@ class AccountManager:
 			i = i + 1
 			section_name = "account" + str(i)
 		
-		# Delete secrets of removed accounts from the credential store
+		# Delete secrets of removed accounts from the secretstore
 		# (it's important to do this before adding accounts, 
-		# in case multiple accounts with the same credential key exist).
-		if self._credentialstore != None:
+		# in case multiple accounts with the same id exist).
+		if self._secretstore != None:
 			for acc in self._removed:
-				protocol = 'imap' if acc.imap else 'pop'
-				# Note: CredentialStore implementations must check if the key acutally exists!
-				self._credentialstore.remove(CREDENTIAL_KEY % (protocol, acc.user, acc.server))
+				self._secretstore.remove(self._get_account_id(acc.user, acc.server, acc.imap))
 			
 		del self._removed[:]
 		
@@ -296,18 +298,23 @@ class AccountManager:
 			config = acc.get_config()
 			option_spec = get_mailbox_parameter_specs(acc.mailbox_type)
 
-			# TODO: Setting password to credentials is mailbox specific.
-			#       Every backend do not have or need password.
-			if self._credentialstore != None:
-				protocol = 'imap' if acc.imap else 'pop'
-				self._credentialstore.set(CREDENTIAL_KEY % (protocol, acc.user, acc.server), acc.password)
+			# TODO: Storing a password is mailbox specific.
+			#       Not every backend requires a password.
+			if self._secretstore != None:
+				self._secretstore.set(self._get_account_id(acc.user, acc.server, acc.imap), acc.password,
+				        f'{PACKAGE_NAME.capitalize()} password for account {acc.user}@{acc.server}')
 				config['password'] = ''
-
+                        
 			self._set_cfg_options(cfg, section_name, config, option_spec)
 
 			i = i + 1
 	
 		
+	def _get_account_id(self, user, server, is_imap):
+                # TODO : Introduce account.uuid when rewriting account and backend code
+                return hashlib.md5((user + server + str(is_imap)).encode('utf-8')).hexdigest()
+	
+	
 	def _get_account_cfg(self, cfg, section_name, option_name):
 		if cfg.has_option(section_name, option_name):
 			return cfg.get(section_name, option_name)

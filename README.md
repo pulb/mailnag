@@ -61,7 +61,7 @@ though make sure the requirements stated below are met.
 * python-dbus
 * pyxdg
 * gettext
-* gir-gnomekeyring-1.0 (optional)
+* gir1.2-secret-1 (optional)
 * networkmanager (optional)
 
 

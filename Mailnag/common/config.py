@@ -1,4 +1,4 @@
-# Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@ mailnag_defaults = {
 		'imap_idle_timeout'	: '10',
 		'autostart'			: '1',
 		'connectivity_test'	: 'auto',
-		'credentialstore'	: 'auto',
 		'enabled_plugins'	: 'dbusplugin, soundplugin, libnotifyplugin'
 	}
 }
