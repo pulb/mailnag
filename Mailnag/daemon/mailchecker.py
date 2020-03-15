@@ -1,4 +1,4 @@
-# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -27,13 +27,14 @@ from Mailnag.daemon.mails import MailSyncer
 
 
 class MailChecker:
-	def __init__(self, cfg, memorizer, hookreg, conntest):
+	def __init__(self, cfg, memorizer, hookreg, conntest, dbus_service):
 		self._firstcheck = True # first check after startup
 		self._mailcheck_lock = threading.Lock()
 		self._mailsyncer = MailSyncer(cfg)
 		self._memorizer = memorizer
 		self._hookreg = hookreg
 		self._conntest = conntest
+		self._dbus_service = dbus_service
 		self._zero_mails_on_last_check = True
 		
 	
@@ -77,11 +78,15 @@ class MailChecker:
 			filtered_new_mails = [m for m in new_mails if m in filtered_unseen_mails]
 			
 			if len(filtered_new_mails) > 0:
+				self._dbus_service.signal_mails_added(filtered_new_mails, filtered_unseen_mails)
+				
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_ADDED):
 					try_call( lambda: f(filtered_new_mails, filtered_unseen_mails) )
 			elif (not self._zero_mails_on_last_check) and (len(filtered_unseen_mails) == 0):
 				# TODO : signal MailsRemoved if not all mails have been removed
 				# (i.e. if mailcount has been decreased)
+				self._dbus_service.signal_mails_removed(filtered_unseen_mails)
+				
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_REMOVED):
 					try_call( lambda: f(filtered_unseen_mails) )
 			

@@ -26,6 +26,7 @@ from Mailnag.daemon.mailchecker import MailChecker
 from Mailnag.daemon.mails import Memorizer
 from Mailnag.daemon.idlers import IdlerRunner
 from Mailnag.daemon.conntest import ConnectivityTest, TestModes
+from Mailnag.daemon.dbus import DBusService
 from Mailnag.common.plugins import Plugin, HookRegistry, HookTypes, MailnagController
 from Mailnag.common.exceptions import InvalidOperationException
 from Mailnag.common.config import read_cfg
@@ -58,8 +59,10 @@ class MailnagDaemon(MailnagController):
 		
 		self._memorizer = Memorizer()
 		self._memorizer.load()
+		
+		dbus_service = DBusService(self)
 
-		self._mailchecker = MailChecker(self._cfg, self._memorizer, self._hookreg, self._conntest)
+		self._mailchecker = MailChecker(self._cfg, self._memorizer, self._hookreg, self._conntest, dbus_service)
 
 		# Note: all code following _load_plugins() should be executed
 		# asynchronously because the dbus plugin requires an active mainloop

@@ -1,4 +1,4 @@
-# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -97,17 +97,11 @@ class ConfigWindow:
 		self._button_edit_plugin = builder.get_object("btn_edit_plugin")
 		self._button_edit_plugin.set_sensitive(False)
 		
-		def renderer_plugin_enabled_func(column, cell_renderer, model, iter, data):
-			plugin = model.get_value(iter, 0)
-			name, desc, ver, author, mandatory = plugin.get_manifest()
-			cell_renderer.set_sensitive(not mandatory)
-		
 		renderer_plugin_enabled = Gtk.CellRendererToggle()
 		renderer_plugin_enabled.connect("toggled", self._on_plugin_toggled)
 		column_plugin_enabled = Gtk.TreeViewColumn(_('Enabled'), renderer_plugin_enabled)
 		column_plugin_enabled.add_attribute(renderer_plugin_enabled, "active", 1)
 		column_plugin_enabled.set_alignment(0.5)
-		column_plugin_enabled.set_cell_data_func(renderer_plugin_enabled, renderer_plugin_enabled_func)
 		self._treeview_plugins.append_column(column_plugin_enabled)
 
 		renderer_plugin_name = Gtk.CellRendererText()
@@ -143,11 +137,11 @@ class ConfigWindow:
 		enabled_lst = [s for s in [s.strip() for s in enabled_lst] if s != '']
 		
 		plugins = Plugin.load_plugins(self._cfg)
-		plugins.sort(key = lambda p : (not p.get_manifest()[4], p.get_manifest()[0]))
+		plugins.sort(key = lambda p : p.get_manifest()[0])
 		
 		for plugin in plugins:
-			name, desc, ver, author, mandatory = plugin.get_manifest()
-			enabled = True if (plugin.get_modname() in enabled_lst) or mandatory else False
+			name, desc, ver, author = plugin.get_manifest()
+			enabled = True if (plugin.get_modname() in enabled_lst) else False
 			description = '<b>%s</b> (%s)\n%s' % (name, ver, desc)
 			row = [plugin, enabled, description]
 			self._liststore_plugins.append(row)
@@ -277,7 +271,7 @@ class ConfigWindow:
 		aboutdialog.set_version(APP_VERSION)
 		aboutdialog.set_program_name(PACKAGE_NAME.title())
 		aboutdialog.set_comments(_("An extensible mail notification daemon."))
-		aboutdialog.set_copyright(_("Copyright (c) 2011 - 2019 Patrick Ulbrich and contributors."))
+		aboutdialog.set_copyright(_("Copyright (c) 2011 - 2020 Patrick Ulbrich and contributors."))
 		aboutdialog.set_logo_icon_name("mailnag")
 		aboutdialog.set_website("https://github.com/pulb/mailnag")
 		aboutdialog.set_website_label(_("Homepage"))

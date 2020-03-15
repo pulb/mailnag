@@ -1,4 +1,4 @@
-# Copyright 2013 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -62,9 +62,8 @@ class SoundPlugin(Plugin):
 	def get_manifest(self):
 		return (_("Sound Notifications"),
 				_("Plays a sound when new mails arrive."),
-				"1.1",
-				"Patrick Ulbrich <zulu99@gmx.net>",
-				False)
+				"2.0",
+				"Patrick Ulbrich <zulu99@gmx.net>")
 
 
 	def get_default_config(self):

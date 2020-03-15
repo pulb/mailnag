@@ -1,4 +1,4 @@
-# Copyright 2013 - 2019 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2013 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -138,7 +138,7 @@ class Plugin:
 	def get_manifest(self):
 		# Plugins are expected to
 		# return a tuple of the following form:
-		# (name, description, version, author, mandatory).
+		# (name, description, version, author).
 		raise NotImplementedError
 	
 	
