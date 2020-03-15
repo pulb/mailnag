@@ -96,6 +96,6 @@ If Mailnag is unable to connect to your Gmail account, please try the following 
 * Try to apply [this](https://github.com/pulb/mailnag/issues/190) workaround
 
 __Other issues__
-If Mailnag doesn't work properly for you, either examine the system log for errors (`journalctl -b _COMM=mailnag`)  
+If Mailnag doesn't work properly for you, either examine the system log for errors (`journalctl -b _COMM=mailnag`)
 or run `mailnag` in a terminal and observe the output.
   
