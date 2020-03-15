@@ -88,5 +88,14 @@ Furthermore, I highly recommend GNOME users to install the [GOA plugin](https://
 which makes Mailnag aware of email accounts specified in GNOME Online Accounts.  
 
 ### Troubleshooting
+
+__Gmail doesn't work__  
+If Mailnag is unable to connect to your Gmail account, please try the following solutions:
+* Install the [GOA plugin](https://github.com/pulb/mailnag-goa-plugin) to connect via GNOME online accounts
+* Have a look at the [FAQ](https://github.com/pulb/mailnag/wiki/FAQ)
+* Try to apply [this](https://github.com/pulb/mailnag/issues/190) workaround
+
+__Other issues__
 If Mailnag doesn't work properly for you, either examine the system log for errors (`journalctl -b _COMM=mailnag`)  
 or run `mailnag` in a terminal and observe the output.
+  
