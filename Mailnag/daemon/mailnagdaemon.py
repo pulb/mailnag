@@ -1,5 +1,5 @@
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
-# Copyright 2014 - 2019 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2014 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,67 +38,42 @@ testmode_mapping = {
 	'ping'				: TestModes.PING
 }
 
-class MailnagDaemon:
+class MailnagDaemon(MailnagController):
 	def __init__(self, fatal_error_handler = None, shutdown_request_handler = None):
-		self._cfg = None
 		self._fatal_error_handler = fatal_error_handler
 		self._shutdown_request_handler = shutdown_request_handler
 		self._plugins = []
-		self._hookreg = None
-		self._conntest = None
-		self._accounts = None
-		self._mailchecker = None
-		self._start_thread = None
 		self._poll_thread = None
 		self._poll_thread_stop = threading.Event()
 		self._idlrunner = None
-		# Lock ensures that init() and dispose() 
-		# are non-reentrant.
-		self._lock = threading.Lock()
-		# Flag indicating complete 
-		# daemon initialization.
-		self._initialized = False
 		self._disposed = False
 	
-	
-	# Initializes the daemon and starts checking threads.
-	def init(self):			
-		with self._lock:
-			if self._disposed:
-				raise InvalidOperationException("Daemon has been disposed")
+		self._cfg = read_cfg()
 		
-			if self._initialized:
-				raise InvalidOperationException("Daemon has already been initialized")
-			
-			self._cfg = read_cfg()
-			
-			accountman = AccountManager()
-			accountman.load_from_cfg(self._cfg, enabled_only = True)
-			self._accounts = accountman.to_list()
-			self._hookreg = HookRegistry()
-			self._conntest = ConnectivityTest(testmode_mapping[self._cfg.get('core', 'connectivity_test')])
-			
-			memorizer = Memorizer()
-			memorizer.load()
+		accountman = AccountManager()
+		accountman.load_from_cfg(self._cfg, enabled_only = True)
+		self._accounts = accountman.to_list()
+		self._hookreg = HookRegistry()
+		self._conntest = ConnectivityTest(testmode_mapping[self._cfg.get('core', 'connectivity_test')])
+		
+		self._memorizer = Memorizer()
+		self._memorizer.load()
 
-			self._mailchecker = MailChecker(self._cfg, memorizer, self._hookreg, self._conntest)
+		self._mailchecker = MailChecker(self._cfg, self._memorizer, self._hookreg, self._conntest)
 
-			# Note: all code following _load_plugins() should be executed
-			# asynchronously because the dbus plugin requires an active mainloop
-			# (usually started in the programs main function).
-			self._load_plugins(self._cfg, self._hookreg, memorizer)
+		# Note: all code following _load_plugins() should be executed
+		# asynchronously because the dbus plugin requires an active mainloop
+		# (usually started in the programs main function).
+		self._load_plugins(self._cfg)
 
-			# Start checking for mails asynchronously.
-			self._start_thread = threading.Thread(target = self._start)
-			self._start_thread.start()
-
-			self._initialized = True
+		# Start checking for mails asynchronously.
+		self._start_thread = threading.Thread(target = self._start)
+		self._start_thread.start()
 	
 	
 	def dispose(self):
-		with self._lock:
-			if self._disposed:
-				return
+		if self._disposed:
+			return
 
 		# Note: _disposed must be set 
 		# before cleaning up resources 
@@ -128,31 +103,47 @@ class MailnagDaemon:
 		self._unload_plugins()
 	
 	
-	def is_initialized(self):
-		return self._initialized
-	
-	
 	def is_disposed(self):
 		return self._disposed
 	
 	
+	# Part of MailnagController interface
+	def get_hooks(self):
+		# Note: ensure_not_disposed() cannot be called here
+		# because plugins are calling get_hooks() when being disabled in dispose().
+		# self._ensure_not_disposed()
+		return self._hookreg
+	
+
+	# Part of MailnagController interface
+	def shutdown(self):
+		if self._shutdown_request_handler != None:
+			self._shutdown_request_handler()
+	
+	
+	# Part of MailnagController interface
+	def mark_mail_as_read(self, mail_id):
+		# Note: ensure_not_disposed() is not really necessary here
+		# (the memorizer object is available in dispose()), 
+		# but better be consistent with other daemon methods.
+		self._ensure_not_disposed()
+		self._memorizer.set_to_seen(mail_id)
+		self._memorizer.save()
+	
+	
 	# Enforces manual mail checks
+	# Part of MailnagController interface
 	def check_for_mails(self):
-		# Don't allow mail checks before initialization or
-		# after object disposal. F.i. plugins may not be 
-		# loaded/unloaded completely or connections may 
-		# have been closed already.
-		self._ensure_valid_state()
+		# Don't allow mail checks after object disposal. 
+		# F.i. plugins may not be unloaded completely or 
+		# connections may have been closed already.
+		self._ensure_not_disposed()
 		
 		non_idle_accounts = self._get_non_idle_accounts(self._accounts)
 		self._mailchecker.check(non_idle_accounts)
-	
-	
-	def _ensure_valid_state(self):
-		if not self._initialized:
-			raise InvalidOperationException(
-				"Daemon has not been initialized")
+
 		
+	def _ensure_not_disposed(self):
 		if self._disposed:
 			raise InvalidOperationException(
 				"Daemon has been disposed")
@@ -234,37 +225,10 @@ class MailnagDaemon:
 		return [acc for acc in self._accounts if not acc.supports_notifications()]
 
 
-	def _load_plugins(self, cfg, hookreg, memorizer):
-		class MailnagController_Impl(MailnagController):
-			def __init__(self, daemon, memorizer, hookreg, shutdown_request_hdlr):
-				self._daemon = daemon
-				self._memorizer = memorizer
-				self._hookreg = hookreg
-				self._shutdown_request_handler = shutdown_request_hdlr
-				
-			def get_hooks(self):
-				return self._hookreg
-			
-			def shutdown(self):
-				if self._shutdown_request_handler != None:
-					self._shutdown_request_handler()
-			
-			def check_for_mails(self):
-				self._daemon.check_for_mails()
-			
-			def mark_mail_as_read(self, mail_id):
-				# Note: ensure_valid_state() is not really necessary here
-				# (the memorizer object is available in init() and dispose()), 
-				# but better be consistent with other daemon methods.
-				self._daemon._ensure_valid_state()
-				self._memorizer.set_to_seen(mail_id)
-				self._memorizer.save()
-		
-		controller = MailnagController_Impl(self, memorizer, hookreg, self._shutdown_request_handler)
-	
+	def _load_plugins(self, cfg):
 		enabled_lst = cfg.get('core', 'enabled_plugins').split(',')
 		enabled_lst = [s for s in [s.strip() for s in enabled_lst] if s != '']
-		self._plugins = Plugin.load_plugins(cfg, controller, enabled_lst)
+		self._plugins = Plugin.load_plugins(cfg, self, enabled_lst)
 	
 		for p in self._plugins:
 			try:
