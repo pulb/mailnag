@@ -273,7 +273,7 @@ class LibNotifyPlugin(Plugin):
 		self._notifications['0'].show()
 	
 	
-	def _notify_single(self, mails, all_mails):
+	def _notify_single(self, new_mails, all_mails):
 		# Remove notifications for messages not in all_mails:
 		for k, n in list(self._notifications.items()):
 			if hasattr(n, 'mail') and not (n.mail in all_mails):
@@ -283,9 +283,9 @@ class LibNotifyPlugin(Plugin):
 
 		# In single notification mode new mails are
 		# added to the *bottom* of the notification list.
-		mails.sort(key = lambda m: m.datetime, reverse = False)
+		new_mails.sort(key = lambda m: m.datetime, reverse = False)
 		
-		for mail in mails:
+		for mail in new_mails:
 			n = self._get_notification(self._get_sender(mail), mail.subject, "mail-unread")
 			# Remember the associated message, so we know when to remove the notification:
 			n.mail = mail
