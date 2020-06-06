@@ -82,7 +82,7 @@ class IMAPMailboxBackend(MailboxBackend):
 
 		for folder in folder_list:
 			# select IMAP folder
-			conn.select(folder, readonly = True)
+			conn.select(f'"{folder}"', readonly = True)
 			try:
 				status, data = conn.search(None, 'UNSEEN') # ALL or UNSEEN
 			except:
@@ -226,7 +226,7 @@ class IMAPMailboxBackend(MailboxBackend):
 		else:
 			folder = "INBOX"
 		
-		conn.select(folder, readonly = True)
+		conn.select(f'"{folder}"', readonly = True)
 	
 	def _ensure_open(self):
 		if not self.is_open():
