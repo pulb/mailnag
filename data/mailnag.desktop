@@ -8,5 +8,6 @@ Exec=/usr/bin/mailnag --quiet
 Icon=mailnag
 Type=Application
 NoDisplay=true
+Categories=Network;Email;
 X-GNOME-Autostart-enabled=true
 X-GNOME-UsesNotifications=true
