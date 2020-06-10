@@ -1,3 +1,63 @@
+mailnag (2.0.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Sun, 07 Jun 2020 14:58:24 +0200
+
+mailnag (1.3.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Sun, 24 Mar 2019 19:00:53 +0100
+
+mailnag (1.2.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Sat, 28 May 2016 16:45:15 +0200
+
+mailnag (1.2.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Thu, 24 Mar 2016 14:03:25 +0100
+
+mailnag (1.1.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Sun, 08 Feb 2015 13:40:55 +0100
+
+mailnag (1.0.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Sun, 13 Jul 2014 14:25:43 +0200
+
+mailnag (0.5.2-0) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Sun, 06 Jan 2013 13:12:00 +0100
+ 
+mailnag (0.5.1-0) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Sun, 23 Dec 2012 15:11:54 +0100
+
+mailnag (0.5.0-0) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Wed, 05 Dec 2012 16:24:46 +0100
+
+mailnag (0.4.4-0) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Sat, 20 Oct 2012 20:58:13 +0200
+
 mailnag (0.4.3-0) unstable; urgency=low
 
   * Initial release
