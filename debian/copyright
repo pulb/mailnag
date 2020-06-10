@@ -7,16 +7,13 @@ Files: *
 Copyright: 2011-2014 Patrick Ulbrich <zulu99@gmx.net>
 License: GPL-2.0+
 
-Files: Mailnag/mailnag.py
-       Mailnag/daemon/mails.py
+Files: Mailnag/daemon/mails.py
 Copyright: 2011-2014 Patrick Ulbrich <zulu99@gmx.net>
            2011 Leighton Earl <leighton.earl@gmx.com>
            2011 Ralf Hersel <ralf.hersel@gmx.net>
 License: GPL-2.0+
 
-Files: Mailnag/config.py
-       Mailnag/common/accounts.py
-       Mailnag/common/keyring.py
+Files: Mailnag/common/accounts.py
        Mailnag/configuration/configwindow.py
        Mailnag/daemon/mailchecker.py
 Copyright: 2011-2014 Patrick Ulbrich <zulu99@gmx.net>
@@ -33,7 +30,7 @@ Copyright: 2011-2013 Patrick Ulbrich <zulu99@gmx.net>
            2007 Marco Ferragina <marco.ferragina@gmail.com>
 License: GPL-2.0+
 
-Files: Mailnag/daemon/imaplib2.py
+Files: Mailnag/common/imaplib2.py
 Copyright: 2011-2012 Piers Lauder <piers@janeelix.com>
 License: Python-2.0
 
