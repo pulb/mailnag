@@ -2,7 +2,7 @@ Source: mailnag
 Section: mail
 Priority: optional
 Maintainer: Patrick Ulbrich <zulu99@gmx.net>
-Build-Depends: debhelper (>= 9), gettext, python (>= 3.5)
+Build-Depends: debhelper (>= 9), gettext, python3 (>= 3.5)
 X-Python-Version: >= 3.5
 Standards-Version: 3.9.5
 Homepage: https://github.com/pulb/mailnag
