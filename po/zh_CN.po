@@ -7,37 +7,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2019-03-16 14:03+0100\n"
+"POT-Creation-Date: 2020-03-28 10:59+0100\n"
 "PO-Revision-Date: 2019-03-16 14:48+0000\n"
 "Last-Translator: Launchpad Translations Administrators <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2019-03-23 16:20+0000\n"
-"X-Generator: Launchpad (build 18910)\n"
+"X-Launchpad-Export-Date: 2020-06-11 14:44+0000\n"
+"X-Generator: Launchpad (build b190cebbf563f89e480a8b57f641753c8196bda0)\n"
 
-#: Mailnag/plugins/userscriptplugin.py:65
+#: Mailnag/plugins/userscriptplugin.py:60
 msgid "User Script"
 msgstr "用户脚本"
 
-#: Mailnag/plugins/userscriptplugin.py:66
+#: Mailnag/plugins/userscriptplugin.py:61
 msgid "Runs an user defined script on mail arrival."
 msgstr "运行在邮件到达时的用户自定义脚本。"
 
-#: Mailnag/plugins/userscriptplugin.py:86
+#: Mailnag/plugins/userscriptplugin.py:80
 msgid "account"
 msgstr ""
 
-#: Mailnag/plugins/userscriptplugin.py:86
+#: Mailnag/plugins/userscriptplugin.py:80
 msgid "sender"
 msgstr "寄件人"
 
-#: Mailnag/plugins/userscriptplugin.py:86
+#: Mailnag/plugins/userscriptplugin.py:80
 msgid "subject"
 msgstr "主题"
 
-#: Mailnag/plugins/userscriptplugin.py:87
+#: Mailnag/plugins/userscriptplugin.py:81
 #, python-format
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
@@ -45,156 +45,148 @@ msgid ""
 "followed by %s sequences."
 msgstr ""
 
-#: Mailnag/plugins/messagingmenuplugin.py:104
+#: Mailnag/plugins/messagingmenuplugin.py:99
 msgid "MessagingMenu"
 msgstr ""
 
-#: Mailnag/plugins/messagingmenuplugin.py:105
+#: Mailnag/plugins/messagingmenuplugin.py:100
 msgid "Shows new mails in the MessagingMenu indicator."
 msgstr ""
 
-#: Mailnag/plugins/messagingmenuplugin.py:124
+#: Mailnag/plugins/messagingmenuplugin.py:118
 msgid "Maximum number of visible mails:"
 msgstr "可显示邮件的最大数量"
 
-#: Mailnag/plugins/spamfilterplugin.py:72
+#: Mailnag/plugins/spamfilterplugin.py:67
 msgid "Spam Filter"
 msgstr "垃圾邮件过滤器"
 
-#: Mailnag/plugins/spamfilterplugin.py:73
+#: Mailnag/plugins/spamfilterplugin.py:68
 msgid "Filters out unwanted mails."
 msgstr "过滤掉不想要的邮件。"
 
-#: Mailnag/plugins/spamfilterplugin.py:93
+#: Mailnag/plugins/spamfilterplugin.py:87
 msgid ""
 "Mailnag will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:106
+#: Mailnag/plugins/libnotifyplugin.py:100
 msgid "LibNotify Notifications"
 msgstr "弹出窗口通知"
 
-#: Mailnag/plugins/libnotifyplugin.py:107
+#: Mailnag/plugins/libnotifyplugin.py:101
 msgid "Shows a popup when new mails arrive."
 msgstr "当新邮件到达时弹出。"
 
-#: Mailnag/plugins/libnotifyplugin.py:123
+#: Mailnag/plugins/libnotifyplugin.py:116
 msgid "Count of new mails"
 msgstr "新邮件数量"
 
-#: Mailnag/plugins/libnotifyplugin.py:124
+#: Mailnag/plugins/libnotifyplugin.py:117
 msgid "Short summary of new mails"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:125
+#: Mailnag/plugins/libnotifyplugin.py:118
 msgid "Detailed summary of new mails"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:126
+#: Mailnag/plugins/libnotifyplugin.py:119
 msgid "One notification per new mail"
 msgstr "每封新邮件通知一次"
 
-#: Mailnag/plugins/libnotifyplugin.py:134
+#: Mailnag/plugins/libnotifyplugin.py:127
 msgid "Notification mode:"
 msgstr "通知模式"
 
-#: Mailnag/plugins/libnotifyplugin.py:221
-#: Mailnag/plugins/libnotifyplugin.py:257
-#: Mailnag/plugins/libnotifyplugin.py:285
+#: Mailnag/plugins/libnotifyplugin.py:214
+#: Mailnag/plugins/libnotifyplugin.py:250
+#: Mailnag/plugins/libnotifyplugin.py:278
 #, python-brace-format
 msgid "{0} new mails"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:223
+#: Mailnag/plugins/libnotifyplugin.py:216
 #, python-brace-format
 msgid "from {0} and others."
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:225
-#: Mailnag/plugins/libnotifyplugin.py:228
+#: Mailnag/plugins/libnotifyplugin.py:218
+#: Mailnag/plugins/libnotifyplugin.py:221
 #, python-brace-format
 msgid "from {0}."
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:227
-#: Mailnag/plugins/libnotifyplugin.py:259
-#: Mailnag/plugins/libnotifyplugin.py:287
+#: Mailnag/plugins/libnotifyplugin.py:220
+#: Mailnag/plugins/libnotifyplugin.py:252
+#: Mailnag/plugins/libnotifyplugin.py:280
 msgid "New mail"
 msgstr ""
 
-#: Mailnag/plugins/libnotifyplugin.py:252
-#: Mailnag/plugins/libnotifyplugin.py:254
+#: Mailnag/plugins/libnotifyplugin.py:245
+#: Mailnag/plugins/libnotifyplugin.py:247
 #, python-brace-format
 msgid "(and {0} more)"
 msgstr "（ 还有 {0} 条）"
 
-#: Mailnag/plugins/libnotifyplugin.py:274
+#: Mailnag/plugins/libnotifyplugin.py:267
 msgid "Mark as read"
 msgstr "标记为已读"
 
-#: Mailnag/plugins/soundplugin.py:68
+#: Mailnag/plugins/soundplugin.py:63
 msgid "Sound Notifications"
 msgstr "声音通知"
 
-#: Mailnag/plugins/soundplugin.py:69
+#: Mailnag/plugins/soundplugin.py:64
 msgid "Plays a sound when new mails arrive."
 msgstr "当新邮件到达时播放声音。"
 
-#: Mailnag/plugins/goaplugin.py:96
+#: Mailnag/plugins/goaplugin.py:91
 msgid "GNOME Online Accounts"
 msgstr ""
 
-#: Mailnag/plugins/goaplugin.py:97
+#: Mailnag/plugins/goaplugin.py:92
 msgid "GNOME Online Accounts Integration."
 msgstr ""
 
-#: Mailnag/plugins/dbusplugin.py:86
-msgid "DBus Service"
-msgstr "DBus服务"
-
-#: Mailnag/plugins/dbusplugin.py:87
-msgid "Exposes Mailnag's functionality via a DBus service."
-msgstr ""
-
-#: Mailnag/daemon/mails.py:111
+#: Mailnag/daemon/mails.py:121
 msgid "No subject"
 msgstr "无主题"
 
-#: Mailnag/configuration/plugindialog.py:35
+#: Mailnag/configuration/plugindialog.py:30
 msgid "Plugin Configuration"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:88
-#: Mailnag/configuration/configwindow.py:113
-#: Mailnag/configuration/accountdialog.py:120
+#: Mailnag/configuration/configwindow.py:82
+#: Mailnag/configuration/configwindow.py:102
+#: Mailnag/configuration/accountdialog.py:115
 msgid "Enabled"
 msgstr "已启用"
 
-#: Mailnag/configuration/configwindow.py:94
-#: Mailnag/configuration/configwindow.py:120
-#: Mailnag/configuration/accountdialog.py:126
+#: Mailnag/configuration/configwindow.py:88
+#: Mailnag/configuration/configwindow.py:108
+#: Mailnag/configuration/accountdialog.py:121
 msgid "Name"
 msgstr "名称"
 
-#: Mailnag/configuration/configwindow.py:282
+#: Mailnag/configuration/configwindow.py:270
 #, python-format
 msgid "About %s"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:285
+#: Mailnag/configuration/configwindow.py:273
 msgid "An extensible mail notification daemon."
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:286
-msgid "Copyright (c) 2011 - 2019 Patrick Ulbrich and contributors."
+#: Mailnag/configuration/configwindow.py:274
+msgid "Copyright (c) 2011 - 2020 Patrick Ulbrich and contributors."
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:289
+#: Mailnag/configuration/configwindow.py:277
 msgid "Homepage"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:304
+#: Mailnag/configuration/configwindow.py:295
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
@@ -202,35 +194,35 @@ msgstr ""
 "  Patrick Ulbrich https://launchpad.net/~pulb\n"
 "  朱涛 https://launchpad.net/~bill-zt"
 
-#: Mailnag/configuration/configwindow.py:344
+#: Mailnag/configuration/configwindow.py:335
 msgid "Delete this account:"
 msgstr "删除该帐户："
 
-#: Mailnag/configuration/accountdialog.py:75
+#: Mailnag/configuration/accountdialog.py:70
 msgid "Mail Account"
 msgstr "邮件账户"
 
-#: Mailnag/configuration/accountdialog.py:116
+#: Mailnag/configuration/accountdialog.py:111
 msgid "optional"
 msgstr "可选"
 
-#: Mailnag/configuration/accountdialog.py:249
+#: Mailnag/configuration/accountdialog.py:244
 msgid "IMAP (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:250
+#: Mailnag/configuration/accountdialog.py:245
 msgid "POP3 (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:251
+#: Mailnag/configuration/accountdialog.py:246
 msgid "MBox (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:252
+#: Mailnag/configuration/accountdialog.py:247
 msgid "Maildir (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:358
+#: Mailnag/configuration/accountdialog.py:353
 msgid "Connection failed."
 msgstr ""
 

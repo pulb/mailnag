@@ -1,16 +1,16 @@
-# Swedish translation for mailnag
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# Catalan translation for mailnag
+# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
 # This file is distributed under the same license as the mailnag package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-03-28 10:59+0100\n"
-"PO-Revision-Date: 2019-03-16 14:48+0000\n"
-"Last-Translator: Launchpad Translations Administrators <Unknown>\n"
-"Language-Team: Swedish <sv@li.org>\n"
+"PO-Revision-Date: 2020-04-05 12:44+0000\n"
+"Last-Translator: Marc Riera Irigoyen <marcriera@softcatala.org>\n"
+"Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,23 +19,23 @@ msgstr ""
 
 #: Mailnag/plugins/userscriptplugin.py:60
 msgid "User Script"
-msgstr "Användarskript"
+msgstr "Script de l'usuari"
 
 #: Mailnag/plugins/userscriptplugin.py:61
 msgid "Runs an user defined script on mail arrival."
-msgstr "Kör ett användardefinerat skript vid inkommande meddelanden."
+msgstr "Executa un script definit per l'usuari quan arriba correu nou."
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "account"
-msgstr "konto"
+msgstr "compte"
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "sender"
-msgstr "avsändare"
+msgstr "remitent"
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "subject"
-msgstr "ämne"
+msgstr "assumpte"
 
 #: Mailnag/plugins/userscriptplugin.py:81
 #, python-format
@@ -44,144 +44,144 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by %s sequences."
 msgstr ""
-"Följande skript kommer köras när nya meddelanden anländer.\n"
-"Mailnag skickar det totala antalet nya meddelanden till detta skript,\n"
-"följt av sekvenser av %s."
+"S'executarà l'script següent quan arribin correus nous.\n"
+"El Mailnag passa el nombre total de correus nous a aquest script,\n"
+"seguit de seqüències %s."
 
 #: Mailnag/plugins/messagingmenuplugin.py:99
 msgid "MessagingMenu"
-msgstr ""
+msgstr "Menú de missatges"
 
 #: Mailnag/plugins/messagingmenuplugin.py:100
 msgid "Shows new mails in the MessagingMenu indicator."
-msgstr ""
+msgstr "Mostra els correus nous a l'indicador del Menú de missatges."
 
 #: Mailnag/plugins/messagingmenuplugin.py:118
 msgid "Maximum number of visible mails:"
-msgstr "Maximalt antal visade meddelanden:"
+msgstr "Nombre màxim de correus visibles:"
 
 #: Mailnag/plugins/spamfilterplugin.py:67
 msgid "Spam Filter"
-msgstr "Skräpfilter"
+msgstr "Filtre de correu brossa"
 
 #: Mailnag/plugins/spamfilterplugin.py:68
 msgid "Filters out unwanted mails."
-msgstr "Filtrera bort oönskade mail."
+msgstr "Exclou correus no desitjats."
 
 #: Mailnag/plugins/spamfilterplugin.py:87
 msgid ""
 "Mailnag will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
-"Mailnag kommer att ignorera meddelanden som innehåller minst ett av \n"
-"följande ord i ämne eller avsändare."
+"El Mailnag ignorarà els correus que continguin com a mínim \n"
+"una de les paraules següents a l'assumpte o el remitent."
 
 #: Mailnag/plugins/libnotifyplugin.py:100
 msgid "LibNotify Notifications"
-msgstr "LibNotify-aviseringar"
+msgstr "Notificacions del LibNotify"
 
 #: Mailnag/plugins/libnotifyplugin.py:101
 msgid "Shows a popup when new mails arrive."
-msgstr "Visar en notis på skärmen när nya meddelanden anländer."
+msgstr "Mostra una finestra emergent quan arriben correus nous."
 
 #: Mailnag/plugins/libnotifyplugin.py:116
 msgid "Count of new mails"
-msgstr "Antal nya meddelanden"
+msgstr "Recompte de correus nous"
 
 #: Mailnag/plugins/libnotifyplugin.py:117
 msgid "Short summary of new mails"
-msgstr "Kort summering av nya meddelanden"
+msgstr "Resum breu dels correus nous"
 
 #: Mailnag/plugins/libnotifyplugin.py:118
 msgid "Detailed summary of new mails"
-msgstr "Detaljerad summering av nya meddelanden"
+msgstr "Resum detallat dels correus nous"
 
 #: Mailnag/plugins/libnotifyplugin.py:119
 msgid "One notification per new mail"
-msgstr "En avisering per nytt meddelande"
+msgstr "Una notificació per correu nou"
 
 #: Mailnag/plugins/libnotifyplugin.py:127
 msgid "Notification mode:"
-msgstr "Aviseringsläge"
+msgstr "Mode de notificació:"
 
 #: Mailnag/plugins/libnotifyplugin.py:214
 #: Mailnag/plugins/libnotifyplugin.py:250
 #: Mailnag/plugins/libnotifyplugin.py:278
 #, python-brace-format
 msgid "{0} new mails"
-msgstr "{0} nya meddelanden"
+msgstr "{0} correus nous"
 
 #: Mailnag/plugins/libnotifyplugin.py:216
 #, python-brace-format
 msgid "from {0} and others."
-msgstr "från {0} och andra."
+msgstr "de {0} i altres."
 
 #: Mailnag/plugins/libnotifyplugin.py:218
 #: Mailnag/plugins/libnotifyplugin.py:221
 #, python-brace-format
 msgid "from {0}."
-msgstr "från {0}."
+msgstr "de {0}."
 
 #: Mailnag/plugins/libnotifyplugin.py:220
 #: Mailnag/plugins/libnotifyplugin.py:252
 #: Mailnag/plugins/libnotifyplugin.py:280
 msgid "New mail"
-msgstr "Nytt meddelande"
+msgstr "Correu nou"
 
 #: Mailnag/plugins/libnotifyplugin.py:245
 #: Mailnag/plugins/libnotifyplugin.py:247
 #, python-brace-format
 msgid "(and {0} more)"
-msgstr "(och {0} till)"
+msgstr "(i {0} més)"
 
 #: Mailnag/plugins/libnotifyplugin.py:267
 msgid "Mark as read"
-msgstr "Markera som läst"
+msgstr "Marca com a llegit"
 
 #: Mailnag/plugins/soundplugin.py:63
 msgid "Sound Notifications"
-msgstr "Ljudaviseringar"
+msgstr "Notificacions sonores"
 
 #: Mailnag/plugins/soundplugin.py:64
 msgid "Plays a sound when new mails arrive."
-msgstr "Spelar upp ett ljud när nya meddelanden anländer."
+msgstr "Reprodueix un so quan arriben correus nous."
 
 #: Mailnag/plugins/goaplugin.py:91
 msgid "GNOME Online Accounts"
-msgstr "GNOME Nätkonton"
+msgstr "Comptes en línia del GNOME"
 
 #: Mailnag/plugins/goaplugin.py:92
 msgid "GNOME Online Accounts Integration."
-msgstr "Integrering med GNOME Nätkonton."
+msgstr "Integració amb els comptes en línia del GNOME."
 
 #: Mailnag/daemon/mails.py:121
 msgid "No subject"
-msgstr "Ämne saknas"
+msgstr "Sense assumpte"
 
 #: Mailnag/configuration/plugindialog.py:30
 msgid "Plugin Configuration"
-msgstr "Inställning av insticksprogram"
+msgstr "Configuració del connector"
 
 #: Mailnag/configuration/configwindow.py:82
 #: Mailnag/configuration/configwindow.py:102
 #: Mailnag/configuration/accountdialog.py:115
 msgid "Enabled"
-msgstr "Aktiverad"
+msgstr "Habilitat"
 
 #: Mailnag/configuration/configwindow.py:88
 #: Mailnag/configuration/configwindow.py:108
 #: Mailnag/configuration/accountdialog.py:121
 msgid "Name"
-msgstr "Namn"
+msgstr "Nom"
 
 #: Mailnag/configuration/configwindow.py:270
 #, python-format
 msgid "About %s"
-msgstr ""
+msgstr "Quant al %s"
 
 #: Mailnag/configuration/configwindow.py:273
 msgid "An extensible mail notification daemon."
-msgstr ""
+msgstr "Un dimoni de notificacions de correu extensible."
 
 #: Mailnag/configuration/configwindow.py:274
 msgid "Copyright (c) 2011 - 2020 Patrick Ulbrich and contributors."
@@ -189,74 +189,73 @@ msgstr ""
 
 #: Mailnag/configuration/configwindow.py:277
 msgid "Homepage"
-msgstr ""
+msgstr "Lloc web"
 
 #: Mailnag/configuration/configwindow.py:295
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
-"  Anders Jonsson https://launchpad.net/~anders-jonsson\n"
-"  kristian https://launchpad.net/~kristianm24"
+"  Marc Riera Irigoyen https://launchpad.net/~marcriera"
 
 #: Mailnag/configuration/configwindow.py:335
 msgid "Delete this account:"
-msgstr "Ta bort detta konto:"
+msgstr "Suprimeix aquest compte:"
 
 #: Mailnag/configuration/accountdialog.py:70
 msgid "Mail Account"
-msgstr "E-postkonto"
+msgstr "Compte de correu"
 
 #: Mailnag/configuration/accountdialog.py:111
 msgid "optional"
-msgstr "valfritt"
+msgstr "opcional"
 
 #: Mailnag/configuration/accountdialog.py:244
 msgid "IMAP (Custom)"
-msgstr ""
+msgstr "IMAP (personalitzat)"
 
 #: Mailnag/configuration/accountdialog.py:245
 msgid "POP3 (Custom)"
-msgstr ""
+msgstr "POP3 (personalitzat)"
 
 #: Mailnag/configuration/accountdialog.py:246
 msgid "MBox (Custom)"
-msgstr ""
+msgstr "MBox (personalitzat)"
 
 #: Mailnag/configuration/accountdialog.py:247
 msgid "Maildir (Custom)"
-msgstr ""
+msgstr "Maildir (personalitzat)"
 
 #: Mailnag/configuration/accountdialog.py:353
 msgid "Connection failed."
-msgstr "Anslutning misslyckades."
+msgstr "No s'ha pogut connectar."
 
 #: data/account_widget.ui.h:1
 msgid "Enable Push-IMAP"
-msgstr "Aktivera Push-IMAP"
+msgstr "Habilita el Push-IMAP"
 
 #: data/account_widget.ui.h:2
 msgid "Enable SSL encryption"
-msgstr "Aktivera SSL-kryptering"
+msgstr "Habilita el xifratge SSL"
 
 #: data/account_widget.ui.h:3
 msgid "Accountname:"
-msgstr "Kontonamn:"
+msgstr "Nom del compte:"
 
 #: data/account_widget.ui.h:4
 msgid "Account type:"
-msgstr "Kontotyp:"
+msgstr "Tipus de compte:"
 
 #: data/account_widget.ui.h:5
 msgid "User:"
-msgstr "Användare:"
+msgstr "Usuari:"
 
 #: data/account_widget.ui.h:6
 msgid "Password:"
-msgstr "Lösenord:"
+msgstr "Contrasenya:"
 
 #: data/account_widget.ui.h:7
 msgid "Server:"
-msgstr "Server:"
+msgstr "Servidor:"
 
 #: data/account_widget.ui.h:8
 msgid "Port:"
@@ -264,48 +263,48 @@ msgstr "Port:"
 
 #: data/account_widget.ui.h:9
 msgid "Folders (optional)"
-msgstr "Mappar (valfritt)"
+msgstr "Carpetes (opcional)"
 
 #: data/account_widget.ui.h:10
 msgid "File path:"
-msgstr ""
+msgstr "Camí del fitxer:"
 
 #: data/account_widget.ui.h:11
 msgid "Directory:"
-msgstr ""
+msgstr "Directori:"
 
 #: data/config_window.ui.h:1
 msgid "Enable/disable Mailnag daemon"
-msgstr ""
+msgstr "Habilita/inhabilita el dimoni del Mailnag"
 
 #: data/config_window.ui.h:2
 msgid "Add Account"
-msgstr "Lägg till Konto"
+msgstr "Afegeix un compte"
 
 #: data/config_window.ui.h:3
 msgid "Remove Account"
-msgstr "Ta bort konto"
+msgstr "Suprimeix el compte"
 
 #: data/config_window.ui.h:4
 msgid "Edit Account"
-msgstr "Redigera konto"
+msgstr "Edita el compte"
 
 #: data/config_window.ui.h:5
 msgid "Accounts"
-msgstr "Konton"
+msgstr "Comptes"
 
 #: data/config_window.ui.h:6
 msgid "Edit Plugin"
-msgstr "Redigera instick"
+msgstr "Edita el connector"
 
 #: data/config_window.ui.h:7
 msgid "Plugins"
-msgstr "Tillägg"
+msgstr "Connectors"
 
 #: data/config_window.ui.h:8
 msgid "Donate"
-msgstr ""
+msgstr "Feu una donació"
 
 #: data/config_window.ui.h:9
 msgid "Info"
-msgstr ""
+msgstr "Informació"
