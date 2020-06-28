@@ -279,6 +279,7 @@ class ConfigWindow:
 		aboutdialog.set_authors([
 			"Patrick Ulbrich (maintainer)",
 			"Balló György",
+			"Dan Christensen",
 			"Edwin Smulders",
 			"Freeroot",
 			"James Powell",
