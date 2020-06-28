@@ -73,8 +73,8 @@ class LibNotifyPlugin(Plugin):
 		
 		self._mails_added_hook = mails_added_hook
 		
-		def mails_removed_hook(all_mails):
-			self._notify_async([], all_mails)
+		def mails_removed_hook(remaining_mails):
+			self._notify_async([], remaining_mails)
 		
 		self._mails_removed_hook = mails_removed_hook
 		
