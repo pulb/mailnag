@@ -35,7 +35,7 @@ class MailChecker:
 		self._hookreg = hookreg
 		self._conntest = conntest
 		self._dbus_service = dbus_service
-		self._zero_mails_on_last_check = True
+		self._count_on_last_check = 0
 		
 	
 	def check(self, accounts):
@@ -82,14 +82,12 @@ class MailChecker:
 				
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_ADDED):
 					try_call( lambda: f(filtered_new_mails, filtered_unseen_mails) )
-			elif (not self._zero_mails_on_last_check) and (len(filtered_unseen_mails) == 0):
-				# TODO : signal MailsRemoved if not all mails have been removed
-				# (i.e. if mailcount has been decreased)
+			elif len(filtered_unseen_mails) != self._count_on_last_check:
 				self._dbus_service.signal_mails_removed(filtered_unseen_mails)
 				
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_REMOVED):
 					try_call( lambda: f(filtered_unseen_mails) )
 			
-			self._zero_mails_on_last_check = (len(filtered_unseen_mails) == 0)
+			self._count_on_last_check = len(filtered_unseen_mails)
 		
 		return

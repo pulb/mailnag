@@ -72,12 +72,19 @@ class LibNotifyPlugin(Plugin):
 		
 		self._mails_added_hook = mails_added_hook
 		
+		def mails_removed_hook(all_mails):
+			self._notify_async([], all_mails)
+		
+		self._mails_removed_hook = mails_removed_hook
+		
 		controller = self.get_mailnag_controller()
 		hooks = controller.get_hooks()
 		
 		hooks.register_hook_func(HookTypes.MAILS_ADDED, 
 			self._mails_added_hook)
 		
+		hooks.register_hook_func(HookTypes.MAILS_REMOVED,
+			self._mails_removed_hook)
 	
 	def disable(self):
 		controller = self.get_mailnag_controller()
@@ -87,6 +94,11 @@ class LibNotifyPlugin(Plugin):
 			hooks.unregister_hook_func(HookTypes.MAILS_ADDED,
 				self._mails_added_hook)
 			self._mails_added_hook = None
+		
+		if self._mails_removed_hook != None:
+			hooks.unregister_hook_func(HookTypes.MAILS_REMOVED,
+				self._mails_removed_hook)
+			self._mails_removed_hook = None
 		
 		# Abort possible notification server wait
 		self._notification_server_wait_event.set()
@@ -172,16 +184,22 @@ class LibNotifyPlugin(Plugin):
 					self._notification_server_ready = True
 			
 				config = self.get_config()
-				if config['notification_mode'] == NOTIFICATION_MODE_COUNT:
-					self._notify_count(len(all_mails))
-				elif config['notification_mode'] == NOTIFICATION_MODE_SHORT_SUMMARY:
-					self._notify_short_summary(new_mails, all_mails)
-				elif config['notification_mode'] == NOTIFICATION_MODE_SUMMARY:
-					self._notify_summary(new_mails, all_mails)
+				if config['notification_mode'] == NOTIFICATION_MODE_SINGLE:
+					self._notify_single(new_mails, all_mails)
 				else:
-					self._notify_single(new_mails)
+					if len(all_mails) == 0:
+						if '0' in self._notifications:
+							# The user may have closed the notification:
+							try_close(self._notifications['0'])
+							del self._notifications['0']
+					elif len(new_mails) > 0:
+						if config['notification_mode'] == NOTIFICATION_MODE_COUNT:
+							self._notify_count(len(all_mails))
+						elif config['notification_mode'] == NOTIFICATION_MODE_SHORT_SUMMARY:
+							self._notify_short_summary(new_mails, all_mails)
+						elif config['notification_mode'] == NOTIFICATION_MODE_SUMMARY:
+							self._notify_summary(new_mails, all_mails)
 					
-		
 		t = threading.Thread(target = thread)
 		t.start()
 	
@@ -255,13 +273,22 @@ class LibNotifyPlugin(Plugin):
 		self._notifications['0'].show()
 	
 	
-	def _notify_single(self, mails):
+	def _notify_single(self, new_mails, all_mails):
+		# Remove notifications for messages not in all_mails:
+		for k, n in list(self._notifications.items()):
+			if hasattr(n, 'mail') and not (n.mail in all_mails):
+				# The user may have closed the notification:
+				try_close(n)
+				del self._notifications[k]
+
 		# In single notification mode new mails are
 		# added to the *bottom* of the notification list.
-		mails.sort(key = lambda m: m.datetime, reverse = False)
+		new_mails.sort(key = lambda m: m.datetime, reverse = False)
 		
-		for mail in mails:
+		for mail in new_mails:
 			n = self._get_notification(self._get_sender(mail), mail.subject, "mail-unread")
+			# Remember the associated message, so we know when to remove the notification:
+			n.mail = mail
 			notification_id = str(id(n))
 			if self._is_gnome:
 				n.add_action("mark-as-read", _("Mark as read"), 
@@ -286,7 +313,7 @@ class LibNotifyPlugin(Plugin):
 	def _close_notifications(self):
 		with self._lock:
 			for n in self._notifications.values():
-				n.close()
+				try_close(n)
 			self._notifications = {}
 	
 	
@@ -367,3 +394,11 @@ def ellipsize(str, max_len):
 		return str
 	else:
 		return str[0:max_len - 3] + '...'
+
+
+# If the user has closed the notification, an exception is raised.
+def try_close(notification):
+        try:
+                notification.close()
+        except:
+                pass
