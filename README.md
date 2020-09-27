@@ -79,10 +79,10 @@ but are visible for a few seconds only. If you like to have a tighter desktop in
 (e.g. a permanently visible indicator in your top panel) you have to install an appropriate  
 extension/plugin for your desktop shell. Currently the following desktop shells are supported:  
 * GNOME-Shell ([GNOME-Shell extension](https://github.com/pulb/mailnag-gnome-shell))  
-* Ubuntu Unity ([MessagingMenu plugin](https://github.com/pulb/mailnag-messagingmenu-plugin))  
+* KDE ([Plasma 5 applet by driglu4it](https://store.kde.org/p/1420222/))  
+* Cinnamon ([Applet by hyOzd](https://bitbucket.org/hyOzd/mailnagapplet))  
 * Elementary Pantheon ([MessagingMenu plugin](https://github.com/pulb/mailnag-messagingmenu-plugin))  
 * XFCE ([MessagingMenu plugin](https://github.com/pulb/mailnag-messagingmenu-plugin))  
-* Cinnamon ([Applet by hyOzd](https://bitbucket.org/hyOzd/mailnagapplet))  
   
 Furthermore, I highly recommend GNOME users to install the [GOA plugin](https://github.com/pulb/mailnag-goa-plugin),  
 which makes Mailnag aware of email accounts specified in GNOME Online Accounts.  
