@@ -64,8 +64,7 @@ class LibNotifyPlugin(Plugin):
 		# initialize Notification
 		if not self._initialized:
 			Notify.init("Mailnag")
-			self._is_gnome = 'GDMSESSION' in os.environ and \
-				(os.environ['GDMSESSION'] == 'gnome')
+			self._is_gnome = self._is_gnome_environment(('GDMSESSION', 'XDG_CURRENT_DESKTOP'))
 			self._initialized = True
 		
 		def mails_added_hook(new_mails, all_mails):
@@ -374,6 +373,13 @@ class LibNotifyPlugin(Plugin):
 		# with the most recent date) is re-notified.
 		# To fix that, simply put new mails on top explicitly.  
 		return new_mails + [m for m in all_mails if m not in new_mails]
+
+
+	def _is_gnome_environment(self, env_vars):
+		for var in env_vars:
+			if os.environ.get(var, '').lower().endswith('gnome'):
+				return True
+		return False
 
 
 def get_default_mail_reader():
