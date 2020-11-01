@@ -126,9 +126,22 @@ class MailnagDaemon(MailnagController):
 	
 	# Part of MailnagController interface
 	def mark_mail_as_read(self, mail_id):
-		# Note: ensure_not_disposed() is not really necessary here
-		# (the memorizer object is available in dispose()), 
-		# but better be consistent with other daemon methods.
+		mails = self._mailchecker._all_mails
+		found = False
+		for mail in mails:
+			if mail_id == mail.id:
+				found = True
+				break
+		if (not found) or (not bool(int(self._cfg.get('core', 'mark_imap_read')))):
+			self._ensure_not_disposed()
+			self._memorizer.set_to_seen(mail_id)
+			self._memorizer.save()
+			return
+		backend = mail.account._get_backend()
+		if type(backend).__name__ == 'IMAPMailboxBackend':
+			mailid = mail.strID
+			conn = backend._conn
+			status, res = conn.uid("STORE", mailid, "+FLAGS", "(\Seen)")
 		self._ensure_not_disposed()
 		self._memorizer.set_to_seen(mail_id)
 		self._memorizer.save()

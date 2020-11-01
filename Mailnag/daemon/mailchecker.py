@@ -36,6 +36,7 @@ class MailChecker:
 		self._conntest = conntest
 		self._dbus_service = dbus_service
 		self._count_on_last_check = 0
+		self._all_mails = []
 		
 	
 	def check(self, accounts):
@@ -65,7 +66,7 @@ class MailChecker:
 				else: # mail is fetched the first time
 					unseen_mails.append(mail)
 					new_mails.append(mail)
-			
+			self._all_mails = all_mails
 			self._memorizer.sync(all_mails)
 			self._memorizer.save()
 			self._firstcheck = False

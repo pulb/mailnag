@@ -82,9 +82,9 @@ class IMAPMailboxBackend(MailboxBackend):
 
 		for folder in folder_list:
 			# select IMAP folder
-			conn.select(f'"{folder}"', readonly = True)
+			conn.select(f'"{folder}"')
 			try:
-				status, data = conn.search(None, 'UNSEEN') # ALL or UNSEEN
+				status, data = conn.uid('SEARCH', None, '(UNSEEN)') # ALL or UNSEEN
 			except:
 				logging.warning('Folder %s does not exist.', folder)
 				continue
@@ -93,7 +93,7 @@ class IMAPMailboxBackend(MailboxBackend):
 				logging.debug('Folder %s in status %s | Data: %s', (folder, status, data))
 				continue # Bugfix LP-735071
 			for num in data[0].split():
-				typ, msg_data = conn.fetch(num, '(BODY.PEEK[HEADER])') # header only (without setting READ flag)
+				typ, msg_data = conn.uid('FETCH', num, '(BODY.PEEK[HEADER])') # header only (without setting READ flag)
 				for response_part in msg_data:
 					if isinstance(response_part, tuple):
 						try:
@@ -101,7 +101,7 @@ class IMAPMailboxBackend(MailboxBackend):
 						except:
 							logging.debug("Couldn't get IMAP message.")
 							continue
-						yield (folder, msg)
+						yield (folder, msg, num.decode("utf-8"))
 
 
 	def request_folders(self):
@@ -225,8 +225,7 @@ class IMAPMailboxBackend(MailboxBackend):
 			folder = self.folders[0]
 		else:
 			folder = "INBOX"
-		
-		conn.select(f'"{folder}"', readonly = True)
+		conn.select(f'"{folder}"')
 	
 	def _ensure_open(self):
 		if not self.is_open():

@@ -35,13 +35,15 @@ from Mailnag.common.config import cfg_folder
 # Mail class
 #
 class Mail:
-	def __init__(self, datetime, subject, sender, id, account):
+	def __init__(self, datetime, subject, sender, id, account, strID):
 		self.datetime = datetime
 		self.subject = subject
 		self.sender = sender
+		self.account = account
 		self.account_name = account.name
 		self.account_id = account.get_id()
 		self.id = id
+		self.strID = strID
 
 
 #
@@ -66,7 +68,7 @@ class MailCollector:
 				logging.error("Failed to open mailbox for account '%s' (%s)." % (acc.name, ex))
 				continue
 
-			for folder, msg in acc.list_messages():
+			for folder, msg, num in acc.list_messages():
 				sender, subject, datetime, msgid = self._get_header(msg)
 				id = self._get_id(msgid, acc, folder, sender, subject, datetime)
 			
@@ -78,7 +80,7 @@ class MailCollector:
 				# Also filter duplicates caused by Gmail labels.
 				if id not in mail_ids:
 					mail_list.append(Mail(datetime, subject, \
-						sender, id, acc))
+						sender, id, acc, num))
 					mail_ids[id] = None
 
 			# leave account with notifications open, so that it can
@@ -193,7 +195,6 @@ class MailSyncer:
 		
 		# collect mails from given accounts
 		rcv_lst = MailCollector(self._cfg, accounts).collect_mail(sort = False)
-	
 		# group received mails by account
 		tmp = {}
 		for acc in accounts:
