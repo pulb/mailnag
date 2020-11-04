@@ -1,5 +1,6 @@
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2014 - 2020 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2020 Andreas Angerer
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -126,23 +127,11 @@ class MailnagDaemon(MailnagController):
 	
 	# Part of MailnagController interface
 	def mark_mail_as_read(self, mail_id):
-		mails = self._mailchecker._all_mails
-		found = False
-		for mail in mails:
-			if mail_id == mail.id:
-				found = True
-				break
-		if (not found) or (not bool(int(self._cfg.get('core', 'mark_imap_read')))):
-			self._ensure_not_disposed()
-			self._memorizer.set_to_seen(mail_id)
-			self._memorizer.save()
-			return
-		backend = mail.account._get_backend()
-		if type(backend).__name__ == 'IMAPMailboxBackend':
-			mailid = mail.strID
-			conn = backend._conn
-			status, res = conn.uid("STORE", mailid, "+FLAGS", "(\Seen)")
+		# Note: ensure_not_disposed() is not really necessary here
+		# (the memorizer object is available in dispose()), 
+		# but better be consistent with other daemon methods.
 		self._ensure_not_disposed()
+		
 		self._memorizer.set_to_seen(mail_id)
 		self._memorizer.save()
 	

@@ -1,4 +1,5 @@
-# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2020 Andreas Angerer
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
@@ -82,7 +83,7 @@ class IMAPMailboxBackend(MailboxBackend):
 
 		for folder in folder_list:
 			# select IMAP folder
-			conn.select(f'"{folder}"')
+			conn.select(f'"{folder}"', readonly = True)
 			try:
 				status, data = conn.uid('SEARCH', None, '(UNSEEN)') # ALL or UNSEEN
 			except:
@@ -101,7 +102,7 @@ class IMAPMailboxBackend(MailboxBackend):
 						except:
 							logging.debug("Couldn't get IMAP message.")
 							continue
-						yield (folder, msg, num.decode("utf-8"))
+						yield (folder, msg, { 'uid' : num.decode("utf-8"), 'folder' : folder })
 
 
 	def request_folders(self):
@@ -128,10 +129,33 @@ class IMAPMailboxBackend(MailboxBackend):
 		return lst
 
 
+	def supports_mark_as_seen(self):
+		return True
+
+
+	def mark_as_seen(self, mails):
+		# Always create a new connection as an existing one may
+		# be used for IMAP IDLE.
+		conn = self._connect()
+		
+		try:
+			last_folder = ''
+			for m in mails:
+				if ('uid' in m.flags) and ('folder' in m.flags):
+					folder = m.flags['folder']
+					if folder != last_folder:
+						conn.select(f'"{folder}"', readonly = False)
+						last_folder = folder
+					status, data = conn.uid("STORE", m.flags['uid'], "+FLAGS", "(\Seen)")
+		finally:
+			self._disconnect(conn)
+	
+	
 	def supports_notifications(self):
 		"""Returns True if mailbox supports notifications.
 		IMAP mailbox supports notifications if idle parameter is True"""
 		return self.idle
+
 
 	def notify_next_change(self, callback=None, timeout=None):
 		self._ensure_open()
@@ -225,7 +249,7 @@ class IMAPMailboxBackend(MailboxBackend):
 			folder = self.folders[0]
 		else:
 			folder = "INBOX"
-		conn.select(f'"{folder}"')
+		conn.select(f'"{folder}"', readonly = True)
 	
 	def _ensure_open(self):
 		if not self.is_open():

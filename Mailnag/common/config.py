@@ -26,7 +26,6 @@ mailnag_defaults = {
 		'poll_interval'		: '10',
 		'imap_idle_timeout'	: '10',
 		'autostart'			: '1',
-		'mark_imap_read'	: '1',
 		'connectivity_test'	: 'auto',
 		'enabled_plugins'	: 'dbusplugin, soundplugin, libnotifyplugin'
 	}

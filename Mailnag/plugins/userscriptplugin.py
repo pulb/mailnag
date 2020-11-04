@@ -120,7 +120,7 @@ class UserscriptPlugin(Plugin):
 				sender_name, sender_addr = m.sender
 				if len(sender_addr) == 0: sender_addr = 'UNKNOWN_SENDER'
 				
-				script_args.append(m.account_name)
+				script_args.append(m.account.name)
 				script_args.append(sender_addr)
 				script_args.append(m.subject)
 			start_subprocess(script_args)

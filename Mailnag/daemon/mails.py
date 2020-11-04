@@ -1,4 +1,5 @@
-# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2020 Andreas Angerer
 # Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
@@ -35,15 +36,13 @@ from Mailnag.common.config import cfg_folder
 # Mail class
 #
 class Mail:
-	def __init__(self, datetime, subject, sender, id, account, strID):
+	def __init__(self, datetime, subject, sender, id, account, flags):
 		self.datetime = datetime
 		self.subject = subject
 		self.sender = sender
 		self.account = account
-		self.account_name = account.name
-		self.account_id = account.get_id()
 		self.id = id
-		self.strID = strID
+		self.flags = flags
 
 
 #
@@ -68,7 +67,7 @@ class MailCollector:
 				logging.error("Failed to open mailbox for account '%s' (%s)." % (acc.name, ex))
 				continue
 
-			for folder, msg, num in acc.list_messages():
+			for folder, msg, flags in acc.list_messages():
 				sender, subject, datetime, msgid = self._get_header(msg)
 				id = self._get_id(msgid, acc, folder, sender, subject, datetime)
 			
@@ -80,7 +79,7 @@ class MailCollector:
 				# Also filter duplicates caused by Gmail labels.
 				if id not in mail_ids:
 					mail_list.append(Mail(datetime, subject, \
-						sender, id, acc, num))
+						sender, id, acc, flags))
 					mail_ids[id] = None
 
 			# leave account with notifications open, so that it can
@@ -195,12 +194,13 @@ class MailSyncer:
 		
 		# collect mails from given accounts
 		rcv_lst = MailCollector(self._cfg, accounts).collect_mail(sort = False)
+		
 		# group received mails by account
 		tmp = {}
 		for acc in accounts:
 			tmp[acc.get_id()] = {}
 		for mail in rcv_lst:
-			tmp[mail.account_id][mail.id] = mail
+			tmp[mail.account.get_id()][mail.id] = mail
 	
 		# compare current mails against received mails
 		# and remove those that are gone (probably opened in mail client).

@@ -1,3 +1,4 @@
+# Copyright 2020 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -50,7 +51,7 @@ class MailboxBackend(object, metaclass=ABCMeta):
 	@abstractmethod
 	def list_messages(self):
 		"""Lists unseen messages from the mailbox for this account.
-		Yields tuples (folder, message) for every message.
+		Yields tuples (folder, message, flags) for every message.
 		"""
 		raise NotImplementedError
 
@@ -61,6 +62,18 @@ class MailboxBackend(object, metaclass=ABCMeta):
 		"""
 		raise NotImplementedError
 
+	def supports_mark_as_seen(self):
+		"""Returns True if mailbox supports flagging mails as seen."""
+		# Default implementation
+		return False
+
+	@abstractmethod
+	def mark_as_seen(self, mails):
+		"""Asks mailbox to flag mails in the list as seen.
+		This may raise an exception if mailbox does not support this action.
+		"""
+		raise NotImplementedError
+		
 	def supports_notifications(self):
 		"""Returns True if mailbox supports notifications."""
 		# Default implementation

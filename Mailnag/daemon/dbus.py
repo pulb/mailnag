@@ -108,9 +108,9 @@ class DBusService(dbus.service.Object):
 			d['subject'] = m.subject			# string (s)
 			d['sender_name'] = name				# string (s)
 			d['sender_addr'] = addr				# string (s)
-			d['account_name'] = m.account_name	# string (s)
+			d['account_name'] = m.account.name	# string (s)
 			d['id'] = m.id						# string (s)
-			d['strID'] = m.strID				# string (s)
+			
 			converted_mails.append(d)
 		
 		return converted_mails

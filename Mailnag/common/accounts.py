@@ -1,4 +1,4 @@
-# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
 # Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
@@ -141,6 +141,14 @@ class Account:
 		return self._get_backend().request_folders()
 
 
+	def supports_mark_as_seen(self):
+		return self._get_backend().supports_mark_as_seen()
+
+
+	def mark_as_seen(self, mails):
+		self._get_backend().mark_as_seen(mails)
+		
+			
 	def get_id(self):
 		"""Returns unique id for the account."""
 		# Assumption: The name of the account is unique.

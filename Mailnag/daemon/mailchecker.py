@@ -1,4 +1,5 @@
 # Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2020 Andreas Angerer
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -36,7 +37,6 @@ class MailChecker:
 		self._conntest = conntest
 		self._dbus_service = dbus_service
 		self._count_on_last_check = 0
-		self._all_mails = []
 		
 	
 	def check(self, accounts):
@@ -55,6 +55,7 @@ class MailChecker:
 			all_mails = self._mailsyncer.sync(accounts)
 			unseen_mails = []
 			new_mails = []
+			seen_mails_by_account = {}
 			
 			for mail in all_mails:
 				if self._memorizer.contains(mail.id): # mail was fetched before
@@ -62,11 +63,24 @@ class MailChecker:
 						unseen_mails.append(mail)
 						if self._firstcheck:
 							new_mails.append(mail)
-				
+					else:
+						# if the mail account supports tagging mails as seen (e.g. IMAP), 
+						# mark the mail as seen on the server as well.
+						if mail.account.supports_mark_as_seen():
+							if not mail.account in seen_mails_by_account:
+								seen_mails_by_account[mail.account] = []
+							seen_mails_by_account[mail.account].append(mail)
 				else: # mail is fetched the first time
 					unseen_mails.append(mail)
 					new_mails.append(mail)
-			self._all_mails = all_mails
+			
+			# Flag mails to seen on server
+			for acc, mails in seen_mails_by_account.items():
+				try:
+					acc.mark_as_seen(mails)
+				except:
+					logging.warning("Failed to set mails to seen on server (account: '%s').", acc.name)
+			
 			self._memorizer.sync(all_mails)
 			self._memorizer.save()
 			self._firstcheck = False

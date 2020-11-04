@@ -1,3 +1,4 @@
+# Copyright 2020 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -61,7 +62,7 @@ class MBoxBackend(MailboxBackend):
 		try:
 			for msg in mbox:
 				if 'R' not in msg.get_flags():
-					yield folder, msg
+					yield (folder, msg, {})
 		finally:
 			mbox.close()
 
@@ -71,6 +72,15 @@ class MBoxBackend(MailboxBackend):
 		raise NotImplementedError("mbox does not support folders")
 
 
+	def supports_mark_as_seen(self):
+		return False
+
+
+	def mark_as_seen(self, mails):
+		# TODO: local mailboxes should support this
+		raise NotImplementedError
+
+		
 	def notify_next_change(self, callback=None, timeout=None):
 		raise NotImplementedError("mbox does not support notifications")
 

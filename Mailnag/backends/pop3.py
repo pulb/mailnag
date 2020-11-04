@@ -117,11 +117,19 @@ class POP3MailboxBackend(MailboxBackend):
 			except:
 				logging.debug("Couldn't get msg from POP message.")
 				continue
-			yield (folder, msg)
+			yield (folder, msg, {})
 
 
 	def request_folders(self):
 		raise NotImplementedError("POP3 does not support folders")
+
+
+	def supports_mark_as_seen(self):
+		return False
+
+
+	def mark_as_seen(self, mails):
+		raise NotImplementedError
 
 
 	def notify_next_change(self, callback=None, timeout=None):

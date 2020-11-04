@@ -278,6 +278,7 @@ class ConfigWindow:
 		aboutdialog.set_license_type(Gtk.License.GPL_2_0)		
 		aboutdialog.set_authors([
 			"Patrick Ulbrich (maintainer)",
+			"Andreas Angerer",
 			"Balló György",
 			"Dan Christensen",
 			"Edwin Smulders",
