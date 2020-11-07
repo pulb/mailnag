@@ -139,8 +139,10 @@ class IMAPMailboxBackend(MailboxBackend):
 		conn = self._connect()
 		
 		try:
+			sorted_mails = sorted(mails, key = lambda m : m.flags['folder'] if 'folder' in m.flags else '')
 			last_folder = ''
-			for m in mails:
+			
+			for m in sorted_mails:
 				if ('uid' in m.flags) and ('folder' in m.flags):
 					folder = m.flags['folder']
 					if folder != last_folder:
