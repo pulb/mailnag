@@ -1,5 +1,6 @@
 # Copyright 2013 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2020 Dan Christensen <jdc@uwo.ca>
+# Copyright 2020 Denis Anuschewski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -64,7 +65,7 @@ class LibNotifyPlugin(Plugin):
 		# initialize Notification
 		if not self._initialized:
 			Notify.init("Mailnag")
-			self._is_gnome = self._is_gnome_environment(('GDMSESSION', 'XDG_CURRENT_DESKTOP'))
+			self._is_gnome = self._is_gnome_environment(('XDG_CURRENT_DESKTOP', 'GDMSESSION'))
 			self._initialized = True
 		
 		def mails_added_hook(new_mails, all_mails):
@@ -377,7 +378,7 @@ class LibNotifyPlugin(Plugin):
 
 	def _is_gnome_environment(self, env_vars):
 		for var in env_vars:
-			if os.environ.get(var, '').lower().endswith('gnome'):
+			if 'gnome' in os.environ.get(var, '').lower().split(':'):
 				return True
 		return False
 

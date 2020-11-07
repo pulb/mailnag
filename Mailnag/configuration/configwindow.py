@@ -281,6 +281,7 @@ class ConfigWindow:
 			"Andreas Angerer",
 			"Balló György",
 			"Dan Christensen",
+			"Denis Anuschewski",
 			"Edwin Smulders",
 			"Freeroot",
 			"James Powell",
