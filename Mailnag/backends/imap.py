@@ -144,11 +144,15 @@ class IMAPMailboxBackend(MailboxBackend):
 			
 			for m in sorted_mails:
 				if ('uid' in m.flags) and ('folder' in m.flags):
-					folder = m.flags['folder']
-					if folder != last_folder:
-						conn.select(f'"{folder}"', readonly = False)
-						last_folder = folder
-					status, data = conn.uid("STORE", m.flags['uid'], "+FLAGS", "(\Seen)")
+					try:
+						folder = m.flags['folder']
+						if folder != last_folder:
+							conn.select(f'"{folder}"', readonly = False)
+							last_folder = folder
+						status, data = conn.uid("STORE", m.flags['uid'], "+FLAGS", "(\Seen)")
+					except:
+						logging.warning("Failed to set mail with uid %s to seen on server (account: '%s').", m.flags['uid'], acc.name)
+
 		finally:
 			self._disconnect(conn)
 	

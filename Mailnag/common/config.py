@@ -1,4 +1,4 @@
-# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,11 +23,12 @@ from configparser import RawConfigParser
 mailnag_defaults = {
 	'core':
 	{
-		'poll_interval'		: '10',
-		'imap_idle_timeout'	: '10',
-		'autostart'			: '1',
-		'connectivity_test'	: 'auto',
-		'enabled_plugins'	: 'dbusplugin, soundplugin, libnotifyplugin'
+		'poll_interval'		 : '10',
+		'imap_idle_timeout'	 : '10',
+		'mailbox_seen_flags' : '1',
+		'autostart'			 : '1',
+		'connectivity_test'	 : 'auto',
+		'enabled_plugins'	 : 'dbusplugin, soundplugin, libnotifyplugin'
 	}
 }
 

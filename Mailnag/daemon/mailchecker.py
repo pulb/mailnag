@@ -32,6 +32,7 @@ class MailChecker:
 		self._firstcheck = True # first check after startup
 		self._mailcheck_lock = threading.Lock()
 		self._mailsyncer = MailSyncer(cfg)
+		self._mailbox_seen_flags = bool(cfg.get('core', 'mailbox_seen_flags'))
 		self._memorizer = memorizer
 		self._hookreg = hookreg
 		self._conntest = conntest
@@ -63,7 +64,7 @@ class MailChecker:
 						unseen_mails.append(mail)
 						if self._firstcheck:
 							new_mails.append(mail)
-					else:
+					elif self._mailbox_seen_flags:
 						# if the mail account supports tagging mails as seen (e.g. IMAP), 
 						# mark the mail as seen on the server as well.
 						if mail.account.supports_mark_as_seen():
@@ -76,10 +77,7 @@ class MailChecker:
 			
 			# Flag mails to seen on server
 			for acc, mails in seen_mails_by_account.items():
-				try:
-					acc.mark_as_seen(mails)
-				except:
-					logging.warning("Failed to set mails to seen on server (account: '%s').", acc.name)
+				acc.mark_as_seen(mails)
 			
 			self._memorizer.sync(all_mails)
 			self._memorizer.save()
