@@ -8,14 +8,17 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-03-28 10:59+0100\n"
-"PO-Revision-Date: 2019-03-16 14:48+0000\n"
-"Last-Translator: Launchpad Translations Administrators <Unknown>\n"
-"Language-Team: Swedish <sv@li.org>\n"
+"PO-Revision-Date: 2020-12-24 02:29+0000\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"Language-Team: Swedish <https://hosted.weblate.org/projects/mailnag/mailnag/"
+"sv/>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 "X-Launchpad-Export-Date: 2020-06-11 14:44+0000\n"
-"X-Generator: Launchpad (build b190cebbf563f89e480a8b57f641753c8196bda0)\n"
 
 #: Mailnag/plugins/userscriptplugin.py:60
 msgid "User Script"
@@ -177,7 +180,7 @@ msgstr "Namn"
 #: Mailnag/configuration/configwindow.py:270
 #, python-format
 msgid "About %s"
-msgstr ""
+msgstr "Om %s"
 
 #: Mailnag/configuration/configwindow.py:273
 msgid "An extensible mail notification daemon."
@@ -189,7 +192,7 @@ msgstr ""
 
 #: Mailnag/configuration/configwindow.py:277
 msgid "Homepage"
-msgstr ""
+msgstr "Hemsida"
 
 #: Mailnag/configuration/configwindow.py:295
 msgid "translator-credits"
@@ -212,19 +215,19 @@ msgstr "valfritt"
 
 #: Mailnag/configuration/accountdialog.py:244
 msgid "IMAP (Custom)"
-msgstr ""
+msgstr "IMAP (Anpassad)"
 
 #: Mailnag/configuration/accountdialog.py:245
 msgid "POP3 (Custom)"
-msgstr ""
+msgstr "POP3 (Anpassad)"
 
 #: Mailnag/configuration/accountdialog.py:246
 msgid "MBox (Custom)"
-msgstr ""
+msgstr "MBox (Anpassad)"
 
 #: Mailnag/configuration/accountdialog.py:247
 msgid "Maildir (Custom)"
-msgstr ""
+msgstr "Maildir (Anpassad)"
 
 #: Mailnag/configuration/accountdialog.py:353
 msgid "Connection failed."
@@ -272,7 +275,7 @@ msgstr ""
 
 #: data/account_widget.ui.h:11
 msgid "Directory:"
-msgstr ""
+msgstr "Katalog:"
 
 #: data/config_window.ui.h:1
 msgid "Enable/disable Mailnag daemon"
@@ -304,8 +307,8 @@ msgstr "Tillägg"
 
 #: data/config_window.ui.h:8
 msgid "Donate"
-msgstr ""
+msgstr "Donera"
 
 #: data/config_window.ui.h:9
 msgid "Info"
-msgstr ""
+msgstr "Info"

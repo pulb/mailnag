@@ -8,14 +8,17 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-03-28 10:59+0100\n"
-"PO-Revision-Date: 2020-06-10 10:52+0000\n"
-"Last-Translator: Patrick Ulbrich <Unknown>\n"
-"Language-Team: German <de@li.org>\n"
+"PO-Revision-Date: 2020-10-24 19:26+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/mailnag/mailnag/"
+"de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 "X-Launchpad-Export-Date: 2020-06-11 14:44+0000\n"
-"X-Generator: Launchpad (build b190cebbf563f89e480a8b57f641753c8196bda0)\n"
 
 #: Mailnag/plugins/userscriptplugin.py:60
 msgid "User Script"
@@ -110,7 +113,7 @@ msgstr "Benachrichtigungsmodus:"
 #: Mailnag/plugins/libnotifyplugin.py:278
 #, python-brace-format
 msgid "{0} new mails"
-msgstr "{0} neue Mails"
+msgstr "{0} neue E-Mails"
 
 #: Mailnag/plugins/libnotifyplugin.py:216
 #, python-brace-format
@@ -153,7 +156,7 @@ msgstr "GNOME Online Accounts"
 
 #: Mailnag/plugins/goaplugin.py:92
 msgid "GNOME Online Accounts Integration."
-msgstr "GNOME Online Accounts Integration."
+msgstr "Integration von GNOME Online Accounts."
 
 #: Mailnag/daemon/mails.py:121
 msgid "No subject"
@@ -190,14 +193,14 @@ msgstr "Copyright (c) 2011 - 2020 Patrick Ulbrich und Mitwirkende."
 
 #: Mailnag/configuration/configwindow.py:277
 msgid "Homepage"
-msgstr "Homepage"
+msgstr "Startseite"
 
 #: Mailnag/configuration/configwindow.py:295
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
-"  Patrick Ulbrich https://launchpad.net/~pulb\n"
-"  Tobias Bannert https://launchpad.net/~toba"
+" Patrick Ulbrich https://launchpad.net/~pulb\n"
+" Tobias Bannert https://launchpad.net/~toba"
 
 #: Mailnag/configuration/configwindow.py:335
 msgid "Delete this account:"
@@ -309,4 +312,4 @@ msgstr "Spenden"
 
 #: data/config_window.ui.h:9
 msgid "Info"
-msgstr "Info"
+msgstr "Infos"
