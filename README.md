@@ -10,7 +10,7 @@ with additional plugins easily.
 
 __This project needs your support!__  
 If you like Mailnag, please help to keep it going by [contributing code](https://github.com/pulb/mailnag),  
-[reporting/fixing bugs](https://github.com/pulb/mailnag/issues), [translating strings into your native language](https://translations.launchpad.net/mailnag),  
+[reporting/fixing bugs](https://github.com/pulb/mailnag/issues), [translating strings into your native language](https://hosted.weblate.org/projects/mailnag/mailnag/),  
 [writing docs](https://github.com/pulb/mailnag/wiki) or by [making a donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8F5FNJ3U4N7AW).  
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8F5FNJ3U4N7AW" target="_blank">
