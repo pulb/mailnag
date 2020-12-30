@@ -1,3 +1,16 @@
+Version 2.1 (2020-12-30):
+=========================
+* Mark-as-read also marks e-mails read on the server 
+  if supported (thanks Andreas Angerer!)
+* libnotify plugin: close associated notification when the e-mail 
+  has been read (single-notification-mode only,
+  thanks Dan Christensen!)
+* libnofify plugin: correctly identify 
+  desktop environment (thanks Denis Anuschewski!)
+* Misc other fixes and improvements
+* Updated translations
+
+
 Version 2.0 (2020-03-28):
 ===========================
 * Ported to Python3
