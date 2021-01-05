@@ -1,4 +1,4 @@
-# Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2020 Andreas Angerer
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
@@ -25,6 +25,7 @@
 
 import email
 import logging
+import threading
 import re
 
 from Mailnag.backends.base import MailboxBackend
@@ -178,8 +179,12 @@ class IMAPMailboxBackend(MailboxBackend):
 				# conn has already been closed, don't try to close it again
 				# self._conn.close() # (calls idle_callback)
 				
-				# shutdown existing callback thread
-				self._conn.logout()
+				# Free resources of the current connection.
+				# NOTE: logout() also joins all threads of the current connection
+				# - including the thread currently executing this callback.
+				# Since a thread can't join itself (throws an exception), 
+				# dispatch the call to logout() to a new thread context.
+				threading.Thread(target=self._conn.logout).start()
 				self._conn = None
 			
 			# call actual callback
