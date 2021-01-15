@@ -175,7 +175,8 @@ class IMAPMailboxBackend(MailboxBackend):
 		# idle callback (runs on a further thread)
 		def _idle_callback(args):
 			# check if the connection has been reset by provider
-			if (args[2] != None) and (args[2][0] is self._conn.abort):
+			aborted = args[2] # (typ, val)
+			if aborted is not None:
 				# conn has already been closed, don't try to close it again
 				# self._conn.close() # (calls idle_callback)
 				
