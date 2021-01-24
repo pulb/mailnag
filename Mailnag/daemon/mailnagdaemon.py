@@ -1,5 +1,5 @@
 # Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
-# Copyright 2014 - 2020 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2014 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2020 Andreas Angerer
 #
 # This program is free software; you can redistribute it and/or modify
@@ -102,7 +102,8 @@ class MailnagDaemon(MailnagController):
 		if self._accounts != None:
 			for acc in self._accounts:
 				if acc.is_open():
-					acc.close()
+					try: acc.close()
+					except: pass
 
 		self._unload_plugins()
 	
@@ -178,15 +179,15 @@ class MailnagDaemon(MailnagController):
 				poll_interval = int(self._cfg.get('core', 'poll_interval'))
 
 				def poll_func():
-					try:
-						while True:
-							self._poll_thread_stop.wait(timeout = 60.0 * poll_interval)
-							if self._poll_thread_stop.is_set():
-								break
-
+					while True:
+						self._poll_thread_stop.wait(timeout = 60.0 * poll_interval)
+						if self._poll_thread_stop.is_set():
+							break
+						
+						try:
 							self._mailchecker.check(non_idle_accounts)
-					except:
-						logging.exception('Caught an exception.')
+						except:
+							logging.exception('Caught an exception.')
 
 				self._poll_thread = threading.Thread(target = poll_func)
 				self._poll_thread.start()
@@ -194,10 +195,7 @@ class MailnagDaemon(MailnagController):
 			# start idler threads for IMAP accounts with idle support
 			if len(idle_accounts) > 0:
 				def sync_func(account):
-					try:
-						self._mailchecker.check([account])
-					except:
-						logging.exception('Caught an exception.')
+					self._mailchecker.check([account])
 
 
 				idle_timeout = int(self._cfg.get('core', 'imap_idle_timeout'))				

@@ -1,4 +1,4 @@
-# Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2020 Andreas Angerer
 # Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
@@ -67,27 +67,41 @@ class MailCollector:
 				logging.error("Failed to open mailbox for account '%s' (%s)." % (acc.name, ex))
 				continue
 
-			for folder, msg, flags in acc.list_messages():
-				sender, subject, datetime, msgid = self._get_header(msg)
-				id = self._get_id(msgid, acc, folder, sender, subject, datetime)
-			
-				# Discard mails with identical IDs (caused
-				# by mails with a non-unique fallback ID,
-				# i.e. mails received in the same folder with
-				# identical sender and subject but *no datetime*,
-				# see _get_id()).
-				# Also filter duplicates caused by Gmail labels.
-				if id not in mail_ids:
-					mail_list.append(Mail(datetime, subject, \
-						sender, id, acc, flags))
-					mail_ids[id] = None
+			try:
+				for folder, msg, flags in acc.list_messages():
+					sender, subject, datetime, msgid = self._get_header(msg)
+					id = self._get_id(msgid, acc, folder, sender, subject, datetime)
+				
+					# Discard mails with identical IDs (caused
+					# by mails with a non-unique fallback ID,
+					# i.e. mails received in the same folder with
+					# identical sender and subject but *no datetime*,
+					# see _get_id()).
+					# Also filter duplicates caused by Gmail labels.
+					if id not in mail_ids:
+						mail_list.append(Mail(datetime, subject, \
+							sender, id, acc, flags))
+						mail_ids[id] = None
+			except Exception as ex:
+				# Catch exceptions here, so remaining accounts will still be checked 
+				# if a specific account has issues.
+				#
+				# Re-throw the exception for accounts that support notifications (i.e. imap IDLE),
+				# so the calling idler thread can handle the error and reset the connection if needed (see idlers.py).
+				# NOTE: Idler threads always check single accounts (i.e. len(self._accounts) == 1), 
+				#       so there are no remaining accounts to be checked for now.
+				if acc.supports_notifications():
+					raise
+				else:
+					logging.error("An error occured while processing mails of account '%s' (%s)." % (acc.name, ex))
+			finally:
+				# leave account with notifications open, so that it can
+				# send notifications about new mails
+				if not acc.supports_notifications():
+					# disconnect from Email-Server
+					acc.close()
 
-			# leave account with notifications open, so that it can
-			# send notifications about new mails
-			if not acc.supports_notifications():
-				# disconnect from Email-Server
-				acc.close()
-		
+			
 		# sort mails
 		if sort:
 			mail_list.sort(key = lambda m: m.datetime, reverse = True)

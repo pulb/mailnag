@@ -62,14 +62,13 @@ class IMAPMailboxBackend(MailboxBackend):
 	def close(self):
 		# if conn has already been closed, don't try to close it again
 		if self._conn != None:
-			self._disconnect(self._conn)
+			conn = self._conn
 			self._conn = None
+			self._disconnect(conn)
 
 
 	def is_open(self):
-		return (self._conn != None) and \
-				(self._conn.state != imaplib.LOGOUT) and \
-				(not self._conn.Terminate)
+		return self._conn != None
 
 
 	def list_messages(self):
@@ -174,22 +173,10 @@ class IMAPMailboxBackend(MailboxBackend):
 
 		# idle callback (runs on a further thread)
 		def _idle_callback(args):
-			# check if the connection has been reset by provider
-			aborted = args[2] # (typ, val)
-			if aborted is not None:
-				# conn has already been closed, don't try to close it again
-				# self._conn.close() # (calls idle_callback)
-				
-				# Free resources of the current connection.
-				# NOTE: logout() also joins all threads of the current connection
-				# - including the thread currently executing this callback.
-				# Since a thread can't join itself (throws an exception), 
-				# dispatch the call to logout() to a new thread context.
-				threading.Thread(target=self._conn.logout).start()
-				self._conn = None
-			
+			# error = (error_type, error_val)
+			response, callback_arg, error = args
 			# call actual callback
-			callback(args)
+			callback(error)
 		
 		self._conn.idle(callback = _idle_callback, timeout = timeout)
 
@@ -252,8 +239,12 @@ class IMAPMailboxBackend(MailboxBackend):
 
 
 	def _disconnect(self, conn):
-		conn.close()
-		conn.logout()
+		try:
+			conn.close()
+		finally:		
+			# Closing the connection may fail (e.g. wrong state), 
+			# but resources need to be freed anyway.
+			conn.logout()
 	
 	
 	def _select_single_folder(self, conn):

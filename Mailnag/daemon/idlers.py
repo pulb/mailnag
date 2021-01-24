@@ -1,4 +1,4 @@
-# Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 #
@@ -77,33 +77,64 @@ class Idler(object):
 				break
 			
 			self._needsync = False
-
-			self._account.notify_next_change(callback = self._idle_callback, timeout = 60 * self._idle_timeout)
+			self._needreset = False
 			
-			# waits for the event to be set
-			# (in idle callback or in dispose())
-			self._event.wait()
+			try:
+				self._account.notify_next_change(callback = self._idle_callback, timeout = 60 * self._idle_timeout)
+			
+				# waits for the event to be set
+				# (in idle callback or in dispose())
+				self._event.wait()
+			except:				
+				logging.exception('Caught an exception.')
+				# Reset current connection if the call to notify_next_change() fails
+				# as this is probably connection related (e.g. conn terminated).
+				self._reset_conn()
 			
 			# if the event is set due to idle sync
-			if self._needsync:
+			if self._needsync:			
 				self._event.clear()
-				if not self._account.is_open():
-					self._reconnect()
+				
+				if self._needreset:
+					self._reset_conn()
 				
 				if self._account.is_open():
-					self._sync_callback(self._account)
+					try:
+						# Fetch and sync mails from account
+						self._sync_callback(self._account)
+					except:
+						logging.exception('Caught an exception.')
+						# Reset current connection if the call to sync_callback() (mail sync) fails.
+						# An immediate sync has already been performed successfully on startup,
+						# so if an error occurs here, it may be connection related (e.g. conn terminated).
+						self._reset_conn()
 
 		self._account.cancel_notifications()
 		
 	
 	# idle callback (runs on a further thread)
-	def _idle_callback(self, args):
+	def _idle_callback(self, error):
 		# flag that a mail sync is needed
 		self._needsync = True
+		
+		# flag the need for a connection reset in case of an error (e.g. conn terminated)
+		if error is not None:
+			error_type, error_val = error
+			logging.error("Idle callback for account '%s' returned an error (%s - %s)." % (self._account.name, error_type, str(error_val)))
+			self._needreset = True
+		
 		# trigger waiting _idle thread
 		self._event.set()
 	
 			
+	def _reset_conn(self):
+		# Try to reset the connection to recover from a possible connection error (e.g. after system suspend)
+		logging.info("Resetting connection for account '%s'" % self._account.name)
+		try: self._account.close()
+		except:	pass
+		self._reconnect()
+		
+	
 	def _reconnect(self):
 		# connection has been reset by provider -> try to reconnect
 		logging.info("Idler thread for account '%s' has been disconnected" % self._account.name)
