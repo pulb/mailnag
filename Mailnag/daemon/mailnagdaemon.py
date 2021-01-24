@@ -35,8 +35,9 @@ from Mailnag.common.utils import try_call
 
 
 testmode_mapping = {
-	'auto'				: TestModes.AUTO,
-	'networkmanager'	: TestModes.NETWORKMANAGER,
+	'auto'				: TestModes.NETWORKMONITOR,	# Legacy, deprecated
+	'networkmanager'	: TestModes.NETWORKMONITOR, # Legacy, deprecated
+	'networkmonitor'	: TestModes.NETWORKMONITOR,
 	'ping'				: TestModes.PING
 }
 
