@@ -36,6 +36,7 @@ class Idler(object):
 		self._sync_callback = sync_callback
 		self._account = account
 		self._idle_timeout = idle_timeout
+		self._disposing = False
 		self._disposed = False
 
 
@@ -48,6 +49,9 @@ class Idler(object):
 		
 	def dispose(self):
 		if self._thread.is_alive():
+			# flag a shutdown
+			self._disposing = True
+			# unblock idle event the _idle thread is waiting for
 			self._event.set()
 			self._thread.join()
 		
@@ -58,11 +62,7 @@ class Idler(object):
 	# idle thread
 	def _idle(self):
 		# mailbox may have been opened in mailnagdaemon.py already (immediate check)
-		while not self._account.is_open():
-			# if the event is set here, disposed() must have been called so stop the idle thread.
-			if self._event.isSet():
-				return
-				
+		while (not self._account.is_open()) and (not self._disposing):
 			try:
 				self._account.open()
 			except Exception as ex:
@@ -71,11 +71,7 @@ class Idler(object):
 					(self._account.name, str(self.RECONNECT_RETRY_INTERVAL)))
 				self._wait(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer the server
 
-		while True:
-			# if the event is set here, disposed() must have been called so stop the idle thread.
-			if self._event.isSet():
-				break
-			
+		while not self._disposing:
 			self._needsync = False
 			self._needreset = False
 			
@@ -93,10 +89,12 @@ class Idler(object):
 			
 			# if the event is set due to idle sync
 			if self._needsync:			
-				self._event.clear()
-				
 				if self._needreset:
 					self._reset_conn()
+				
+				# NOTE: the event must be cleared after resetting (closing) the connection
+				# so no more callbacks (that may set the event again) can occur.
+				self._event.clear()
 				
 				if self._account.is_open():
 					try:
@@ -139,7 +137,7 @@ class Idler(object):
 		# connection has been reset by provider -> try to reconnect
 		logging.info("Idler thread for account '%s' has been disconnected" % self._account.name)
 
-		while (not self._account.is_open()) and (not self._event.isSet()):
+		while (not self._account.is_open()) and (not self._disposing):
 			logging.info("Trying to reconnect Idler thread for account '%s'." % self._account.name)
 			try:
 				self._account.open()
@@ -153,7 +151,7 @@ class Idler(object):
 					
 	def _wait(self, secs):
 		start_time = time.time()
-		while (((time.time() - start_time) < secs) and (not self._event.isSet())):
+		while (((time.time() - start_time) < secs) and (not self._disposing)):
 			time.sleep(1)
 
 
