@@ -25,7 +25,6 @@
 
 import email
 import logging
-import threading
 import re
 
 from Mailnag.backends.base import MailboxBackend
