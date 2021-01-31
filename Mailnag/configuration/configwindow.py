@@ -1,4 +1,4 @@
-# Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -271,7 +271,7 @@ class ConfigWindow:
 		aboutdialog.set_version(APP_VERSION)
 		aboutdialog.set_program_name(PACKAGE_NAME.title())
 		aboutdialog.set_comments(_("An extensible mail notification daemon."))
-		aboutdialog.set_copyright(_("Copyright (c) 2011 - 2020 Patrick Ulbrich and contributors."))
+		aboutdialog.set_copyright(_("Copyright (c) 2011 - 2021 Patrick Ulbrich and contributors."))
 		aboutdialog.set_logo_icon_name("mailnag")
 		aboutdialog.set_website("https://github.com/pulb/mailnag")
 		aboutdialog.set_website_label(_("Homepage"))
