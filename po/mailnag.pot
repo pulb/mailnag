@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-31 17:33+0100\n"
+"POT-Creation-Date: 2021-02-01 17:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,13 +159,13 @@ msgstr ""
 
 #: Mailnag/configuration/configwindow.py:82
 #: Mailnag/configuration/configwindow.py:102
-#: Mailnag/configuration/accountdialog.py:115
+#: Mailnag/configuration/accountdialog.py:118
 msgid "Enabled"
 msgstr ""
 
 #: Mailnag/configuration/configwindow.py:88
 #: Mailnag/configuration/configwindow.py:108
-#: Mailnag/configuration/accountdialog.py:121
+#: Mailnag/configuration/accountdialog.py:124
 msgid "Name"
 msgstr ""
 
@@ -194,75 +194,81 @@ msgstr ""
 msgid "Delete this account:"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:70
+#: Mailnag/configuration/accountdialog.py:72
 msgid "Mail Account"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:111
+#: Mailnag/configuration/accountdialog.py:114
 msgid "optional"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:244
+#: Mailnag/configuration/accountdialog.py:247
 msgid "IMAP (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:245
+#: Mailnag/configuration/accountdialog.py:248
 msgid "POP3 (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:246
+#: Mailnag/configuration/accountdialog.py:249
 msgid "MBox (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:247
+#: Mailnag/configuration/accountdialog.py:250
 msgid "Maildir (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:353
+#: Mailnag/configuration/accountdialog.py:356
 msgid "Connection failed."
 msgstr ""
 
 #: data/account_widget.ui.h:1
-msgid "Enable Push-IMAP"
-msgstr ""
-
-#: data/account_widget.ui.h:2
-msgid "Enable SSL encryption"
+msgid ""
+"You may need to create an application-specific password for Gmail.\n"
+"Click this icon for more information."
 msgstr ""
 
 #: data/account_widget.ui.h:3
-msgid "Accountname:"
+msgid "Enable Push-IMAP"
 msgstr ""
 
 #: data/account_widget.ui.h:4
-msgid "Account type:"
+msgid "Enable SSL encryption"
 msgstr ""
 
 #: data/account_widget.ui.h:5
-msgid "User:"
+msgid "Accountname:"
 msgstr ""
 
 #: data/account_widget.ui.h:6
-msgid "Password:"
+msgid "Account type:"
 msgstr ""
 
 #: data/account_widget.ui.h:7
-msgid "Server:"
+msgid "User:"
 msgstr ""
 
 #: data/account_widget.ui.h:8
-msgid "Port:"
+msgid "Password:"
 msgstr ""
 
 #: data/account_widget.ui.h:9
-msgid "Folders (optional)"
+msgid "Server:"
 msgstr ""
 
 #: data/account_widget.ui.h:10
-msgid "File path:"
+msgid "Port:"
 msgstr ""
 
 #: data/account_widget.ui.h:11
+msgid "Folders (optional)"
+msgstr ""
+
+#: data/account_widget.ui.h:12
+msgid "File path:"
+msgstr ""
+
+#: data/account_widget.ui.h:13
 msgid "Directory:"
 msgstr ""
 
