@@ -51,7 +51,7 @@
         <property name="visibility">False</property>
         <property name="invisible-char">•</property>
         <property name="secondary-icon-name">emblem-important</property>
-        <property name="secondary-icon-tooltip-text" translatable="yes">You may need to create an application-specific password for GMail.
+        <property name="secondary-icon-tooltip-text" translatable="yes">You may need to create an application-specific password for Gmail.
 Click this icon for more information.</property>
         <signal name="changed" handler="entry_changed" swapped="no"/>
         <signal name="icon-release" handler="password_info_icon_released" swapped="no"/>
