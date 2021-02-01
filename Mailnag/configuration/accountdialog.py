@@ -1,4 +1,4 @@
-# Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016, 2019 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('GLib', '2.0')
 
-from gi.repository import GObject, GLib, Gtk
+from gi.repository import GObject, GLib, Gtk, Gdk
 from _thread import start_new_thread
 from Mailnag.common.dist_cfg import PACKAGE_NAME
 from Mailnag.common.i18n import _
@@ -38,6 +38,7 @@ IDX_POP3	= 5
 IDX_MBOX	= 6
 IDX_MAILDIR	= 7
 
+GMAIL_SUPPORT_PAGE = "https://support.google.com/mail/answer/185833?hl=en"
 
 PROVIDER_CONFIGS = [
 	[ 'Gmail', 'imap.gmail.com', '993'],
@@ -64,7 +65,8 @@ class AccountDialog:
 		builder.connect_signals({ \
 			"account_type_changed" : self._on_cmb_account_type_changed, \
 			"entry_changed" : self._on_entry_changed, \
-			"expander_folders_activate" : self._on_expander_folders_activate \
+			"expander_folders_activate" : self._on_expander_folders_activate, \
+			"password_info_icon_released" : self._on_password_info_icon_released \
 		})
 
 		self._window = Gtk.Dialog(title = _('Mail Account'), parent = parent, use_header_bar = True, \
@@ -107,6 +109,7 @@ class AccountDialog:
 		self._error_label = None
 		self._folders_received = False
 		self._selected_folder_count = 0
+		self._pwd_info_icon = self._entry_account_password.get_icon_name(Gtk.EntryIconPosition.SECONDARY)
 		
 		self._entry_account_port.set_placeholder_text(_("optional"))
 
@@ -375,6 +378,10 @@ class AccountDialog:
 		start_new_thread(worker_thread, ("worker_thread",))		
 		
 
+	def _on_password_info_icon_released(self, widget, icon_pos, event):
+		Gtk.show_uri_on_window(None, GMAIL_SUPPORT_PAGE, Gdk.CURRENT_TIME)
+
+
 	def _on_folder_toggled(self, cell, path):
 		isactive = not cell.get_active()
 		model = self._liststore_folders
@@ -395,6 +402,7 @@ class AccountDialog:
 	
 	def _on_cmb_account_type_changed(self, widget):
 		acctype = widget.get_active()
+		self._entry_account_password.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, None)
 		
 		#
 		# Reset everything when the account type changes
@@ -490,6 +498,10 @@ class AccountDialog:
 			self._chooser_account_file_path.set_visible(False)
 			self._label_account_directory_path.set_visible(False)
 			self._chooser_account_directory_path.set_visible(False)
+			
+			if acctype == IDX_GMAIL:
+				self._entry_account_password.set_icon_from_icon_name(
+					Gtk.EntryIconPosition.SECONDARY, self._pwd_info_icon)
 		
 		self._folders_received = False
 		self._selected_folder_count = 0
