@@ -76,6 +76,9 @@ class Account:
 			self._backend.close()
 		self._backend = None
 
+		if mailbox_type == "gmail_rss":
+			self.user = name
+			self.server = "gmail_rss"
 
 	def get_config(self):
 		"""Return account's configuration as a dict."""
@@ -255,6 +258,11 @@ class AccountManager:
 				#       Not every backend requires a password.
 				user = options.get('user')
 				server = options.get('server')
+				# TODO: get rid of the fake server and user names
+				if mailbox_type == "gmail_rss":
+					user = name
+					server = "gmail_rss"
+					imap = True
 				if self._secretstore != None and user and server:
 					password = self._secretstore.get(self._get_account_id(user, server, imap))
 					if not password: password = ''

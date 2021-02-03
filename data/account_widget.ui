@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.16"/>
   <object class="GtkListStore" id="liststore_folders">
@@ -10,219 +10,240 @@
       <column type="gchararray"/>
     </columns>
   </object>
-  <!-- n-columns=2 n-rows=11 -->
+  <object class="GtkListStore" id="liststore_gmail_label_modes">
+    <columns>
+      <!-- column-name mode_choice -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Include</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Exclude</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="liststore_gmail_labels">
+    <columns>
+      <!-- column-name label -->
+      <column type="gchararray"/>
+      <!-- column-name mode -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkGrid" id="account_widget">
     <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="margin-top">6</property>
-    <property name="row-spacing">6</property>
-    <property name="column-spacing">6</property>
+    <property name="can_focus">False</property>
+    <property name="margin_top">6</property>
+    <property name="row_spacing">6</property>
+    <property name="column_spacing">6</property>
     <child>
       <object class="GtkEntry" id="entry_account_port">
         <property name="visible">True</property>
-        <property name="can-focus">True</property>
+        <property name="can_focus">True</property>
         <property name="hexpand">True</property>
-        <property name="invisible-char">•</property>
-        <property name="input-purpose">number</property>
+        <property name="invisible_char">•</property>
+        <property name="input_purpose">number</property>
       </object>
       <packing>
-        <property name="left-attach">1</property>
-        <property name="top-attach">5</property>
+        <property name="left_attach">1</property>
+        <property name="top_attach">7</property>
       </packing>
     </child>
     <child>
       <object class="GtkEntry" id="entry_account_server">
         <property name="visible">True</property>
-        <property name="can-focus">True</property>
+        <property name="can_focus">True</property>
         <property name="hexpand">True</property>
-        <property name="invisible-char">•</property>
+        <property name="invisible_char">•</property>
         <signal name="changed" handler="entry_changed" swapped="no"/>
       </object>
       <packing>
-        <property name="left-attach">1</property>
-        <property name="top-attach">4</property>
+        <property name="left_attach">1</property>
+        <property name="top_attach">6</property>
       </packing>
     </child>
     <child>
       <object class="GtkEntry" id="entry_account_password">
         <property name="visible">True</property>
-        <property name="can-focus">True</property>
+        <property name="can_focus">True</property>
         <property name="hexpand">True</property>
         <property name="visibility">False</property>
-        <property name="invisible-char">•</property>
-        <property name="secondary-icon-name">emblem-important</property>
-        <property name="secondary-icon-tooltip-text" translatable="yes">You may need to create an application-specific password for Gmail.
+        <property name="invisible_char">•</property>
+        <property name="secondary_icon_name">emblem-important</property>
+        <property name="secondary_icon_tooltip_text" translatable="yes">You may need to create an application-specific password for Gmail.
 Click this icon for more information.</property>
         <signal name="changed" handler="entry_changed" swapped="no"/>
         <signal name="icon-release" handler="password_info_icon_released" swapped="no"/>
       </object>
       <packing>
-        <property name="left-attach">1</property>
-        <property name="top-attach">3</property>
+        <property name="left_attach">1</property>
+        <property name="top_attach">5</property>
       </packing>
     </child>
     <child>
       <object class="GtkEntry" id="entry_account_user">
         <property name="visible">True</property>
-        <property name="can-focus">True</property>
+        <property name="can_focus">True</property>
         <property name="hexpand">True</property>
-        <property name="invisible-char">•</property>
+        <property name="invisible_char">•</property>
         <signal name="changed" handler="entry_changed" swapped="no"/>
       </object>
       <packing>
-        <property name="left-attach">1</property>
-        <property name="top-attach">2</property>
+        <property name="left_attach">1</property>
+        <property name="top_attach">4</property>
       </packing>
     </child>
     <child>
       <object class="GtkEntry" id="entry_account_name">
         <property name="visible">True</property>
-        <property name="can-focus">True</property>
+        <property name="can_focus">True</property>
         <property name="hexpand">True</property>
-        <property name="invisible-char">•</property>
+        <property name="invisible_char">•</property>
         <signal name="changed" handler="entry_changed" swapped="no"/>
       </object>
       <packing>
-        <property name="left-attach">1</property>
-        <property name="top-attach">1</property>
+        <property name="left_attach">1</property>
+        <property name="top_attach">1</property>
       </packing>
     </child>
     <child>
       <object class="GtkCheckButton" id="chk_account_push">
         <property name="label" translatable="yes">Enable Push-IMAP</property>
         <property name="visible">True</property>
-        <property name="can-focus">True</property>
-        <property name="receives-default">False</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
         <property name="xalign">0</property>
-        <property name="draw-indicator">True</property>
+        <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">8</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">10</property>
         <property name="width">2</property>
       </packing>
     </child>
     <child>
       <object class="GtkComboBoxText" id="cmb_account_type">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <signal name="changed" handler="account_type_changed" swapped="no"/>
       </object>
       <packing>
-        <property name="left-attach">1</property>
-        <property name="top-attach">0</property>
+        <property name="left_attach">1</property>
+        <property name="top_attach">0</property>
       </packing>
     </child>
     <child>
       <object class="GtkCheckButton" id="chk_account_ssl">
         <property name="label" translatable="yes">Enable SSL encryption</property>
         <property name="visible">True</property>
-        <property name="can-focus">True</property>
-        <property name="receives-default">False</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
         <property name="xalign">0</property>
-        <property name="draw-indicator">True</property>
+        <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">9</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">11</property>
         <property name="width">2</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel" id="label_account_name">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <property name="label" translatable="yes">Accountname:</property>
         <property name="xalign">0</property>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">1</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">1</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel" id="label_account_type">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <property name="label" translatable="yes">Account type:</property>
         <property name="xalign">0</property>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">0</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">0</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel" id="label_account_user">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <property name="label" translatable="yes">User:</property>
         <property name="xalign">0</property>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">2</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">4</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel" id="label_account_password">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <property name="label" translatable="yes">Password:</property>
         <property name="xalign">0</property>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">3</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">5</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel" id="label_account_server">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <property name="label" translatable="yes">Server:</property>
         <property name="xalign">0</property>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">4</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">6</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel" id="label_account_port">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <property name="label" translatable="yes">Port:</property>
         <property name="xalign">0</property>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">5</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">7</property>
       </packing>
     </child>
     <child>
       <object class="GtkExpander" id="expander_folders">
         <property name="visible">True</property>
         <property name="sensitive">False</property>
-        <property name="can-focus">True</property>
+        <property name="can_focus">True</property>
         <signal name="activate" handler="expander_folders_activate" swapped="no"/>
         <child>
           <object class="GtkOverlay" id="overlay">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <child>
               <object class="GtkScrolledWindow" id="scrolledwindow1">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="shadow-type">in</property>
-                <property name="min-content-height">100</property>
+                <property name="can_focus">True</property>
+                <property name="shadow_type">in</property>
+                <property name="min_content_height">100</property>
                 <child>
                   <object class="GtkTreeView" id="treeview_folders">
                     <property name="visible">True</property>
-                    <property name="can-focus">True</property>
+                    <property name="can_focus">True</property>
                     <property name="model">liststore_folders</property>
-                    <property name="headers-visible">False</property>
-                    <property name="search-column">0</property>
+                    <property name="headers_visible">False</property>
+                    <property name="search_column">0</property>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection"/>
                     </child>
@@ -238,72 +259,234 @@ Click this icon for more information.</property>
         <child type="label">
           <object class="GtkLabel" id="label1">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Folders (optional)</property>
           </object>
         </child>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">10</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">12</property>
         <property name="width">2</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel" id="label_account_file_path">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <property name="label" translatable="yes">File path:</property>
         <property name="xalign">0</property>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">6</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">8</property>
       </packing>
     </child>
     <child>
       <object class="GtkFileChooserButton" id="chooser_file_path">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="create-folders">False</property>
-        <property name="preview-widget-active">False</property>
-        <property name="show-hidden">True</property>
-        <property name="use-preview-label">False</property>
+        <property name="can_focus">False</property>
+        <property name="create_folders">False</property>
+        <property name="preview_widget_active">False</property>
+        <property name="show_hidden">True</property>
+        <property name="use_preview_label">False</property>
         <property name="title" translatable="yes"/>
         <signal name="file-set" handler="entry_changed" swapped="no"/>
       </object>
       <packing>
-        <property name="left-attach">1</property>
-        <property name="top-attach">6</property>
+        <property name="left_attach">1</property>
+        <property name="top_attach">8</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel" id="label_account_directory_path">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <property name="label" translatable="yes">Directory:</property>
         <property name="xalign">0</property>
       </object>
       <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">7</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">9</property>
       </packing>
     </child>
     <child>
       <object class="GtkFileChooserButton" id="chooser_directory_path">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <property name="action">select-folder</property>
-        <property name="create-folders">False</property>
-        <property name="preview-widget-active">False</property>
-        <property name="show-hidden">True</property>
-        <property name="use-preview-label">False</property>
+        <property name="create_folders">False</property>
+        <property name="preview_widget_active">False</property>
+        <property name="show_hidden">True</property>
+        <property name="use_preview_label">False</property>
         <property name="title" translatable="yes"/>
         <signal name="file-set" handler="entry_changed" swapped="no"/>
       </object>
       <packing>
-        <property name="left-attach">1</property>
-        <property name="top-attach">7</property>
+        <property name="left_attach">1</property>
+        <property name="top_attach">9</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="label_log_in">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Log in:</property>
+        <property name="xalign">0</property>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="label_gmail_labels">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Gmail labels:</property>
+        <property name="xalign">0</property>
+        <property name="yalign">0</property>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">3</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox" id="box_gmail_labels">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkActionBar">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkButton">
+                <property name="label">gtk-add</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="gmail_label_add" swapped="no"/>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_remove_gmail_label">
+                <property name="label">gtk-remove</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="gmail_label_remove" swapped="no"/>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="height_request">100</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="vexpand">True</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkTreeView" id="treeview_gmail_labels">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="vexpand">True</property>
+                <property name="model">liststore_gmail_labels</property>
+                <property name="reorderable">True</property>
+                <property name="search_column">0</property>
+                <property name="show_expanders">False</property>
+                <property name="rubber_banding">True</property>
+                <property name="activate_on_single_click">True</property>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection">
+                    <property name="mode">multiple</property>
+                    <signal name="changed" handler="gmail_labels_selection_changed" swapped="no"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="column_gmail_label">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">Label</property>
+                    <property name="expand">True</property>
+                    <property name="reorderable">True</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">0</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cr_gmail_label_column">
+                        <property name="editable">True</property>
+                        <signal name="edited" handler="gmail_label_edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="sizing">fixed</property>
+                    <property name="title" translatable="yes">Mode</property>
+                    <property name="clickable">True</property>
+                    <property name="reorderable">True</property>
+                    <property name="sort_indicator">True</property>
+                    <property name="sort_column_id">1</property>
+                    <child>
+                      <object class="GtkCellRendererCombo" id="cr_gmail_label_mode">
+                        <property name="editable">True</property>
+                        <property name="has_entry">False</property>
+                        <property name="model">liststore_gmail_label_modes</property>
+                        <property name="text_column">0</property>
+                        <signal name="changed" handler="gmail_label_mode_edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="text">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="left_attach">1</property>
+        <property name="top_attach">3</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="button_log_in">
+        <property name="label" translatable="yes">Log in to account</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <signal name="clicked" handler="log_in" swapped="no"/>
+      </object>
+      <packing>
+        <property name="left_attach">1</property>
+        <property name="top_attach">2</property>
       </packing>
     </child>
   </object>

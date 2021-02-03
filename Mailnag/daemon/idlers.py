@@ -66,7 +66,7 @@ class Idler(object):
 			try:
 				self._account.open()
 			except Exception as ex:
-				logging.error("Failed to open mailbox for account '%s' (%s)." % (self._account.name, ex))
+				logging.error("Failed to open mailbox for account '%s' (%s)." % (self._account.name, ex), exc_info=True)
 				logging.info("Trying to reconnect Idler thread for account '%s' in %s minutes" % 
 					(self._account.name, str(self.RECONNECT_RETRY_INTERVAL)))
 				self._wait(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer the server
@@ -143,7 +143,7 @@ class Idler(object):
 				self._account.open()
 				logging.info("Successfully reconnected Idler thread for account '%s'." % self._account.name)
 			except Exception as ex:
-				logging.error("Failed to reconnect Idler thread for account '%s' (%s)." % (self._account.name, ex))
+				logging.error("Failed to reconnect Idler thread for account '%s' (%s)." % (self._account.name, ex), exc_info=True)
 				logging.info("Trying to reconnect Idler thread for account '%s' in %s minutes" % 
 					(self._account.name, str(self.RECONNECT_RETRY_INTERVAL)))
 				self._wait(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer the server
@@ -174,7 +174,7 @@ class IdlerRunner:
 					idler.start()
 					self._idlerlist.append(idler)
 				except Exception as ex:
-					logging.error("Error: Failed to create an idler thread for account '%s' (%s)" % (acc.name, ex))
+					logging.error("Error: Failed to create an idler thread for account '%s' (%s)" % (acc.name, ex), exc_info=True)
 					
 	
 	def dispose(self):

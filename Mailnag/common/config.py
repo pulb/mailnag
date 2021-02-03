@@ -52,5 +52,8 @@ def read_cfg():
 def write_cfg(cfg):
 	if not os.path.exists(cfg_folder):
 		os.makedirs(cfg_folder)
+
+
 	
-	with open(cfg_file, 'w') as configfile: cfg.write(configfile)
+	with open(cfg_file, 'w') as configfile:
+		cfg.write(configfile)
