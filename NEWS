@@ -1,3 +1,18 @@
+Version 2.2 (2021-02-14):
+=========================
+* Massive robustness improvements. Especially long running IMAP IDLE 
+  connections do survive peer resets and system hibernation now
+* New default connectivity test based on glib NetworkMonitor 
+  (likely to improve VPN issues as well)
+* Configuration UI hints for Gmail
+* Updated translations
+
+NOTES FOR PACKAGERS:
+The networkmanager dependency may be removed 
+since Mailnag now uses the NetworkMonitor API (of glib),
+which in turn optionally depends on networkmanager.
+
+
 Version 2.1 (2020-12-30):
 =========================
 * Mark-as-read also marks e-mails read on the server 
