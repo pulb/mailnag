@@ -62,7 +62,6 @@ though make sure the requirements stated below are met.
 * pyxdg
 * gettext
 * gir1.2-secret-1 (optional)
-* networkmanager (optional)
 
 
 ## Configuration
