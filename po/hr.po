@@ -9,22 +9,26 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-03-28 10:59+0100\n"
-"PO-Revision-Date: 2019-03-16 14:48+0000\n"
-"Last-Translator: Launchpad Translations Administrators <Unknown>\n"
-"Language-Team: Croatian <hr@li.org>\n"
+"PO-Revision-Date: 2021-01-18 00:35+0000\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/mailnag/mailnag/"
+"hr/>\n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.5-dev\n"
 "X-Launchpad-Export-Date: 2020-06-11 14:44+0000\n"
-"X-Generator: Launchpad (build b190cebbf563f89e480a8b57f641753c8196bda0)\n"
 
 #: Mailnag/plugins/userscriptplugin.py:60
 msgid "User Script"
-msgstr "preglednik pošte"
+msgstr "Korisnička skripta"
 
 #: Mailnag/plugins/userscriptplugin.py:61
 msgid "Runs an user defined script on mail arrival."
-msgstr "pokreni preglednik pošte kad stigne nova poruka"
+msgstr "Pokreće korisnički definiranu skriptu po dolasku e-poruka."
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "account"
@@ -36,7 +40,7 @@ msgstr "pošiljatelj"
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "subject"
-msgstr "naslov"
+msgstr "predmet"
 
 #: Mailnag/plugins/userscriptplugin.py:81
 #, python-format
@@ -45,18 +49,21 @@ msgid ""
 "Mailnag passes the total count of new mails to this script,\n"
 "followed by %s sequences."
 msgstr ""
+"Sljedeća skripta izvršit će se kad god stignu nove e-poruke.\n"
+"Mailnag prosljeđuje ukupan broj novih e-poruka ovoj skripti,\n"
+"nakon čega slijede %s sekvence."
 
 #: Mailnag/plugins/messagingmenuplugin.py:99
 msgid "MessagingMenu"
-msgstr ""
+msgstr "Izbornik poruka"
 
 #: Mailnag/plugins/messagingmenuplugin.py:100
 msgid "Shows new mails in the MessagingMenu indicator."
-msgstr ""
+msgstr "Prikazuje nove e-poruke u indikatoru izbornika poruka."
 
 #: Mailnag/plugins/messagingmenuplugin.py:118
 msgid "Maximum number of visible mails:"
-msgstr "maksimalan broj vidljivih poruka"
+msgstr "Maksimalan broj vidljivih e-poruka:"
 
 #: Mailnag/plugins/spamfilterplugin.py:67
 msgid "Spam Filter"
@@ -64,15 +71,15 @@ msgstr "filter za spam poruke"
 
 #: Mailnag/plugins/spamfilterplugin.py:68
 msgid "Filters out unwanted mails."
-msgstr "filtriranje neželjenih poruka"
+msgstr "Filtrira neželjene e-poruke."
 
 #: Mailnag/plugins/spamfilterplugin.py:87
 msgid ""
 "Mailnag will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
-"Mailnag će ignorirati poruke koje ne sadrže barem\n"
-"jednu riječ iz naslova ili pošiljatelja"
+"Mailnag će zanemariti e-poruke koje sadrže barem jednu od\n"
+"sljedećih riječi u predmetu ili pošiljatelju."
 
 #: Mailnag/plugins/libnotifyplugin.py:100
 msgid "LibNotify Notifications"
@@ -80,51 +87,51 @@ msgstr "LibNotify oznake"
 
 #: Mailnag/plugins/libnotifyplugin.py:101
 msgid "Shows a popup when new mails arrive."
-msgstr "skočni prozor za nove poruke"
+msgstr "Prikazuje skočni prozor po primanju novih e-poruka."
 
 #: Mailnag/plugins/libnotifyplugin.py:116
 msgid "Count of new mails"
-msgstr "broj novih poruka"
+msgstr "Broj novih e-poruka"
 
 #: Mailnag/plugins/libnotifyplugin.py:117
 msgid "Short summary of new mails"
-msgstr "kratak pregled novih poruka"
+msgstr "Kratak pregled novih e-poruka"
 
 #: Mailnag/plugins/libnotifyplugin.py:118
 msgid "Detailed summary of new mails"
-msgstr "detaljan pregled novih poruka"
+msgstr "Detaljan pregled novih e-poruka"
 
 #: Mailnag/plugins/libnotifyplugin.py:119
 msgid "One notification per new mail"
-msgstr "jedna obavijest po novom e-mailu"
+msgstr "Jedna obavijest za svaku novu e-poruku"
 
 #: Mailnag/plugins/libnotifyplugin.py:127
 msgid "Notification mode:"
-msgstr "mod obavjesti"
+msgstr "Modus obavještavanja:"
 
 #: Mailnag/plugins/libnotifyplugin.py:214
 #: Mailnag/plugins/libnotifyplugin.py:250
 #: Mailnag/plugins/libnotifyplugin.py:278
 #, python-brace-format
 msgid "{0} new mails"
-msgstr "{0}novih poruka"
+msgstr "Broj novih e-poruka: {0}"
 
 #: Mailnag/plugins/libnotifyplugin.py:216
 #, python-brace-format
 msgid "from {0} and others."
-msgstr "od {0} i drugih"
+msgstr "od {0} i drugih."
 
 #: Mailnag/plugins/libnotifyplugin.py:218
 #: Mailnag/plugins/libnotifyplugin.py:221
 #, python-brace-format
 msgid "from {0}."
-msgstr "od {0}"
+msgstr "od {0}."
 
 #: Mailnag/plugins/libnotifyplugin.py:220
 #: Mailnag/plugins/libnotifyplugin.py:252
 #: Mailnag/plugins/libnotifyplugin.py:280
 msgid "New mail"
-msgstr "nova poruka"
+msgstr "Nova e-poruka"
 
 #: Mailnag/plugins/libnotifyplugin.py:245
 #: Mailnag/plugins/libnotifyplugin.py:247
@@ -134,27 +141,27 @@ msgstr "(i još {0})"
 
 #: Mailnag/plugins/libnotifyplugin.py:267
 msgid "Mark as read"
-msgstr "Označi sve kao pročitano"
+msgstr "Označi kao pročitano"
 
 #: Mailnag/plugins/soundplugin.py:63
 msgid "Sound Notifications"
-msgstr "zvučna obavijest"
+msgstr "Obavještavanje zvukom"
 
 #: Mailnag/plugins/soundplugin.py:64
 msgid "Plays a sound when new mails arrive."
-msgstr "zvuk za dolaznu poruku"
+msgstr "Svira zvuk po primanju nove e-poruke."
 
 #: Mailnag/plugins/goaplugin.py:91
 msgid "GNOME Online Accounts"
-msgstr "GNOME račun"
+msgstr "Internetski GNOME računi"
 
 #: Mailnag/plugins/goaplugin.py:92
 msgid "GNOME Online Accounts Integration."
-msgstr "GNOME Online integracija računa"
+msgstr "Integracija internetskih GNOME računa."
 
 #: Mailnag/daemon/mails.py:121
 msgid "No subject"
-msgstr "Nema naslova"
+msgstr "Bez predmeta"
 
 #: Mailnag/configuration/plugindialog.py:30
 msgid "Plugin Configuration"
@@ -175,19 +182,19 @@ msgstr "Ime"
 #: Mailnag/configuration/configwindow.py:270
 #, python-format
 msgid "About %s"
-msgstr ""
+msgstr "Informacije o %s"
 
 #: Mailnag/configuration/configwindow.py:273
 msgid "An extensible mail notification daemon."
-msgstr ""
+msgstr "Proširiv demon za obavještavanje o e-porukama."
 
 #: Mailnag/configuration/configwindow.py:274
 msgid "Copyright (c) 2011 - 2020 Patrick Ulbrich and contributors."
-msgstr ""
+msgstr "Autorska prava 2011. – 2020. Patrick Ulbrich i doprinositelji."
 
 #: Mailnag/configuration/configwindow.py:277
 msgid "Homepage"
-msgstr ""
+msgstr "Početna web-stranica"
 
 #: Mailnag/configuration/configwindow.py:295
 msgid "translator-credits"
@@ -200,7 +207,7 @@ msgstr ""
 
 #: Mailnag/configuration/configwindow.py:335
 msgid "Delete this account:"
-msgstr "Izbriši ovaj korisnički račun:"
+msgstr "Izbriši ovaj račun:"
 
 #: Mailnag/configuration/accountdialog.py:70
 msgid "Mail Account"
@@ -208,23 +215,23 @@ msgstr "Račun e-pošte"
 
 #: Mailnag/configuration/accountdialog.py:111
 msgid "optional"
-msgstr "opcija"
+msgstr "opcionalno"
 
 #: Mailnag/configuration/accountdialog.py:244
 msgid "IMAP (Custom)"
-msgstr ""
+msgstr "IMAP (prilagođeno)"
 
 #: Mailnag/configuration/accountdialog.py:245
 msgid "POP3 (Custom)"
-msgstr ""
+msgstr "POP3 (prilagođeno)"
 
 #: Mailnag/configuration/accountdialog.py:246
 msgid "MBox (Custom)"
-msgstr ""
+msgstr "MBox (prilagođeno)"
 
 #: Mailnag/configuration/accountdialog.py:247
 msgid "Maildir (Custom)"
-msgstr ""
+msgstr "Maildir (prilagođeno)"
 
 #: Mailnag/configuration/accountdialog.py:353
 msgid "Connection failed."
@@ -252,7 +259,7 @@ msgstr "Korisnik:"
 
 #: data/account_widget.ui.h:6
 msgid "Password:"
-msgstr "Lozinka"
+msgstr "Lozinka:"
 
 #: data/account_widget.ui.h:7
 msgid "Server:"
@@ -268,15 +275,15 @@ msgstr "Mape(neobavezno)"
 
 #: data/account_widget.ui.h:10
 msgid "File path:"
-msgstr ""
+msgstr "Staza datoteke:"
 
 #: data/account_widget.ui.h:11
 msgid "Directory:"
-msgstr ""
+msgstr "Direktorij:"
 
 #: data/config_window.ui.h:1
 msgid "Enable/disable Mailnag daemon"
-msgstr ""
+msgstr "Aktiviraj/deaktiviraj Mailnag demon"
 
 #: data/config_window.ui.h:2
 msgid "Add Account"
@@ -304,8 +311,8 @@ msgstr "Priključci"
 
 #: data/config_window.ui.h:8
 msgid "Donate"
-msgstr ""
+msgstr "Doniraj"
 
 #: data/config_window.ui.h:9
 msgid "Info"
-msgstr ""
+msgstr "Informacije"

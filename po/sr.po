@@ -7,15 +7,18 @@ msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-03-28 10:59+0100\n"
-"PO-Revision-Date: 2019-03-16 14:48+0000\n"
-"Last-Translator: Launchpad Translations Administrators <Unknown>\n"
-"Language-Team: Serbian <gnom@prevod.org>\n"
+"PO-Revision-Date: 2021-01-07 11:29+0000\n"
+"Last-Translator: Burek <jokxa@hotmail.com>\n"
+"Language-Team: Serbian <https://hosted.weblate.org/projects/mailnag/mailnag/"
+"sr/>\n"
+"Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 "X-Launchpad-Export-Date: 2020-06-11 14:44+0000\n"
-"X-Generator: Launchpad (build b190cebbf563f89e480a8b57f641753c8196bda0)\n"
-"Language: sr\n"
 
 #: Mailnag/plugins/userscriptplugin.py:60
 msgid "User Script"
@@ -27,7 +30,7 @@ msgstr "Покреће скрипту коју је одредио корисн�
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "account"
-msgstr ""
+msgstr "налог"
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "sender"
@@ -190,10 +193,7 @@ msgstr ""
 
 #: Mailnag/configuration/configwindow.py:295
 msgid "translator-credits"
-msgstr ""
-"Launchpad Contributions:\n"
-"  Patrick Ulbrich https://launchpad.net/~pulb\n"
-"  Мирослав Николић https://launchpad.net/~lipek"
+msgstr "преводилац/иоци-заслуге"
 
 #: Mailnag/configuration/configwindow.py:335
 msgid "Delete this account:"
