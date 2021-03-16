@@ -21,8 +21,6 @@ Depends:
  python3-xdg,
  ${misc:Depends},
  ${python3:Depends}
-Recommends:
- network-manager
 Description: extensible mail notification daemon
  Mailnag is a daemon program that checks POP3 and IMAP servers for new mail.
  On mail arrival it performs various actions provided by plugins. Mailnag
