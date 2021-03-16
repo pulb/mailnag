@@ -1,3 +1,9 @@
+mailnag (2.2.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Patrick Ulbrich <zulu99@gmx.net>  Tue, 16 Mar 2021 18:07:36 +0100
+ 
 mailnag (2.0.0-1) unstable; urgency=low
 
   * New upstream release
