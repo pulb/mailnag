@@ -44,7 +44,10 @@ class ConnectivityTest:
 			if self._monitor.get_connectivity() == Gio.NetworkConnectivity.FULL:
 				return False
 			else:
-				return (not self._monitor.can_reach(Gio.NetworkAddress.new(TEST_HOST, 8080)))
+				try:
+					return (not self._monitor.can_reach(Gio.NetworkAddress.new(TEST_HOST, 8080)))
+				except:
+					return False
 		else:
 			return (os.system('ping -c1 -W2 %s > /dev/null 2>&1' % TEST_HOST) != 0)
 
