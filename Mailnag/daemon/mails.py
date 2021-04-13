@@ -64,14 +64,14 @@ class MailCollector:
 				if not acc.is_open():
 					acc.open()
 			except Exception as ex:
-				logging.error("Failed to open mailbox for account '%s' (%s)." % (acc.name, ex))
+				logging.error("Failed to open mailbox for account '%s' (%s)." % (acc.name, ex),
+					      exc_info=True)
 				continue
 
 			try:
 				for folder, msg, flags in acc.list_messages():
 					sender, subject, datetime, msgid = self._get_header(msg)
 					id = self._get_id(msgid, acc, folder, sender, subject, datetime)
-				
 					# Discard mails with identical IDs (caused
 					# by mails with a non-unique fallback ID,
 					# i.e. mails received in the same folder with
@@ -93,7 +93,7 @@ class MailCollector:
 				if acc.supports_notifications():
 					raise
 				else:
-					logging.error("An error occured while processing mails of account '%s' (%s)." % (acc.name, ex))
+					logging.error("An error occured while processing mails of account '%s' (%s)." % (acc.name, ex), exc_info=True)
 			finally:
 				# leave account with notifications open, so that it can
 				# send notifications about new mails

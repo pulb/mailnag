@@ -25,6 +25,7 @@ import re
 from Mailnag.backends.imap import IMAPMailboxBackend
 from Mailnag.backends.pop3 import POP3MailboxBackend
 from Mailnag.backends.local import MBoxBackend, MaildirBackend
+from Mailnag.backends.gmail_rss import GMailRssBackend
 from Mailnag.common.utils import splitstr
 
 
@@ -80,8 +81,11 @@ _backends = {
 				Param('path', 'path', str, str, ''),
 				Param('folders', 'folder', _str_to_folders, _folders_to_str, []),
 			]),
+        'gmail_rss' : Backend(GMailRssBackend, [
+                		Param('gmail_labels', 'gmail_labels', _str_to_folders, _folders_to_str, []),
+				Param('password', 'password', str, str, ''),
+                	])
 }
-
 
 def create_backend(mailbox_type, **kw):
 	"""Create mailbox backend of specified type and parameters."""
