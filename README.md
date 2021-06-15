@@ -41,6 +41,11 @@ Just run `yum install mailnag` (as root) in a terminal to install the package.
 Mailnag is available in the official repos.  
 Please run `pacman -Syu mailnag` (as root) to install the package.
 
+### Void Linux
+Mailnag is available in the official repos.  
+Run `xbps-install -S mailnag` (as root) in a terminal to install the package.  
+Read `/usr/share/doc/mailnag/README.voidlinux` after install for further information.
+
 ### openSUSE
 Mailnag is available in openSUSE Tumbleweed.  
 Run `sudo zypper install mailnag` in a terminal to install it.
