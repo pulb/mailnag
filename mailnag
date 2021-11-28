@@ -43,7 +43,7 @@ from Mailnag.common.exceptions import InvalidOperationException
 from Mailnag.daemon.mailnagdaemon import MailnagDaemon
 
 PROGNAME = 'mailnag'
-LOG_LEVEL = logging.DEBUG
+LOG_LEVEL = logging.WARNING
 
 
 def cleanup(daemon):
