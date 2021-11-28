@@ -28,7 +28,7 @@ import inspect
 
 from Mailnag.common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
 
-LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
+LOG_FORMAT = 'mailnag[%(process)d]: %(levelname)s (%(asctime)s): %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
