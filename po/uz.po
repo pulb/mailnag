@@ -1,0 +1,319 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Umidjon Almasov <umidjon@almasov.uz>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-01 17:31+0100\n"
+"PO-Revision-Date: 2022-02-18 17:05+0000\n"
+"Last-Translator: Umidjon Almasov <umidjon@almasov.uz>\n"
+"Language-Team: Uzbek <https://hosted.weblate.org/projects/mailnag/mailnag/uz/"
+">\n"
+"Language: uz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
+
+#: Mailnag/plugins/userscriptplugin.py:60
+msgid "User Script"
+msgstr "Foydalanuvchi skripti"
+
+#: Mailnag/plugins/userscriptplugin.py:61
+msgid "Runs an user defined script on mail arrival."
+msgstr ""
+"Pochta kelganda foydalanuvchi tomonidan belgilangan skriptni ishga tushiradi."
+
+#: Mailnag/plugins/userscriptplugin.py:80
+msgid "account"
+msgstr "hisob"
+
+#: Mailnag/plugins/userscriptplugin.py:80
+msgid "sender"
+msgstr "jo'natuvchi"
+
+#: Mailnag/plugins/userscriptplugin.py:80
+msgid "subject"
+msgstr "mavzu"
+
+#: Mailnag/plugins/userscriptplugin.py:81
+#, python-format
+msgid ""
+"The following script will be executed whenever new mails arrive.\n"
+"Mailnag passes the total count of new mails to this script,\n"
+"followed by %s sequences."
+msgstr ""
+"Har safar yangi xatlar kelganda quyidagi skript bajariladi.\n"
+"Mailnag ushbu skriptga yangi xatlarning umumiy sonini,\n"
+"keyin %s ketma-ketlikni uzatadi."
+
+#: Mailnag/plugins/messagingmenuplugin.py:99
+msgid "MessagingMenu"
+msgstr "Xabarlar menyusi"
+
+#: Mailnag/plugins/messagingmenuplugin.py:100
+msgid "Shows new mails in the MessagingMenu indicator."
+msgstr "Xabarlar menyusi indikatorida yangi xatlarni ko'rsatadi."
+
+#: Mailnag/plugins/messagingmenuplugin.py:118
+msgid "Maximum number of visible mails:"
+msgstr "Ko'rinadigan xatlarning maksimal soni:"
+
+#: Mailnag/plugins/spamfilterplugin.py:67
+msgid "Spam Filter"
+msgstr "Spam filtri"
+
+#: Mailnag/plugins/spamfilterplugin.py:68
+msgid "Filters out unwanted mails."
+msgstr "Keraksiz xatlarni filtrlaydi."
+
+#: Mailnag/plugins/spamfilterplugin.py:87
+msgid ""
+"Mailnag will ignore mails containing at least one of \n"
+"the following words in subject or sender."
+msgstr ""
+"Mailnag mavzu yoki jo'natuvchida quyidagi so'zlardan \n"
+"kamida bittasi bo'lgan xatlarni e'tiborsiz qoldiradi."
+
+#: Mailnag/plugins/libnotifyplugin.py:113
+msgid "LibNotify Notifications"
+msgstr "LibNotify bildirishnomalari"
+
+#: Mailnag/plugins/libnotifyplugin.py:114
+msgid "Shows a popup when new mails arrive."
+msgstr "Yangi xatlar kelganda qalqib chiquvchi oynani ko'rsatadi."
+
+#: Mailnag/plugins/libnotifyplugin.py:129
+msgid "Count of new mails"
+msgstr "Yangi xatlar soni"
+
+#: Mailnag/plugins/libnotifyplugin.py:130
+msgid "Short summary of new mails"
+msgstr "Yangi xatlarning qisqacha mazmuni"
+
+#: Mailnag/plugins/libnotifyplugin.py:131
+msgid "Detailed summary of new mails"
+msgstr "Yangi xatlarning batafsil xulosasi"
+
+#: Mailnag/plugins/libnotifyplugin.py:132
+msgid "One notification per new mail"
+msgstr "Har bir yangi xat uchun bitta bildirishnoma"
+
+#: Mailnag/plugins/libnotifyplugin.py:140
+msgid "Notification mode:"
+msgstr "Bildirishnoma rejimi:"
+
+#: Mailnag/plugins/libnotifyplugin.py:233
+#: Mailnag/plugins/libnotifyplugin.py:269
+#: Mailnag/plugins/libnotifyplugin.py:306
+#, python-brace-format
+msgid "{0} new mails"
+msgstr "{0} ta yangi xat"
+
+#: Mailnag/plugins/libnotifyplugin.py:235
+#, python-brace-format
+msgid "from {0} and others."
+msgstr "{0} va boshqalardan."
+
+#: Mailnag/plugins/libnotifyplugin.py:237
+#: Mailnag/plugins/libnotifyplugin.py:240
+#, python-brace-format
+msgid "from {0}."
+msgstr "{0} dan."
+
+#: Mailnag/plugins/libnotifyplugin.py:239
+#: Mailnag/plugins/libnotifyplugin.py:271
+#: Mailnag/plugins/libnotifyplugin.py:308
+msgid "New mail"
+msgstr "Yangi pochta"
+
+#: Mailnag/plugins/libnotifyplugin.py:264
+#: Mailnag/plugins/libnotifyplugin.py:266
+#, python-brace-format
+msgid "(and {0} more)"
+msgstr "(va yana {0} ta)"
+
+#: Mailnag/plugins/libnotifyplugin.py:295
+msgid "Mark as read"
+msgstr "O'qilgan deb belgilash"
+
+#: Mailnag/plugins/soundplugin.py:63
+msgid "Sound Notifications"
+msgstr "Ovozli bildirishnomalar"
+
+#: Mailnag/plugins/soundplugin.py:64
+msgid "Plays a sound when new mails arrive."
+msgstr "Yangi xatlar kelganda ovoz chiqaradi."
+
+#: Mailnag/plugins/goaplugin.py:91
+msgid "GNOME Online Accounts"
+msgstr "GNOME onlayn hisoblari"
+
+#: Mailnag/plugins/goaplugin.py:92
+msgid "GNOME Online Accounts Integration."
+msgstr "GNOME onlayn hisoblari integratsiyasi."
+
+#: Mailnag/daemon/mails.py:136
+msgid "No subject"
+msgstr "Mavzu yo'q"
+
+#: Mailnag/configuration/plugindialog.py:30
+msgid "Plugin Configuration"
+msgstr "Plagin konfiguratsiyasi"
+
+#: Mailnag/configuration/configwindow.py:82
+#: Mailnag/configuration/configwindow.py:102
+#: Mailnag/configuration/accountdialog.py:118
+msgid "Enabled"
+msgstr "Yoqilgan"
+
+#: Mailnag/configuration/configwindow.py:88
+#: Mailnag/configuration/configwindow.py:108
+#: Mailnag/configuration/accountdialog.py:124
+msgid "Name"
+msgstr "Nomi"
+
+#: Mailnag/configuration/configwindow.py:270
+#, python-format
+msgid "About %s"
+msgstr "%s haqida"
+
+#: Mailnag/configuration/configwindow.py:273
+msgid "An extensible mail notification daemon."
+msgstr "Kengaytirilgan pochta xabarnomasi demoni."
+
+#: Mailnag/configuration/configwindow.py:274
+msgid "Copyright (c) 2011 - 2021 Patrick Ulbrich and contributors."
+msgstr "Mualliflik huquqi (c) 2011 - 2021 Patrick Ulbrich va hissa qo'shganlar."
+
+#: Mailnag/configuration/configwindow.py:277
+msgid "Homepage"
+msgstr "Uy sahifasi"
+
+#: Mailnag/configuration/configwindow.py:298
+msgid "translator-credits"
+msgstr "Umidjon Almasov <umidjon@almasov.uz>"
+
+#: Mailnag/configuration/configwindow.py:338
+msgid "Delete this account:"
+msgstr "Ushbu hisobni o'chirish:"
+
+#: Mailnag/configuration/accountdialog.py:72
+msgid "Mail Account"
+msgstr "Pochta hisobi"
+
+#: Mailnag/configuration/accountdialog.py:114
+msgid "optional"
+msgstr "ixtiyoriy"
+
+#: Mailnag/configuration/accountdialog.py:247
+msgid "IMAP (Custom)"
+msgstr "IMAP (sozlanadigan)"
+
+#: Mailnag/configuration/accountdialog.py:248
+msgid "POP3 (Custom)"
+msgstr "POP3 (sozlanadigan)"
+
+#: Mailnag/configuration/accountdialog.py:249
+msgid "MBox (Custom)"
+msgstr "MBox (sozlanadigan)"
+
+#: Mailnag/configuration/accountdialog.py:250
+msgid "Maildir (Custom)"
+msgstr "Maildir (sozlanadigan)"
+
+#: Mailnag/configuration/accountdialog.py:356
+msgid "Connection failed."
+msgstr "Ulanish muvaffaqiyatsiz."
+
+#: data/account_widget.ui.h:1
+msgid ""
+"You may need to create an application-specific password for Gmail.\n"
+"Click this icon for more information."
+msgstr ""
+"Gmail uchun ilovaga xos parol yaratishingiz kerak boʻlishi mumkin.\n"
+"Qo'shimcha ma'lumot olish uchun ushbu belgini bosing."
+
+#: data/account_widget.ui.h:3
+msgid "Enable Push-IMAP"
+msgstr "Push-IMAP-ni yoqish"
+
+#: data/account_widget.ui.h:4
+msgid "Enable SSL encryption"
+msgstr "SSL shifrlashni yoqish"
+
+#: data/account_widget.ui.h:5
+msgid "Accountname:"
+msgstr "Hisob nomi:"
+
+#: data/account_widget.ui.h:6
+msgid "Account type:"
+msgstr "Hisob turi:"
+
+#: data/account_widget.ui.h:7
+msgid "User:"
+msgstr "Foydalanuvchi:"
+
+#: data/account_widget.ui.h:8
+msgid "Password:"
+msgstr "Parol:"
+
+#: data/account_widget.ui.h:9
+msgid "Server:"
+msgstr "Server:"
+
+#: data/account_widget.ui.h:10
+msgid "Port:"
+msgstr "Port:"
+
+#: data/account_widget.ui.h:11
+msgid "Folders (optional)"
+msgstr "Jildlar (ixtiyoriy)"
+
+#: data/account_widget.ui.h:12
+msgid "File path:"
+msgstr "Fayl yo'li:"
+
+#: data/account_widget.ui.h:13
+msgid "Directory:"
+msgstr "Katalog:"
+
+#: data/config_window.ui.h:1
+msgid "Enable/disable Mailnag daemon"
+msgstr "Mailnag demonini yoqish/o‘chirish"
+
+#: data/config_window.ui.h:2
+msgid "Add Account"
+msgstr "Hisob qo'shish"
+
+#: data/config_window.ui.h:3
+msgid "Remove Account"
+msgstr "Hisobni o'chirish"
+
+#: data/config_window.ui.h:4
+msgid "Edit Account"
+msgstr "Hisobni tahrirlash"
+
+#: data/config_window.ui.h:5
+msgid "Accounts"
+msgstr "Hisoblar"
+
+#: data/config_window.ui.h:6
+msgid "Edit Plugin"
+msgstr "Plaginni tahrirlash"
+
+#: data/config_window.ui.h:7
+msgid "Plugins"
+msgstr "Plaginlar"
+
+#: data/config_window.ui.h:8
+msgid "Donate"
+msgstr "Xayriya qilish"
+
+#: data/config_window.ui.h:9
+msgid "Info"
+msgstr "Ma'lumot"
