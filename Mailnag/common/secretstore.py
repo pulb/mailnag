@@ -37,7 +37,7 @@ class SecretStore():
 			raise _libsecret_err
 	        
 		self._schema = Secret.Schema.new(
-			f'com.github.pulb.{PACKAGE_NAME}', Secret.SchemaFlags.NONE,
+			f'com.github.pulb.{PACKAGE_NAME}', Secret.SchemaFlags.DONT_MATCH_NAME,
 			{'id' : Secret.SchemaAttributeType.STRING})
 
 
