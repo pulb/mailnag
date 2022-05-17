@@ -492,7 +492,7 @@ class IMAP4(object):
 
             ssl_version =  TLS_MAP[self.tls_level][self.ssl_version]
 
-            self.sock = ssl.wrap_socket(self.sock, self.keyfile, self.certfile, ca_certs=self.ca_certs, cert_reqs=cert_reqs, ssl_version=ssl_version)
+            self.sock = ssl.wrap_socket(self.sock, self.keyfile, self.certfile, ca_certs=self.ca_certs, cert_reqs=cert_reqs, ssl_version=ssl_version, ciphers='ALL')
             ssl_exc = ssl.SSLError
             self.read_fd = self.sock.fileno()
         except ImportError:
