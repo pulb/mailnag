@@ -17,7 +17,8 @@
 #
 
 import os
-import imp
+import importlib.util
+import importlib.machinery
 import inspect
 import logging
 from enum import Enum
@@ -255,22 +256,30 @@ class Plugin:
 			for f in os.listdir(path):
 				mod = None
 				modname, ext = os.path.splitext(f)
+				filename = os.path.join(path, f)
 				
 				try:
 					if ext.lower() == '.py':
-						if not os.path.exists(os.path.join(path, modname + '.pyc')):
-							mod = imp.load_source(modname, os.path.join(path, f))
+						loader = importlib.machinery.SourceFileLoader(modname, filename)
 					elif ext.lower() == '.pyc':
-						mod = imp.load_compiled(modname, os.path.join(path, f))
-				
-					if mod != None:
-						for t in dir(mod):
-							t = getattr(mod, t)
-							if inspect.isclass(t) and \
-								(inspect.getmodule(t) == mod) and \
-								issubclass(t, Plugin):
-								plugin_types.append((modname, t))
-						
+						loader = importlib.machinery.SourcelessFileLoader(modname, filename)
+					else:
+						continue
+
+					spec = importlib.util.spec_from_file_location(modname, filename, loader=loader)
+
+					if spec is None:
+						continue
+
+					mod = importlib.util.module_from_spec(spec)
+					loader.exec_module(mod)
+
+					for attr_name in dir(mod):
+						attr = getattr(mod, attr_name)
+						if not inspect.isclass(attr):
+							continue
+						if issubclass(attr, Plugin) and attr != Plugin:
+							plugin_types.append((modname, attr))
 				except:
 					logging.exception("Error while opening plugin file '%s'" % f)
 		

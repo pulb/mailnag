@@ -245,7 +245,12 @@ class ConfigWindow:
 		if not os.path.exists(autostart_folder):
 			os.makedirs(autostart_folder)
 
-		shutil.copyfile(src, dst)
+		try:
+			shutil.copyfile(src, dst)
+		except Exception as e:
+			import logging
+			logging.info(f"failed setting autostart: {e}")
+			return
 		
 		# If mailag-config was started from a local directory, 
 		# patch the exec path of the autostart .desktop file accordingly.

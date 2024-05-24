@@ -309,6 +309,7 @@ class IMAP4(object):
         self.compressor = None          # COMPRESS/DEFLATE if not None
         self.decompressor = None
         self._tls_established = False
+        self._ssl_context = None
 
         # Create unique tag for this session,
         # and compile tagged response matcher.
@@ -492,7 +493,13 @@ class IMAP4(object):
 
             ssl_version =  TLS_MAP[self.tls_level][self.ssl_version]
 
-            self.sock = ssl.wrap_socket(self.sock, self.keyfile, self.certfile, ca_certs=self.ca_certs, cert_reqs=cert_reqs, ssl_version=ssl_version)
+            self._ssl_context = ssl.SSLContext(ssl_version)
+            self._ssl_context.verify_mode = cert_reqs
+            if self.ca_certs:
+                self._ssl_context.load_verify_locations(self.ca_certs)
+            if self.keyfile and self.certfile:
+                self._ssl_context.load_cert_chain(self.certfile, self.keyfile)
+            self.sock = self._ssl_context.wrap_socket(self.sock, server_hostname=self.host)
             ssl_exc = ssl.SSLError
             self.read_fd = self.sock.fileno()
         except ImportError:
@@ -2459,7 +2466,7 @@ if __name__ == '__main__':
     ('select', ('imaplib2_test2',)),
     ('search', (None, 'SUBJECT', '"IMAP4 test"')),
     ('fetch', ('1:*', '(FLAGS INTERNALDATE RFC822)')),
-    ('store', ('1', 'FLAGS', '(\Deleted)')),
+    ('store', ('1', 'FLAGS', r'(\Deleted)')),
     ('namespace', ()),
     ('expunge', ()),
     ('recent', ()),
@@ -2564,7 +2571,7 @@ if __name__ == '__main__':
             if not uid: continue
             run('uid', ('FETCH', uid[-1],
                     '(FLAGS INTERNALDATE RFC822.SIZE RFC822.HEADER RFC822.TEXT)'))
-            run('uid', ('STORE', uid[-1], 'FLAGS', '(\Deleted)'))
+            run('uid', ('STORE', uid[-1], 'FLAGS', r'(\Deleted)'))
             run('expunge', ())
 
         if 'IDLE' in M.capabilities:
@@ -2578,10 +2585,10 @@ if __name__ == '__main__':
             dat = run('fetch', (num, '(FLAGS INTERNALDATE RFC822)'), cb=False)
             M._mesg('fetch %s => %s' % (num, repr(dat)))
             run('idle', (2,))
-            run('store', (num, '-FLAGS', '(\Seen)'), cb=False),
+            run('store', (num, '-FLAGS', r'(\Seen)'), cb=False),
             dat = run('fetch', (num, '(FLAGS INTERNALDATE RFC822)'), cb=False)
             M._mesg('fetch %s => %s' % (num, repr(dat)))
-            run('uid', ('STORE', num, 'FLAGS', '(\Deleted)'))
+            run('uid', ('STORE', num, 'FLAGS', r'(\Deleted)'))
             run('expunge', ())
             if idle_intr:
                 M._mesg('HIT CTRL-C to interrupt IDLE')

@@ -148,7 +148,7 @@ class IMAPMailboxBackend(MailboxBackend):
 						if folder != last_folder:
 							conn.select(f'"{folder}"', readonly = False)
 							last_folder = folder
-						status, data = conn.uid("STORE", m.flags['uid'], "+FLAGS", "(\Seen)")
+						status, data = conn.uid("STORE", m.flags['uid'], "+FLAGS", r"(\Seen)")
 					except:
 						logging.warning("Failed to set mail with uid %s to seen on server (account: '%s').", m.flags['uid'], acc.name)
 
