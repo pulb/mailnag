@@ -2,7 +2,7 @@
 #
 # test_account.py
 #
-# Copyright 2018 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2018, 2024 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -52,7 +52,11 @@ class FakeBackend(MailboxBackend):
 
 	def list_messages(self):
 		for msg in self.messages:
-			yield "samplefolder", msg
+			yield "samplefolder", msg, {}
+
+
+	def mark_as_seen(self, mails):
+		raise NotImplementedError
 
 
 	def request_folders(self):

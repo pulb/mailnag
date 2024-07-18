@@ -2,7 +2,7 @@
 #
 # test_accountmanager.py
 #
-# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018, 2024 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,24 +28,43 @@ import pytest
 
 from Mailnag.backends import get_mailbox_parameter_specs
 from Mailnag.common.accounts import AccountManager
-from Mailnag.common.credentialstore import CredentialStore
+import Mailnag.common.secretstore
+from Mailnag.common.secretstore import SecretStore
 
 
-class FakeCredentialStore(CredentialStore):
+class FakeSecretStore(SecretStore):
 	"""Helper class to be used in tests."""
 
 	def __init__(self):
 		self.secrets = {}
 
-	def get(self, key):
-		return self.secrets[key]
+	def get(self, secret_id):
+		secret, description = self.secrets[secret_id]
+		return secret
 
-	def set(self, key, secret):
-		self.secrets[key] = secret
+	def set(self, secret_id, secret, description):
+		self.secrets[secret_id] = (secret, description)
 
-	def remove(self, key):
-		if key in self.secrets:
-			del self.secrets[key]
+	def remove(self, secret_id):
+		if secret_id in self.secrets:
+			del self.secrets[secret_id]
+
+
+@pytest.fixture
+def libsecret_is_unavailable():
+	"""Fixture to say that libsecret is not available."""
+	Mailnag.common.secretstore._libsecret_err = object()
+	yield
+	Mailnag.common.secretstore._libsecret_err = None
+
+
+@pytest.fixture
+def secret_store():
+	"""Fixture to fake SecretStore in test."""
+	cs = FakeSecretStore()
+	SecretStore._instance = cs
+	yield cs
+	SecretStore._instance = None
 
 
 sample_config_file = """
@@ -96,7 +115,7 @@ folder = ["folderA", "folderB", "folderC"]
 @pytest.fixture
 def config():
 	cp = RawConfigParser()
-	cp.readfp(StringIO(sample_config_file), filename='sample_config_file')
+	cp.read_string(sample_config_file, source='sample_config_file')
 	return cp
 
 
@@ -223,7 +242,7 @@ def get_account(accounts, name):
 	return next(account for account in accounts if account.name == name)
 
 
-def test_load_from_config(config):
+def test_load_from_config(config, libsecret_is_unavailable):
 	am = AccountManager()
 	am.load_from_cfg(config, enabled_only=False)
 	accounts = am.to_list()
@@ -234,11 +253,18 @@ def test_load_from_config(config):
 	assert pop3_account.get_config()['password'] == 'poppoppop'
 
 
-def test_load_from_config_with_credential_store(config):
-	cs = FakeCredentialStore()
-	cs.set('Mailnag password for imap://you@imap.example.org', 'verry seecret')
-	cs.set('Mailnag password for pop://me@pop.example.org', 'seecret too')
-	am = AccountManager(cs)
+def test_load_from_config_with_secret_store(config, secret_store):
+	secret_store.set(
+		'b1a892abc4445a099647cb0df75c6f7c',
+		'verry seecret',
+		'some description'
+	)
+	secret_store.set(
+		'1f8d0aabde255c9eea2ebf2c4b09dfc6',
+		'seecret too',
+		'some other desciption'
+	)
+	am = AccountManager()
 	am.load_from_cfg(config, enabled_only=False)
 	accounts = am.to_list()
 	assert len(accounts) == 6
@@ -250,50 +276,72 @@ def test_load_from_config_with_credential_store(config):
 
 # Save to config
 
-def test_save_zero_accounts_to_config(config):
+def test_save_zero_accounts_to_config(config, libsecret_is_unavailable):
 	am = AccountManager()
 	am.save_to_cfg(config)
 	assert len(config.sections()) == 0
 
 
-def test_save_all_accounts_to_config(config):
+def test_save_all_accounts_to_config(config, libsecret_is_unavailable):
 	am = AccountManager()
 	am.load_from_cfg(config, enabled_only=False)
 	am.save_to_cfg(config)
 	assert len(config.sections()) == 6
 
 
-def test_save_zero_accounts_to_config_with_credential_store(config):
-	cs = FakeCredentialStore()
-	am = AccountManager(cs)
+def test_save_zero_accounts_to_config_with_secret_store(config, secret_store):
+	am = AccountManager()
 	am.save_to_cfg(config)
 	assert len(config.sections()) == 0
-	assert cs.secrets == {}
+	assert secret_store.secrets == {}
 
 
-def test_save_all_accounts_to_config_with_credential_store(config):
-	cs = FakeCredentialStore()
-	cs.set('Mailnag password for imap://you@imap.example.org', 'verry seecret')
-	cs.set('Mailnag password for pop://me@pop.example.org', 'seecret too')
-	am = AccountManager(cs)
+def test_save_all_accounts_to_config_with_secret_store(config, secret_store):
+	secret_store.set(
+		'b1a892abc4445a099647cb0df75c6f7c',
+		'verry seecret',
+		'description1'
+	)
+	secret_store.set(
+		'1f8d0aabde255c9eea2ebf2c4b09dfc6',
+		'seecret too',
+		'description2'
+	)
+	am = AccountManager()
 	am.load_from_cfg(config, enabled_only=False)
 	am.save_to_cfg(config)
 	assert len(config.sections()) == 6
-	assert cs.secrets == {
-	    'Mailnag password for imap://@': '',
-	    'Mailnag password for imap://you@imap.example.org': 'verry seecret',
-	    'Mailnag password for pop://me@pop.example.org': 'seecret too'
+	assert secret_store.secrets == {
+	    'f827cf462f62848df37c5e1e94a4da74': (
+	    	'',
+	    	'Mailnag password for account @'
+	    ),
+	    'b1a892abc4445a099647cb0df75c6f7c' : (
+	    	'verry seecret',
+	    	'Mailnag password for account you@imap.example.org'
+	    ),
+	    '1f8d0aabde255c9eea2ebf2c4b09dfc6': (
+	    	'seecret too',
+	    	'Mailnag password for account me@pop.example.org'
+	    ),
 	}
 
 
-def test_save_removed_accounts_to_config_with_credential_store(config):
-	cs = FakeCredentialStore()
-	cs.set('Mailnag password for imap://you@imap.example.org', 'verry seecret')
-	cs.set('Mailnag password for pop://me@pop.example.org', 'seecret too')
-	am = AccountManager(cs)
+def test_save_removed_accounts_to_config_with_secret_store(config, secret_store):
+	secret_store.set(
+		'b1a892abc4445a099647cb0df75c6f7c',
+		'verry seecret',
+		'Mailnag password for imap://you@imap.example.org'
+	)
+	secret_store.set(
+		'1f8d0aabde255c9eea2ebf2c4b09dfc6',
+		'seecret too',
+		'Mailnag password for pop://me@pop.example.org'
+	)
+	am = AccountManager()
 	am.load_from_cfg(config, enabled_only=False)
 	am.clear()
 	am.save_to_cfg(config)
 	assert len(config.sections()) == 0
-	assert cs.secrets == {}
+	assert secret_store.secrets == {}
 

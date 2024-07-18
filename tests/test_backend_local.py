@@ -2,7 +2,7 @@
 #
 # test_backend_local.py
 #
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2024 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -80,8 +80,8 @@ class TestMBox:
 		be.open()
 		try:
 			msgs = list(be.list_messages())
-			folders = [folder for folder, msg in msgs]
-			msg_ids = set(msg.get('message-id') for folder, msg in msgs)
+			folders = [folder for folder, msg, flags in msgs]
+			msg_ids = set(msg.get('message-id') for folder, msg, flags in msgs)
 		finally:
 			be.close()
 		assert len(msgs) == 2
@@ -170,8 +170,8 @@ class TestMaildir:
 		be.open()
 		try:
 			msgs = list(be.list_messages())
-			folders = [folder for folder, msg in msgs]
-			msg_ids = set(msg.get('message-id') for folder, msg in msgs)
+			folders = [folder for folder, msg, flags in msgs]
+			msg_ids = set(msg.get('message-id') for folder, msg, flags in msgs)
 		finally:
 			be.close()
 		assert len(msgs) == 2
@@ -191,8 +191,8 @@ class TestMaildir:
 		be.open()
 		try:
 			msgs = list(be.list_messages())
-			folders = [folder for folder, msg in msgs]
-			msg_ids = set(msg.get('message-id') for folder, msg in msgs)
+			folders = [folder for folder, msg, flags in msgs]
+			msg_ids = set(msg.get('message-id') for folder, msg, flags in msgs)
 		finally:
 			be.close()
 		assert len(msgs) == 2
