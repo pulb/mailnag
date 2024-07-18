@@ -1,5 +1,5 @@
 # Copyright 2020 Patrick Ulbrich <zulu99@gmx.net>
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2024 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -119,7 +119,7 @@ class MaildirBackend(MailboxBackend):
 
 	def list_messages(self):
 		"""List unread messages from the mailbox.
-		Yields pairs (folder, message).
+		Yields tuples (folder, message, flags).
 		"""
 		folders = self._folders if len(self._folders) != 0 else ['']
 		root_maildir = mailbox.Maildir(self._path, factory=None, create=False)
@@ -128,7 +128,7 @@ class MaildirBackend(MailboxBackend):
 				maildir = self._get_folder(root_maildir, folder)
 				for msg in maildir:
 					if 'S' not in msg.get_flags():
-						yield folder, msg
+						yield folder, msg, {}
 		finally:
 			root_maildir.close()
 
@@ -140,6 +140,11 @@ class MaildirBackend(MailboxBackend):
 			return [''] + maildir.list_folders()
 		finally:
 			maildir.close()
+
+
+	def mark_as_seen(self, mails):
+		# TODO: local mailboxes should support this
+		raise NotImplementedError
 
 
 	def notify_next_change(self, callback=None, timeout=None):
